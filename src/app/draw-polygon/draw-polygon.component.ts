@@ -82,7 +82,10 @@ export class DrawPolygonComponent implements OnInit {
 
   endDraw(feature: Feature) {
     const olGeomPolygon = fromExtent(feature.getGeometry()?.getExtent() || []);
-    olGeomPolygon.transform(new Projection({ code: 'EPSG:3857' }), new Projection({ code: 'EPSG:4326' }));
+    olGeomPolygon.transform(
+      new Projection({ code: 'EPSG:3857' }),
+      new Projection({ code: 'EPSG:4326' }),
+    );
     this.feature = {
       type: 'Feature',
       properties: {},

@@ -17,7 +17,10 @@ export class ControlMousePositionComponent implements OnInit, OnDestroy {
   instance: MousePosition;
   target: HTMLElement;
 
-  constructor(private map: MapComponent, private element: ElementRef) {}
+  constructor(
+    private map: MapComponent,
+    private element: ElementRef,
+  ) {}
 
   ngOnInit() {
     this.target = this.element.nativeElement;

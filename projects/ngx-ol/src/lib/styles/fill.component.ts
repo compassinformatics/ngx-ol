@@ -20,7 +20,7 @@ export class StyleFillComponent implements OnInit, OnChanges {
   constructor(
     @Optional() styleHost: StyleComponent,
     @Optional() styleCircleHost: StyleCircleComponent,
-    @Optional() styleTextHost: StyleTextComponent
+    @Optional() styleTextHost: StyleTextComponent,
   ) {
     if (!styleHost) {
       throw new Error('aol-style-stroke must be a descendant of aol-style');

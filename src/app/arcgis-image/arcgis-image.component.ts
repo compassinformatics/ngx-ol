@@ -7,7 +7,9 @@ import { Component } from '@angular/core';
       <aol-interaction-default></aol-interaction-default>
       <aol-control-defaults></aol-control-defaults>
       <aol-control-fullscreen></aol-control-fullscreen>
-      <aol-view [zoom]="zoom"> <aol-coordinate [x]="-10997148" [y]="4569099"></aol-coordinate> </aol-view>
+      <aol-view [zoom]="zoom">
+        <aol-coordinate [x]="-10997148" [y]="4569099"></aol-coordinate>
+      </aol-view>
       <aol-layer-tile> <aol-source-osm></aol-source-osm> </aol-layer-tile>
 
       <aol-layer-image>

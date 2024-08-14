@@ -5,7 +5,7 @@ import { Options } from 'ol/format/MVT';
 
 @Component({
   selector: 'aol-format-mvt',
-  template: ''
+  template: '',
 })
 export class FormatMVTComponent {
   @Input()

@@ -7,7 +7,9 @@ import { Component, OnInit } from '@angular/core';
       <aol-interaction-default></aol-interaction-default>
       <aol-control-defaults></aol-control-defaults>
 
-      <aol-view [zoom]="6"> <aol-coordinate [x]="1" [y]="46.292896" [srid]="'EPSG:4326'"></aol-coordinate> </aol-view>
+      <aol-view [zoom]="6">
+        <aol-coordinate [x]="1" [y]="46.292896" [srid]="'EPSG:4326'"></aol-coordinate>
+      </aol-view>
 
       <aol-layer-tile [opacity]="1"> <aol-source-osm></aol-source-osm> </aol-layer-tile>
 
@@ -20,7 +22,10 @@ import { Component, OnInit } from '@angular/core';
             </aol-style>
             <aol-feature>
               <aol-geometry-polygon>
-                <aol-collection-coordinates [coordinates]="feature.geometry.coordinates" [srid]="'EPSG:4326'">
+                <aol-collection-coordinates
+                  [coordinates]="feature.geometry.coordinates"
+                  [srid]="'EPSG:4326'"
+                >
                 </aol-collection-coordinates>
               </aol-geometry-polygon>
             </aol-feature>
@@ -48,7 +53,10 @@ import { Component, OnInit } from '@angular/core';
           <aol-source-vector *ngSwitchCase="'LineString'">
             <aol-feature>
               <aol-geometry-linestring>
-                <aol-collection-coordinates [coordinates]="feature.geometry.coordinates" [srid]="'EPSG:4326'">
+                <aol-collection-coordinates
+                  [coordinates]="feature.geometry.coordinates"
+                  [srid]="'EPSG:4326'"
+                >
                 </aol-collection-coordinates>
               </aol-geometry-linestring>
             </aol-feature>
@@ -74,7 +82,10 @@ import { Component, OnInit } from '@angular/core';
           <aol-source-vector *ngSwitchCase="'MultiPoint'">
             <aol-feature>
               <aol-geometry-multipoint>
-                <aol-collection-coordinates [coordinates]="feature.geometry.coordinates" [srid]="'EPSG:4326'">
+                <aol-collection-coordinates
+                  [coordinates]="feature.geometry.coordinates"
+                  [srid]="'EPSG:4326'"
+                >
                 </aol-collection-coordinates>
                 <aol-style>
                   <aol-style-circle [radius]="5">
@@ -89,7 +100,10 @@ import { Component, OnInit } from '@angular/core';
           <aol-source-vector *ngSwitchCase="'MultiLineString'">
             <aol-feature>
               <aol-geometry-multilinestring>
-                <aol-collection-coordinates [coordinates]="feature.geometry.coordinates" [srid]="'EPSG:4326'">
+                <aol-collection-coordinates
+                  [coordinates]="feature.geometry.coordinates"
+                  [srid]="'EPSG:4326'"
+                >
                 </aol-collection-coordinates>
               </aol-geometry-multilinestring>
             </aol-feature>
@@ -102,7 +116,10 @@ import { Component, OnInit } from '@angular/core';
             </aol-style>
             <aol-feature>
               <aol-geometry-multipolygon>
-                <aol-collection-coordinates [coordinates]="feature.geometry.coordinates" [srid]="'EPSG:4326'">
+                <aol-collection-coordinates
+                  [coordinates]="feature.geometry.coordinates"
+                  [srid]="'EPSG:4326'"
+                >
                 </aol-collection-coordinates>
               </aol-geometry-multipolygon>
             </aol-feature>

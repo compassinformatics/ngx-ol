@@ -25,7 +25,10 @@ import { RequestEncoding } from 'ol/source/WMTS';
   template: ` <ng-content></ng-content> `,
   providers: [{ provide: SourceComponent, useExisting: forwardRef(() => SourceTileWMTSComponent) }],
 })
-export class SourceTileWMTSComponent extends SourceComponent implements AfterContentInit, OnChanges {
+export class SourceTileWMTSComponent
+  extends SourceComponent
+  implements AfterContentInit, OnChanges
+{
   @Input()
   cacheSize?: number;
   @Input()

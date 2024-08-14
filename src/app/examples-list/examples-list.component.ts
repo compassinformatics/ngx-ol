@@ -6,12 +6,23 @@ import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
   selector: 'app-examples-list',
   template: `
     <div class="search">
-      <form [formGroup]="form"><input type="text" formControlName="term" placeholder="Search" /></form>
+      <form [formGroup]="form">
+        <input type="text" formControlName="term" placeholder="Search" />
+      </form>
     </div>
     <div class="wrapper">
-      <div class="example-item" *ngFor="let example of list" [routerLink]="'examples/' + example.routerLink">
-        <span class="title">{{ example.title }}</span> <span class="description">{{ example.description }}</span>
-        <div *ngIf="example.openLayersLink" class="open-layers-link" (click)="$event.stopPropagation()">
+      <div
+        class="example-item"
+        *ngFor="let example of list"
+        [routerLink]="'examples/' + example.routerLink"
+      >
+        <span class="title">{{ example.title }}</span>
+        <span class="description">{{ example.description }}</span>
+        <div
+          *ngIf="example.openLayersLink"
+          class="open-layers-link"
+          (click)="$event.stopPropagation()"
+        >
           <a [href]="example.openLayersLink" target="_blank">{{ example.openLayersLink }}</a>
         </div>
       </div>
@@ -89,7 +100,7 @@ export class ExamplesListComponent implements OnInit {
         this.list = this.list.filter(
           (item) =>
             (item.title && item.title.toLowerCase().includes(termValue)) ||
-            (item.description && item.description.toLowerCase().includes(termValue))
+            (item.description && item.description.toLowerCase().includes(termValue)),
         );
       }
     });

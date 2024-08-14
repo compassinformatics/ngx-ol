@@ -47,11 +47,14 @@ import { ObjectEvent } from 'ol/Object';
       </aol-layer-vector>
     </aol-map>
     <div class="controls">
-      <span>opacity:</span><button (click)="increaseOpacity()">+</button><button (click)="decreaseOpacity()">-</button
-      ><br />
-      <span>zoom:</span><button (click)="increaseZoom()">+</button><button (click)="decreaseZoom()">-</button><br />
-      <span>latitude:</span><button (click)="increaseLat()">+</button><button (click)="decreaseLat()">-</button><br />
-      <span>longitude:</span><button (click)="increaseLon()">+</button><button (click)="decreaseLon()">-</button><br />
+      <span>opacity:</span><button (click)="increaseOpacity()">+</button
+      ><button (click)="decreaseOpacity()">-</button><br />
+      <span>zoom:</span><button (click)="increaseZoom()">+</button
+      ><button (click)="decreaseZoom()">-</button><br />
+      <span>latitude:</span><button (click)="increaseLat()">+</button
+      ><button (click)="decreaseLat()">-</button><br />
+      <span>longitude:</span><button (click)="increaseLon()">+</button
+      ><button (click)="decreaseLon()">-</button><br />
     </div>
   `,
   styles: [

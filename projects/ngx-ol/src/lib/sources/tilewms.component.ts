@@ -1,4 +1,12 @@
-import { Component, Host, Input, OnChanges, OnInit, forwardRef, SimpleChanges } from '@angular/core';
+import {
+  Component,
+  Host,
+  Input,
+  OnChanges,
+  OnInit,
+  forwardRef,
+  SimpleChanges,
+} from '@angular/core';
 import { LayerTileComponent } from '../layers/layertile.component';
 import { SourceComponent } from './source.component';
 import { TileWMS } from 'ol/source';

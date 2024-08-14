@@ -18,7 +18,9 @@ import { Component, OnInit } from '@angular/core';
           <aol-source-vector>
             <aol-feature>
               <aol-source-geojson
-                [url]="'https://raw.githubusercontent.com/johan/world.geo.json/master/countries.geo.json'"
+                [url]="
+                  'https://raw.githubusercontent.com/johan/world.geo.json/master/countries.geo.json'
+                "
               >
               </aol-source-geojson>
             </aol-feature>

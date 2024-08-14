@@ -71,7 +71,8 @@ export const examplesList = [
   },
   {
     title: 'Cluster',
-    description: 'Example of using aol-source-cluster. This example shows how to do clustering on point features.',
+    description:
+      'Example of using aol-source-cluster. This example shows how to do clustering on point features.',
     routerLink: 'cluster',
     openLayersLink: 'https://openlayers.org/en/latest/examples/cluster.html',
   },
@@ -90,7 +91,8 @@ export const examplesList = [
   },
   {
     title: 'Image Load Events',
-    description: 'Example of using aol-source-imagewms. This example listens to image loading events.',
+    description:
+      'Example of using aol-source-imagewms. This example listens to image loading events.',
     routerLink: 'image-wms',
     openLayersLink: 'https://openlayers.org/en/latest/examples/image-load-events.html',
   },
@@ -107,7 +109,8 @@ export const examplesList = [
   },
   {
     title: 'UTF Grid',
-    description: 'Example of using aol-source-utfgrid. This example display country flag in an overlay on hover',
+    description:
+      'Example of using aol-source-utfgrid. This example display country flag in an overlay on hover',
     routerLink: 'utf-grid',
     openLayersLink: 'https://openlayers.org/en/latest/examples/utfgrid.html',
   },
@@ -131,7 +134,8 @@ export const examplesList = [
   },
   {
     title: 'Graticule',
-    description: 'Example of using aol-graticule. This example shows how to add a graticule overlay to a map',
+    description:
+      'Example of using aol-graticule. This example shows how to add a graticule overlay to a map',
     routerLink: 'graticule',
     openLayersLink: 'https://openlayers.org/en/latest/examples/graticule.html',
   },

@@ -1,4 +1,12 @@
-import { Component, Input, Host, AfterContentInit, OnChanges, OnDestroy, SimpleChanges } from '@angular/core';
+import {
+  Component,
+  Input,
+  Host,
+  AfterContentInit,
+  OnChanges,
+  OnDestroy,
+  SimpleChanges,
+} from '@angular/core';
 import { Circle, Fill, Stroke } from 'ol/style';
 import { StyleComponent } from './style.component';
 import ImageStyle from 'ol/style/Image';

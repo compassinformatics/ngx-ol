@@ -26,12 +26,12 @@ export class StyleStrokeComponent implements OnInit, OnChanges {
 
   public instance: Stroke;
   /* the typings do not have the setters */
-  private readonly host: StyleComponent|StyleCircleComponent|StyleTextComponent;
+  private readonly host: StyleComponent | StyleCircleComponent | StyleTextComponent;
 
   constructor(
     @Optional() styleHost: StyleComponent,
     @Optional() styleCircleHost: StyleCircleComponent,
-    @Optional() styleTextHost: StyleTextComponent
+    @Optional() styleTextHost: StyleTextComponent,
   ) {
     if (!styleHost) {
       throw new Error('aol-style-stroke must be a descendant of aol-style');

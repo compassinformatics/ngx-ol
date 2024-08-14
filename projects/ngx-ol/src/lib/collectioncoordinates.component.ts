@@ -28,7 +28,7 @@ export class CollectionCoordinatesComponent implements OnChanges, OnInit {
     @Optional() geometryPolygon: GeometryPolygonComponent,
     @Optional() geometryMultipoint: GeometryMultiPointComponent,
     @Optional() geometryMultilinestring: GeometryMultiLinestringComponent,
-    @Optional() geometryMultipolygon: GeometryMultiPolygonComponent
+    @Optional() geometryMultipolygon: GeometryMultiPolygonComponent,
   ) {
     if (!!geometryLinestring) {
       this.host = geometryLinestring;
@@ -61,7 +61,8 @@ export class CollectionCoordinatesComponent implements OnChanges, OnInit {
   }
 
   private transformCoordinates() {
-    let transformedCoordinates: Coordinate[] | Coordinate[][] | Coordinate[][][] | Array<number> = [];
+    let transformedCoordinates: Coordinate[] | Coordinate[][] | Coordinate[][][] | Array<number> =
+      [];
 
     if (this.srid === this.mapSrid) {
       transformedCoordinates = this.coordinates;
@@ -69,17 +70,19 @@ export class CollectionCoordinatesComponent implements OnChanges, OnInit {
       switch (this.host.componentType) {
         case 'geometry-linestring':
         case 'geometry-multipoint':
-          transformedCoordinates = (this.coordinates as Coordinate[]).map((c) => transform(c, this.srid, this.mapSrid));
+          transformedCoordinates = (this.coordinates as Coordinate[]).map((c) =>
+            transform(c, this.srid, this.mapSrid),
+          );
           break;
         case 'geometry-polygon':
         case 'geometry-multilinestring':
           transformedCoordinates = (this.coordinates as Coordinate[][]).map((cc) =>
-            cc.map((c) => transform(c, this.srid, this.mapSrid))
+            cc.map((c) => transform(c, this.srid, this.mapSrid)),
           );
           break;
         case 'geometry-multipolygon':
           transformedCoordinates = (this.coordinates as Coordinate[][][]).map((ccc) =>
-            ccc.map((cc) => cc.map((c) => transform(c, this.srid, this.mapSrid)))
+            ccc.map((cc) => cc.map((c) => transform(c, this.srid, this.mapSrid))),
           );
           break;
       }

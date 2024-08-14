@@ -74,6 +74,5 @@ export class StyleTextComponent implements OnInit, OnChanges {
     // console.log('changes detected in aol-style-text, setting new properties: ', changes);
   }
 
-  update() {
-  }
+  update() {}
 }

@@ -60,7 +60,14 @@ import { ViewProjectionUpdateComponent } from './view-projection-update/view-pro
     ViewProjectionUpdateComponent,
     GraticuleComponent,
   ],
-  imports: [BrowserModule, FormsModule, AppRoutingModule, AngularOpenlayersModule, ReactiveFormsModule, HammerModule],
+  imports: [
+    BrowserModule,
+    FormsModule,
+    AppRoutingModule,
+    AngularOpenlayersModule,
+    ReactiveFormsModule,
+    HammerModule,
+  ],
   providers: [],
   bootstrap: [AppComponent],
 })

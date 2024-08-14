@@ -14,7 +14,7 @@ export class LayerGroupComponent extends LayerComponent implements OnInit, OnDes
     map: MapComponent,
     @SkipSelf()
     @Optional()
-    group?: LayerGroupComponent
+    group?: LayerGroupComponent,
   ) {
     super(group || map);
   }

@@ -8,7 +8,8 @@ import Projection, { Options as ProjectionOptions } from 'ol/proj/Projection';
     <aol-map [width]="'100%'" [height]="'100%'">
       <aol-view [projection]="projection" [zoom]="2" [center]="[512, 484]"> </aol-view>
       <aol-layer-image [opacity]="opacity" [extent]="extent">
-        <aol-source-imagestatic [url]="url" [projection]="projection" [imageExtent]="extent"> </aol-source-imagestatic>
+        <aol-source-imagestatic [url]="url" [projection]="projection" [imageExtent]="extent">
+        </aol-source-imagestatic>
       </aol-layer-image>
     </aol-map>
     <div class="controls">

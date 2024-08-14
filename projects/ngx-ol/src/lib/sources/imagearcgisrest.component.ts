@@ -20,7 +20,9 @@ import { ImageSourceEvent } from 'ol/source/Image';
 @Component({
   selector: 'aol-source-imagearcgisrest',
   template: ` <ng-content></ng-content> `,
-  providers: [{ provide: SourceComponent, useExisting: forwardRef(() => SourceImageArcGISRestComponent) }],
+  providers: [
+    { provide: SourceComponent, useExisting: forwardRef(() => SourceImageArcGISRestComponent) },
+  ],
 })
 export class SourceImageArcGISRestComponent extends SourceComponent implements OnInit, OnChanges {
   @Input() projection: ProjectionLike | string;
@@ -49,9 +51,13 @@ export class SourceImageArcGISRestComponent extends SourceComponent implements O
   ngOnInit() {
     this.instance = new ImageArcGISRest(this);
     this.host.instance.setSource(this.instance);
-    this.instance.on('imageloadstart', (event: ImageSourceEvent) => this.imageLoadStart.emit(event));
+    this.instance.on('imageloadstart', (event: ImageSourceEvent) =>
+      this.imageLoadStart.emit(event),
+    );
     this.instance.on('imageloadend', (event: ImageSourceEvent) => this.imageLoadEnd.emit(event));
-    this.instance.on('imageloaderror', (event: ImageSourceEvent) => this.imageLoadError.emit(event));
+    this.instance.on('imageloaderror', (event: ImageSourceEvent) =>
+      this.imageLoadError.emit(event),
+    );
   }
 
   ngOnChanges(changes: SimpleChanges) {

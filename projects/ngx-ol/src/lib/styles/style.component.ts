@@ -27,7 +27,10 @@ export class StyleComponent implements OnInit {
   public componentType = 'style';
   private readonly host: FeatureComponent | LayerVectorComponent;
 
-  constructor(@Optional() featureHost: FeatureComponent, @Optional() layerHost: LayerVectorComponent) {
+  constructor(
+    @Optional() featureHost: FeatureComponent,
+    @Optional() layerHost: LayerVectorComponent,
+  ) {
     // console.log('creating aol-style');
     this.host = !!featureHost ? featureHost : layerHost;
     if (!this.host) {

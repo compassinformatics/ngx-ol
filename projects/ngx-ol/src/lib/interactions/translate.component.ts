@@ -36,8 +36,7 @@ export class TranslateInteractionComponent implements OnInit, OnDestroy {
 
   instance: Translate;
 
-  constructor(private map: MapComponent) {
-  }
+  constructor(private map: MapComponent) {}
 
   ngOnInit() {
     this.instance = new Translate(this);

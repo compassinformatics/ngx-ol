@@ -37,6 +37,15 @@ TODO
 
 Live example will be viewable at locahost:4200
 
+## Publish
+
+```
+npm run release
+npm run build:lib
+cd dist/ngx-ol
+npm publish --access public
+```
+
 ## Contributing
 
 1. Fork it!

@@ -73,7 +73,7 @@ export class SourceXYZComponent extends SourceComponent implements AfterContentI
   constructor(
     @Optional()
     @Host()
-    protected layer?: LayerTileComponent
+    protected layer?: LayerTileComponent,
   ) {
     super(layer!);
   }

@@ -1,4 +1,13 @@
-import { Component, Input, OnInit, OnChanges, OnDestroy, SimpleChanges, EventEmitter, Output } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnInit,
+  OnChanges,
+  OnDestroy,
+  SimpleChanges,
+  EventEmitter,
+  Output,
+} from '@angular/core';
 import View from 'ol/View';
 import { MapComponent } from './map.component';
 import { ObjectEvent } from 'ol/Object';
@@ -82,7 +91,9 @@ export class ViewComponent implements OnInit, OnChanges, OnDestroy {
 
     this.instance.on('change', (event: BaseEvent) => this.olChange.emit(event));
     this.instance.on('change:center', (event: ObjectEvent) => this.changeCenter.emit(event));
-    this.instance.on('change:resolution', (event: ObjectEvent) => this.changeResolution.emit(event));
+    this.instance.on('change:resolution', (event: ObjectEvent) =>
+      this.changeResolution.emit(event),
+    );
     this.instance.on('change:rotation', (event: ObjectEvent) => this.changeRotation.emit(event));
     this.instance.on('error', (event: BaseEvent) => this.olError.emit(event));
     this.instance.on('propertychange', (event: ObjectEvent) => this.propertyChange.emit(event));

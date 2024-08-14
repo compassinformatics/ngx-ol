@@ -61,8 +61,12 @@ export class SourceRasterComponent extends SourceComponent implements AfterConte
 
   init() {
     this.instance = new Raster(this);
-    this.instance.on('beforeoperations', (event: RasterSourceEvent) => this.beforeOperations.emit(event));
-    this.instance.on('afteroperations', (event: RasterSourceEvent) => this.afterOperations.emit(event));
+    this.instance.on('beforeoperations', (event: RasterSourceEvent) =>
+      this.beforeOperations.emit(event),
+    );
+    this.instance.on('afteroperations', (event: RasterSourceEvent) =>
+      this.afterOperations.emit(event),
+    );
     this.register(this.instance);
   }
 }

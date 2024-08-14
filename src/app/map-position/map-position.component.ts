@@ -7,12 +7,22 @@ import Projection from 'ol/proj/Projection';
 @Component({
   selector: 'app-map-position',
   template: `
-    <aol-map #map width="100%" height="100%" (moveStart)="startMoving()" (moveEnd)="displayCoordinates()">
+    <aol-map
+      #map
+      width="100%"
+      height="100%"
+      (moveStart)="startMoving()"
+      (moveEnd)="displayCoordinates()"
+    >
       <aol-interaction-default></aol-interaction-default>
       <aol-control-defaults></aol-control-defaults>
 
       <aol-view #view [zoom]="form.get('zoom')?.value">
-        <aol-coordinate [x]="form.get('x')?.value" [y]="form.get('y')?.value" srid="EPSG:4326"></aol-coordinate>
+        <aol-coordinate
+          [x]="form.get('x')?.value"
+          [y]="form.get('y')?.value"
+          srid="EPSG:4326"
+        ></aol-coordinate>
       </aol-view>
 
       <aol-layer-tile [opacity]="1"> <aol-source-osm></aol-source-osm> </aol-layer-tile>
@@ -28,9 +38,15 @@ import Projection from 'ol/proj/Projection';
       <div class="update-coordinates">
         <h3>Update coordinates</h3>
         <form [formGroup]="form">
-          <div class="row"><label>Longitude:</label><input min="0" type="number" formControlName="x" /></div>
-          <div class="row"><label>Latitude:</label><input min="0" type="number" formControlName="y" /></div>
-          <div class="row"><label>Zoom:</label><input min="0" type="number" formControlName="zoom" /></div>
+          <div class="row">
+            <label>Longitude:</label><input min="0" type="number" formControlName="x" />
+          </div>
+          <div class="row">
+            <label>Latitude:</label><input min="0" type="number" formControlName="y" />
+          </div>
+          <div class="row">
+            <label>Zoom:</label><input min="0" type="number" formControlName="zoom" />
+          </div>
         </form>
       </div>
     </div>
@@ -108,7 +124,11 @@ export class MapPositionComponent implements OnInit {
   displayCoordinates(): void {
     this.moving = false;
     this.currentZoom = this.view.instance.getZoom()!;
-    [this.currentLon, this.currentLat] = transform(this.view.instance.getCenter()!, this.displayProj, this.inputProj);
+    [this.currentLon, this.currentLat] = transform(
+      this.view.instance.getCenter()!,
+      this.displayProj,
+      this.inputProj,
+    );
   }
 
   startMoving(): void {

@@ -22,7 +22,9 @@ import { ImageSourceEvent } from 'ol/source/Image';
 @Component({
   selector: 'aol-source-imagestatic',
   template: ` <ng-content></ng-content> `,
-  providers: [{ provide: SourceComponent, useExisting: forwardRef(() => SourceImageStaticComponent) }],
+  providers: [
+    { provide: SourceComponent, useExisting: forwardRef(() => SourceImageStaticComponent) },
+  ],
 })
 export class SourceImageStaticComponent extends SourceComponent implements OnInit, OnChanges {
   @Input()
@@ -56,9 +58,13 @@ export class SourceImageStaticComponent extends SourceComponent implements OnIni
   setLayerSource(): void {
     this.instance = new ImageStatic(this);
     this.host.instance.setSource(this.instance);
-    this.instance.on('imageloadstart', (event: ImageSourceEvent) => this.imageLoadStart.emit(event));
+    this.instance.on('imageloadstart', (event: ImageSourceEvent) =>
+      this.imageLoadStart.emit(event),
+    );
     this.instance.on('imageloadend', (event: ImageSourceEvent) => this.imageLoadEnd.emit(event));
-    this.instance.on('imageloaderror', (event: ImageSourceEvent) => this.imageLoadError.emit(event));
+    this.instance.on('imageloaderror', (event: ImageSourceEvent) =>
+      this.imageLoadError.emit(event),
+    );
   }
 
   ngOnInit() {

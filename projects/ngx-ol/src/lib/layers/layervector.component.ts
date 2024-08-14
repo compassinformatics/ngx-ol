@@ -1,4 +1,12 @@
-import { Component, OnDestroy, OnInit, Input, Optional, OnChanges, SimpleChanges } from '@angular/core';
+import {
+  Component,
+  OnDestroy,
+  OnInit,
+  Input,
+  Optional,
+  OnChanges,
+  SimpleChanges,
+} from '@angular/core';
 import { MapComponent } from '../map.component';
 import { Vector } from 'ol/layer';
 import { Style } from 'ol/style';

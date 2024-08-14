@@ -1,4 +1,13 @@
-import { AfterContentInit, Component, EventEmitter, forwardRef, Host, Input, Optional, Output } from '@angular/core';
+import {
+  AfterContentInit,
+  Component,
+  EventEmitter,
+  forwardRef,
+  Host,
+  Input,
+  Optional,
+  Output,
+} from '@angular/core';
 import { OSM } from 'ol/source';
 import { AttributionLike } from 'ol/source/Source';
 import { TileSourceEvent } from 'ol/source/Tile';
@@ -44,7 +53,7 @@ export class SourceOsmComponent extends SourceXYZComponent implements AfterConte
   constructor(
     @Optional()
     @Host()
-    protected layer?: LayerTileComponent
+    protected layer?: LayerTileComponent,
   ) {
     super(layer);
   }

@@ -27,7 +27,7 @@ export class CoordinateComponent implements OnChanges, OnInit {
     @Optional() viewHost: ViewComponent,
     @Optional() geometryPointHost: GeometryPointComponent,
     @Optional() geometryCircleHost: GeometryCircleComponent,
-    @Optional() overlayHost: OverlayComponent
+    @Optional() overlayHost: OverlayComponent,
   ) {
     // console.log('instancing aol-coordinate');
     if (geometryPointHost !== null) {

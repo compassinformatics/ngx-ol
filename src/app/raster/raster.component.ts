@@ -19,7 +19,11 @@ interface RasterData {
       </aol-view>
 
       <aol-layer-image>
-        <aol-source-raster [threads]="4" operationType="image" (beforeOperations)="beforeOperations($event)">
+        <aol-source-raster
+          [threads]="4"
+          operationType="image"
+          (beforeOperations)="beforeOperations($event)"
+        >
           <aol-source-osm *ngIf="selectLayer === 'osm'"></aol-source-osm>
           <aol-source-xyz
             *ngIf="selectLayer === 'xyz'"
@@ -43,7 +47,13 @@ interface RasterData {
       </div>
       <div class="control">
         <span>Brightness : </span>
-        <input type="range" min="-255" max="255" [(ngModel)]="brightness" (input)="updateRaster()" />
+        <input
+          type="range"
+          min="-255"
+          max="255"
+          [(ngModel)]="brightness"
+          (input)="updateRaster()"
+        />
         <span> ({{ brightness }})</span>
       </div>
     </div>

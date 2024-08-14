@@ -1,4 +1,12 @@
-import { Component, OnDestroy, OnInit, Input, Optional, OnChanges, SimpleChanges } from '@angular/core';
+import {
+  Component,
+  OnDestroy,
+  OnInit,
+  Input,
+  Optional,
+  OnChanges,
+  SimpleChanges,
+} from '@angular/core';
 import { Tile } from 'ol/layer';
 import { MapComponent } from '../map.component';
 import { LayerComponent } from './layer.component';

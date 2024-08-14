@@ -3,12 +3,13 @@
   "version": "18.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "yarn build:lib && ng serve",
+    "start": "npm run build:lib && ng serve",
     "build:lib": "ng build ngx-ol --configuration production",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "yarn build:lib && ng test",
-    "lint": "ng lint"
+    "test": "npm run  build:lib && ng test",
+    "format": "prettier --write \"**/@(src|e2e)/**/*.ts\"",
+    "release": "npm --cwd projects/ngx-ol release"
   },
   "private": true,
   "dependencies": {

@@ -13,8 +13,7 @@ export class ControlScaleLineComponent implements OnInit, OnDestroy {
 
   instance: ScaleLine;
 
-  constructor(private map: MapComponent) {
-  }
+  constructor(private map: MapComponent) {}
 
   ngOnInit() {
     this.instance = new ScaleLine(this);

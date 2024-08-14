@@ -19,7 +19,11 @@ import { Component, OnInit } from '@angular/core';
         <aol-source-vector #markers>
           <aol-feature>
             <aol-geometry-point>
-              <aol-coordinate [x]="marker.lon" [y]="marker.lat" [srid]="'EPSG:4326'"></aol-coordinate>
+              <aol-coordinate
+                [x]="marker.lon"
+                [y]="marker.lat"
+                [srid]="'EPSG:4326'"
+              ></aol-coordinate>
             </aol-geometry-point>
             <aol-style>
               <aol-style-icon
