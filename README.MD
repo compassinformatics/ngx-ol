@@ -40,7 +40,7 @@ Live example will be viewable at locahost:4200
 ## Publish
 
 ```
-npm run release
+npm version <update_type> (major, minor, patch) --prefix projects/ngx-ol
 npm run build:lib
 cd dist/ngx-ol
 npm publish --access public

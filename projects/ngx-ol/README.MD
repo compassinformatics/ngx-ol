@@ -1,19 +1,15 @@
-# @achimha/ngx-ol [![Build Status](https://travis-ci.org/achimha/ngx-ol.svg?branch=next)](https://travis-ci.org/achimha/ngx-ol)[![Join the chat at https://gitter.im/ngx-openlayers](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/ngx-openlayers?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-
-This is based on ngx-openlayers targeting Openlayers 6 and current Angular.
-
-It's working fine but needs some polishing around the build procedure to match the standard quality
-requirements for packages.
+# @compassinformatics/ngx-ol
 
 ## Demo
-https://achimha.github.io/ngx-ol/
+
+TODO
 
 ## Installation
 
 To install this library, run:
 
 ```bash
-npm install ngx-ol --save
+npm install @compassinformatics/ngx-ol --save
 ```
 
 ## Example
@@ -22,47 +18,33 @@ Here is a "minimal" map example that fetches tiles from OpenStreetMap and center
 
 ```html
 <aol-map [width]="'500px'" [height]="'300'">
-    <aol-view [zoom]="2">
-        <aol-coordinate [x]="5.795122" [y]="45.210225" [srid]="'EPSG:4326'"></aol-coordinate>
-    </aol-view>
-    <aol-layer-tile>
-        <aol-source-osm></aol-source-osm>
-    </aol-layer-tile>
+  <aol-view [zoom]="2">
+    <aol-coordinate [x]="5.795122" [y]="45.210225" [srid]="'EPSG:4326'"></aol-coordinate>
+  </aol-view>
+  <aol-layer-tile>
+    <aol-source-osm></aol-source-osm>
+  </aol-layer-tile>
 </aol-map>
 ```
 
 ## Documentation
 
-The API is documented in `documentation/`
-
-## Getting Help
-
-Join us at our Gitter: [https://gitter.im/ngx-openlayers](https://gitter.im/ngx-openlayers)
+See `/src/app` for examples
 
 ## Development
 
-To generate all `*.js`, `*.js.map` and `*.d.ts` files:
-
-```bash
-npm run ngc
-```
-
-To lint all `*.ts` files:
-
-```bash
-npm run lint
-```
-
-Live example (reload on code changes):
-
-```bash
-npm install -g @angular/cli
-cd example
-npm install
-ng serve
-```
+TODO
 
 Live example will be viewable at locahost:4200
+
+## Publish
+
+```
+npm version <update_type> (major, minor, patch) --prefix projects/ngx-ol
+npm run build:lib
+cd dist/ngx-ol
+npm publish --access public
+```
 
 ## Contributing
 
@@ -71,7 +53,3 @@ Live example will be viewable at locahost:4200
 3. Commit your changes: `git commit -am 'Add some feature'`
 4. Push to the branch: `git push origin my-new-feature`
 5. Submit a pull request and enjoy! :D
-
-## License
-
-MPL-2.0 - Quentin Lampin <quentin.lampin@orange.com> Copyright 2017 Orange
