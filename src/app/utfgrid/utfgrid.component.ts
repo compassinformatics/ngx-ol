@@ -17,7 +17,7 @@ import { Coordinate } from 'ol/coordinate';
           [url]="'https://api.tiles.mapbox.com/v4/mapbox.geography-class.json?secure&access_token=' + key"
         ></aol-source-utfgrid>
       </aol-layer-tile>
-      <aol-overlay *ngIf="coords && info" [positioning]="'BOTTOM_RIGHT'" [stopEvent]="false">
+      <aol-overlay *ngIf="coords && info" [positioning]="'bottom-right'" [stopEvent]="false">
         <aol-coordinate [x]="coords[0]" [y]="coords[1]" [srid]="'EPSG:3857'"> </aol-coordinate>
         <aol-content>
           <img [src]="'data:image/png;base64,' + info['flag_png']" />
@@ -47,8 +47,8 @@ export class UTFGridComponent {
   coords: Coordinate;
   key = 'pk.eyJ1IjoieWFrb3VzdCIsImEiOiJjanVkc3Y0b2cwNWppM3lwaXd5M3JidHRzIn0.rJmuWPJnuKA9MJ9z5RPKZw';
 
-  displayInfo(c) {
-    this.UTFGrid.instance.forDataAtCoordinateAndResolution(c, this.view.instance.getResolution(), (data) => {
+  displayInfo(c: Coordinate) {
+    this.UTFGrid.instance.forDataAtCoordinateAndResolution(c, this.view.instance.getResolution() || 0, (data) => {
       if (data !== null && data !== undefined && data !== '') {
         this.info = data;
         this.coords = c;

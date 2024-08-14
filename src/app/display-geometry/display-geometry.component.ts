@@ -15,7 +15,7 @@ import { Component, OnInit } from '@angular/core';
         <aol-layer-vector *ngFor="let feature of features" [ngSwitch]="feature.geometry.type">
           <aol-source-vector *ngSwitchCase="'Polygon'">
             <aol-style>
-              <aol-style-stroke [color]="'rgba(90, 17, 26)'" width="3"></aol-style-stroke>
+              <aol-style-stroke [color]="'rgba(90, 17, 26)'" [width]="3"></aol-style-stroke>
               <aol-style-fill [color]="'rgba(90, 17, 26, 0.5)'"></aol-style-fill>
             </aol-style>
             <aol-feature>
@@ -26,7 +26,7 @@ import { Component, OnInit } from '@angular/core';
             </aol-feature>
           </aol-source-vector>
 
-          <aol-source-vector *ngSwitchCase="'Point'">
+          <!-- <aol-source-vector *ngSwitchCase="'Point'">
             <aol-feature>
               <aol-geometry-point>
                 <aol-coordinate
@@ -43,7 +43,7 @@ import { Component, OnInit } from '@angular/core';
                 </aol-style>
               </aol-geometry-point>
             </aol-feature>
-          </aol-source-vector>
+          </aol-source-vector> -->
 
           <aol-source-vector *ngSwitchCase="'LineString'">
             <aol-feature>
@@ -54,9 +54,9 @@ import { Component, OnInit } from '@angular/core';
             </aol-feature>
           </aol-source-vector>
 
-          <aol-source-vector *ngSwitchCase="'Circle'">
+          <!-- <aol-source-vector *ngSwitchCase="'Circle'">
             <aol-feature>
-              <aol-geometry-circle [radius]="feature.geometry.radius">
+              <aol-geometry-circle [radius]="feature.geometry.radius!">
                 <aol-coordinate
                   [x]="feature.geometry.coordinates[0]"
                   [y]="feature.geometry.coordinates[1]"
@@ -64,12 +64,12 @@ import { Component, OnInit } from '@angular/core';
                 >
                 </aol-coordinate>
                 <aol-style>
-                  <aol-style-stroke color="blue" width="2"></aol-style-stroke>
+                  <aol-style-stroke color="blue" [width]="2"></aol-style-stroke>
                   <aol-style-fill color="rgba(255, 255, 0, 0.5)"></aol-style-fill>
                 </aol-style>
               </aol-geometry-circle>
             </aol-feature>
-          </aol-source-vector>
+          </aol-source-vector> -->
 
           <aol-source-vector *ngSwitchCase="'MultiPoint'">
             <aol-feature>
@@ -97,7 +97,7 @@ import { Component, OnInit } from '@angular/core';
 
           <aol-source-vector *ngSwitchCase="'MultiPolygon'">
             <aol-style>
-              <aol-style-stroke [color]="'rgba(81, 15.3, 23.4)'" width="2"></aol-style-stroke>
+              <aol-style-stroke [color]="'rgba(81, 15.3, 23.4)'" [width]="2"></aol-style-stroke>
               <aol-style-fill [color]="'rgba(81, 15.3, 23.4, 0.4)'"></aol-style-fill>
             </aol-style>
             <aol-feature>

@@ -5,6 +5,7 @@ import { GeometryPointComponent } from './geom/geometrypoint.component';
 import { GeometryCircleComponent } from './geom/geometrycircle.component';
 import { ViewComponent } from './view.component';
 import { OverlayComponent } from './overlay.component';
+import { ObjectEvent } from 'ol/Object';
 
 @Component({
   selector: 'aol-coordinate',
@@ -50,7 +51,7 @@ export class CoordinateComponent implements OnChanges, OnInit {
     this.transformCoordinates();
   }
 
-  private onMapViewChanged(event) {
+  private onMapViewChanged(event: ObjectEvent) {
     this.mapSrid = event.target.get(event.key).getProjection().getCode();
     this.transformCoordinates();
   }

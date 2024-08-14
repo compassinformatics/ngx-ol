@@ -37,7 +37,7 @@ export class SelectInteractionComponent implements OnInit, OnDestroy {
   wrapX?: boolean;
 
   @Output()
-  olChange = new EventEmitter<SelectEvent>();
+  olChange = new EventEmitter<BaseEvent>();
   @Output()
   olChangeActive = new EventEmitter<ObjectEvent>();
   @Output()
@@ -54,7 +54,7 @@ export class SelectInteractionComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.instance = new Select(this);
 
-    this.instance.on('change', (event: SelectEvent) => this.olChange.emit(event));
+    this.instance.on('change', (event: BaseEvent) => this.olChange.emit(event));
     this.instance.on('change:active', (event: ObjectEvent) => this.olChangeActive.emit(event));
     this.instance.on('error', (event: BaseEvent) => this.olError.emit(event));
     this.instance.on('propertychange', (event: ObjectEvent) => this.propertyChange.emit(event));

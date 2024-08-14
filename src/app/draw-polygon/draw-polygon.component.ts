@@ -27,7 +27,7 @@ import { fromExtent } from 'ol/geom/Polygon';
         <aol-source-vector>
           <aol-feature>
             <aol-geometry-polygon>
-              <aol-collection-coordinates [coordinates]="feature.geometry.coordinates" [srid]="'EPSG:4326'">
+              <aol-collection-coordinates [coordinates]="getCoords(feature)" [srid]="'EPSG:4326'">
               </aol-collection-coordinates>
             </aol-geometry-polygon>
           </aol-feature>
@@ -68,7 +68,7 @@ export class DrawPolygonComponent implements OnInit {
 
   isDrawing = false;
   drawBoxGeometryFunction = createBox();
-  feature;
+  feature: any;
 
   ngOnInit() {}
 
@@ -76,8 +76,12 @@ export class DrawPolygonComponent implements OnInit {
     this.isDrawing = !this.isDrawing;
   }
 
+  getCoords(feature: any) {
+    return feature.geometry.coordinates;
+  }
+
   endDraw(feature: Feature) {
-    const olGeomPolygon = fromExtent(feature.getGeometry().getExtent());
+    const olGeomPolygon = fromExtent(feature.getGeometry()?.getExtent() || []);
     olGeomPolygon.transform(new Projection({ code: 'EPSG:3857' }), new Projection({ code: 'EPSG:4326' }));
     this.feature = {
       type: 'Feature',

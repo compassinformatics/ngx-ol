@@ -19,12 +19,7 @@ interface RasterData {
       </aol-view>
 
       <aol-layer-image>
-        <aol-source-raster
-          threads="4"
-          operationType="image"
-          [operation]="operation"
-          (beforeOperations)="beforeOperations($event)"
-        >
+        <aol-source-raster [threads]="4" operationType="image" (beforeOperations)="beforeOperations($event)">
           <aol-source-osm *ngIf="selectLayer === 'osm'"></aol-source-osm>
           <aol-source-xyz
             *ngIf="selectLayer === 'xyz'"
@@ -85,9 +80,9 @@ export class RasterComponent {
 
   selectLayer = 'osm';
   @ViewChild(SourceRasterComponent, { static: true })
-  rasterSource;
+  rasterSource: any;
 
-  beforeOperations(event) {
+  beforeOperations(event: any) {
     const data: RasterData = event.data;
     data.brightness = this.brightness;
     data.contrast = this.contrast;

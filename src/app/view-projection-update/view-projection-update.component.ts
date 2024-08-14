@@ -70,8 +70,8 @@ import { Component } from '@angular/core';
 export class ViewProjectionUpdateComponent {
   public viewProjection = 'EPSG:3857';
 
-  projectionChange(evt) {
-    console.log(`Projection changed to ${evt.target.value}`);
-    this.viewProjection = evt.target.value;
+  projectionChange(evt: Event) {
+    console.log(`Projection changed to ${(evt.target as HTMLSelectElement).value}`);
+    this.viewProjection = (evt.target as HTMLSelectElement).value;
   }
 }

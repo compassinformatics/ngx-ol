@@ -6,6 +6,7 @@ import { MapComponent } from '../map.component';
 import { LayerComponent } from './layer.component';
 import { LayerGroupComponent } from './layergroup.component';
 import { StyleFunction } from 'ol/style/Style';
+import { Options } from 'ol/source/VectorTile';
 
 @Component({
   selector: 'aol-layer-vectortile',
@@ -34,7 +35,7 @@ export class LayerVectorTileComponent extends LayerComponent implements OnInit, 
 
   ngOnInit() {
     // console.log('creating ol.layer.VectorTile instance with:', this);
-    this.instance = new VectorTile(this);
+    this.instance = new VectorTile(this as Options);
     super.ngOnInit();
   }
 

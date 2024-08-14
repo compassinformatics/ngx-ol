@@ -1,6 +1,7 @@
 import { Component, Input, Host, AfterContentInit, OnChanges, OnDestroy, SimpleChanges } from '@angular/core';
 import { Circle, Fill, Stroke } from 'ol/style';
 import { StyleComponent } from './style.component';
+import ImageStyle from 'ol/style/Image';
 
 @Component({
   selector: 'aol-style-circle',
@@ -53,6 +54,6 @@ export class StyleCircleComponent implements AfterContentInit, OnChanges, OnDest
 
   ngOnDestroy() {
     // console.log('removing aol-style-circle');
-    this.host.instance.setImage(null);
+    // this.host.instance.setImage(null);
   }
 }

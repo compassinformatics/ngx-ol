@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ObjectEvent } from 'ol/Object';
 
 @Component({
   selector: 'app-root',
@@ -118,15 +119,15 @@ export class BasicComponent {
     console.log('opacity: ', this.opacity);
   }
 
-  changeResolution(evt) {
+  changeResolution(evt: ObjectEvent) {
     console.log('Resolution changed:', evt);
   }
 
-  changeCenter(evt) {
+  changeCenter(evt: ObjectEvent) {
     console.log('Center changed:', evt);
   }
 
-  changeZoom(evt) {
+  changeZoom(evt: Event) {
     console.log('Zoom changed:', evt);
   }
 }

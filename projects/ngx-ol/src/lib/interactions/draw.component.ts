@@ -48,7 +48,7 @@ export class DrawInteractionComponent implements OnInit, OnDestroy {
   wrapX?: boolean;
 
   @Output()
-  olChange = new EventEmitter<DrawEvent>();
+  olChange = new EventEmitter<BaseEvent>();
   @Output()
   olChangeActive = new EventEmitter<ObjectEvent>();
   @Output()
@@ -68,7 +68,7 @@ export class DrawInteractionComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.instance = new Draw(this);
-    this.instance.on('change', (event: DrawEvent) => this.olChange.emit(event));
+    this.instance.on('change', (event: BaseEvent) => this.olChange.emit(event));
     this.instance.on('change:active', (event: ObjectEvent) => this.olChangeActive.emit(event));
     this.instance.on('drawabort', (event: DrawEvent) => this.olDrawAbort.emit(event));
     this.instance.on('drawend', (event: DrawEvent) => this.drawEnd.emit(event));

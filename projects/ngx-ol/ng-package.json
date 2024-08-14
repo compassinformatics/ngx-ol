@@ -1,9 +1,6 @@
 {
   "$schema": "../../node_modules/ng-packagr/ng-package.schema.json",
   "dest": "../../dist/ngx-ol",
-  "assets": [
-    "ngcc.config.js"
-  ],
   "lib": {
     "entryFile": "src/public-api.ts"
   }

@@ -2,7 +2,7 @@ import { Component, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/
 import { MapComponent, LayerVectorComponent } from 'ngx-ol';
 import { Fill, Stroke, Style } from 'ol/style';
 import { Layer } from 'ol/layer';
-import { Feature } from 'ol';
+import { Feature, MapBrowserEvent } from 'ol';
 
 @Component({
   selector: 'app-color-select-hover',
@@ -21,12 +21,12 @@ import { Feature } from 'ol';
       <aol-layer-group>
         <aol-layer-vector #aoiLayerVector *ngFor="let f of features.features">
           <aol-style *ngIf="f.id === hoveredFeatureId; else notHovered">
-            <aol-style-stroke [color]="'white'" width="3"></aol-style-stroke>
+            <aol-style-stroke [color]="'white'" [width]="3"></aol-style-stroke>
             <aol-style-fill [color]="'rgba(90, 17, 26, 0.3)'"></aol-style-fill>
           </aol-style>
           <ng-template #notHovered>
             <aol-style>
-              <aol-style-stroke [color]="'rgba(90, 17, 26)'" width="3"></aol-style-stroke>
+              <aol-style-stroke [color]="'rgba(90, 17, 26)'" [width]="3"></aol-style-stroke>
               <aol-style-fill [color]="'rgba(90, 17, 26, 0.5)'"></aol-style-fill>
             </aol-style>
           </ng-template>
@@ -137,16 +137,15 @@ export class ColorSelectHoverComponent implements OnInit {
     }),
   });
 
-  hoveredFeatureId;
+  hoveredFeatureId: any;
 
   ngOnInit() {}
 
-  changeFeatureHovered(event) {
-    const hit: Feature =
-      this.map.instance.forEachFeatureAtPixel(event.pixel, (f) => f, {
-        layerFilter: inLayer(...this.aoiLayerVector.toArray()),
-        hitTolerance: 10,
-      }) as Feature;
+  changeFeatureHovered(event: MapBrowserEvent<MouseEvent>) {
+    const hit: Feature = this.map.instance.forEachFeatureAtPixel(event.pixel, (f) => f, {
+      layerFilter: inLayer(...this.aoiLayerVector.toArray()),
+      hitTolerance: 10,
+    }) as Feature;
 
     if (!hit && this.hoveredFeatureId) {
       this.hoveredFeatureId = null;

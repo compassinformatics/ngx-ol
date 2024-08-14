@@ -81,8 +81,8 @@ export class ExamplesListComponent implements OnInit {
       term: '',
     });
 
-    this.form.get('term').valueChanges.subscribe(() => {
-      const termValue = this.form.get('term').value.toLowerCase();
+    this.form.get('term')!.valueChanges.subscribe(() => {
+      const termValue = this.form.get('term')!.value.toLowerCase();
       if (!termValue.trim()) {
         this.list = examplesList;
       } else {

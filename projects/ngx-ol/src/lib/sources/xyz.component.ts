@@ -75,7 +75,7 @@ export class SourceXYZComponent extends SourceComponent implements AfterContentI
     @Host()
     protected layer?: LayerTileComponent
   ) {
-    super(layer);
+    super(layer!);
   }
 
   ngAfterContentInit() {

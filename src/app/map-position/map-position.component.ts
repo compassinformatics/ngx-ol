@@ -11,8 +11,8 @@ import Projection from 'ol/proj/Projection';
       <aol-interaction-default></aol-interaction-default>
       <aol-control-defaults></aol-control-defaults>
 
-      <aol-view #view [zoom]="form.get('zoom').value">
-        <aol-coordinate [x]="form.get('x').value" [y]="form.get('y').value" srid="EPSG:4326"></aol-coordinate>
+      <aol-view #view [zoom]="form.get('zoom')?.value">
+        <aol-coordinate [x]="form.get('x')?.value" [y]="form.get('y')?.value" srid="EPSG:4326"></aol-coordinate>
       </aol-view>
 
       <aol-layer-tile [opacity]="1"> <aol-source-osm></aol-source-osm> </aol-layer-tile>
@@ -107,8 +107,8 @@ export class MapPositionComponent implements OnInit {
 
   displayCoordinates(): void {
     this.moving = false;
-    this.currentZoom = this.view.instance.getZoom();
-    [this.currentLon, this.currentLat] = transform(this.view.instance.getCenter(), this.displayProj, this.inputProj);
+    this.currentZoom = this.view.instance.getZoom()!;
+    [this.currentLon, this.currentLat] = transform(this.view.instance.getCenter()!, this.displayProj, this.inputProj);
   }
 
   startMoving(): void {

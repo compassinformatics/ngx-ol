@@ -7,6 +7,7 @@ import { GeometryMultiLinestringComponent } from './geom/geometrymultilinestring
 import { GeometryMultiPolygonComponent } from './geom/geometrymultipolygon.component';
 import { Coordinate } from 'ol/coordinate';
 import { transform } from 'ol/proj';
+import { ObjectEvent } from 'ol/Object';
 
 @Component({
   selector: 'aol-collection-coordinates',
@@ -14,7 +15,7 @@ import { transform } from 'ol/proj';
 })
 export class CollectionCoordinatesComponent implements OnChanges, OnInit {
   @Input()
-  coordinates: Coordinate[] | Coordinate[][] | Coordinate[][][];
+  coordinates: Coordinate[] | Coordinate[][] | Coordinate[][][] | Array<number>;
   @Input()
   srid = 'EPSG:3857';
 
@@ -54,13 +55,13 @@ export class CollectionCoordinatesComponent implements OnChanges, OnInit {
     this.transformCoordinates();
   }
 
-  private onMapViewChanged(event) {
+  private onMapViewChanged(event: ObjectEvent) {
     this.mapSrid = event.target.get(event.key).getProjection().getCode();
     this.transformCoordinates();
   }
 
   private transformCoordinates() {
-    let transformedCoordinates: Coordinate[] | Coordinate[][] | Coordinate[][][];
+    let transformedCoordinates: Coordinate[] | Coordinate[][] | Coordinate[][][] | Array<number> = [];
 
     if (this.srid === this.mapSrid) {
       transformedCoordinates = this.coordinates;

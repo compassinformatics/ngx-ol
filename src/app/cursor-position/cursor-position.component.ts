@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MapBrowserEvent } from 'ol';
 import { transform } from 'ol/proj';
 
 @Component({
@@ -53,7 +54,7 @@ export class CursorPositionComponent implements OnInit {
 
   ngOnInit() {}
 
-  dispatchCursor(event): void {
+  dispatchCursor(event: MapBrowserEvent<MouseEvent>): void {
     const coordinates = event.coordinate;
     this.lon = transform(coordinates, 'EPSG:3857', 'EPSG:4326')[0];
     this.lat = transform(coordinates, 'EPSG:3857', 'EPSG:4326')[1];

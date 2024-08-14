@@ -6,6 +6,7 @@ import { Extent } from 'ol/extent';
 import { Coordinate } from 'ol/coordinate';
 import { DrawEvent } from 'ol/interaction/Draw';
 import BaseEvent from 'ol/events/Event';
+import { ProjectionLike } from 'ol/proj';
 
 @Component({
   selector: 'aol-view',
@@ -39,7 +40,7 @@ export class ViewComponent implements OnInit, OnChanges, OnDestroy {
   @Input()
   center: Coordinate;
   @Input()
-  projection: string;
+  projection: ProjectionLike;
   @Input()
   constrainOnlyCenter: boolean;
   @Input()
@@ -57,7 +58,7 @@ export class ViewComponent implements OnInit, OnChanges, OnDestroy {
   zoomAnimation = false;
 
   @Output()
-  olChange = new EventEmitter<DrawEvent>();
+  olChange = new EventEmitter<BaseEvent>();
   @Output()
   changeCenter = new EventEmitter<ObjectEvent>();
   @Output()
@@ -79,7 +80,7 @@ export class ViewComponent implements OnInit, OnChanges, OnDestroy {
     this.instance = new View(this);
     this.host.instance.setView(this.instance);
 
-    this.instance.on('change', (event: DrawEvent) => this.olChange.emit(event));
+    this.instance.on('change', (event: BaseEvent) => this.olChange.emit(event));
     this.instance.on('change:center', (event: ObjectEvent) => this.changeCenter.emit(event));
     this.instance.on('change:resolution', (event: ObjectEvent) => this.changeResolution.emit(event));
     this.instance.on('change:rotation', (event: ObjectEvent) => this.changeRotation.emit(event));

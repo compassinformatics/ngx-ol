@@ -14,11 +14,11 @@ import Projection, { Options as ProjectionOptions } from 'ol/proj/Projection';
     <div class="controls">
       Current image url:
       <select (change)="onUrlChange($event)">
-        <option value="https://imgs.xkcd.com/comics/online_communities.png"
-          >https://imgs.xkcd.com/comics/online_communities.png
+        <option value="https://imgs.xkcd.com/comics/online_communities.png">
+          https://imgs.xkcd.com/comics/online_communities.png
         </option>
-        <option value="https://pbs.twimg.com/media/D7IgamEUEAA5DHE.jpg"
-          >https://pbs.twimg.com/media/D7IgamEUEAA5DHE.jpg
+        <option value="https://pbs.twimg.com/media/D7IgamEUEAA5DHE.jpg">
+          https://pbs.twimg.com/media/D7IgamEUEAA5DHE.jpg
         </option>
       </select>
     </div>
@@ -55,9 +55,9 @@ export class ImageStaticComponent {
 
   projection = new Projection(this.po);
 
-  getCenter = (ext) => getCenter(ext);
+  getCenter = (ext: Extent) => getCenter(ext);
 
-  onUrlChange(evt) {
-    this.url = evt.target.value;
+  onUrlChange(evt: Event) {
+    this.url = (evt.target as HTMLSelectElement).value;
   }
 }

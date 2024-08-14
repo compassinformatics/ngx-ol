@@ -1,5 +1,6 @@
 import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
 import { MapComponent } from 'ngx-ol';
+import BaseEvent from 'ol/events/Event';
 
 @Component({
   selector: 'app-swipe',
@@ -63,8 +64,8 @@ export class SwipeComponent implements OnInit {
   @ViewChild('map', { static: true })
   map: MapComponent;
 
-  public prerenderFunction: (event) => void;
-  public postrenderFunction: (event) => void;
+  public prerenderFunction: (event: BaseEvent) => void;
+  public postrenderFunction: (event: BaseEvent) => void;
 
   swipeValue = 50;
   swipeOffsetToCenter = 0;
@@ -79,12 +80,12 @@ export class SwipeComponent implements OnInit {
   }
 
   @HostListener('window:resize', ['$event'])
-  onWindowResize(event) {
+  onWindowResize(event: any) {
     this.resetSwipeValues();
   }
 
   prerender() {
-    return (event) => {
+    return (event: any) => {
       const ctx = event.context;
       const width = ctx.canvas.width * (this.swipeValue / 100);
 
@@ -96,7 +97,7 @@ export class SwipeComponent implements OnInit {
   }
 
   postrender() {
-    return (event) => {
+    return (event: any) => {
       const ctx = event.context;
       ctx.restore();
     };

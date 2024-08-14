@@ -32,7 +32,7 @@ export class ModifyInteractionComponent implements OnInit, OnDestroy {
   source?: Vector;
 
   @Output()
-  olChange = new EventEmitter<DrawEvent>();
+  olChange = new EventEmitter<BaseEvent>();
   @Output()
   olChangeActive = new EventEmitter<ObjectEvent>();
   @Output()
@@ -50,7 +50,7 @@ export class ModifyInteractionComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.instance = new Modify(this);
-    this.instance.on('change', (event: DrawEvent) => this.olChange.emit(event));
+    this.instance.on('change', (event: BaseEvent) => this.olChange.emit(event));
     this.instance.on('change:active', (event: ObjectEvent) => this.olChangeActive.emit(event));
     this.instance.on('error', (event: BaseEvent) => this.olError.emit(event));
     this.instance.on('modifyend', (event: ModifyEvent) => this.olModifyEnd.emit(event));

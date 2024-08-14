@@ -1,14 +1,13 @@
-import { Component, forwardRef, Input } from '@angular/core';
-import { FormatComponent } from './format.component';
+import { Component, Input } from '@angular/core';
 import { MVT } from 'ol/format';
 import { FeatureClass } from 'ol/Feature';
+import { Options } from 'ol/format/MVT';
 
 @Component({
   selector: 'aol-format-mvt',
-  template: '',
-  providers: [{ provide: FormatComponent, useExisting: forwardRef(() => FormatMVTComponent) }],
+  template: ''
 })
-export class FormatMVTComponent extends FormatComponent {
+export class FormatMVTComponent {
   @Input()
   featureClass: FeatureClass;
   @Input()
@@ -18,10 +17,11 @@ export class FormatMVTComponent extends FormatComponent {
   @Input()
   layers: string[];
 
+  public componentType = 'format';
+
   instance: MVT;
 
   constructor() {
-    super();
-    this.instance = new MVT(this);
+    this.instance = new MVT(this as Options);
   }
 }

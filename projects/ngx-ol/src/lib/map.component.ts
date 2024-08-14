@@ -45,7 +45,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
   renderer: 'canvas' | 'webgl';
 
   @Output()
-  olChange = new EventEmitter<DrawEvent>();
+  olChange = new EventEmitter<BaseEvent>();
   @Output()
   olChangeLayerGroup = new EventEmitter<ObjectEvent>();
   @Output()
@@ -101,7 +101,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
     // console.log('creating ol.Map instance with:', this);
     this.instance = new Map(this);
     this.instance.setTarget(this.host.nativeElement.firstElementChild);
-    this.instance.on('change', (event: DrawEvent) => this.olChange.emit(event));
+    this.instance.on('change', (event: BaseEvent) => this.olChange.emit(event));
     this.instance.on('change:layergroup', (event: ObjectEvent) => this.olChangeLayerGroup.emit(event));
     this.instance.on('change:size', (event: ObjectEvent) => this.olChangeSize.emit(event));
     this.instance.on('change:target', (event: ObjectEvent) => this.olChangeTarget.emit(event));

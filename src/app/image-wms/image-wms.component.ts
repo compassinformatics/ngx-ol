@@ -5,7 +5,7 @@ import { Component, OnInit } from '@angular/core';
   template: `
     <aol-map #map width="100%" height="100%">
       <aol-interaction-default></aol-interaction-default>
-      <aol-view zoom="4"> <aol-coordinate [x]="-10997148" [y]="4569099"></aol-coordinate> </aol-view>
+      <aol-view [zoom]="4"> <aol-coordinate [x]="-10997148" [y]="4569099"></aol-coordinate> </aol-view>
       <aol-layer-image>
         <aol-source-imagewms
           [url]="'https://ahocevar.com/geoserver/wms'"

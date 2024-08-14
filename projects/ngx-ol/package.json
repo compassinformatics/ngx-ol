@@ -1,35 +1,13 @@
 {
-  "name": "@achimha/ngx-ol",
-  "version": "15.0.0",
-  "description": "Openlayers Angular framework",
-  "author": "Achim Hasenmueller (achim.hasenmueller@gmail.com)",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/achimha/ngx-ol.git"
-  },
-  "bugs": {
-    "url": "https://github.com/achimha/ngx-ol/issues"
-  },
-  "homepage": "https://github.com/achimha/ngx-ol",
-  "keywords": [
-    "angular",
-    "openlayers"
-  ],
-  "license": "MPL-2.0",
-  "private": false,
-  "scripts": {
-    "release": "standard-version -m \"chore(release): version %s\" -t \"\"",
-    "prepublishOnly": "cp projects/ngx-ol/README.md dist/ngx-ol/README.md"
-  },
-  "standard-version": {
-    "postchangelog": "cp projects/ngx-ol/CHANGELOG.md dist/ngx-ol/CHANGELOG.md"
+  "name": "@compassinformatics/ngx-ol",
+  "version": "18.0.0",
+  "peerDependencies": {
+    "@angular/common": "^18.1.0",
+    "@angular/core": "^18.1.0",
+    "ol": "^10.0.0"
   },
   "dependencies": {
-    "tslib": "^2.0.0"
+    "tslib": "^2.3.0"
   },
-  "peerDependencies": {
-    "@angular/common": ">=12.0.0",
-    "@angular/core": ">=12.0.0",
-    "ol": "^7.1.0"
-  }
+  "sideEffects": false
 }

@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Feature } from 'geojson';
 import OLFeature from 'ol/Feature';
 import Projection from 'ol/proj/Projection';
 import { GeoJSON } from 'ol/format';
@@ -14,7 +13,7 @@ import { Polygon } from 'ol/geom';
       <aol-interaction-modify
         #modify
         [features]="select.instance.getFeatures()"
-        (modifyEnd)="modifyEnd($event.features.getArray()[0])"
+        (olModifyEnd)="modifyEnd($event.features.getArray()[0])"
       >
       </aol-interaction-modify>
 
@@ -87,7 +86,7 @@ export class ModifyPolygonComponent implements OnInit {
 
   ngOnInit() {}
 
-  modifyEnd(feature: OLFeature<Polygon>) {
+  modifyEnd(feature: OLFeature<any>) {
     this.feature = this.format.writeFeatureObject(feature, {
       dataProjection: this.inputProj,
       featureProjection: this.displayProj,
