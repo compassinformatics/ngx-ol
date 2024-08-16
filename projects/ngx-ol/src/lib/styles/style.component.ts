@@ -4,6 +4,7 @@ import { Geometry } from 'ol/geom';
 import { FeatureComponent } from '../feature.component';
 import { LayerVectorComponent } from '../layers/layervector.component';
 import { GeometryFunction } from 'ol/style/Style';
+import { LayerVectorImageComponent } from '../layers/layervectorimage.component';
 
 @Component({
   selector: 'aol-style',
@@ -29,10 +30,11 @@ export class StyleComponent implements OnInit {
 
   constructor(
     @Optional() featureHost: FeatureComponent,
-    @Optional() layerHost: LayerVectorComponent,
+    @Optional() vectorLayer: LayerVectorComponent,
+    @Optional() vectorImageLayer: LayerVectorImageComponent,
   ) {
     // console.log('creating aol-style');
-    this.host = !!featureHost ? featureHost : layerHost;
+    this.host = featureHost || vectorLayer || vectorImageLayer;
     if (!this.host) {
       throw new Error('aol-style must be applied to a feature or a layer');
     }

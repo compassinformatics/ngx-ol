@@ -6,6 +6,7 @@ import {
   Host,
   Input,
   OnChanges,
+  Optional,
   SimpleChanges,
 } from '@angular/core';
 import { Feature } from 'ol';
@@ -15,6 +16,7 @@ import { Cluster, Vector } from 'ol/source';
 import { LayerVectorComponent } from '../layers/layervector.component';
 import { SourceComponent } from './source.component';
 import { SourceVectorComponent } from './vector.component';
+import { LayerVectorImageComponent } from '../layers/layervectorimage.component';
 
 @Component({
   selector: 'aol-source-cluster',
@@ -33,10 +35,13 @@ export class SourceClusterComponent extends SourceComponent implements AfterCont
   sourceVectorComponent: SourceVectorComponent;
 
   instance: Cluster<any>;
-  source: Vector;
+  source: Vector<any>;
 
-  constructor(@Host() layer: LayerVectorComponent) {
-    super(layer);
+  constructor(
+    @Optional() @Host() vectorLayer: LayerVectorComponent,
+    @Optional() @Host() vectorImageLayer: LayerVectorImageComponent,
+  ) {
+    super(vectorLayer || vectorImageLayer);
   }
 
   ngAfterContentInit() {

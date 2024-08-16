@@ -1,10 +1,11 @@
-import { Component, Host, Input, OnInit, forwardRef } from '@angular/core';
+import { Component, Host, Input, OnInit, Optional, forwardRef } from '@angular/core';
 import { LayerVectorComponent } from '../layers/layervector.component';
 import { SourceComponent } from './source.component';
 import FeatureFormat from 'ol/format/Feature';
 import { Vector } from 'ol/source';
 import { GeoJSON } from 'ol/format';
 import { ProjectionLike } from 'ol/proj';
+import { LayerVectorImageComponent } from '../layers/layervectorimage.component';
 
 @Component({
   selector: 'aol-source-geojson',
@@ -24,8 +25,11 @@ export class SourceGeoJSONComponent extends SourceComponent implements OnInit {
   instance: Vector;
   format: FeatureFormat;
 
-  constructor(@Host() layer: LayerVectorComponent) {
-    super(layer);
+  constructor(
+    @Optional() @Host() vectorLayer: LayerVectorComponent,
+    @Optional() @Host() vectorImageLayer: LayerVectorImageComponent,
+  ) {
+    super(vectorLayer || vectorImageLayer);
   }
 
   ngOnInit() {

@@ -1,5 +1,14 @@
-import { Component, OnInit, OnDestroy, OnChanges, Input, SimpleChanges } from '@angular/core';
-import { Feature } from 'ol';
+import {
+  Component,
+  OnInit,
+  OnDestroy,
+  OnChanges,
+  Input,
+  SimpleChanges,
+  Output,
+  EventEmitter,
+} from '@angular/core';
+import { Feature, MapBrowserEvent } from 'ol';
 import { SourceVectorComponent } from './sources/vector.component';
 
 @Component({
@@ -10,13 +19,29 @@ export class FeatureComponent implements OnInit, OnDestroy, OnChanges {
   @Input()
   id: string | number | undefined;
 
+  @Input()
+  properties: Record<any, any>;
+
+  @Input()
+  feature: Feature;
+
+  @Output()
+  olClick = new EventEmitter<{ event: MapBrowserEvent<MouseEvent>; feature: Feature }>();
+  @Output()
+  singleClick = new EventEmitter<{ event: MapBrowserEvent<MouseEvent>; feature: Feature }>();
+  @Output()
+  dblClick = new EventEmitter<{ event: MapBrowserEvent<MouseEvent>; feature: Feature }>();
+
   public componentType = 'feature';
   public instance: Feature;
 
   constructor(private host: SourceVectorComponent) {}
 
   ngOnInit() {
-    this.instance = new Feature();
+    this.instance = this.feature || new Feature();
+    if (this.properties) {
+      this.instance.setProperties(this.properties);
+    }
     if (this.id !== undefined) {
       this.instance.setId(this.id);
     }

@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'app-root',
   template: `
-    <header><h1 routerLink="/">ngx-openlayer demo</h1></header>
+    <header><h1 routerLink="/">ngx-ol demo</h1></header>
     <div class="main-container"><router-outlet></router-outlet></div>
   `,
   styles: [

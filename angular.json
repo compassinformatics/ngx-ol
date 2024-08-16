@@ -59,7 +59,7 @@
                 "input": "public"
               }
             ],
-            "styles": ["node_modules/ol/ol.css"],
+            "styles": ["src/styles.css", "node_modules/ol/ol.css"],
             "scripts": []
           },
           "configurations": {
@@ -113,7 +113,7 @@
                 "input": "public"
               }
             ],
-            "styles": ["node_modules/ol/ol.css"],
+            "styles": ["src/styles.css", "node_modules/ol/ol.css"],
             "scripts": []
           }
         }

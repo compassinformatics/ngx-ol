@@ -8,7 +8,7 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import { MapComponent } from '../map.component';
-import { Vector } from 'ol/layer';
+import { VectorImage } from 'ol/layer';
 import { Style } from 'ol/style';
 import { StyleFunction } from 'ol/style/Style';
 import { LayerComponent } from './layer.component';
@@ -16,10 +16,13 @@ import { LayerGroupComponent } from './layergroup.component';
 import { BackgroundColor } from 'ol/layer/Base';
 
 @Component({
-  selector: 'aol-layer-vector',
+  selector: 'aol-layer-vectorimage',
   template: ` <ng-content></ng-content> `,
 })
-export class LayerVectorComponent extends LayerComponent implements OnInit, OnDestroy, OnChanges {
+export class LayerVectorImageComponent
+  extends LayerComponent
+  implements OnInit, OnDestroy, OnChanges
+{
   @Input()
   renderBuffer: number;
 
@@ -27,16 +30,13 @@ export class LayerVectorComponent extends LayerComponent implements OnInit, OnDe
   style: Style | Style[] | StyleFunction;
 
   @Input()
-  updateWhileAnimating: boolean;
-
-  @Input()
-  updateWhileInteracting: boolean;
-
-  @Input()
   declutter: boolean | string | number;
 
   @Input()
   background: BackgroundColor;
+
+  @Input()
+  imageRatio: number;
 
   @Input()
   properties: Record<string, any>;
@@ -47,7 +47,7 @@ export class LayerVectorComponent extends LayerComponent implements OnInit, OnDe
 
   ngOnInit() {
     // console.log('creating ol.layer.Vector instance with:', this);
-    this.instance = new Vector(this);
+    this.instance = new VectorImage(this);
     super.ngOnInit();
   }
 

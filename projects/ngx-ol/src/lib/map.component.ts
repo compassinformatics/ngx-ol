@@ -8,6 +8,8 @@ import {
   AfterViewInit,
   SimpleChanges,
   OnChanges,
+  ContentChildren,
+  QueryList,
 } from '@angular/core';
 import { Map } from 'ol';
 import MapBrowserEvent from 'ol/MapBrowserEvent';
@@ -16,8 +18,8 @@ import { ObjectEvent } from 'ol/Object';
 import RenderEvent from 'ol/render/Event';
 import { Control } from 'ol/control';
 import { Interaction } from 'ol/interaction';
-import { DrawEvent } from 'ol/interaction/Draw';
 import BaseEvent from 'ol/events/Event';
+import { FeatureComponent } from './feature.component';
 
 @Component({
   selector: 'aol-map',
@@ -87,6 +89,9 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
   @Output()
   singleClick = new EventEmitter<MapBrowserEvent<MouseEvent>>();
 
+  @ContentChildren(FeatureComponent, { descendants: true })
+  featureComponents: QueryList<FeatureComponent>;
+
   public instance: Map;
   public componentType = 'map';
 
@@ -107,8 +112,6 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
     this.instance.on('change:size', (event: ObjectEvent) => this.olChangeSize.emit(event));
     this.instance.on('change:target', (event: ObjectEvent) => this.olChangeTarget.emit(event));
     this.instance.on('change:view', (event: ObjectEvent) => this.olChangeView.emit(event));
-    this.instance.on('click', (event: MapBrowserEvent<MouseEvent>) => this.olClick.emit(event));
-    this.instance.on('dblclick', (event: MapBrowserEvent<MouseEvent>) => this.dblClick.emit(event));
     this.instance.on('error', (event: BaseEvent) => this.olError.emit(event));
     this.instance.on('loadend', (event: MapEvent) => this.loadEnd.emit(event));
     this.instance.on('loadstart', (event: MapEvent) => this.loadStart.emit(event));
@@ -124,10 +127,35 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
     this.instance.on('postrender', (event: RenderEvent) => this.olPostRender.emit(event));
     this.instance.on('postrender', (event: MapEvent) => this.postRender.emit(event));
     this.instance.on('precompose', (event: RenderEvent) => this.olPreCompose.emit(event));
+
     this.instance.on('propertychange', (event: ObjectEvent) => this.olPropertyChange.emit(event));
-    this.instance.on('singleclick', (event: MapBrowserEvent<MouseEvent>) =>
-      this.singleClick.emit(event),
-    );
+
+    // this.instance.on('click', (event: MapBrowserEvent<MouseEvent>) => this.olClick.emit(event));
+    // this.instance.on('dblclick', (event: MapBrowserEvent<MouseEvent>) => this.dblClick.emit(event));
+    // this.instance.on('singleclick', (event: MapBrowserEvent<MouseEvent>) => this.singleClick.emit(event));
+    const handleFeatureClick = (
+      event: MapBrowserEvent<MouseEvent>,
+      type: 'olClick' | 'singleClick' | 'dblClick',
+    ) => {
+      this.instance.forEachFeatureAtPixel(event.pixel, (feature) => {
+        const featureComponent = this.featureComponents.find((item) => item.instance === feature);
+        if (featureComponent) {
+          featureComponent[type].emit({ event, feature: featureComponent.instance });
+        }
+      });
+    };
+    this.instance.on('click', (event: MapBrowserEvent<MouseEvent>) => {
+      this.olClick.emit(event);
+      handleFeatureClick(event, 'olClick');
+    });
+    this.instance.on('singleclick', (event: MapBrowserEvent<MouseEvent>) => {
+      this.singleClick.emit(event);
+      handleFeatureClick(event, 'singleClick');
+    });
+    this.instance.on('dblclick', (event: MapBrowserEvent<MouseEvent>) => {
+      this.dblClick.emit(event);
+      handleFeatureClick(event, 'dblClick');
+    });
   }
 
   ngOnChanges(changes: SimpleChanges) {

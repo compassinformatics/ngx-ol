@@ -13,6 +13,7 @@ import { LayerTileComponent } from './lib/layers/layertile.component';
 import { MapComponent } from './lib/map.component';
 import { LayerVectorComponent } from './lib/layers/layervector.component';
 import { LayerVectorTileComponent } from './lib/layers/layervectortile.component';
+import { LayerVectorImageComponent } from './lib/layers/layervectorimage.component';
 import { SourceOsmComponent } from './lib/sources/osm.component';
 import { SourceBingmapsComponent } from './lib/sources/bingmaps.component';
 import { SourceClusterComponent } from './lib/sources/cluster.component';
@@ -90,6 +91,7 @@ export {
   LayerTileComponent,
   LayerVectorComponent,
   LayerVectorTileComponent,
+  LayerVectorImageComponent,
   SourceComponent,
   SourceOsmComponent,
   SourceBingmapsComponent,
@@ -170,6 +172,7 @@ const COMPONENTS = [
   LayerTileComponent,
   LayerVectorComponent,
   LayerVectorTileComponent,
+  LayerVectorImageComponent,
 
   SourceOsmComponent,
   SourceBingmapsComponent,
