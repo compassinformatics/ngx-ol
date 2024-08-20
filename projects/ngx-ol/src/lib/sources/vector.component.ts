@@ -38,7 +38,7 @@ export class SourceVectorComponent extends SourceComponent implements OnInit, On
   @Input()
   strategy: LoadingStrategy;
 
-  instance: Vector<FeatureLike>;
+  instance: Vector;
 
   constructor(
     @Optional() @Host() vectorLayer: LayerVectorComponent,
@@ -48,7 +48,7 @@ export class SourceVectorComponent extends SourceComponent implements OnInit, On
   }
 
   ngOnInit() {
-    this.instance = new Vector(this);
+    (this.instance as Vector<FeatureLike>) = new Vector(this);
     this.host.instance.setSource(this.instance);
   }
 
