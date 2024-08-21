@@ -1,13 +1,22 @@
-import { Component, ContentChild, Input, OnDestroy, OnInit } from '@angular/core';
+import {
+  Component,
+  ContentChild,
+  Input,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  SimpleChanges,
+} from '@angular/core';
 import { MapComponent } from './map.component';
 import Overlay, { PanOptions, Positioning } from 'ol/Overlay';
 import { ContentComponent } from './content.component';
+import { Coordinate } from 'ol/coordinate';
 
 @Component({
   selector: 'aol-overlay',
   template: '<ng-content></ng-content>',
 })
-export class OverlayComponent implements OnInit, OnDestroy {
+export class OverlayComponent implements OnInit, OnDestroy, OnChanges {
   @ContentChild(ContentComponent, { static: true })
   content: ContentComponent;
 
@@ -27,6 +36,8 @@ export class OverlayComponent implements OnInit, OnDestroy {
   autoPanAnimation: PanOptions;
   @Input()
   autoPanMargin: number;
+  @Input()
+  position: Coordinate;
 
   componentType = 'overlay';
   instance: Overlay;
@@ -45,6 +56,14 @@ export class OverlayComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     if (this.instance) {
       this.map.instance.removeOverlay(this.instance);
+    }
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    const { position } = changes;
+
+    if (position && this.instance) {
+      this.instance.setPosition(position.currentValue);
     }
   }
 }
