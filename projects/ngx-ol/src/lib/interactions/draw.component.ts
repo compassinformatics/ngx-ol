@@ -5,11 +5,12 @@ import { Collection, Feature } from 'ol';
 import { Vector } from 'ol/source';
 import { Style } from 'ol/style';
 import { DrawEvent, GeometryFunction } from 'ol/interaction/Draw';
-import { StyleFunction } from 'ol/style/Style';
+import { StyleFunction, StyleLike } from 'ol/style/Style';
 import { Condition } from 'ol/events/condition';
 import { Type } from 'ol/geom/Geometry';
 import { ObjectEvent } from 'ol/Object';
 import BaseEvent from 'ol/events/Event';
+import { FlatStyleLike } from 'ol/style/flat';
 
 @Component({
   selector: 'aol-interaction-draw',
@@ -33,7 +34,7 @@ export class DrawInteractionComponent implements OnInit, OnDestroy {
   @Input()
   finishCondition?: Condition;
   @Input()
-  style?: Style | Style[] | StyleFunction;
+  style?: StyleLike | FlatStyleLike | undefined;
   @Input()
   geometryFunction?: GeometryFunction;
   @Input()

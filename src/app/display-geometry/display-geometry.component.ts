@@ -31,7 +31,13 @@ import { Component, OnInit } from '@angular/core';
             </aol-feature>
           </aol-source-vector>
 
-          <!-- <aol-source-vector *ngSwitchCase="'Point'">
+          <aol-source-vector *ngSwitchCase="'Point'">
+            <aol-style>
+              <aol-style-circle [radius]="10">
+                <aol-style-stroke [color]="'black'" [width]="5"></aol-style-stroke>
+                <aol-style-fill [color]="'green'"></aol-style-fill>
+              </aol-style-circle>
+            </aol-style>
             <aol-feature>
               <aol-geometry-point>
                 <aol-coordinate
@@ -40,15 +46,14 @@ import { Component, OnInit } from '@angular/core';
                   [srid]="'EPSG:4326'"
                 >
                 </aol-coordinate>
-                <aol-style>
-                  <aol-style-circle [radius]="10">
-                    <aol-style-stroke [color]="'black'" [width]="5"></aol-style-stroke>
-                    <aol-style-fill [color]="'green'"></aol-style-fill>
-                  </aol-style-circle>
-                </aol-style>
               </aol-geometry-point>
             </aol-feature>
-          </aol-source-vector> -->
+            <aol-feature>
+              <aol-geometry-point
+                [coordinates]="[-38524.262256, 6306972.077866]"
+              ></aol-geometry-point>
+            </aol-feature>
+          </aol-source-vector>
 
           <aol-source-vector *ngSwitchCase="'LineString'">
             <aol-feature>
@@ -62,7 +67,11 @@ import { Component, OnInit } from '@angular/core';
             </aol-feature>
           </aol-source-vector>
 
-          <!-- <aol-source-vector *ngSwitchCase="'Circle'">
+          <aol-source-vector *ngSwitchCase="'Circle'">
+            <aol-style>
+              <aol-style-stroke color="blue" [width]="2"></aol-style-stroke>
+              <aol-style-fill color="rgba(255, 255, 0, 0.5)"></aol-style-fill>
+            </aol-style>
             <aol-feature>
               <aol-geometry-circle [radius]="feature.geometry.radius!">
                 <aol-coordinate
@@ -71,13 +80,20 @@ import { Component, OnInit } from '@angular/core';
                   srid="EPSG:4326"
                 >
                 </aol-coordinate>
+              </aol-geometry-circle>
+            </aol-feature>
+            <aol-feature>
+              <aol-geometry-circle
+                [center]="[450311.8414140029, 6305735.688940656]"
+                [radius]="feature.geometry.radius!"
+              >
                 <aol-style>
                   <aol-style-stroke color="blue" [width]="2"></aol-style-stroke>
                   <aol-style-fill color="rgba(255, 255, 0, 0.5)"></aol-style-fill>
                 </aol-style>
               </aol-geometry-circle>
             </aol-feature>
-          </aol-source-vector> -->
+          </aol-source-vector>
 
           <aol-source-vector *ngSwitchCase="'MultiPoint'">
             <aol-feature>
@@ -132,7 +148,7 @@ import { Component, OnInit } from '@angular/core';
 export class DisplayGeometryComponent implements OnInit {
   constructor() {}
 
-  features = [
+  features: any = [
     {
       type: 'Feature',
       properties: {},

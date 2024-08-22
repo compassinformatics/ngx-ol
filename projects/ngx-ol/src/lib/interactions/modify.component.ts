@@ -2,14 +2,13 @@ import { Component, OnDestroy, OnInit, Input, Output, EventEmitter } from '@angu
 import { MapComponent } from '../map.component';
 import { Modify } from 'ol/interaction';
 import { Collection, Feature } from 'ol';
-import { Style } from 'ol/style';
 import { Vector } from 'ol/source';
 import { ModifyEvent } from 'ol/interaction/Modify';
-import { StyleFunction } from 'ol/style/Style';
+import { StyleLike } from 'ol/style/Style';
 import { Condition } from 'ol/events/condition';
 import { ObjectEvent } from 'ol/Object';
-import { DrawEvent } from 'ol/interaction/Draw';
 import BaseEvent from 'ol/events/Event';
+import { FlatStyleLike } from 'ol/style/flat';
 
 @Component({
   selector: 'aol-interaction-modify',
@@ -23,7 +22,7 @@ export class ModifyInteractionComponent implements OnInit, OnDestroy {
   @Input()
   pixelTolerance?: number;
   @Input()
-  style?: Style | Style[] | StyleFunction;
+  style?: StyleLike | FlatStyleLike | undefined;
   @Input()
   features: Collection<Feature>;
   @Input()

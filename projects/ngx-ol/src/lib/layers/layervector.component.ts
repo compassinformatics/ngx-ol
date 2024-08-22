@@ -9,11 +9,11 @@ import {
 } from '@angular/core';
 import { MapComponent } from '../map.component';
 import { Vector } from 'ol/layer';
-import { Style } from 'ol/style';
-import { StyleFunction } from 'ol/style/Style';
+import { StyleLike } from 'ol/style/Style';
 import { LayerComponent } from './layer.component';
 import { LayerGroupComponent } from './layergroup.component';
 import { BackgroundColor } from 'ol/layer/Base';
+import { FlatStyleLike } from 'ol/style/flat';
 
 @Component({
   selector: 'aol-layer-vector',
@@ -24,7 +24,7 @@ export class LayerVectorComponent extends LayerComponent implements OnInit, OnDe
   renderBuffer: number;
 
   @Input()
-  style: Style | Style[] | StyleFunction;
+  style: StyleLike | FlatStyleLike | null | undefined;
 
   @Input()
   updateWhileAnimating: boolean;

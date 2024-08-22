@@ -2,10 +2,9 @@ import { Component, OnDestroy, OnInit, Input, Output, EventEmitter } from '@angu
 import { MapComponent } from '../map.component';
 import { Select } from 'ol/interaction';
 import { Layer } from 'ol/layer';
-import { Style } from 'ol/style';
 import { Collection, Feature } from 'ol';
 import { SelectEvent, FilterFunction } from 'ol/interaction/Select';
-import { StyleFunction } from 'ol/style/Style';
+import { StyleLike } from 'ol/style/Style';
 import { Condition } from 'ol/events/condition';
 import { ObjectEvent } from 'ol/Object';
 import BaseEvent from 'ol/events/Event';
@@ -22,7 +21,7 @@ export class SelectInteractionComponent implements OnInit, OnDestroy {
   @Input()
   layers?: Layer[] | ((layer: Layer) => boolean);
   @Input()
-  style?: Style | Style[] | StyleFunction;
+  style?: StyleLike | null | undefined;
   @Input()
   removeCondition?: Condition;
   @Input()

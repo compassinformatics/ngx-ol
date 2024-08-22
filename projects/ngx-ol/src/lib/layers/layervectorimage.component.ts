@@ -9,11 +9,11 @@ import {
 } from '@angular/core';
 import { MapComponent } from '../map.component';
 import { VectorImage } from 'ol/layer';
-import { Style } from 'ol/style';
-import { StyleFunction } from 'ol/style/Style';
+import { StyleLike } from 'ol/style/Style';
 import { LayerComponent } from './layer.component';
 import { LayerGroupComponent } from './layergroup.component';
 import { BackgroundColor } from 'ol/layer/Base';
+import { FlatStyleLike } from 'ol/style/flat';
 
 @Component({
   selector: 'aol-layer-vectorimage',
@@ -27,7 +27,7 @@ export class LayerVectorImageComponent
   renderBuffer: number;
 
   @Input()
-  style: Style | Style[] | StyleFunction;
+  style: StyleLike | FlatStyleLike | null | undefined;
 
   @Input()
   declutter: boolean | string | number;

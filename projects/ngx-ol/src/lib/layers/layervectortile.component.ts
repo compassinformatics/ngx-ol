@@ -1,11 +1,10 @@
 import { Component, OnInit, Input, Optional, SimpleChanges, OnChanges } from '@angular/core';
 import { VectorTile } from 'ol/layer';
 import { Feature } from 'ol';
-import { Style } from 'ol/style';
 import { MapComponent } from '../map.component';
 import { LayerComponent } from './layer.component';
 import { LayerGroupComponent } from './layergroup.component';
-import { StyleFunction } from 'ol/style/Style';
+import { StyleLike } from 'ol/style/Style';
 import { Options } from 'ol/source/VectorTile';
 
 @Component({
@@ -21,7 +20,7 @@ export class LayerVectorTileComponent extends LayerComponent implements OnInit, 
   @Input()
   renderOrder: (feature1: Feature, feature2: Feature) => number;
   @Input()
-  style: Style | Style[] | StyleFunction;
+  style: StyleLike | null | undefined;
   @Input()
   updateWhileAnimating: boolean;
   @Input()
