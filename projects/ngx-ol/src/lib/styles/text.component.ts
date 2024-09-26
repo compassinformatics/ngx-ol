@@ -1,6 +1,8 @@
 import { Component, Input, Optional, OnInit, OnChanges, SimpleChanges } from '@angular/core';
-import { Text } from 'ol/style';
+import { Fill, Stroke, Text } from 'ol/style';
 import { StyleComponent } from './style.component';
+import { TextJustify, TextPlacement } from 'ol/style/Text';
+import { DeclutterMode } from 'ol/style/Style';
 
 @Component({
   selector: 'aol-style-text',
@@ -10,9 +12,17 @@ export class StyleTextComponent implements OnInit, OnChanges {
   @Input()
   font: string | undefined;
   @Input()
+  maxAngle: number | undefined;
+  @Input()
   offsetX: number | undefined;
   @Input()
   offsetY: number | undefined;
+  @Input()
+  overflow: boolean | undefined;
+  @Input()
+  placement: TextPlacement | undefined;
+  @Input()
+  repeat: number | undefined;
   @Input()
   scale: number | undefined;
   @Input()
@@ -20,11 +30,25 @@ export class StyleTextComponent implements OnInit, OnChanges {
   @Input()
   rotation: number | undefined;
   @Input()
-  text: string | undefined;
+  text: string | string[] | undefined;
   @Input()
   textAlign: CanvasTextAlign | undefined;
   @Input()
-  textBaseLine: string | undefined;
+  justify: TextJustify | undefined;
+  @Input()
+  textBaseline: CanvasTextBaseline | undefined;
+  @Input()
+  fill: Fill | undefined;
+  @Input()
+  stroke: Stroke | undefined;
+  @Input()
+  backgroundFill: Fill | undefined;
+  @Input()
+  backgroundStroke: Stroke | undefined;
+  @Input()
+  padding: number[] | undefined;
+  @Input()
+  declutterMode: DeclutterMode | undefined;
 
   public instance: Text;
   public componentType = 'style-text';
