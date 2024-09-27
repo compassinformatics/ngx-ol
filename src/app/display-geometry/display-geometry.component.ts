@@ -1,9 +1,18 @@
 import { Component, OnInit } from '@angular/core';
+import { Feature } from 'ol';
+import { Geometry, Point } from 'ol/geom';
+import { transform } from 'ol/proj';
 
 @Component({
   selector: 'app-display-geometry',
   template: `
-    <aol-map #map width="100%" height="100%">
+    <aol-map #map width="100%" height="100%" style="position: relative">
+      <button
+        style="position: absolute; z-index: 10; right: 5px; top: 5px"
+        (click)="updateFeature()"
+      >
+        Update feature binding
+      </button>
       <aol-interaction-default></aol-interaction-default>
       <aol-control-defaults></aol-control-defaults>
 
@@ -142,6 +151,12 @@ import { Component, OnInit } from '@angular/core';
           </aol-source-vector>
         </aol-layer-vector>
       </aol-layer-group>
+
+      <aol-layer-vector>
+        <aol-source-vector>
+          <aol-feature [feature]="feature"></aol-feature>
+        </aol-source-vector>
+      </aol-layer-vector>
     </aol-map>
   `,
 })
@@ -267,5 +282,15 @@ export class DisplayGeometryComponent implements OnInit {
     },
   ];
 
+  feature = new Feature({
+    geometry: new Point(transform([-0.649, 44.026], 'EPSG:4326', 'EPSG:3857')),
+  });
+
   ngOnInit() {}
+
+  updateFeature() {
+    this.feature = new Feature({
+      geometry: new Point(transform([3.922, 44.34], 'EPSG:4326', 'EPSG:3857')),
+    });
+  }
 }

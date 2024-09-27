@@ -53,8 +53,15 @@ export class FeatureComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges) {
+    const { feature } = changes;
     if (this.instance) {
       this.instance.setId(this.id);
+    }
+
+    if (feature && !feature.firstChange) {
+      this.host.instance.removeFeature(this.instance);
+      this.instance = feature.currentValue;
+      this.host.instance.addFeature(this.instance);
     }
   }
 }
