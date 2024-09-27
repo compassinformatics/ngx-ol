@@ -37,10 +37,29 @@ TODO
 
 Live example will be viewable at locahost:4200
 
-## Publish
+## Publish to NPM
+
+Update package.json version. Choose major, minor or patch
+Run both commands to update both package.json files
 
 ```
-npm version <update_type> (major, minor, patch) --prefix projects/ngx-ol
+npm version major --prefix projects/ngx-ol --no-git-tag-version
+npm version major --no-git-tag-version
+
+npm version minor --prefix projects/ngx-ol --no-git-tag-version
+npm version minor --no-git-tag-version
+
+npm version patch --prefix projects/ngx-ol --no-git-tag-version
+npm version patch --no-git-tag-version
+```
+
+Push changes to GitHub
+Create a release with title new version number, e.g. v18.x.x
+Package will be automattically published to NPM
+
+To manually publish to npm:
+
+```
 npm run build:lib
 cd dist/ngx-ol
 npm publish --access public
