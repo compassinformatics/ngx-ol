@@ -10,6 +10,8 @@ To install this library, run:
 
 ```bash
 npm install @compassinformatics/ngx-ol --save
+or
+yarn add @compassinformatics/ngx-ol
 ```
 
 ## Example
