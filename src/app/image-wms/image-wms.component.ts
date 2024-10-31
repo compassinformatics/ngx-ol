@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MapComponent } from '../../../projects/ngx-ol/src/public-api';
 
 @Component({
   selector: 'app-root',
@@ -8,7 +9,7 @@ import { Component, OnInit } from '@angular/core';
       <aol-view [zoom]="4">
         <aol-coordinate [x]="-10997148" [y]="4569099"></aol-coordinate>
       </aol-view>
-      <aol-layer-image>
+      <aol-layer-image id="test-id" className="'test-classname">
         <aol-source-imagewms
           [url]="'https://ahocevar.com/geoserver/wms'"
           [params]="params"
@@ -28,6 +29,7 @@ import { Component, OnInit } from '@angular/core';
   ],
 })
 export class ImageWMSComponent implements OnInit {
+  @ViewChild('map') mapComponent: MapComponent;
   constructor() {}
 
   params = { LAYERS: 'topp:states' };
@@ -40,5 +42,6 @@ export class ImageWMSComponent implements OnInit {
 
   imageLoadEnd() {
     console.log('image ends loading at: ' + new Date());
+    console.log(this.mapComponent.instance);
   }
 }

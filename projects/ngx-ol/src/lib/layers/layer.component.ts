@@ -8,6 +8,10 @@ import { Extent } from 'ol/extent';
 // eslint-disable-next-line @angular-eslint/directive-class-suffix
 export abstract class LayerComponent implements OnInit, OnChanges, OnDestroy {
   @Input()
+  id: string | number;
+  @Input()
+  className: string;
+  @Input()
   opacity: number;
   @Input()
   visible: boolean;
