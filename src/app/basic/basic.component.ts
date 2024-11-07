@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Feature, MapBrowserEvent } from 'ol';
 import { ObjectEvent } from 'ol/Object';
 
 @Component({
@@ -16,7 +17,7 @@ import { ObjectEvent } from 'ol/Object';
       <aol-layer-tile [opacity]="opacity"> <aol-source-osm></aol-source-osm> </aol-layer-tile>
       <aol-layer-vector [opacity]="opacity">
         <aol-source-vector>
-          <aol-feature>
+          <aol-feature [clickable]="true" (olClick)="featureClick($event)">
             <aol-geometry-point>
               <aol-coordinate [x]="5" [y]="45" [srid]="'EPSG:4326'"></aol-coordinate>
             </aol-geometry-point>
@@ -132,5 +133,9 @@ export class BasicComponent {
 
   changeZoom(evt: Event) {
     console.log('Zoom changed:', evt);
+  }
+
+  featureClick(e: { event: MapBrowserEvent<MouseEvent>; feature: Feature }) {
+    console.log(e);
   }
 }

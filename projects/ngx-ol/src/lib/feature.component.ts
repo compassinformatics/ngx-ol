@@ -25,6 +25,9 @@ export class FeatureComponent implements OnInit, OnDestroy, OnChanges {
   @Input()
   feature: Feature;
 
+  @Input()
+  clickable: boolean;
+
   @Output()
   olClick = new EventEmitter<{ event: MapBrowserEvent<MouseEvent>; feature: Feature }>();
   @Output()
@@ -45,23 +48,35 @@ export class FeatureComponent implements OnInit, OnDestroy, OnChanges {
     if (this.id !== undefined) {
       this.instance.setId(this.id);
     }
+    if (this.clickable) {
+      this.instance.set('__aol-feature', this);
+    }
     this.host.instance.addFeature(this.instance);
   }
 
   ngOnDestroy() {
+    this.instance.set('__aol-feature', null);
     this.host.instance.removeFeature(this.instance);
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    const { feature } = changes;
+    const { feature, clickable } = changes;
     if (this.instance) {
       this.instance.setId(this.id);
     }
 
     if (feature && !feature.firstChange) {
+      this.instance.set('__aol-feature', null);
       this.host.instance.removeFeature(this.instance);
       this.instance = feature.currentValue;
+      if (this.clickable) {
+        this.instance.set('__aol-feature', this);
+      }
       this.host.instance.addFeature(this.instance);
+    }
+
+    if (clickable && !clickable.firstChange) {
+      this.instance.set('__aol-feature', clickable.currentValue ? this : null);
     }
   }
 }

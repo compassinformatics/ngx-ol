@@ -89,9 +89,6 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
   @Output()
   singleClick = new EventEmitter<MapBrowserEvent<MouseEvent>>();
 
-  @ContentChildren(FeatureComponent, { descendants: true })
-  featureComponents: QueryList<FeatureComponent>;
-
   public instance: Map;
   public componentType = 'map';
 
@@ -138,7 +135,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
       type: 'olClick' | 'singleClick' | 'dblClick',
     ) => {
       this.instance.forEachFeatureAtPixel(event.pixel, (feature) => {
-        const featureComponent = this.featureComponents.find((item) => item.instance === feature);
+        const featureComponent = feature.get('__aol-feature');
         if (featureComponent) {
           featureComponent[type].emit({ event, feature: featureComponent.instance });
         }
