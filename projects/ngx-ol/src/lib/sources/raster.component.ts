@@ -33,6 +33,8 @@ export class SourceRasterComponent extends SourceComponent implements AfterConte
   lib?: any;
   @Input()
   operationType?: 'pixel' | 'image';
+  @Input()
+  resolutions?: number[] | null;
 
   @Output()
   beforeOperations = new EventEmitter<RasterSourceEvent>();

@@ -3,6 +3,7 @@ import { BingMaps } from 'ol/source';
 import { SourceComponent } from './source.component';
 import { LayerTileComponent } from '../layers/layertile.component';
 import { LoadFunction } from 'ol/Tile';
+import { NearestDirectionFunction } from 'ol/array';
 
 @Component({
   selector: 'aol-source-bingmaps',
@@ -11,7 +12,7 @@ import { LoadFunction } from 'ol/Tile';
 })
 export class SourceBingmapsComponent extends SourceComponent implements OnInit {
   @Input()
-  cacheSize: number;
+  cacheSize?: number;
   @Input()
   hidpi: boolean;
   @Input()
@@ -25,9 +26,17 @@ export class SourceBingmapsComponent extends SourceComponent implements OnInit {
   @Input()
   reprojectionErrorThreshold: number;
   @Input()
-  tileLoadFunction: LoadFunction;
+  tileLoadFunction?: LoadFunction;
   @Input()
   wrapX: boolean;
+  @Input()
+  interpolate: boolean;
+  @Input()
+  placeholderTiles?: boolean;
+  @Input()
+  transition?: number;
+  @Input()
+  zDirection: number | NearestDirectionFunction;
 
   instance: BingMaps;
 

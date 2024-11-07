@@ -9,13 +9,13 @@ import {
   forwardRef,
 } from '@angular/core';
 import { Vector } from 'ol/source';
-import Feature from 'ol/format/Feature';
 import { LayerVectorComponent } from '../layers/layervector.component';
 import { SourceComponent } from './source.component';
 import { LoadingStrategy } from 'ol/source/Vector';
 import { LayerVectorImageComponent } from '../layers/layervectorimage.component';
 import { Collection } from 'ol';
 import { FeatureLike } from 'ol/Feature';
+import FeatureFormat from 'ol/format/Feature';
 
 @Component({
   selector: 'aol-source-vector',
@@ -32,11 +32,11 @@ export class SourceVectorComponent extends SourceComponent implements OnInit, On
   @Input()
   wrapX: boolean;
   @Input()
-  url: string;
+  url?: string;
   @Input()
-  format: Feature;
+  format?: FeatureFormat<any>;
   @Input()
-  strategy: LoadingStrategy;
+  strategy?: LoadingStrategy;
 
   instance: Vector;
 

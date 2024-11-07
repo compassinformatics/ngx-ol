@@ -25,11 +25,12 @@ import { ImageSourceEvent } from 'ol/source/Image';
   ],
 })
 export class SourceImageArcGISRestComponent extends SourceComponent implements OnInit, OnChanges {
-  @Input() projection: ProjectionLike | string;
-  @Input() url: string;
+  @Input() projection?: ProjectionLike | string;
+  @Input() url?: string;
   @Input() attributions: AttributionLike;
-  @Input() crossOrigin?: string;
+  @Input() crossOrigin?: string | null;
   @Input() imageLoadFunction?: LoadFunction;
+  @Input() interpolate: boolean;
   @Input() params?: { [k: string]: any };
   @Input() ratio = 1.5;
   @Input() resolutions?: number[];

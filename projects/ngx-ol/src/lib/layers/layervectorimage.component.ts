@@ -33,7 +33,7 @@ export class LayerVectorImageComponent
   declutter: boolean | string | number;
 
   @Input()
-  background: BackgroundColor;
+  background?: BackgroundColor;
 
   @Input()
   imageRatio: number;

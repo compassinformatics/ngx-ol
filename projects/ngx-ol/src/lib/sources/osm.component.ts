@@ -29,17 +29,23 @@ export class SourceOsmComponent extends SourceXYZComponent implements AfterConte
   @Input()
   crossOrigin: string;
   @Input()
+  interpolate: boolean;
+  @Input()
   maxZoom: number;
   @Input()
   opaque: boolean;
   @Input()
   reprojectionErrorThreshold: number;
   @Input()
-  tileLoadFunction: LoadFunction;
+  tileLoadFunction?: LoadFunction;
+  @Input()
+  transition: number;
   @Input()
   url: string;
   @Input()
   wrapX: boolean;
+  @Input()
+  zDirection: number;
 
   @Output()
   tileLoadStart = new EventEmitter<TileSourceEvent>();

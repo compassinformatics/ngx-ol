@@ -3,6 +3,7 @@ import Event from 'ol/events/Event';
 import { MapComponent } from '../map.component';
 import { LayerGroupComponent } from './layergroup.component';
 import { Extent } from 'ol/extent';
+import { RenderFunction } from 'ol/layer/Layer';
 
 @Directive()
 // eslint-disable-next-line @angular-eslint/directive-class-suffix
@@ -16,13 +17,21 @@ export abstract class LayerComponent implements OnInit, OnChanges, OnDestroy {
   @Input()
   visible: boolean;
   @Input()
-  extent: Extent;
+  extent?: Extent;
   @Input()
-  zIndex: number;
+  zIndex?: number;
   @Input()
-  minResolution: number;
+  minResolution?: number;
   @Input()
-  maxResolution: number;
+  maxResolution?: number;
+  @Input()
+  minZoom?: number;
+  @Input()
+  maxZoom?: number;
+  @Input()
+  render?: RenderFunction;
+  @Input()
+  properties?: Record<string, any>;
 
   @Input()
   prerender: (evt: Event) => void;

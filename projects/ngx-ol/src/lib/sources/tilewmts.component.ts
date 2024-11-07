@@ -32,11 +32,11 @@ export class SourceTileWMTSComponent
   @Input()
   cacheSize?: number;
   @Input()
-  crossOrigin?: string;
+  crossOrigin?: null | string;
   @Input()
   tileGrid: WMTS;
   @Input()
-  projection: ProjectionLike;
+  projection?: ProjectionLike;
   @Input()
   reprojectionErrorThreshold?: number;
   @Input()

@@ -7,7 +7,7 @@ import { FormatComponent } from '../formats/format.component';
 import { TileGridComponent } from '../tilegrid.component';
 import { SourceComponent } from './source.component';
 import { ProjectionLike } from 'ol/proj';
-import { UrlFunction } from 'ol/Tile';
+import { LoadFunction, UrlFunction } from 'ol/Tile';
 
 @Component({
   selector: 'aol-source-vectortile',
@@ -18,19 +18,21 @@ import { UrlFunction } from 'ol/Tile';
 })
 export class SourceVectorTileComponent extends SourceComponent implements AfterContentInit {
   @Input()
-  cacheSize: number;
+  cacheSize?: number;
   @Input()
   overlaps: boolean;
   @Input()
-  projection: ProjectionLike;
+  projection?: ProjectionLike;
   @Input()
   tilePixelRatio: number;
   @Input()
-  tileUrlFunction: UrlFunction;
+  tileUrlFunction?: UrlFunction;
   @Input()
-  url: string;
+  tileLoadFunction?: LoadFunction;
   @Input()
-  urls: string[];
+  url?: string;
+  @Input()
+  urls?: string[];
   @Input()
   wrapX: boolean;
 
