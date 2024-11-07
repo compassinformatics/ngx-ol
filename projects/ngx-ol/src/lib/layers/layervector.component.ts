@@ -14,12 +14,16 @@ import { LayerComponent } from './layer.component';
 import { LayerGroupComponent } from './layergroup.component';
 import { BackgroundColor } from 'ol/layer/Base';
 import { FlatStyleLike } from 'ol/style/flat';
+import { OrderFunction } from 'ol/render';
 
 @Component({
   selector: 'aol-layer-vector',
   template: ` <ng-content></ng-content> `,
 })
 export class LayerVectorComponent extends LayerComponent implements OnInit, OnDestroy, OnChanges {
+  @Input()
+  renderOrder?: OrderFunction;
+
   @Input()
   renderBuffer: number;
 
@@ -36,7 +40,7 @@ export class LayerVectorComponent extends LayerComponent implements OnInit, OnDe
   declutter: boolean | string | number;
 
   @Input()
-  background: BackgroundColor;
+  background?: BackgroundColor;
 
   @Input()
   properties: Record<string, any>;

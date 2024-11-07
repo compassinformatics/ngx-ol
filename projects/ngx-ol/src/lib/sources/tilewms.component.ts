@@ -23,7 +23,7 @@ export class SourceTileWMSComponent extends SourceComponent implements OnChanges
   @Input()
   cacheSize: number;
   @Input()
-  crossOrigin: string;
+  crossOrigin?: null | string;
   @Input()
   gutter: number;
   @Input()
@@ -31,17 +31,17 @@ export class SourceTileWMSComponent extends SourceComponent implements OnChanges
   @Input()
   params: { [key: string]: any };
   @Input()
-  projection: string;
+  projection?: string;
   @Input()
   reprojectionErrorThreshold: number;
   @Input()
-  serverType: ServerType;
+  serverType?: ServerType;
   @Input()
-  tileGrid: TileGrid;
+  tileGrid?: TileGrid;
   @Input()
-  tileLoadFunction: LoadFunction;
+  tileLoadFunction?: LoadFunction;
   @Input()
-  url: string;
+  url?: string;
   @Input()
   urls: string[];
   @Input()

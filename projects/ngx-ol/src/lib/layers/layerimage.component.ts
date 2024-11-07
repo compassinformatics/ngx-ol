@@ -10,19 +10,6 @@ import { Extent } from 'ol/extent';
   template: ` <ng-content></ng-content> `,
 })
 export class LayerImageComponent extends LayerComponent implements OnInit, OnChanges {
-  @Input()
-  opacity: number;
-  @Input()
-  visible: boolean;
-  @Input()
-  extent: Extent;
-  @Input()
-  minResolution: number;
-  @Input()
-  maxResolution: number;
-  @Input()
-  zIndex: number;
-
   constructor(map: MapComponent, @Optional() group?: LayerGroupComponent) {
     super(group || map);
   }

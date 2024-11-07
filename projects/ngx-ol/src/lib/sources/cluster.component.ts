@@ -27,9 +27,13 @@ export class SourceClusterComponent extends SourceComponent implements AfterCont
   @Input()
   distance: number;
   @Input()
+  minDistance: number;
+  @Input()
   geometryFunction?: (feature: Feature) => Point;
   @Input()
   wrapX?: boolean;
+  @Input()
+  createCluster: any;
 
   @ContentChild(SourceVectorComponent, { static: false })
   sourceVectorComponent: SourceVectorComponent;

@@ -6,6 +6,7 @@ import { LayerComponent } from './layer.component';
 import { LayerGroupComponent } from './layergroup.component';
 import { StyleLike } from 'ol/style/Style';
 import { Options } from 'ol/source/VectorTile';
+import { BackgroundColor } from 'ol/layer/Base';
 
 @Component({
   selector: 'aol-layer-vectortile',
@@ -18,9 +19,11 @@ export class LayerVectorTileComponent extends LayerComponent implements OnInit, 
   renderMode: any | string;
   /* not marked as optional in the typings */
   @Input()
-  renderOrder: (feature1: Feature, feature2: Feature) => number;
+  renderOrder?: (feature1: Feature, feature2: Feature) => number;
   @Input()
   style: StyleLike | null | undefined;
+  @Input()
+  background?: BackgroundColor;
   @Input()
   updateWhileAnimating: boolean;
   @Input()

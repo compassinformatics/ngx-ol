@@ -10,8 +10,8 @@ import { Config } from 'ol/source/TileJSON';
   providers: [{ provide: SourceComponent, useExisting: forwardRef(() => SourceUTFGridComponent) }],
 })
 export class SourceUTFGridComponent extends SourceComponent implements OnInit {
-  @Input() tileJSON: Config;
-  @Input() url: string;
+  @Input() tileJSON?: Config;
+  @Input() url?: string;
 
   instance: UTFGrid;
 

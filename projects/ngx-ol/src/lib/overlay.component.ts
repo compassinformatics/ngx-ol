@@ -21,7 +21,7 @@ export class OverlayComponent implements OnInit, OnDestroy, OnChanges {
   content: ContentComponent;
 
   @Input()
-  id: number | string;
+  id: number | string | undefined;
   @Input()
   offset: number[];
   @Input()
@@ -37,7 +37,7 @@ export class OverlayComponent implements OnInit, OnDestroy, OnChanges {
   @Input()
   autoPanMargin: number;
   @Input()
-  position: Coordinate;
+  position: Coordinate | undefined;
 
   componentType = 'overlay';
   instance: Overlay;

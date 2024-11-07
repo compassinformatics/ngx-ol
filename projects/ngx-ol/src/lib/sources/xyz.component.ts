@@ -30,11 +30,11 @@ export class SourceXYZComponent extends SourceComponent implements AfterContentI
   @Input()
   cacheSize: number;
   @Input()
-  crossOrigin: string;
+  crossOrigin?: null | string;
   @Input()
   opaque: boolean;
   @Input()
-  projection: string;
+  projection?: string;
   @Input()
   reprojectionErrorThreshold: number;
   @Input()
@@ -42,7 +42,7 @@ export class SourceXYZComponent extends SourceComponent implements AfterContentI
   @Input()
   maxZoom: number;
   @Input()
-  tileGrid: TileGrid;
+  tileGrid?: TileGrid;
   @Input()
   tileLoadFunction?: LoadFunction;
   @Input()
@@ -52,9 +52,9 @@ export class SourceXYZComponent extends SourceComponent implements AfterContentI
   @Input()
   tileUrlFunction?: UrlFunction;
   @Input()
-  url: string;
+  url?: string;
   @Input()
-  urls: string[];
+  urls?: string[];
   @Input()
   wrapX: boolean;
 

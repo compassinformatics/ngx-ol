@@ -21,6 +21,8 @@ export class LayerTileComponent extends LayerComponent implements OnInit, OnDest
   preload: number;
   @Input()
   useInterimTilesOnError: boolean;
+  @Input()
+  cacheSize: number;
 
   constructor(map: MapComponent, @Optional() group?: LayerGroupComponent) {
     super(group || map);

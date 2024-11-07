@@ -1,6 +1,6 @@
 {
   "name": "demo-ngx-ol",
-  "version": "18.1.7",
+  "version": "18.1.8",
   "scripts": {
     "ng": "ng",
     "start": "npm run build:lib && ng serve",
