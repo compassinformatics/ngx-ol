@@ -33,6 +33,8 @@ export class SelectInteractionComponent implements OnInit, OnDestroy {
   @Input()
   filter?: FilterFunction;
   @Input()
+  hitTolerance?: number;
+  @Input()
   wrapX?: boolean;
 
   @Output()
