@@ -9,6 +9,7 @@ import { Condition } from 'ol/events/condition';
 import { ObjectEvent } from 'ol/Object';
 import BaseEvent from 'ol/events/Event';
 import { FlatStyleLike } from 'ol/style/flat';
+import BaseVectorLayer from 'ol/layer/BaseVector';
 
 @Component({
   selector: 'aol-interaction-modify',
@@ -20,15 +21,21 @@ export class ModifyInteractionComponent implements OnInit, OnDestroy {
   @Input()
   deleteCondition?: Condition;
   @Input()
+  insertVertexCondition?: Condition;
+  @Input()
   pixelTolerance?: number;
   @Input()
   style?: StyleLike | FlatStyleLike | undefined;
   @Input()
-  features: Collection<Feature>;
+  features?: Collection<Feature>;
   @Input()
   wrapX?: boolean;
   @Input()
   source?: Vector;
+  @Input()
+  hitDetection?: boolean | BaseVectorLayer<any, any, any>;
+  @Input()
+  snapToPointer: boolean;
 
   @Output()
   olChange = new EventEmitter<BaseEvent>();

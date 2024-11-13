@@ -73,6 +73,7 @@ import { KeyboardPanInteractionComponent } from './lib/interactions/keyboardpan.
 import { KeyboardZoomInteractionComponent } from './lib/interactions/keyboardzoom.component';
 import { SelectInteractionComponent } from './lib/interactions/select.component';
 import { ModifyInteractionComponent } from './lib/interactions/modify.component';
+import { SnapInteractionComponent } from './lib/interactions/snap.component';
 import { TranslateInteractionComponent } from './lib/interactions/translate.component';
 import { OverlayComponent } from './lib/overlay.component';
 import { ContentComponent } from './lib/content.component';
@@ -154,6 +155,7 @@ export {
   KeyboardZoomInteractionComponent,
   SelectInteractionComponent,
   ModifyInteractionComponent,
+  SnapInteractionComponent,
   TranslateInteractionComponent,
   OverlayComponent,
   ContentComponent,
@@ -237,6 +239,7 @@ const COMPONENTS = [
   DrawInteractionComponent,
   SelectInteractionComponent,
   ModifyInteractionComponent,
+  SnapInteractionComponent,
   TranslateInteractionComponent,
 
   OverlayComponent,
