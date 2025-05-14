@@ -57,7 +57,7 @@ npm version patch --no-git-tag-version
 
 Push changes to GitHub
 Create a release with title new version number, e.g. v18.x.x
-Package will be automattically published to NPM
+Package will be automatically published to NPM
 
 To manually publish to npm:
 
