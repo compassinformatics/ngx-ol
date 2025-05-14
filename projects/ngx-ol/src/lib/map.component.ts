@@ -10,6 +10,7 @@ import {
   OnChanges,
   ContentChildren,
   QueryList,
+  NgZone,
 } from '@angular/core';
 import { Map } from 'ol';
 import MapBrowserEvent from 'ol/MapBrowserEvent';
@@ -45,6 +46,8 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
   logo: string | boolean;
   @Input()
   renderer: 'canvas' | 'webgl';
+  @Input()
+  runOutsideAngular = false;
 
   @Output()
   olChange = new EventEmitter<BaseEvent>();
@@ -96,63 +99,66 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
   controls: Control[] = [];
   interactions: Interaction[] = [];
 
-  constructor(private host: ElementRef) {}
+  constructor(private host: ElementRef, private ngZone: NgZone) {}
 
   ngOnInit() {
-    // console.log('creating ol.Map instance with:', this);
-    this.instance = new Map(this);
-    this.instance.setTarget(this.host.nativeElement.firstElementChild);
-    this.instance.on('change', (event: BaseEvent) => this.olChange.emit(event));
-    this.instance.on('change:layergroup', (event: ObjectEvent) =>
-      this.olChangeLayerGroup.emit(event),
-    );
-    this.instance.on('change:size', (event: ObjectEvent) => this.olChangeSize.emit(event));
-    this.instance.on('change:target', (event: ObjectEvent) => this.olChangeTarget.emit(event));
-    this.instance.on('change:view', (event: ObjectEvent) => this.olChangeView.emit(event));
-    this.instance.on('error', (event: BaseEvent) => this.olError.emit(event));
-    this.instance.on('loadend', (event: MapEvent) => this.loadEnd.emit(event));
-    this.instance.on('loadstart', (event: MapEvent) => this.loadStart.emit(event));
-    this.instance.on('moveend', (event: MapEvent) => this.moveEnd.emit(event));
-    this.instance.on('movestart', (event: MapEvent) => this.moveStart.emit(event));
-    this.instance.on('pointerdrag', (event: MapBrowserEvent<MouseEvent>) =>
-      this.pointerDrag.emit(event),
-    );
-    this.instance.on('pointermove', (event: MapBrowserEvent<MouseEvent>) =>
-      this.pointerMove.emit(event),
-    );
-    this.instance.on('postcompose', (event: RenderEvent) => this.olPostCompose.emit(event));
-    this.instance.on('postrender', (event: RenderEvent) => this.olPostRender.emit(event));
-    this.instance.on('postrender', (event: MapEvent) => this.postRender.emit(event));
-    this.instance.on('precompose', (event: RenderEvent) => this.olPreCompose.emit(event));
+    const initMap = () => {
+      this.instance = new Map(this);
+      this.instance.setTarget(this.host.nativeElement.firstElementChild);
+      this.instance.on('change', (event: BaseEvent) => this.olChange.emit(event));
+      this.instance.on('change:layergroup', (event: ObjectEvent) =>
+        this.olChangeLayerGroup.emit(event),
+      );
+      this.instance.on('change:size', (event: ObjectEvent) => this.olChangeSize.emit(event));
+      this.instance.on('change:target', (event: ObjectEvent) => this.olChangeTarget.emit(event));
+      this.instance.on('change:view', (event: ObjectEvent) => this.olChangeView.emit(event));
+      this.instance.on('error', (event: BaseEvent) => this.olError.emit(event));
+      this.instance.on('loadend', (event: MapEvent) => this.loadEnd.emit(event));
+      this.instance.on('loadstart', (event: MapEvent) => this.loadStart.emit(event));
+      this.instance.on('moveend', (event: MapEvent) => this.moveEnd.emit(event));
+      this.instance.on('movestart', (event: MapEvent) => this.moveStart.emit(event));
+      this.instance.on('pointerdrag', (event: MapBrowserEvent<MouseEvent>) =>
+        this.pointerDrag.emit(event),
+      );
+      this.instance.on('pointermove', (event: MapBrowserEvent<MouseEvent>) =>
+        this.pointerMove.emit(event),
+      );
+      this.instance.on('postcompose', (event: RenderEvent) => this.olPostCompose.emit(event));
+      this.instance.on('postrender', (event: RenderEvent) => this.olPostRender.emit(event));
+      this.instance.on('postrender', (event: MapEvent) => this.postRender.emit(event));
+      this.instance.on('precompose', (event: RenderEvent) => this.olPreCompose.emit(event));
+      this.instance.on('propertychange', (event: ObjectEvent) => this.olPropertyChange.emit(event));
 
-    this.instance.on('propertychange', (event: ObjectEvent) => this.olPropertyChange.emit(event));
-
-    // this.instance.on('click', (event: MapBrowserEvent<MouseEvent>) => this.olClick.emit(event));
-    // this.instance.on('dblclick', (event: MapBrowserEvent<MouseEvent>) => this.dblClick.emit(event));
-    // this.instance.on('singleclick', (event: MapBrowserEvent<MouseEvent>) => this.singleClick.emit(event));
-    const handleFeatureClick = (
-      event: MapBrowserEvent<MouseEvent>,
-      type: 'olClick' | 'singleClick' | 'dblClick',
-    ) => {
-      this.instance.forEachFeatureAtPixel(event.pixel, (feature) => {
-        const featureComponent = feature.get('__aol-feature');
-        if (featureComponent) {
-          featureComponent[type].emit({ event, feature: featureComponent.instance });
-        }
+      const handleFeatureClick = (
+        event: MapBrowserEvent<MouseEvent>,
+        type: 'olClick' | 'singleClick' | 'dblClick',
+      ) => {
+        this.instance.forEachFeatureAtPixel(event.pixel, (feature) => {
+          const featureComponent = feature.get('__aol-feature');
+          if (featureComponent) {
+            featureComponent[type].emit({ event, feature: featureComponent.instance });
+          }
+        });
+      };
+      this.instance.on('click', (event: MapBrowserEvent<MouseEvent>) => {
+        this.olClick.emit(event);
+        handleFeatureClick(event, 'olClick');
+      });
+      this.instance.on('singleclick', (event: MapBrowserEvent<MouseEvent>) => {
+        this.singleClick.emit(event);
+        handleFeatureClick(event, 'singleClick');
+      });
+      this.instance.on('dblclick', (event: MapBrowserEvent<MouseEvent>) => {
+        this.dblClick.emit(event);
+        handleFeatureClick(event, 'dblClick');
       });
     };
-    this.instance.on('click', (event: MapBrowserEvent<MouseEvent>) => {
-      this.olClick.emit(event);
-      handleFeatureClick(event, 'olClick');
-    });
-    this.instance.on('singleclick', (event: MapBrowserEvent<MouseEvent>) => {
-      this.singleClick.emit(event);
-      handleFeatureClick(event, 'singleClick');
-    });
-    this.instance.on('dblclick', (event: MapBrowserEvent<MouseEvent>) => {
-      this.dblClick.emit(event);
-      handleFeatureClick(event, 'dblClick');
-    });
+
+    if (this.runOutsideAngular) {
+      this.ngZone.runOutsideAngular(initMap);
+    } else {
+      initMap();
+    }
   }
 
   ngOnChanges(changes: SimpleChanges) {
