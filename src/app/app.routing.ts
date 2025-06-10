@@ -25,6 +25,8 @@ import { TileJsonComponent } from './tile-json/tile-json.component';
 import { SelectInteractionComponent } from './select-interaction/select-interaction.component';
 import { ImageStaticComponent } from './image-static/image-static.component';
 import { GraticuleComponent } from './graticule/graticule.component';
+import { OGCVectorTileComponent } from './ogc-vectortile/ocg-vectortile.component';
+import { OGCMapTileComponent } from './ogc-maptile/ocg-maptile.component';
 
 const routes: Routes = [
   { path: '', component: ExamplesListComponent },
@@ -55,6 +57,8 @@ const routes: Routes = [
       { path: 'select-interaction', component: SelectInteractionComponent },
       { path: 'tile-json', component: TileJsonComponent },
       { path: 'graticule', component: GraticuleComponent },
+      { path: 'ogcvectortile', component: OGCVectorTileComponent },
+      { path: 'ogcmaptile', component: OGCMapTileComponent },
     ],
   },
   { path: '**', redirectTo: '' },

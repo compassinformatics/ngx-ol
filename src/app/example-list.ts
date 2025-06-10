@@ -139,4 +139,18 @@ export const examplesList = [
     routerLink: 'graticule',
     openLayersLink: 'https://openlayers.org/en/latest/examples/graticule.html',
   },
+  {
+    title: 'OGC Vector Tile',
+    description:
+      'Example of using aol-source-ogcvectortile.',
+    routerLink: 'ogcvectortile',
+    openLayersLink: 'https://openlayers.org/en/latest/examples/ogc-vector-tiles.html',
+  },
+  {
+    title: 'OGC Map Tile',
+    description:
+      'Example of using aol-source-ogcmaptile.',
+    routerLink: 'ogcmaptile',
+    openLayersLink: 'https://openlayers.org/en/latest/examples/ogc-map-tiles.html',
+  },
 ];

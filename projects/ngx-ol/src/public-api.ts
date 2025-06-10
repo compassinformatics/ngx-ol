@@ -81,6 +81,9 @@ import { AttributionsComponent } from './lib/attributions.component';
 import { AttributionComponent } from './lib/attribution.component';
 import { SourceUTFGridComponent } from './lib/sources/utfgrid.component';
 import { LayerComponent } from './lib/layers/layer.component';
+import { SourceOGCMapTileComponent } from './lib/sources/ogcmaptile.component';
+import { SourceOGCVectorTileComponent } from './lib/sources/ogcvectortile.component';
+import { FormatGeoJSONComponent } from './lib/formats/geojson.component';
 
 export {
   MapComponent,
@@ -109,6 +112,8 @@ export {
   SourceImageWMSComponent,
   SourceRasterComponent,
   SourceImageArcGISRestComponent,
+  SourceOGCMapTileComponent,
+  SourceOGCVectorTileComponent,
   SimpleGeometryComponent,
   FeatureComponent,
   GeometryLinestringComponent,
@@ -138,6 +143,7 @@ export {
   ControlZoomSliderComponent,
   ControlZoomToExtentComponent,
   FormatMVTComponent,
+  FormatGeoJSONComponent,
   TileGridComponent,
   TileGridWMTSComponent,
   DefaultInteractionComponent,
@@ -191,6 +197,8 @@ const COMPONENTS = [
   SourceImageWMSComponent,
   SourceImageArcGISRestComponent,
   SourceRasterComponent,
+  SourceOGCMapTileComponent,
+  SourceOGCVectorTileComponent,
 
   FeatureComponent,
   GeometryLinestringComponent,
@@ -223,6 +231,7 @@ const COMPONENTS = [
   ControlZoomToExtentComponent,
 
   FormatMVTComponent,
+  FormatGeoJSONComponent,
   TileGridComponent,
   TileGridWMTSComponent,
 

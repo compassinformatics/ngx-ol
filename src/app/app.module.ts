@@ -30,6 +30,8 @@ import { SwipeComponent } from './swipe/swipe.component';
 import { TileJsonComponent } from './tile-json/tile-json.component';
 import { UTFGridComponent } from './utfgrid/utfgrid.component';
 import { ViewProjectionUpdateComponent } from './view-projection-update/view-projection-update.component';
+import { OGCVectorTileComponent } from './ogc-vectortile/ocg-vectortile.component';
+import { OGCMapTileComponent } from './ogc-maptile/ocg-maptile.component';
 
 @NgModule({
   declarations: [
@@ -59,6 +61,8 @@ import { ViewProjectionUpdateComponent } from './view-projection-update/view-pro
     OverviewComponent,
     ViewProjectionUpdateComponent,
     GraticuleComponent,
+    OGCVectorTileComponent,
+    OGCMapTileComponent
   ],
   imports: [
     BrowserModule,

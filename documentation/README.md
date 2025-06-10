@@ -53,9 +53,7 @@ the map.
 Here is a simple example, based on OpenStreetMap tiles source:
  ```html
 <aol-map [width]="'500px'" [height]="'300px'">
-    <aol-view [zoom]="2">
-        <aol-coordinate [x]="5.795122" [y]="45.210225" [srid]="'EPSG:4326'"></aol-coordinate>
-    </aol-view>
+    <aol-view [zoom]="9" [center]="[-907904, 7065770]"></aol-view>
     <aol-layer-tile>
         <aol-source-osm></aol-source-osm>
     </aol-layer-tile>
@@ -69,6 +67,9 @@ _i.e._ coordinates on which the map is centered, and a zoom level or extent.
 
 Available parameters are:
 
+- `center` (`Coordinate`) The center coordinate of the view. Values should be in the projection of the view. The default projection is EPSG:3857.
+- `projection` (`ProjectionLike`) The projection to use for the map/view. The default projection is EPSG:3857
+projection: ProjectionLike;
 - `constrainRotation` (`boolean|number|undefined`) Rotation constraint. false means no constraint. true means no constraint, but snap to zero near zero. A number constrains the rotation to that number of values. For example, 4 will constrain the rotation to 0, 90, 180, and 270 degrees. Defaults to `true`.
 - `enableRotation` (`boolean|undefined`) Enable rotation. If false a rotation constraint that always sets the rotation to zero is used. The constrainRotation option has no effect if enableRotation is false. Defaults to `true`.
 - `extent` (`ol.Extent|undefined`) extent that constrains the center, in other words, center cannot be set outside this extent. Defaults to `undefined`.
@@ -85,6 +86,10 @@ Available parameters are:
 ### View component example
 
 ```html
+<aol-view [zoom]="9" [center]="[-907904, 7065770]"></aol-view>
+
+OR
+
 <aol-view [zoom]="15">
     <aol-coordinate [x]="5" [y]="45" [srid]="'EPSG:4326'"></aol-coordinate>
 </aol-view>
