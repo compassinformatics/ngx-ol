@@ -11,11 +11,13 @@ export class FormatMVTComponent {
   @Input()
   featureClass: FeatureClass;
   @Input()
-  geometryName: string;
+  geometryName?: string;
   @Input()
-  layerName: string;
+  layerName?: string;
   @Input()
-  layers: string[];
+  layers?: string[];
+  @Input()
+  idProperty?: string;
 
   public componentType = 'format';
 

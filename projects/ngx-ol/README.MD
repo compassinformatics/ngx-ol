@@ -17,10 +17,8 @@ npm install @compassinformatics/ngx-ol --save
 Here is a "minimal" map example that fetches tiles from OpenStreetMap and center the map in Meylan (France):
 
 ```html
-<aol-map [width]="'500px'" [height]="'300'">
-  <aol-view [zoom]="2">
-    <aol-coordinate [x]="5.795122" [y]="45.210225" [srid]="'EPSG:4326'"></aol-coordinate>
-  </aol-view>
+<aol-map [width]="'500px'" [height]="'300px'">
+  <aol-view [zoom]="9" [center]="[-907904, 7065770]"></aol-view>
   <aol-layer-tile>
     <aol-source-osm></aol-source-osm>
   </aol-layer-tile>

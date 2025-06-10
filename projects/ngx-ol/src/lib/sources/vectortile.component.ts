@@ -3,11 +3,13 @@ import { VectorTile } from 'ol/source';
 import Feature from 'ol/format/Feature';
 import TileGrid from 'ol/tilegrid/TileGrid';
 import { LayerVectorTileComponent } from '../layers/layervectortile.component';
-import { FormatComponent } from '../formats/format.component';
 import { TileGridComponent } from '../tilegrid.component';
 import { SourceComponent } from './source.component';
 import { ProjectionLike } from 'ol/proj';
 import { LoadFunction, UrlFunction } from 'ol/Tile';
+import { FormatGeoJSONComponent } from '../formats/geojson.component';
+import { FormatMVTComponent } from '../formats/mvt.component';
+import FeatureFormat from 'ol/format/Feature';
 
 @Component({
   selector: 'aol-source-vectortile',
@@ -35,26 +37,34 @@ export class SourceVectorTileComponent extends SourceComponent implements AfterC
   urls?: string[];
   @Input()
   wrapX: boolean;
+  @Input()
+  format?: any;
 
-  @ContentChild(FormatComponent, { static: false })
-  formatComponent: FormatComponent;
+  @ContentChild(FormatMVTComponent, { static: false })
+  formatMVTComponent: FormatMVTComponent;
+  @ContentChild(FormatGeoJSONComponent, { static: false })
+  formatGeoJSONComponent: FormatGeoJSONComponent;
   @ContentChild(TileGridComponent, { static: false })
   tileGridComponent: TileGridComponent;
 
   public instance: VectorTile;
-  format: Feature;
   tileGrid: TileGrid;
 
   constructor(@Host() layer: LayerVectorTileComponent) {
     super(layer);
   }
 
-  /* need the children to construct the OL3 object */
   ngAfterContentInit() {
-    this.format = this.formatComponent.instance;
+    let format: any = this.format;
+    if (this.formatMVTComponent) {
+      format = this.formatMVTComponent.instance;
+    }
+    if (this.formatGeoJSONComponent) {
+      format = this.formatGeoJSONComponent.instance;
+    }
     this.tileGrid = this.tileGridComponent.instance;
-    // console.log('creating ol.source.VectorTile instance with:', this);
-    this.instance = new VectorTile(this);
+
+    this.instance = new VectorTile(Object.assign({format}, this));
     this.host.instance.setSource(this.instance);
   }
 }
