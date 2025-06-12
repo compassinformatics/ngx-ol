@@ -56,7 +56,6 @@ export class SourceVectorComponent extends SourceComponent implements OnInit, On
     const { features } = changes;
 
     if (features?.currentValue && this.instance) {
-      console.log('features change');
       this.instance.clear();
       this.instance.addFeatures(features.currentValue);
     }
