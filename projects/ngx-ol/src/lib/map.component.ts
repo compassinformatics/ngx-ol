@@ -117,10 +117,9 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
       this.instance.on('loadstart', (event: MapEvent) => this.loadStart.emit(event));
       this.instance.on('moveend', (event: MapEvent) => this.moveEnd.emit(event));
       this.instance.on('movestart', (event: MapEvent) => this.moveStart.emit(event));
-      this.instance.on('pointerdrag', (event: MapBrowserEvent<MouseEvent>|any) => {
-          console.log(event);
-          this.pointerDrag.emit(event);
-      });
+      this.instance.on('pointerdrag', (event: MapBrowserEvent<MouseEvent>|any) =>
+        this.pointerDrag.emit(event),
+      );
       this.instance.on('pointermove', (event: MapBrowserEvent<MouseEvent>|any) =>
         this.pointerMove.emit(event),
       );
