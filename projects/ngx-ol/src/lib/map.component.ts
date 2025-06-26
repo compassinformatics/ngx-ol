@@ -47,7 +47,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
   @Input()
   renderer: 'canvas' | 'webgl';
   @Input()
-  runOutsideAngular = false;
+  runOutsideAngular = true;
 
   @Output()
   olChange = new EventEmitter<BaseEvent>();
@@ -60,9 +60,9 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
   @Output()
   olChangeView = new EventEmitter<ObjectEvent>();
   @Output()
-  olClick = new EventEmitter<MapBrowserEvent<MouseEvent>>();
+  olClick = new EventEmitter<MapBrowserEvent<MouseEvent>|any>();
   @Output()
-  dblClick = new EventEmitter<MapBrowserEvent<MouseEvent>>();
+  dblClick = new EventEmitter<MapBrowserEvent<MouseEvent>|any>();
   @Output()
   olError = new EventEmitter<BaseEvent>();
   @Output()
@@ -74,9 +74,9 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
   @Output()
   moveStart = new EventEmitter<MapEvent>();
   @Output()
-  pointerDrag = new EventEmitter<MapBrowserEvent<MouseEvent>>();
+  pointerDrag = new EventEmitter<MapBrowserEvent<MouseEvent>|any>();
   @Output()
-  pointerMove = new EventEmitter<MapBrowserEvent<MouseEvent>>();
+  pointerMove = new EventEmitter<MapBrowserEvent<MouseEvent>|any>();
   @Output()
   olPostCompose = new EventEmitter<RenderEvent>();
   @Output()
@@ -90,7 +90,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
   @Output()
   propertyChange = new EventEmitter<ObjectEvent>();
   @Output()
-  singleClick = new EventEmitter<MapBrowserEvent<MouseEvent>>();
+  singleClick = new EventEmitter<MapBrowserEvent<MouseEvent>|any>();
 
   public instance: Map;
   public componentType = 'map';
@@ -117,10 +117,11 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
       this.instance.on('loadstart', (event: MapEvent) => this.loadStart.emit(event));
       this.instance.on('moveend', (event: MapEvent) => this.moveEnd.emit(event));
       this.instance.on('movestart', (event: MapEvent) => this.moveStart.emit(event));
-      this.instance.on('pointerdrag', (event: MapBrowserEvent<MouseEvent>) =>
-        this.pointerDrag.emit(event),
-      );
-      this.instance.on('pointermove', (event: MapBrowserEvent<MouseEvent>) =>
+      this.instance.on('pointerdrag', (event: MapBrowserEvent<MouseEvent>|any) => {
+          console.log(event);
+          this.pointerDrag.emit(event);
+      });
+      this.instance.on('pointermove', (event: MapBrowserEvent<MouseEvent>|any) =>
         this.pointerMove.emit(event),
       );
       this.instance.on('postcompose', (event: RenderEvent) => this.olPostCompose.emit(event));
@@ -130,7 +131,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
       this.instance.on('propertychange', (event: ObjectEvent) => this.olPropertyChange.emit(event));
 
       const handleFeatureClick = (
-        event: MapBrowserEvent<MouseEvent>,
+        event: MapBrowserEvent<MouseEvent>|any,
         type: 'olClick' | 'singleClick' | 'dblClick',
       ) => {
         this.instance.forEachFeatureAtPixel(event.pixel, (feature) => {
@@ -140,15 +141,15 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
           }
         });
       };
-      this.instance.on('click', (event: MapBrowserEvent<MouseEvent>) => {
+      this.instance.on('click', (event: MapBrowserEvent<MouseEvent>|any) => {
         this.olClick.emit(event);
         handleFeatureClick(event, 'olClick');
       });
-      this.instance.on('singleclick', (event: MapBrowserEvent<MouseEvent>) => {
+      this.instance.on('singleclick', (event: MapBrowserEvent<MouseEvent>|any) => {
         this.singleClick.emit(event);
         handleFeatureClick(event, 'singleClick');
       });
-      this.instance.on('dblclick', (event: MapBrowserEvent<MouseEvent>) => {
+      this.instance.on('dblclick', (event: MapBrowserEvent<MouseEvent>|any) => {
         this.dblClick.emit(event);
         handleFeatureClick(event, 'dblClick');
       });

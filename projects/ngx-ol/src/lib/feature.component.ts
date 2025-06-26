@@ -29,11 +29,11 @@ export class FeatureComponent implements OnInit, OnDestroy, OnChanges {
   clickable: boolean;
 
   @Output()
-  olClick = new EventEmitter<{ event: MapBrowserEvent<MouseEvent>; feature: Feature }>();
+  olClick = new EventEmitter<{ event: MapBrowserEvent<MouseEvent>|any; feature: Feature }>();
   @Output()
-  singleClick = new EventEmitter<{ event: MapBrowserEvent<MouseEvent>; feature: Feature }>();
+  singleClick = new EventEmitter<{ event: MapBrowserEvent<MouseEvent>|any; feature: Feature }>();
   @Output()
-  dblClick = new EventEmitter<{ event: MapBrowserEvent<MouseEvent>; feature: Feature }>();
+  dblClick = new EventEmitter<{ event: MapBrowserEvent<MouseEvent>|any; feature: Feature }>();
 
   public componentType = 'feature';
   public instance: Feature;
