@@ -35,7 +35,7 @@ See `/src/app` for examples
 
 TODO
 
-Live example will be viewable at locahost:4200
+Live example will be viewable at localhost:4200
 
 ## Publish to NPM
 
