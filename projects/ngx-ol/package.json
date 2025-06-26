@@ -1,9 +1,9 @@
 {
   "name": "@compassinformatics/ngx-ol",
-  "version": "19.0.0",
+  "version": "20.0.0",
   "peerDependencies": {
-    "@angular/common": ">=18.0.0 <20.0.0",
-    "@angular/core": ">=18.0.0 <20.0.0",
+    "@angular/common": ">=18.0.0 <21.0.0",
+    "@angular/core": ">=18.0.0 <21.0.0",
     "ol": "^10.0.0"
   },
   "dependencies": {
