@@ -57,5 +57,9 @@ export class LayerVectorComponent extends LayerComponent implements OnInit, OnDe
 
   ngOnChanges(changes: SimpleChanges) {
     super.ngOnChanges(changes);
+    const { style } = changes;
+    if (style) {
+      this.instance.setStyle(style.currentValue);
+    }
   }
 }
