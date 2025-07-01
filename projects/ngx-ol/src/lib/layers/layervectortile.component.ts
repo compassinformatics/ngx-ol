@@ -44,7 +44,7 @@ export class LayerVectorTileComponent extends LayerComponent implements OnInit, 
   ngOnChanges(changes: SimpleChanges) {
     super.ngOnChanges(changes);
     const { style } = changes;
-    if (style) {
+    if (style && this.instance) {
       this.instance.setStyle(style.currentValue);
     }
   }
