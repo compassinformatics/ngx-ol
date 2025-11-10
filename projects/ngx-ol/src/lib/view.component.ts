@@ -27,7 +27,7 @@ export class ViewComponent implements OnInit, OnChanges, OnDestroy {
   @Input()
   enableRotation: boolean;
   @Input()
-  extent: Extent;
+  extent: Extent | undefined;
   @Input()
   maxResolution: number;
   @Input()
@@ -37,17 +37,17 @@ export class ViewComponent implements OnInit, OnChanges, OnDestroy {
   @Input()
   minZoom: number;
   @Input()
-  resolution: number;
+  resolution: number | undefined;
   @Input()
   resolutions: number[];
   @Input()
   rotation: number;
   @Input()
-  zoom: number;
+  zoom: number | undefined;
   @Input()
   zoomFactor: number;
   @Input()
-  center: Coordinate;
+  center: Coordinate | undefined;
   @Input()
   projection: ProjectionLike;
   @Input()
