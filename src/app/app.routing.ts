@@ -22,6 +22,7 @@ import { ViewProjectionUpdateComponent } from './view-projection-update/view-pro
 import { UTFGridComponent } from './utfgrid/utfgrid.component';
 import { OverviewComponent } from './overview/overview.component';
 import { TileJsonComponent } from './tile-json/tile-json.component';
+import { TileJsonDynamicComponent } from './tile-json-dynamic/tile-json-dynamic.component';
 import { SelectInteractionComponent } from './select-interaction/select-interaction.component';
 import { ImageStaticComponent } from './image-static/image-static.component';
 import { GraticuleComponent } from './graticule/graticule.component';
@@ -56,6 +57,7 @@ const routes: Routes = [
       { path: 'image-static', component: ImageStaticComponent },
       { path: 'select-interaction', component: SelectInteractionComponent },
       { path: 'tile-json', component: TileJsonComponent },
+      { path: 'tile-json-dynamic', component: TileJsonDynamicComponent },
       { path: 'graticule', component: GraticuleComponent },
       { path: 'ogcvectortile', component: OGCVectorTileComponent },
       { path: 'ogcmaptile', component: OGCMapTileComponent },

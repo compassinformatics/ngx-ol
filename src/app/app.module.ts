@@ -28,6 +28,7 @@ import { SelectInteractionComponent } from './select-interaction/select-interact
 import { SideBySideComponent } from './side-by-side/side-by-side.component';
 import { SwipeComponent } from './swipe/swipe.component';
 import { TileJsonComponent } from './tile-json/tile-json.component';
+import { TileJsonDynamicComponent } from './tile-json-dynamic/tile-json-dynamic.component';
 import { UTFGridComponent } from './utfgrid/utfgrid.component';
 import { ViewProjectionUpdateComponent } from './view-projection-update/view-projection-update.component';
 import { OGCVectorTileComponent } from './ogc-vectortile/ocg-vectortile.component';
@@ -58,11 +59,12 @@ import { OGCMapTileComponent } from './ogc-maptile/ocg-maptile.component';
     SelectInteractionComponent,
     ImageStaticComponent,
     TileJsonComponent,
+    TileJsonDynamicComponent,
     OverviewComponent,
     ViewProjectionUpdateComponent,
     GraticuleComponent,
     OGCVectorTileComponent,
-    OGCMapTileComponent
+    OGCMapTileComponent,
   ],
   imports: [
     BrowserModule,

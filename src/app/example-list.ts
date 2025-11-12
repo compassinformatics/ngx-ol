@@ -128,8 +128,15 @@ export const examplesList = [
   },
   {
     title: 'Tile Json',
-    description: 'Example of using aol-source-tilejson. This example display mapbox json',
+    description: 'Example of using aol-source-tilejson. This example display tile json.',
     routerLink: 'tile-json',
+    openLayersLink: 'https://openlayers.org/en/latest/examples/tilejson.html',
+  },
+  {
+    title: 'Tile Json with Dynamic Source',
+    description:
+      'Example of using aol-source-tilejson with a dynamic source. This example display tile json.',
+    routerLink: 'tile-json-dynamic',
     openLayersLink: 'https://openlayers.org/en/latest/examples/tilejson.html',
   },
   {
@@ -141,15 +148,13 @@ export const examplesList = [
   },
   {
     title: 'OGC Vector Tile',
-    description:
-      'Example of using aol-source-ogcvectortile.',
+    description: 'Example of using aol-source-ogcvectortile.',
     routerLink: 'ogcvectortile',
     openLayersLink: 'https://openlayers.org/en/latest/examples/ogc-vector-tiles.html',
   },
   {
     title: 'OGC Map Tile',
-    description:
-      'Example of using aol-source-ogcmaptile.',
+    description: 'Example of using aol-source-ogcmaptile.',
     routerLink: 'ogcmaptile',
     openLayersLink: 'https://openlayers.org/en/latest/examples/ogc-map-tiles.html',
   },
