@@ -11,6 +11,7 @@ import { Tile } from 'ol/layer';
 import { MapComponent } from '../map.component';
 import { LayerComponent } from './layer.component';
 import { LayerGroupComponent } from './layergroup.component';
+import TileSource from 'ol/source/Tile';
 
 @Component({
   selector: 'aol-layer-tile',
@@ -23,6 +24,8 @@ export class LayerTileComponent extends LayerComponent implements OnInit, OnDest
   useInterimTilesOnError: boolean;
   @Input()
   cacheSize: number;
+  @Input()
+  source?: TileSource;
 
   constructor(map: MapComponent, @Optional() group?: LayerGroupComponent) {
     super(group || map);

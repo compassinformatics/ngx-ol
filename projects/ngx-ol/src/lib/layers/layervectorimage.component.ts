@@ -14,6 +14,7 @@ import { LayerComponent } from './layer.component';
 import { LayerGroupComponent } from './layergroup.component';
 import { BackgroundColor } from 'ol/layer/Base';
 import { FlatStyleLike } from 'ol/style/flat';
+import VectorSource from 'ol/source/Vector';
 
 @Component({
   selector: 'aol-layer-vectorimage',
@@ -40,6 +41,9 @@ export class LayerVectorImageComponent
 
   @Input()
   properties: Record<string, any>;
+
+  @Input()
+  source?: VectorSource;
 
   constructor(map: MapComponent, @Optional() group?: LayerGroupComponent) {
     super(group || map);

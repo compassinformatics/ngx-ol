@@ -7,6 +7,7 @@ import { LayerGroupComponent } from './layergroup.component';
 import { StyleLike } from 'ol/style/Style';
 import { Options } from 'ol/source/VectorTile';
 import { BackgroundColor } from 'ol/layer/Base';
+import VectorSource from 'ol/source/Vector';
 
 @Component({
   selector: 'aol-layer-vectortile',
@@ -30,6 +31,8 @@ export class LayerVectorTileComponent extends LayerComponent implements OnInit, 
   updateWhileInteracting: boolean;
   @Input()
   visible: boolean;
+  @Input()
+  source?: VectorSource;
 
   constructor(map: MapComponent, @Optional() group?: LayerGroupComponent) {
     super(group || map);

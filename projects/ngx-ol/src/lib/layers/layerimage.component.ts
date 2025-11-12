@@ -3,13 +3,16 @@ import { Image } from 'ol/layer';
 import { MapComponent } from '../map.component';
 import { LayerComponent } from './layer.component';
 import { LayerGroupComponent } from './layergroup.component';
-import { Extent } from 'ol/extent';
+import ImageSource from 'ol/source/Image';
 
 @Component({
   selector: 'aol-layer-image',
   template: ` <ng-content></ng-content> `,
 })
 export class LayerImageComponent extends LayerComponent implements OnInit, OnChanges {
+  @Input()
+  source?: ImageSource;
+
   constructor(map: MapComponent, @Optional() group?: LayerGroupComponent) {
     super(group || map);
   }

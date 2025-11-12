@@ -15,6 +15,7 @@ import { LayerGroupComponent } from './layergroup.component';
 import { BackgroundColor } from 'ol/layer/Base';
 import { FlatStyleLike } from 'ol/style/flat';
 import { OrderFunction } from 'ol/render';
+import VectorSource from 'ol/source/Vector';
 
 @Component({
   selector: 'aol-layer-vector',
@@ -44,6 +45,9 @@ export class LayerVectorComponent extends LayerComponent implements OnInit, OnDe
 
   @Input()
   properties: Record<string, any>;
+
+  @Input()
+  source?: VectorSource;
 
   constructor(map: MapComponent, @Optional() group?: LayerGroupComponent) {
     super(group || map);
