@@ -9,6 +9,9 @@ export abstract class SourceComponent implements OnDestroy {
   @Input()
   attributions: any;
 
+  @Input()
+  attributionsCollapsible?: boolean;
+
   public instance: Source;
   public componentType = 'source';
 
