@@ -2,7 +2,7 @@
 
 ## Demo
 
-TODO
+See `/src/app`
 
 ## Installation
 
@@ -33,7 +33,7 @@ See `/src/app` for examples
 
 ## Development
 
-TODO
+`npm start` to build the library and serve the demo app
 
 Live example will be viewable at localhost:4200
 

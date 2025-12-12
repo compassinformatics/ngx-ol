@@ -1,6 +1,6 @@
 {
   "name": "demo-ngx-ol",
-  "version": "21.0.0",
+  "version": "21.0.1",
   "scripts": {
     "ng": "ng",
     "start": "npm run build:lib && ng serve",
@@ -8,8 +8,7 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "npm run  build:lib && ng test",
-    "format": "prettier --write \"**/@(src|e2e)/**/*.ts\"",
-    "release": "npm --cwd projects/ngx-ol release"
+    "format": "prettier --write \"**/@(src|e2e)/**/*.ts\""
   },
   "private": true,
   "dependencies": {
