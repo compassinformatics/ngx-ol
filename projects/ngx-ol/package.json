@@ -1,6 +1,6 @@
 {
   "name": "@compassinformatics/ngx-ol",
-  "version": "21.0.3",
+  "version": "21.0.4",
   "peerDependencies": {
     "@angular/common": ">=18.0.0 <22.0.0",
     "@angular/core": ">=18.0.0 <22.0.0",

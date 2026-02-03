@@ -45,7 +45,7 @@ export class SourceTileWMSComponent extends SourceComponent implements OnChanges
   @Input()
   urls: string[];
   @Input()
-  wrapX: boolean;
+  wrapX?: boolean;
 
   instance: TileWMS;
 
