@@ -39,7 +39,7 @@ export class ViewComponent implements OnInit, OnChanges, OnDestroy {
   @Input()
   resolution?: number;
   @Input()
-  resolutions: number[];
+  resolutions: number[] | undefined;
   @Input()
   rotation: number;
   @Input()
