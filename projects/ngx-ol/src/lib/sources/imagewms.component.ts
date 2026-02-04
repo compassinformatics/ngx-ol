@@ -13,7 +13,6 @@ import { ImageWMS } from 'ol/source';
 import { LayerImageComponent } from '../layers/layerimage.component';
 import { SourceComponent } from './source.component';
 import { ProjectionLike } from 'ol/proj';
-import { AttributionLike } from 'ol/source/Source';
 import { LoadFunction } from 'ol/Image';
 import { ImageSourceEvent } from 'ol/source/Image';
 import { ServerType } from 'ol/source/wms';
@@ -24,8 +23,6 @@ import { ServerType } from 'ol/source/wms';
   providers: [{ provide: SourceComponent, useExisting: forwardRef(() => SourceImageWMSComponent) }],
 })
 export class SourceImageWMSComponent extends SourceComponent implements OnChanges, OnInit {
-  @Input()
-  attributions: AttributionLike;
   @Input()
   crossOrigin?: null | string;
   @Input()

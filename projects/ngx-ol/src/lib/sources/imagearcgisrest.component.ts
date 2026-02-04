@@ -13,7 +13,6 @@ import ImageArcGISRest from 'ol/source/ImageArcGISRest';
 import { LayerImageComponent } from '../layers/layerimage.component';
 import { SourceComponent } from './source.component';
 import { ProjectionLike } from 'ol/proj';
-import { AttributionLike } from 'ol/source/Source';
 import { LoadFunction } from 'ol/Image';
 import { ImageSourceEvent } from 'ol/source/Image';
 
@@ -27,7 +26,6 @@ import { ImageSourceEvent } from 'ol/source/Image';
 export class SourceImageArcGISRestComponent extends SourceComponent implements OnInit, OnChanges {
   @Input() projection?: ProjectionLike | string;
   @Input() url?: string;
-  @Input() attributions: AttributionLike;
   @Input() crossOrigin?: string | null;
   @Input() imageLoadFunction?: LoadFunction;
   @Input() interpolate: boolean;

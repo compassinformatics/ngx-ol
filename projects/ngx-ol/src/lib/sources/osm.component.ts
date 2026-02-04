@@ -9,7 +9,6 @@ import {
   Output,
 } from '@angular/core';
 import { OSM } from 'ol/source';
-import { AttributionLike } from 'ol/source/Source';
 import { TileSourceEvent } from 'ol/source/Tile';
 import { LoadFunction } from 'ol/Tile';
 import { LayerTileComponent } from '../layers/layertile.component';
@@ -22,8 +21,6 @@ import { SourceXYZComponent } from './xyz.component';
   providers: [{ provide: SourceComponent, useExisting: forwardRef(() => SourceOsmComponent) }],
 })
 export class SourceOsmComponent extends SourceXYZComponent implements AfterContentInit {
-  @Input()
-  attributions: AttributionLike;
   @Input()
   cacheSize: number;
   @Input()

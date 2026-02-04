@@ -1,16 +1,9 @@
 import { Component, Host, Input, forwardRef, ContentChild, AfterContentInit } from '@angular/core';
 import { OGCVectorTile } from 'ol/source';
-import Feature from 'ol/format/Feature';
 import TileGrid from 'ol/tilegrid/TileGrid';
 import { LayerVectorTileComponent } from '../layers/layervectortile.component';
-import { TileGridComponent } from '../tilegrid.component';
 import { SourceComponent } from './source.component';
 import { ProjectionLike } from 'ol/proj';
-import FeatureFormat from 'ol/format/Feature';
-import XMLFeature from 'ol/format/XMLFeature';
-import { MVT, WKB } from 'ol/format';
-import JSONFeature from 'ol/format/JSONFeature';
-import TextFeature from 'ol/format/TextFeature';
 import { FormatMVTComponent } from '../formats/mvt.component';
 import { FormatGeoJSONComponent } from '../formats/geojson.component';
 
@@ -25,7 +18,6 @@ export class SourceOGCVectorTileComponent extends SourceComponent implements Aft
   @Input() url: string;
   @Input() context?: any;
   @Input() mediaType?: string;
-  @Input() attributionsCollapsible?: boolean;
   @Input() cacheSize?: number;
   @Input() overlaps?: boolean;
   @Input() projection?: ProjectionLike;
@@ -57,7 +49,7 @@ export class SourceOGCVectorTileComponent extends SourceComponent implements Aft
       format = this.formatGeoJSONComponent.instance;
     }
 
-    this.instance = new OGCVectorTile(Object.assign({format}, this));
+    this.instance = new OGCVectorTile(Object.assign({ format }, this));
     this.host.instance.setSource(this.instance);
   }
 }

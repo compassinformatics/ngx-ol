@@ -14,9 +14,7 @@ import { SourceComponent } from './source.component';
 import { LayerImageComponent } from '../layers/layerimage.component';
 import { ProjectionLike } from 'ol/proj';
 import { Extent } from 'ol/extent';
-import { AttributionLike } from 'ol/source/Source';
 import { LoadFunction } from 'ol/Image';
-import { Size } from 'ol/size';
 import { ImageSourceEvent } from 'ol/source/Image';
 
 @Component({

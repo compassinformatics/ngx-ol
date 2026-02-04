@@ -1,5 +1,5 @@
 import { Input, OnDestroy, Directive } from '@angular/core';
-import Source from 'ol/source/Source';
+import Source, { AttributionLike } from 'ol/source/Source';
 
 import { LayerComponent } from '../layers/layer.component';
 
@@ -7,7 +7,7 @@ import { LayerComponent } from '../layers/layer.component';
 // eslint-disable-next-line @angular-eslint/directive-class-suffix
 export abstract class SourceComponent implements OnDestroy {
   @Input()
-  attributions: any;
+  attributions?: AttributionLike;
 
   @Input()
   attributionsCollapsible?: boolean;
