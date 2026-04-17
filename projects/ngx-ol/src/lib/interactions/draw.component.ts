@@ -13,8 +13,8 @@ import BaseEvent from 'ol/events/Event';
 import { FlatStyleLike } from 'ol/style/flat';
 
 @Component({
-    selector: 'aol-interaction-draw',
-    template: ''
+  selector: 'aol-interaction-draw',
+  template: '',
 })
 export class DrawInteractionComponent implements OnInit, OnDestroy {
   @Input()

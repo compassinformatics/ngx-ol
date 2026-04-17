@@ -5,8 +5,8 @@ import { Condition } from 'ol/events/condition';
 import { EndCondition } from 'ol/interaction/DragBox';
 
 @Component({
-    selector: 'aol-interaction-dragbox',
-    template: ''
+  selector: 'aol-interaction-dragbox',
+  template: '',
 })
 export class DragBoxInteractionComponent implements OnInit, OnDestroy {
   @Input()

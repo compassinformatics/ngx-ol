@@ -4,8 +4,8 @@ import { transform } from 'ol/proj';
 import { AngularOpenlayersModule } from 'ngx-ol';
 
 @Component({
-    selector: 'app-cursor-position',
-    template: `
+  selector: 'app-cursor-position',
+  template: `
     <aol-map #map width="100%" height="100%" (pointerMove)="dispatchCursor($event)">
       <aol-interaction-default></aol-interaction-default>
       <aol-control-defaults></aol-control-defaults>
@@ -24,8 +24,8 @@ import { AngularOpenlayersModule } from 'ngx-ol';
       </div>
     </div>
   `,
-    styles: [
-        `
+  styles: [
+    `
       :host {
         height: 100%;
         display: flex;
@@ -45,8 +45,8 @@ import { AngularOpenlayersModule } from 'ngx-ol';
         flex-direction: column;
       }
     `,
-    ],
-    imports: [AngularOpenlayersModule]
+  ],
+  imports: [AngularOpenlayersModule],
 })
 export class CursorPositionComponent implements OnInit {
   constructor() {}

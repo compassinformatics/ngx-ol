@@ -14,8 +14,8 @@ import { LayerGroupComponent } from './layergroup.component';
 import TileSource from 'ol/source/Tile';
 
 @Component({
-    selector: 'aol-layer-tile',
-    template: ` <ng-content></ng-content> `
+  selector: 'aol-layer-tile',
+  template: ` <ng-content></ng-content> `,
 })
 export class LayerTileComponent extends LayerComponent implements OnInit, OnDestroy, OnChanges {
   @Input()

@@ -2,8 +2,8 @@ import { Component } from '@angular/core';
 import { AngularOpenlayersModule } from 'ngx-ol';
 
 @Component({
-    selector: 'app-tile-json',
-    template: `
+  selector: 'app-tile-json',
+  template: `
     <aol-map #map width="100%" height="100%">
       <aol-view [zoom]="3">
         <aol-coordinate [x]="-2.269282" [y]="46.987247" [srid]="'EPSG:4326'"></aol-coordinate>
@@ -18,7 +18,7 @@ import { AngularOpenlayersModule } from 'ngx-ol';
       </aol-layer-tile>
     </aol-map>
   `,
-    imports: [AngularOpenlayersModule]
+  imports: [AngularOpenlayersModule],
 })
 export class TileJsonComponent {
   constructor() {}

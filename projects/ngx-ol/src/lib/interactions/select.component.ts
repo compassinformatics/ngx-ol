@@ -10,8 +10,8 @@ import { ObjectEvent } from 'ol/Object';
 import BaseEvent from 'ol/events/Event';
 
 @Component({
-    selector: 'aol-interaction-select',
-    template: ''
+  selector: 'aol-interaction-select',
+  template: '',
 })
 export class SelectInteractionComponent implements OnInit, OnDestroy {
   @Input()

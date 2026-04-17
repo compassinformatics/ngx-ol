@@ -7,8 +7,8 @@ import { Coordinate } from 'ol/coordinate';
 import { GeometryLayout } from 'ol/geom/Geometry';
 
 @Component({
-    selector: 'aol-geometry-point',
-    template: ` <ng-content></ng-content> `
+  selector: 'aol-geometry-point',
+  template: ` <ng-content></ng-content> `,
 })
 export class GeometryPointComponent extends SimpleGeometryComponent implements OnInit, OnChanges {
   @Input() coordinates: Coordinate = [0, 0];

@@ -7,8 +7,8 @@ import { Color } from 'ol/color';
 import { ColorLike } from 'ol/colorlike';
 
 @Component({
-    selector: 'aol-style-stroke',
-    template: ` <div class="aol-style-stroke"></div> `
+  selector: 'aol-style-stroke',
+  template: ` <div class="aol-style-stroke"></div> `,
 })
 export class StyleStrokeComponent implements OnInit, OnChanges {
   @Input()

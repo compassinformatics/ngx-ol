@@ -7,8 +7,8 @@ import { AngularOpenlayersModule } from 'ngx-ol';
 import { JsonPipe } from '@angular/common';
 
 @Component({
-    selector: 'app-modify-polygon',
-    template: `
+  selector: 'app-modify-polygon',
+  template: `
     <aol-map #map width="100%" height="100%">
       <aol-interaction-default></aol-interaction-default>
       <aol-interaction-select [wrapX]="true" #select></aol-interaction-select>
@@ -16,15 +16,15 @@ import { JsonPipe } from '@angular/common';
         #modify
         [features]="select.instance.getFeatures()"
         (olModifyEnd)="modifyEnd($event.features.getArray()[0])"
-        >
+      >
       </aol-interaction-modify>
-    
+
       <aol-view [zoom]="5">
         <aol-coordinate [x]="1.4886" [y]="43.5554" [srid]="'EPSG:4326'"></aol-coordinate>
       </aol-view>
-    
+
       <aol-layer-tile [opacity]="1"> <aol-source-osm></aol-source-osm> </aol-layer-tile>
-    
+
       @if (feature) {
         <aol-layer-vector>
           <aol-source-vector>
@@ -33,7 +33,7 @@ import { JsonPipe } from '@angular/common';
                 <aol-collection-coordinates
                   [coordinates]="feature.geometry.coordinates"
                   [srid]="'EPSG:4326'"
-                  >
+                >
                 </aol-collection-coordinates>
               </aol-geometry-polygon>
             </aol-feature>
@@ -41,16 +41,16 @@ import { JsonPipe } from '@angular/common';
         </aol-layer-vector>
       }
     </aol-map>
-    
+
     <div class="info">
       <h3>Result</h3>
       <code>
         <pre>{{ feature | json }}</pre>
       </code>
     </div>
-    `,
-    styles: [
-        `
+  `,
+  styles: [
+    `
       :host {
         height: 100%;
         display: flex;
@@ -65,8 +65,8 @@ import { JsonPipe } from '@angular/common';
         padding: 1rem;
       }
     `,
-    ],
-    imports: [AngularOpenlayersModule, JsonPipe]
+  ],
+  imports: [AngularOpenlayersModule, JsonPipe],
 })
 export class ModifyPolygonComponent implements OnInit {
   constructor() {}

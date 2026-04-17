@@ -2,13 +2,13 @@ import { Component } from '@angular/core';
 import { RouterLink, RouterOutlet } from '@angular/router';
 
 @Component({
-    selector: 'app-root',
-    template: `
+  selector: 'app-root',
+  template: `
     <header><h1 routerLink="/">ngx-ol demo</h1></header>
     <div class="main-container"><router-outlet></router-outlet></div>
   `,
-    styles: [
-        `
+  styles: [
+    `
       header {
         top: 0;
         height: 75px;
@@ -42,7 +42,7 @@ import { RouterLink, RouterOutlet } from '@angular/router';
         overflow: auto;
       }
     `,
-    ],
-    imports: [RouterLink, RouterOutlet]
+  ],
+  imports: [RouterLink, RouterOutlet],
 })
 export class AppComponent {}

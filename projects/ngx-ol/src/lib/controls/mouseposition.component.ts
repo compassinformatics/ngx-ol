@@ -5,8 +5,8 @@ import { CoordinateFormat } from 'ol/coordinate';
 import { ProjectionLike } from 'ol/proj';
 
 @Component({
-    selector: 'aol-control-mouseposition',
-    template: ``
+  selector: 'aol-control-mouseposition',
+  template: ``,
 })
 export class ControlMousePositionComponent implements OnInit, OnDestroy {
   @Input()

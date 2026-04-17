@@ -3,8 +3,8 @@ import { Attribution } from 'ol/control';
 import { MapComponent } from '../map.component';
 
 @Component({
-    selector: 'aol-control-attribution',
-    template: ``
+  selector: 'aol-control-attribution',
+  template: ``,
 })
 export class ControlAttributionComponent implements OnInit, OnDestroy {
   @Input()

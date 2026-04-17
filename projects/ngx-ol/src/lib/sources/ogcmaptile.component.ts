@@ -6,11 +6,11 @@ import { SourceComponent } from './source.component';
 import { LayerTileComponent } from '../layers/layertile.component';
 
 @Component({
-    selector: 'aol-source-ogcmaptile',
-    template: ` <ng-content></ng-content> `,
-    providers: [
-        { provide: SourceComponent, useExisting: forwardRef(() => SourceOGCMapTileComponent) },
-    ]
+  selector: 'aol-source-ogcmaptile',
+  template: ` <ng-content></ng-content> `,
+  providers: [
+    { provide: SourceComponent, useExisting: forwardRef(() => SourceOGCMapTileComponent) },
+  ],
 })
 export class SourceOGCMapTileComponent extends SourceComponent implements AfterContentInit {
   @Input() url: string;

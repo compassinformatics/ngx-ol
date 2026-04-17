@@ -2,8 +2,8 @@ import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MapComponent, ViewComponent, AngularOpenlayersModule } from 'ngx-ol';
 
 @Component({
-    selector: 'app-side-by-side',
-    template: `
+  selector: 'app-side-by-side',
+  template: `
     <aol-map #map [width]="'100%'" [height]="'100%'">
       <aol-interaction-default></aol-interaction-default>
 
@@ -24,8 +24,8 @@ import { MapComponent, ViewComponent, AngularOpenlayersModule } from 'ngx-ol';
       </aol-layer-tile>
     </aol-map>
   `,
-    styles: [
-        `
+  styles: [
+    `
       :host {
         height: 100%;
         display: flex;
@@ -35,8 +35,8 @@ import { MapComponent, ViewComponent, AngularOpenlayersModule } from 'ngx-ol';
         width: 50%;
       }
     `,
-    ],
-    imports: [AngularOpenlayersModule]
+  ],
+  imports: [AngularOpenlayersModule],
 })
 export class SideBySideComponent implements OnInit, AfterViewInit {
   constructor() {}

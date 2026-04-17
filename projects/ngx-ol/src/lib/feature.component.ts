@@ -12,8 +12,8 @@ import { Feature, MapBrowserEvent } from 'ol';
 import { SourceVectorComponent } from './sources/vector.component';
 
 @Component({
-    selector: 'aol-feature',
-    template: ` <ng-content></ng-content> `
+  selector: 'aol-feature',
+  template: ` <ng-content></ng-content> `,
 })
 export class FeatureComponent implements OnInit, OnDestroy, OnChanges {
   @Input()
@@ -29,11 +29,11 @@ export class FeatureComponent implements OnInit, OnDestroy, OnChanges {
   clickable: boolean;
 
   @Output()
-  olClick = new EventEmitter<{ event: MapBrowserEvent<MouseEvent>|any; feature: Feature }>();
+  olClick = new EventEmitter<{ event: MapBrowserEvent<MouseEvent> | any; feature: Feature }>();
   @Output()
-  singleClick = new EventEmitter<{ event: MapBrowserEvent<MouseEvent>|any; feature: Feature }>();
+  singleClick = new EventEmitter<{ event: MapBrowserEvent<MouseEvent> | any; feature: Feature }>();
   @Output()
-  dblClick = new EventEmitter<{ event: MapBrowserEvent<MouseEvent>|any; feature: Feature }>();
+  dblClick = new EventEmitter<{ event: MapBrowserEvent<MouseEvent> | any; feature: Feature }>();
 
   public componentType = 'feature';
   public instance: Feature;

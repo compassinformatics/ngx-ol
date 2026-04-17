@@ -4,21 +4,20 @@ import { Fill, Stroke, Style } from 'ol/style';
 import { Layer } from 'ol/layer';
 import { Feature, MapBrowserEvent } from 'ol';
 
-
 @Component({
-    selector: 'app-color-select-hover',
-    template: `
+  selector: 'app-color-select-hover',
+  template: `
     <aol-map #map (pointerMove)="changeFeatureHovered($event)" width="100%" height="100%">
       <aol-interaction-default></aol-interaction-default>
       <aol-control-defaults></aol-control-defaults>
       <aol-interaction-select #select [style]="styleInteratiselected"></aol-interaction-select>
-    
+
       <aol-view [zoom]="5">
         <aol-coordinate [x]="1.4886" [y]="43.5554" [srid]="'EPSG:4326'"></aol-coordinate>
       </aol-view>
-    
+
       <aol-layer-tile [opacity]="1"> <aol-source-osm></aol-source-osm> </aol-layer-tile>
-    
+
       <aol-layer-group>
         @for (f of features.features; track f) {
           <aol-layer-vector #aoiLayerVector>
@@ -47,8 +46,8 @@ import { Feature, MapBrowserEvent } from 'ol';
         }
       </aol-layer-group>
     </aol-map>
-    `,
-    imports: [AngularOpenlayersModule]
+  `,
+  imports: [AngularOpenlayersModule],
 })
 export class ColorSelectHoverComponent implements OnInit {
   constructor() {}

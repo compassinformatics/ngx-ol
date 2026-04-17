@@ -12,8 +12,8 @@ import { StyleComponent } from './style.component';
 import ImageStyle from 'ol/style/Image';
 
 @Component({
-    selector: 'aol-style-circle',
-    template: ` <ng-content></ng-content> `
+  selector: 'aol-style-circle',
+  template: ` <ng-content></ng-content> `,
 })
 export class StyleCircleComponent implements AfterContentInit, OnChanges, OnDestroy {
   @Input()

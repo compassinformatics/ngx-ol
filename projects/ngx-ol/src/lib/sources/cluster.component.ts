@@ -19,9 +19,9 @@ import { SourceVectorComponent } from './vector.component';
 import { LayerVectorImageComponent } from '../layers/layervectorimage.component';
 
 @Component({
-    selector: 'aol-source-cluster',
-    template: ` <ng-content></ng-content> `,
-    providers: [{ provide: SourceComponent, useExisting: forwardRef(() => SourceClusterComponent) }]
+  selector: 'aol-source-cluster',
+  template: ` <ng-content></ng-content> `,
+  providers: [{ provide: SourceComponent, useExisting: forwardRef(() => SourceClusterComponent) }],
 })
 export class SourceClusterComponent extends SourceComponent implements AfterContentInit, OnChanges {
   @Input()

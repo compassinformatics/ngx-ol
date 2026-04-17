@@ -6,8 +6,8 @@ import { Coordinate } from 'ol/coordinate';
 import { Size } from 'ol/size';
 
 @Component({
-    selector: 'aol-tilegrid',
-    template: ''
+  selector: 'aol-tilegrid',
+  template: '',
 })
 export class TileGridComponent implements OnInit, OnChanges {
   @Input()

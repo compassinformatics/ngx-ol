@@ -18,8 +18,8 @@ import BaseEvent from 'ol/events/Event';
 import { ProjectionLike } from 'ol/proj';
 
 @Component({
-    selector: 'aol-view',
-    template: ` <ng-content></ng-content> `
+  selector: 'aol-view',
+  template: ` <ng-content></ng-content> `,
 })
 export class ViewComponent implements OnInit, OnChanges, OnDestroy {
   @Input()

@@ -12,11 +12,11 @@ import { FormatMVTComponent } from '../formats/mvt.component';
 import FeatureFormat from 'ol/format/Feature';
 
 @Component({
-    selector: 'aol-source-vectortile',
-    template: ` <ng-content></ng-content> `,
-    providers: [
-        { provide: SourceComponent, useExisting: forwardRef(() => SourceVectorTileComponent) },
-    ]
+  selector: 'aol-source-vectortile',
+  template: ` <ng-content></ng-content> `,
+  providers: [
+    { provide: SourceComponent, useExisting: forwardRef(() => SourceVectorTileComponent) },
+  ],
 })
 export class SourceVectorTileComponent extends SourceComponent implements AfterContentInit {
   @Input()
@@ -64,7 +64,7 @@ export class SourceVectorTileComponent extends SourceComponent implements AfterC
     }
     this.tileGrid = this.tileGridComponent.instance;
 
-    this.instance = new VectorTile(Object.assign({format}, this));
+    this.instance = new VectorTile(Object.assign({ format }, this));
     this.host.instance.setSource(this.instance);
   }
 }

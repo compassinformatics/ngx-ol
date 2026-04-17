@@ -8,8 +8,8 @@ import { Options as ZoomOptions } from 'ol/control/Zoom';
 import { MapComponent } from '../map.component';
 
 @Component({
-    selector: 'aol-control-defaults',
-    template: ''
+  selector: 'aol-control-defaults',
+  template: '',
 })
 export class DefaultControlComponent implements OnInit, OnDestroy {
   @Input()

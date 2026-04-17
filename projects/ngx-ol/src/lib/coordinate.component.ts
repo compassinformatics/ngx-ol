@@ -8,8 +8,8 @@ import { OverlayComponent } from './overlay.component';
 import { ObjectEvent } from 'ol/Object';
 
 @Component({
-    selector: 'aol-coordinate',
-    template: ` <div class="aol-coordinate"></div> `
+  selector: 'aol-coordinate',
+  template: ` <div class="aol-coordinate"></div> `,
 })
 export class CoordinateComponent implements OnChanges, OnInit {
   @Input()

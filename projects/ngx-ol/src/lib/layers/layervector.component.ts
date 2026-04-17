@@ -18,8 +18,8 @@ import { OrderFunction } from 'ol/render';
 import VectorSource from 'ol/source/Vector';
 
 @Component({
-    selector: 'aol-layer-vector',
-    template: ` <ng-content></ng-content> `
+  selector: 'aol-layer-vector',
+  template: ` <ng-content></ng-content> `,
 })
 export class LayerVectorComponent extends LayerComponent implements OnInit, OnDestroy, OnChanges {
   @Input()

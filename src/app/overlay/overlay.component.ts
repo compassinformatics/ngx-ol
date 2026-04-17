@@ -6,8 +6,8 @@ import { Geometry } from 'ol/geom';
 import { AngularOpenlayersModule } from 'ngx-ol';
 
 @Component({
-    selector: 'app-display-overlay',
-    template: `
+  selector: 'app-display-overlay',
+  template: `
     <aol-map #map width="100%" height="100%">
       <aol-interaction-default></aol-interaction-default>
       <aol-control-defaults></aol-control-defaults>
@@ -39,8 +39,8 @@ import { AngularOpenlayersModule } from 'ngx-ol';
       </aol-overlay>
     </aol-map>
   `,
-    styles: [
-        `
+  styles: [
+    `
       .tooltip {
         margin-top: 35%;
         right: 50%;
@@ -57,8 +57,8 @@ import { AngularOpenlayersModule } from 'ngx-ol';
         border: 1px solid white;
       }
     `,
-    ],
-    imports: [AngularOpenlayersModule]
+  ],
+  imports: [AngularOpenlayersModule],
 })
 export class OverlayComponent implements OnInit {
   constructor() {}

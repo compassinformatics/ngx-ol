@@ -17,8 +17,8 @@ import { FlatStyleLike } from 'ol/style/flat';
 import VectorSource from 'ol/source/Vector';
 
 @Component({
-    selector: 'aol-layer-vectorimage',
-    template: ` <ng-content></ng-content> `
+  selector: 'aol-layer-vectorimage',
+  template: ` <ng-content></ng-content> `,
 })
 export class LayerVectorImageComponent
   extends LayerComponent

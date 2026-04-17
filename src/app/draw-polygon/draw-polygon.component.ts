@@ -7,8 +7,8 @@ import { AngularOpenlayersModule } from 'ngx-ol';
 import { JsonPipe } from '@angular/common';
 
 @Component({
-    selector: 'app-draw-polygon',
-    template: `
+  selector: 'app-draw-polygon',
+  template: `
     <aol-map #map width="100%" height="100%">
       <aol-interaction-default></aol-interaction-default>
       @if (isDrawing) {
@@ -16,16 +16,16 @@ import { JsonPipe } from '@angular/common';
           type="Circle"
           [geometryFunction]="drawBoxGeometryFunction"
           (drawEnd)="endDraw($event.feature)"
-          >
+        >
         </aol-interaction-draw>
       }
-    
+
       <aol-view [zoom]="5">
         <aol-coordinate [x]="1.4886" [y]="43.5554" [srid]="'EPSG:4326'"></aol-coordinate>
       </aol-view>
-    
+
       <aol-layer-tile [opacity]="1"> <aol-source-osm></aol-source-osm> </aol-layer-tile>
-    
+
       @if (feature) {
         <aol-layer-vector>
           <aol-source-vector>
@@ -39,7 +39,7 @@ import { JsonPipe } from '@angular/common';
         </aol-layer-vector>
       }
     </aol-map>
-    
+
     <div class="info">
       <div class="draw-section">
         <button (click)="drawMode()">{{ isDrawing ? 'End draw' : 'Start draw' }}</button>
@@ -49,9 +49,9 @@ import { JsonPipe } from '@angular/common';
         </code>
       </div>
     </div>
-    `,
-    styles: [
-        `
+  `,
+  styles: [
+    `
       :host {
         height: 100%;
         display: flex;
@@ -66,8 +66,8 @@ import { JsonPipe } from '@angular/common';
         padding: 1rem;
       }
     `,
-    ],
-    imports: [AngularOpenlayersModule, JsonPipe]
+  ],
+  imports: [AngularOpenlayersModule, JsonPipe],
 })
 export class DrawPolygonComponent implements OnInit {
   constructor() {}

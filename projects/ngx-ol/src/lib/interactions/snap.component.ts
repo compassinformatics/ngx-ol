@@ -8,8 +8,8 @@ import { Collection, Feature } from 'ol';
 import { Vector } from 'ol/source';
 
 @Component({
-    selector: 'aol-interaction-snap',
-    template: ''
+  selector: 'aol-interaction-snap',
+  template: '',
 })
 export class SnapInteractionComponent implements OnInit, OnDestroy {
   @Input()

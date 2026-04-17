@@ -12,8 +12,8 @@ import { FlatStyleLike } from 'ol/style/flat';
 import BaseVectorLayer from 'ol/layer/BaseVector';
 
 @Component({
-    selector: 'aol-interaction-modify',
-    template: ''
+  selector: 'aol-interaction-modify',
+  template: '',
 })
 export class ModifyInteractionComponent implements OnInit, OnDestroy {
   @Input()

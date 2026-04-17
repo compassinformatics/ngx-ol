@@ -4,8 +4,8 @@ import { MapComponent } from '../map.component';
 import { Units } from 'ol/control/ScaleLine';
 
 @Component({
-    selector: 'aol-control-scaleline',
-    template: ` <ng-content></ng-content> `
+  selector: 'aol-control-scaleline',
+  template: ` <ng-content></ng-content> `,
 })
 export class ControlScaleLineComponent implements OnInit, OnDestroy {
   @Input()

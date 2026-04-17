@@ -5,8 +5,8 @@ import { AngularOpenlayersModule } from 'ngx-ol';
 import { FormsModule } from '@angular/forms';
 
 @Component({
-    selector: 'app-root',
-    template: `
+  selector: 'app-root',
+  template: `
     <aol-map [width]="'100%'" [height]="'100%'">
       <aol-view [projection]="projection" [zoom]="2" [center]="[512, 484]"> </aol-view>
       <aol-layer-image [opacity]="opacity" [extent]="extent">
@@ -26,8 +26,8 @@ import { FormsModule } from '@angular/forms';
       </select>
     </div>
   `,
-    styles: [
-        `
+  styles: [
+    `
       :host {
         height: 100%;
         display: flex;
@@ -42,8 +42,8 @@ import { FormsModule } from '@angular/forms';
         padding: 1rem;
       }
     `,
-    ],
-    imports: [AngularOpenlayersModule, FormsModule]
+  ],
+  imports: [AngularOpenlayersModule, FormsModule],
 })
 export class ImageStaticComponent {
   public url = 'https://imgs.xkcd.com/comics/online_communities.png';

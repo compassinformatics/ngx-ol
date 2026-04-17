@@ -2,10 +2,9 @@ import { Component, ViewChild } from '@angular/core';
 import { SourceUTFGridComponent, ViewComponent, AngularOpenlayersModule } from 'ngx-ol';
 import { Coordinate } from 'ol/coordinate';
 
-
 @Component({
-    selector: 'app-root',
-    template: `
+  selector: 'app-root',
+  template: `
     <aol-map (pointerMove)="displayInfo($event.coordinate)">
       <aol-interaction-default></aol-interaction-default>
       <aol-control-defaults></aol-control-defaults>
@@ -15,9 +14,7 @@ import { Coordinate } from 'ol/coordinate';
       <aol-layer-tile>
         <aol-source-utfgrid
           #UTFGrid
-          [url]="
-            'https://api.tiles.mapbox.com/v4/mapbox.geography-class.json'
-          "
+          [url]="'https://api.tiles.mapbox.com/v4/mapbox.geography-class.json'"
         ></aol-source-utfgrid>
       </aol-layer-tile>
       @if (coords && info) {
@@ -29,9 +26,9 @@ import { Coordinate } from 'ol/coordinate';
         </aol-overlay>
       }
     </aol-map>
-    `,
-    styles: [
-        `
+  `,
+  styles: [
+    `
       :host {
         height: 100%;
         display: flex;
@@ -42,8 +39,8 @@ import { Coordinate } from 'ol/coordinate';
         height: 100%;
       }
     `,
-    ],
-    imports: [AngularOpenlayersModule]
+  ],
+  imports: [AngularOpenlayersModule],
 })
 export class UTFGridComponent {
   @ViewChild('UTFGrid', { static: true }) UTFGrid: SourceUTFGridComponent;

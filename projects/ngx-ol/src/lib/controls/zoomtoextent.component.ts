@@ -4,8 +4,8 @@ import { MapComponent } from '../map.component';
 import { Extent } from 'ol/extent';
 
 @Component({
-    selector: 'aol-control-zoomtoextent',
-    template: ` <ng-content></ng-content> `
+  selector: 'aol-control-zoomtoextent',
+  template: ` <ng-content></ng-content> `,
 })
 export class ControlZoomToExtentComponent implements OnInit, OnDestroy {
   @Input()

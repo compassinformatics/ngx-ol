@@ -5,9 +5,9 @@ import { UTFGrid } from 'ol/source';
 import { Config } from 'ol/source/TileJSON';
 
 @Component({
-    selector: 'aol-source-utfgrid',
-    template: ` <ng-content></ng-content> `,
-    providers: [{ provide: SourceComponent, useExisting: forwardRef(() => SourceUTFGridComponent) }]
+  selector: 'aol-source-utfgrid',
+  template: ` <ng-content></ng-content> `,
+  providers: [{ provide: SourceComponent, useExisting: forwardRef(() => SourceUTFGridComponent) }],
 })
 export class SourceUTFGridComponent extends SourceComponent implements OnInit {
   @Input() tileJSON?: Config;

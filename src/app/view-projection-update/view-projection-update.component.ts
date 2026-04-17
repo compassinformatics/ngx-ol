@@ -3,8 +3,8 @@ import { AngularOpenlayersModule } from 'ngx-ol';
 import { FormsModule } from '@angular/forms';
 
 @Component({
-    selector: 'app-root',
-    template: `
+  selector: 'app-root',
+  template: `
     <aol-map [width]="'100%'" [height]="'100%'">
       <aol-interaction-default></aol-interaction-default>
       <aol-view [zoom]="2" [projection]="viewProjection">
@@ -51,8 +51,8 @@ import { FormsModule } from '@angular/forms';
       </select>
     </div>
   `,
-    styles: [
-        `
+  styles: [
+    `
       :host {
         height: 100%;
         display: flex;
@@ -67,8 +67,8 @@ import { FormsModule } from '@angular/forms';
         padding: 1rem;
       }
     `,
-    ],
-    imports: [AngularOpenlayersModule, FormsModule]
+  ],
+  imports: [AngularOpenlayersModule, FormsModule],
 })
 export class ViewProjectionUpdateComponent {
   public viewProjection = 'EPSG:3857';
