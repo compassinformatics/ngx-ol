@@ -13,9 +13,7 @@
     "strictPropertyInitialization": false,
     "useDefineForClassFields": false,
     "paths": {
-      "ngx-ol": [
-        "./dist/ngx-ol"
-      ]
+      "ngx-ol": ["./dist/ngx-ol"]
     },
     "esModuleInterop": true,
     "sourceMap": true,
@@ -24,11 +22,7 @@
     "moduleResolution": "bundler",
     "importHelpers": true,
     "target": "ES2022",
-    "module": "ES2022",
-    "lib": [
-      "ES2022",
-      "dom"
-    ]
+    "module": "ES2022"
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,

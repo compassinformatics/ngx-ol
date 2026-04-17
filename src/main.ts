@@ -1,8 +1,7 @@
-import { enableProdMode, importProvidersFrom } from '@angular/core';
+import { enableProdMode, importProvidersFrom, provideZoneChangeDetection } from '@angular/core';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
 import 'hammerjs';
-
 
 import { environment } from './environments/environment';
 import { BrowserModule, HammerModule, bootstrapApplication } from '@angular/platform-browser';
@@ -16,6 +15,15 @@ if (environment.production) {
 }
 
 bootstrapApplication(AppComponent, {
-    providers: [importProvidersFrom(BrowserModule, FormsModule, AppRoutingModule, AngularOpenlayersModule, ReactiveFormsModule, HammerModule)]
-})
-  .catch((err) => console.log(err));
+  providers: [
+    provideZoneChangeDetection(),
+    importProvidersFrom(
+      BrowserModule,
+      FormsModule,
+      AppRoutingModule,
+      AngularOpenlayersModule,
+      ReactiveFormsModule,
+      HammerModule,
+    ),
+  ],
+}).catch((err) => console.log(err));
