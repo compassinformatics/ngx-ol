@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MapBrowserEvent } from 'ol';
 import { transform } from 'ol/proj';
+import { AngularOpenlayersModule } from 'ngx-ol';
 
 @Component({
   selector: 'app-cursor-position',
@@ -45,6 +46,7 @@ import { transform } from 'ol/proj';
       }
     `,
   ],
+  imports: [AngularOpenlayersModule],
 })
 export class CursorPositionComponent implements OnInit {
   constructor() {}

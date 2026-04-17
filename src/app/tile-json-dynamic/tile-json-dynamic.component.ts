@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { TileJSON } from 'ol/source';
+import { AngularOpenlayersModule } from 'ngx-ol';
 
 @Component({
   selector: 'app-tile-json-dynamic',
@@ -14,6 +15,7 @@ import { TileJSON } from 'ol/source';
       <aol-layer-tile [source]="jsonSource"> </aol-layer-tile>
     </aol-map>
   `,
+  imports: [AngularOpenlayersModule],
 })
 export class TileJsonDynamicComponent implements OnInit {
   constructor() {}

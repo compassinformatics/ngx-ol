@@ -3,19 +3,22 @@ import { createBox } from 'ol/interaction/Draw';
 import { Feature } from 'ol';
 import Projection from 'ol/proj/Projection';
 import { fromExtent } from 'ol/geom/Polygon';
+import { AngularOpenlayersModule } from 'ngx-ol';
+import { JsonPipe } from '@angular/common';
 
 @Component({
   selector: 'app-draw-polygon',
   template: `
     <aol-map #map width="100%" height="100%">
       <aol-interaction-default></aol-interaction-default>
-      <aol-interaction-draw
-        *ngIf="isDrawing"
-        type="Circle"
-        [geometryFunction]="drawBoxGeometryFunction"
-        (drawEnd)="endDraw($event.feature)"
-      >
-      </aol-interaction-draw>
+      @if (isDrawing) {
+        <aol-interaction-draw
+          type="Circle"
+          [geometryFunction]="drawBoxGeometryFunction"
+          (drawEnd)="endDraw($event.feature)"
+        >
+        </aol-interaction-draw>
+      }
 
       <aol-view [zoom]="5">
         <aol-coordinate [x]="1.4886" [y]="43.5554" [srid]="'EPSG:4326'"></aol-coordinate>
@@ -23,16 +26,18 @@ import { fromExtent } from 'ol/geom/Polygon';
 
       <aol-layer-tile [opacity]="1"> <aol-source-osm></aol-source-osm> </aol-layer-tile>
 
-      <aol-layer-vector *ngIf="feature">
-        <aol-source-vector>
-          <aol-feature>
-            <aol-geometry-polygon>
-              <aol-collection-coordinates [coordinates]="getCoords(feature)" [srid]="'EPSG:4326'">
-              </aol-collection-coordinates>
-            </aol-geometry-polygon>
-          </aol-feature>
-        </aol-source-vector>
-      </aol-layer-vector>
+      @if (feature) {
+        <aol-layer-vector>
+          <aol-source-vector>
+            <aol-feature>
+              <aol-geometry-polygon>
+                <aol-collection-coordinates [coordinates]="getCoords(feature)" [srid]="'EPSG:4326'">
+                </aol-collection-coordinates>
+              </aol-geometry-polygon>
+            </aol-feature>
+          </aol-source-vector>
+        </aol-layer-vector>
+      }
     </aol-map>
 
     <div class="info">
@@ -62,6 +67,7 @@ import { fromExtent } from 'ol/geom/Polygon';
       }
     `,
   ],
+  imports: [AngularOpenlayersModule, JsonPipe],
 })
 export class DrawPolygonComponent implements OnInit {
   constructor() {}

@@ -1,4 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { AngularOpenlayersModule } from 'ngx-ol';
+
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-cluster',
@@ -17,11 +20,13 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
       <aol-layer-vector>
         <aol-source-cluster [distance]="distance">
           <aol-source-vector>
-            <aol-feature *ngFor="let p of points">
-              <aol-geometry-point>
-                <aol-coordinate [x]="p.x" [y]="p.y" [srid]="'EPSG:4326'"></aol-coordinate>
-              </aol-geometry-point>
-            </aol-feature>
+            @for (p of points; track p) {
+              <aol-feature>
+                <aol-geometry-point>
+                  <aol-coordinate [x]="p.x" [y]="p.y" [srid]="'EPSG:4326'"></aol-coordinate>
+                </aol-geometry-point>
+              </aol-feature>
+            }
           </aol-source-vector>
 
           <aol-style>
@@ -87,6 +92,7 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
     `,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [AngularOpenlayersModule, FormsModule],
 })
 export class ClusterComponent implements OnInit {
   distance = 60;

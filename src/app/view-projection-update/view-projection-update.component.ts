@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { AngularOpenlayersModule } from 'ngx-ol';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-root',
@@ -66,6 +68,7 @@ import { Component } from '@angular/core';
       }
     `,
   ],
+  imports: [AngularOpenlayersModule, FormsModule],
 })
 export class ViewProjectionUpdateComponent {
   public viewProjection = 'EPSG:3857';

@@ -64,7 +64,7 @@ export class SourceVectorTileComponent extends SourceComponent implements AfterC
     }
     this.tileGrid = this.tileGridComponent.instance;
 
-    this.instance = new VectorTile(Object.assign({format}, this));
+    this.instance = new VectorTile(Object.assign({ format }, this));
     this.host.instance.setSource(this.instance);
   }
 }

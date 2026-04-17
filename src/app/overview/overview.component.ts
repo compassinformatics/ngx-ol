@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AngularOpenlayersModule } from 'ngx-ol';
 
 @Component({
   selector: 'app-root',
@@ -13,6 +14,7 @@ import { Component } from '@angular/core';
       <aol-layer-tile #osm [opacity]="1"> <aol-source-osm></aol-source-osm> </aol-layer-tile>
     </aol-map>
   `,
+  imports: [AngularOpenlayersModule],
 })
 export class OverviewComponent {
   public zoom = 15;

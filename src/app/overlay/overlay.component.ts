@@ -3,6 +3,7 @@ import { GeoJSON } from 'ol/format';
 import { Feature, Feature as OlFeature } from 'ol';
 import { fromExtent } from 'ol/geom/Polygon';
 import { Geometry } from 'ol/geom';
+import { AngularOpenlayersModule } from 'ngx-ol';
 
 @Component({
   selector: 'app-display-overlay',
@@ -57,6 +58,7 @@ import { Geometry } from 'ol/geom';
       }
     `,
   ],
+  imports: [AngularOpenlayersModule],
 })
 export class OverlayComponent implements OnInit {
   constructor() {}

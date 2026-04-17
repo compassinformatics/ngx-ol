@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AngularOpenlayersModule } from 'ngx-ol';
 
 @Component({
   selector: 'app-display-geojson-source',
@@ -25,6 +26,7 @@ import { Component, OnInit } from '@angular/core';
       </aol-layer-group>
     </aol-map>
   `,
+  imports: [AngularOpenlayersModule],
 })
 export class DisplayGeojsonSourceComponent implements OnInit {
   constructor() {}

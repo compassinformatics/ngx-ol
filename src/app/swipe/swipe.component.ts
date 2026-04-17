@@ -1,5 +1,5 @@
 import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
-import { MapComponent } from 'ngx-ol';
+import { MapComponent, AngularOpenlayersModule } from 'ngx-ol';
 import BaseEvent from 'ol/events/Event';
 
 @Component({
@@ -59,6 +59,7 @@ import BaseEvent from 'ol/events/Event';
       }
     `,
   ],
+  imports: [AngularOpenlayersModule],
 })
 export class SwipeComponent implements OnInit {
   constructor() {}

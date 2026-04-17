@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Feature, MapBrowserEvent } from 'ol';
 import { ObjectEvent } from 'ol/Object';
+import { AngularOpenlayersModule } from 'ngx-ol';
 
 @Component({
   selector: 'app-root',
@@ -75,6 +76,7 @@ import { ObjectEvent } from 'ol/Object';
       }
     `,
   ],
+  imports: [AngularOpenlayersModule],
 })
 export class BasicComponent {
   public zoom = 15;

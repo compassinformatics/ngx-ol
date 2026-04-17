@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MapComponent } from '../../../projects/ngx-ol/src/public-api';
+import { AngularOpenlayersModule } from 'ngx-ol';
 
 @Component({
   selector: 'app-root',
@@ -9,10 +10,12 @@ import { MapComponent } from '../../../projects/ngx-ol/src/public-api';
       <aol-view [zoom]="9" [center]="[-907904, 7065770]"></aol-view>
       <aol-layer-vectortile>
         <aol-source-ogcvectortile
-          [url]="'https://maps.gnosis.earth/ogcapi/collections/NaturalEarth:cultural:ne_10m_admin_0_countries/tiles/WebMercatorQuad'"
+          [url]="
+            'https://maps.gnosis.earth/ogcapi/collections/NaturalEarth:cultural:ne_10m_admin_0_countries/tiles/WebMercatorQuad'
+          "
         >
-        <aol-format-mvt></aol-format-mvt>
-      </aol-source-ogcvectortile>
+          <aol-format-mvt></aol-format-mvt>
+        </aol-source-ogcvectortile>
       </aol-layer-vectortile>
     </aol-map>
   `,
@@ -23,6 +26,7 @@ import { MapComponent } from '../../../projects/ngx-ol/src/public-api';
       }
     `,
   ],
+  imports: [AngularOpenlayersModule],
 })
 export class OGCVectorTileComponent implements OnInit {
   @ViewChild('map') mapComponent: MapComponent;

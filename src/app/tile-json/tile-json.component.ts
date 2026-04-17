@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AngularOpenlayersModule } from 'ngx-ol';
 
 @Component({
   selector: 'app-tile-json',
@@ -17,6 +18,7 @@ import { Component } from '@angular/core';
       </aol-layer-tile>
     </aol-map>
   `,
+  imports: [AngularOpenlayersModule],
 })
 export class TileJsonComponent {
   constructor() {}

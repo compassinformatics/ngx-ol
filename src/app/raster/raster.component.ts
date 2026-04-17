@@ -1,5 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
-import { SourceRasterComponent } from 'ngx-ol';
+import { SourceRasterComponent, AngularOpenlayersModule } from 'ngx-ol';
+
+import { FormsModule } from '@angular/forms';
 
 interface RasterData {
   brightness: number;
@@ -24,12 +26,15 @@ interface RasterData {
           operationType="image"
           (beforeOperations)="beforeOperations($event)"
         >
-          <aol-source-osm *ngIf="selectLayer === 'osm'"></aol-source-osm>
-          <aol-source-xyz
-            *ngIf="selectLayer === 'xyz'"
-            url="https://c.tile.thunderforest.com/cycle/{z}/{x}/{y}.png?apikey=0e6fc415256d4fbb9b5166a718591d71"
-            crossOrigin=""
-          ></aol-source-xyz>
+          @if (selectLayer === 'osm') {
+            <aol-source-osm></aol-source-osm>
+          }
+          @if (selectLayer === 'xyz') {
+            <aol-source-xyz
+              url="https://c.tile.thunderforest.com/cycle/{z}/{x}/{y}.png?apikey=0e6fc415256d4fbb9b5166a718591d71"
+              crossOrigin=""
+            ></aol-source-xyz>
+          }
         </aol-source-raster>
       </aol-layer-image>
     </aol-map>
@@ -82,6 +87,7 @@ interface RasterData {
       }
     `,
   ],
+  imports: [AngularOpenlayersModule, FormsModule],
 })
 export class RasterComponent {
   operation = rasterOperation;

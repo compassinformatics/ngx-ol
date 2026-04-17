@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AngularOpenlayersModule } from 'ngx-ol';
 
 @Component({
   selector: 'app-root',
@@ -36,6 +37,7 @@ import { Component } from '@angular/core';
       }
     `,
   ],
+  imports: [AngularOpenlayersModule],
 })
 export class ArcgisImageComponent {
   public zoom = 4;

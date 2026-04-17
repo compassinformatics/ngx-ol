@@ -2,6 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import { Layer as OlLayer } from 'ol/layer';
 import { LayerVectorComponent } from '../../../projects/ngx-ol/src/lib/layers/layervector.component';
 import { SelectEvent } from 'ol/interaction/Select';
+import { AngularOpenlayersModule } from 'ngx-ol';
 
 @Component({
   selector: 'app-select-interaction',
@@ -34,6 +35,7 @@ import { SelectEvent } from 'ol/interaction/Select';
       </aol-layer-vector>
     </aol-map>
   `,
+  imports: [AngularOpenlayersModule],
 })
 export class SelectInteractionComponent {
   @ViewChild('markersLayer', { static: true }) markersLayer: LayerVectorComponent;

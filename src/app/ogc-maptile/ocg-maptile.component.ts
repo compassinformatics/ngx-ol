@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MapComponent } from '../../../projects/ngx-ol/src/public-api';
+import { AngularOpenlayersModule } from 'ngx-ol';
 
 @Component({
   selector: 'app-root',
@@ -9,10 +10,12 @@ import { MapComponent } from '../../../projects/ngx-ol/src/public-api';
       <aol-view [zoom]="9" [center]="[-907904, 7065770]"></aol-view>
       <aol-layer-tile>
         <aol-source-ogcmaptile
-          [url]="'https://maps.gnosis.earth/ogcapi/collections/blueMarble/map/tiles/WebMercatorQuad'"
+          [url]="
+            'https://maps.gnosis.earth/ogcapi/collections/blueMarble/map/tiles/WebMercatorQuad'
+          "
         >
-        <aol-format-mvt></aol-format-mvt>
-      </aol-source-ogcmaptile>
+          <aol-format-mvt></aol-format-mvt>
+        </aol-source-ogcmaptile>
       </aol-layer-tile>
     </aol-map>
   `,
@@ -23,6 +26,7 @@ import { MapComponent } from '../../../projects/ngx-ol/src/public-api';
       }
     `,
   ],
+  imports: [AngularOpenlayersModule],
 })
 export class OGCMapTileComponent implements OnInit {
   @ViewChild('map') mapComponent: MapComponent;

@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MapComponent } from '../../../projects/ngx-ol/src/public-api';
+import { AngularOpenlayersModule } from 'ngx-ol';
 
 @Component({
   selector: 'app-root',
@@ -27,6 +28,7 @@ import { MapComponent } from '../../../projects/ngx-ol/src/public-api';
       }
     `,
   ],
+  imports: [AngularOpenlayersModule],
 })
 export class ImageWMSComponent implements OnInit {
   @ViewChild('map') mapComponent: MapComponent;

@@ -1,6 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MapComponent, ViewComponent } from 'ngx-ol';
-import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
+import { MapComponent, ViewComponent, AngularOpenlayersModule } from 'ngx-ol';
+import {
+  UntypedFormBuilder,
+  UntypedFormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+} from '@angular/forms';
 import { transform } from 'ol/proj';
 import Projection from 'ol/proj/Projection';
 
@@ -94,6 +99,7 @@ import Projection from 'ol/proj/Projection';
       }
     `,
   ],
+  imports: [AngularOpenlayersModule, FormsModule, ReactiveFormsModule],
 })
 export class MapPositionComponent implements OnInit {
   constructor(private fb: UntypedFormBuilder) {}

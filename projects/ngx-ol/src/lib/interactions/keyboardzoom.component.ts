@@ -5,6 +5,7 @@ import { MapComponent } from '../map.component';
 @Component({
   selector: 'aol-interaction-keyboardpan',
   template: '',
+  standalone: false,
 })
 export class KeyboardZoomInteractionComponent implements OnInit, OnDestroy {
   @Input()
