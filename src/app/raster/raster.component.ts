@@ -1,5 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
-import { SourceRasterComponent } from 'ngx-ol';
+import { SourceRasterComponent, AngularOpenlayersModule } from 'ngx-ol';
+
+import { FormsModule } from '@angular/forms';
 
 interface RasterData {
   brightness: number;
@@ -7,39 +9,42 @@ interface RasterData {
 }
 
 @Component({
-  selector: 'app-raster',
-  template: `
+    selector: 'app-raster',
+    template: `
     <aol-map width="100%" height="100%">
       <aol-interaction-default></aol-interaction-default>
       <aol-control-defaults></aol-control-defaults>
       <aol-control-fullscreen></aol-control-fullscreen>
-
+    
       <aol-view [zoom]="14">
         <aol-coordinate [x]="1.4886" [y]="43.5554" [srid]="'EPSG:4326'"></aol-coordinate>
       </aol-view>
-
+    
       <aol-layer-image>
         <aol-source-raster
           [threads]="4"
           operationType="image"
           (beforeOperations)="beforeOperations($event)"
-        >
-          <aol-source-osm *ngIf="selectLayer === 'osm'"></aol-source-osm>
-          <aol-source-xyz
-            *ngIf="selectLayer === 'xyz'"
-            url="https://c.tile.thunderforest.com/cycle/{z}/{x}/{y}.png?apikey=0e6fc415256d4fbb9b5166a718591d71"
-            crossOrigin=""
-          ></aol-source-xyz>
+          >
+          @if (selectLayer === 'osm') {
+            <aol-source-osm></aol-source-osm>
+          }
+          @if (selectLayer === 'xyz') {
+            <aol-source-xyz
+              url="https://c.tile.thunderforest.com/cycle/{z}/{x}/{y}.png?apikey=0e6fc415256d4fbb9b5166a718591d71"
+              crossOrigin=""
+            ></aol-source-xyz>
+          }
         </aol-source-raster>
       </aol-layer-image>
     </aol-map>
-
+    
     <div class="controls">
       <form>
         <input type="radio" name="layer" value="osm" [(ngModel)]="selectLayer" />OSM<br />
         <input type="radio" name="layer" value="xyz" [(ngModel)]="selectLayer" />XYZ<br />
       </form>
-
+    
       <div class="control">
         <span>Contrast : </span>
         <input type="range" min="-255" max="255" [(ngModel)]="contrast" (input)="updateRaster()" />
@@ -53,13 +58,13 @@ interface RasterData {
           max="255"
           [(ngModel)]="brightness"
           (input)="updateRaster()"
-        />
+          />
         <span> ({{ brightness }})</span>
       </div>
     </div>
-  `,
-  styles: [
-    `
+    `,
+    styles: [
+        `
       :host {
         height: 100%;
         display: flex;
@@ -81,7 +86,8 @@ interface RasterData {
         margin: 20px;
       }
     `,
-  ],
+    ],
+    imports: [AngularOpenlayersModule, FormsModule]
 })
 export class RasterComponent {
   operation = rasterOperation;

@@ -3,10 +3,12 @@ import OLFeature from 'ol/Feature';
 import Projection from 'ol/proj/Projection';
 import { GeoJSON } from 'ol/format';
 import { Polygon } from 'ol/geom';
+import { AngularOpenlayersModule } from 'ngx-ol';
+import { JsonPipe } from '@angular/common';
 
 @Component({
-  selector: 'app-modify-polygon',
-  template: `
+    selector: 'app-modify-polygon',
+    template: `
     <aol-map #map width="100%" height="100%">
       <aol-interaction-default></aol-interaction-default>
       <aol-interaction-select [wrapX]="true" #select></aol-interaction-select>
@@ -14,39 +16,41 @@ import { Polygon } from 'ol/geom';
         #modify
         [features]="select.instance.getFeatures()"
         (olModifyEnd)="modifyEnd($event.features.getArray()[0])"
-      >
+        >
       </aol-interaction-modify>
-
+    
       <aol-view [zoom]="5">
         <aol-coordinate [x]="1.4886" [y]="43.5554" [srid]="'EPSG:4326'"></aol-coordinate>
       </aol-view>
-
+    
       <aol-layer-tile [opacity]="1"> <aol-source-osm></aol-source-osm> </aol-layer-tile>
-
-      <aol-layer-vector *ngIf="feature">
-        <aol-source-vector>
-          <aol-feature>
-            <aol-geometry-polygon>
-              <aol-collection-coordinates
-                [coordinates]="feature.geometry.coordinates"
-                [srid]="'EPSG:4326'"
-              >
-              </aol-collection-coordinates>
-            </aol-geometry-polygon>
-          </aol-feature>
-        </aol-source-vector>
-      </aol-layer-vector>
+    
+      @if (feature) {
+        <aol-layer-vector>
+          <aol-source-vector>
+            <aol-feature>
+              <aol-geometry-polygon>
+                <aol-collection-coordinates
+                  [coordinates]="feature.geometry.coordinates"
+                  [srid]="'EPSG:4326'"
+                  >
+                </aol-collection-coordinates>
+              </aol-geometry-polygon>
+            </aol-feature>
+          </aol-source-vector>
+        </aol-layer-vector>
+      }
     </aol-map>
-
+    
     <div class="info">
       <h3>Result</h3>
       <code>
         <pre>{{ feature | json }}</pre>
       </code>
     </div>
-  `,
-  styles: [
-    `
+    `,
+    styles: [
+        `
       :host {
         height: 100%;
         display: flex;
@@ -61,7 +65,8 @@ import { Polygon } from 'ol/geom';
         padding: 1rem;
       }
     `,
-  ],
+    ],
+    imports: [AngularOpenlayersModule, JsonPipe]
 })
 export class ModifyPolygonComponent implements OnInit {
   constructor() {}

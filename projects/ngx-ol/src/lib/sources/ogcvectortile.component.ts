@@ -8,11 +8,11 @@ import { FormatMVTComponent } from '../formats/mvt.component';
 import { FormatGeoJSONComponent } from '../formats/geojson.component';
 
 @Component({
-  selector: 'aol-source-ogcvectortile',
-  template: ` <ng-content></ng-content> `,
-  providers: [
-    { provide: SourceComponent, useExisting: forwardRef(() => SourceOGCVectorTileComponent) },
-  ],
+    selector: 'aol-source-ogcvectortile',
+    template: ` <ng-content></ng-content> `,
+    providers: [
+        { provide: SourceComponent, useExisting: forwardRef(() => SourceOGCVectorTileComponent) },
+    ]
 })
 export class SourceOGCVectorTileComponent extends SourceComponent implements AfterContentInit {
   @Input() url: string;

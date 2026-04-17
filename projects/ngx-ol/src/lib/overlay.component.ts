@@ -13,8 +13,8 @@ import { ContentComponent } from './content.component';
 import { Coordinate } from 'ol/coordinate';
 
 @Component({
-  selector: 'aol-overlay',
-  template: '<ng-content></ng-content>',
+    selector: 'aol-overlay',
+    template: '<ng-content></ng-content>'
 })
 export class OverlayComponent implements OnInit, OnDestroy, OnChanges {
   @ContentChild(ContentComponent, { static: true })

@@ -4,8 +4,8 @@ import { FeatureClass } from 'ol/Feature';
 import { Options } from 'ol/format/MVT';
 
 @Component({
-  selector: 'aol-format-mvt',
-  template: '',
+    selector: 'aol-format-mvt',
+    template: ''
 })
 export class FormatMVTComponent {
   @Input()

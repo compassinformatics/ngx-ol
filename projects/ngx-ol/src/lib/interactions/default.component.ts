@@ -4,8 +4,8 @@ import { Collection } from 'ol';
 import { MapComponent } from '../map.component';
 
 @Component({
-  selector: 'aol-interaction-default',
-  template: '',
+    selector: 'aol-interaction-default',
+    template: ''
 })
 export class DefaultInteractionComponent implements OnInit, OnDestroy {
   @Input()

@@ -3,8 +3,8 @@ import { Rotate } from 'ol/control';
 import { MapComponent } from '../map.component';
 
 @Component({
-  selector: 'aol-control-rotate',
-  template: ` <ng-content></ng-content> `,
+    selector: 'aol-control-rotate',
+    template: ` <ng-content></ng-content> `
 })
 export class ControlRotateComponent implements OnInit, OnDestroy {
   @Input()

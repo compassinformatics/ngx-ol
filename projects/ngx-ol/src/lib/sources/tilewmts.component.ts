@@ -21,9 +21,9 @@ import { TileSourceEvent } from 'ol/source/Tile';
 import { RequestEncoding } from 'ol/source/WMTS';
 
 @Component({
-  selector: 'aol-source-tilewmts',
-  template: ` <ng-content></ng-content> `,
-  providers: [{ provide: SourceComponent, useExisting: forwardRef(() => SourceTileWMTSComponent) }],
+    selector: 'aol-source-tilewmts',
+    template: ` <ng-content></ng-content> `,
+    providers: [{ provide: SourceComponent, useExisting: forwardRef(() => SourceTileWMTSComponent) }]
 })
 export class SourceTileWMTSComponent
   extends SourceComponent

@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
+import { AngularOpenlayersModule } from 'ngx-ol';
 
 @Component({
-  selector: 'app-root',
-  template: `
+    selector: 'app-root',
+    template: `
     <aol-map>
       <aol-interaction-default></aol-interaction-default>
       <aol-control-defaults></aol-control-defaults>
@@ -23,8 +24,8 @@ import { Component } from '@angular/core';
       </aol-layer-image>
     </aol-map>
   `,
-  styles: [
-    `
+    styles: [
+        `
       :host {
         height: 100%;
         display: flex;
@@ -35,7 +36,8 @@ import { Component } from '@angular/core';
         height: 100%;
       }
     `,
-  ],
+    ],
+    imports: [AngularOpenlayersModule]
 })
 export class ArcgisImageComponent {
   public zoom = 4;

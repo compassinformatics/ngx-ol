@@ -1,35 +1,39 @@
 import { Component, OnInit } from '@angular/core';
 import { examplesList } from '../example-list';
-import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+
+import { RouterLink } from '@angular/router';
 
 @Component({
-  selector: 'app-examples-list',
-  template: `
+    selector: 'app-examples-list',
+    template: `
     <div class="search">
       <form [formGroup]="form">
         <input type="text" formControlName="term" placeholder="Search" />
       </form>
     </div>
     <div class="wrapper">
-      <div
-        class="example-item"
-        *ngFor="let example of list"
-        [routerLink]="'examples/' + example.routerLink"
-      >
-        <span class="title">{{ example.title }}</span>
-        <span class="description">{{ example.description }}</span>
+      @for (example of list; track example) {
         <div
-          *ngIf="example.openLayersLink"
-          class="open-layers-link"
-          (click)="$event.stopPropagation()"
-        >
-          <a [href]="example.openLayersLink" target="_blank">{{ example.openLayersLink }}</a>
+          class="example-item"
+          [routerLink]="'examples/' + example.routerLink"
+          >
+          <span class="title">{{ example.title }}</span>
+          <span class="description">{{ example.description }}</span>
+          @if (example.openLayersLink) {
+            <div
+              class="open-layers-link"
+              (click)="$event.stopPropagation()"
+              >
+              <a [href]="example.openLayersLink" target="_blank">{{ example.openLayersLink }}</a>
+            </div>
+          }
         </div>
-      </div>
+      }
     </div>
-  `,
-  styles: [
-    `
+    `,
+    styles: [
+        `
       .search {
         display: flex;
         justify-content: center;
@@ -81,7 +85,8 @@ import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
         font-size: 12px;
       }
     `,
-  ],
+    ],
+    imports: [FormsModule, ReactiveFormsModule, RouterLink]
 })
 export class ExamplesListComponent implements OnInit {
   constructor(private fb: UntypedFormBuilder) {}

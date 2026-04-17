@@ -1,10 +1,10 @@
 import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
-import { MapComponent } from 'ngx-ol';
+import { MapComponent, AngularOpenlayersModule } from 'ngx-ol';
 import BaseEvent from 'ol/events/Event';
 
 @Component({
-  selector: 'app-swipe',
-  template: `
+    selector: 'app-swipe',
+    template: `
     <aol-map #map width="100%" height="100%">
       <aol-interaction-default></aol-interaction-default>
 
@@ -30,8 +30,8 @@ import BaseEvent from 'ol/events/Event';
       <>
     </button>
   `,
-  styles: [
-    `
+    styles: [
+        `
       .swipe-button {
         box-shadow:
           0 3px 5px -1px rgba(0, 0, 0, 0.2),
@@ -58,7 +58,8 @@ import BaseEvent from 'ol/events/Event';
         height: 40px;
       }
     `,
-  ],
+    ],
+    imports: [AngularOpenlayersModule]
 })
 export class SwipeComponent implements OnInit {
   constructor() {}

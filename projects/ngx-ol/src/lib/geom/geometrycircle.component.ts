@@ -7,8 +7,8 @@ import { Coordinate } from 'ol/coordinate';
 import { GeometryLayout } from 'ol/geom/Geometry';
 
 @Component({
-  selector: 'aol-geometry-circle',
-  template: ` <ng-content></ng-content> `,
+    selector: 'aol-geometry-circle',
+    template: ` <ng-content></ng-content> `
 })
 export class GeometryCircleComponent extends SimpleGeometryComponent implements OnInit, OnChanges {
   @Input() center: Coordinate = [0, 0];

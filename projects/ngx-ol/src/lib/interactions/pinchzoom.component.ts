@@ -3,8 +3,8 @@ import { PinchZoom } from 'ol/interaction';
 import { MapComponent } from '../map.component';
 
 @Component({
-  selector: 'aol-interaction-pinchzoom',
-  template: '',
+    selector: 'aol-interaction-pinchzoom',
+    template: ''
 })
 export class PinchZoomInteractionComponent implements OnInit, OnDestroy {
   @Input()

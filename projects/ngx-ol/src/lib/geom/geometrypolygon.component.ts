@@ -5,8 +5,8 @@ import { MapComponent } from '../map.component';
 import { Polygon } from 'ol/geom';
 
 @Component({
-  selector: 'aol-geometry-polygon',
-  template: ` <ng-content></ng-content> `,
+    selector: 'aol-geometry-polygon',
+    template: ` <ng-content></ng-content> `
 })
 export class GeometryPolygonComponent extends SimpleGeometryComponent implements OnInit {
   public componentType = 'geometry-polygon';

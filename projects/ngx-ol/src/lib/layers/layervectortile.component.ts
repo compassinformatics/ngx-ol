@@ -10,8 +10,8 @@ import { BackgroundColor } from 'ol/layer/Base';
 import VectorSource from 'ol/source/Vector';
 
 @Component({
-  selector: 'aol-layer-vectortile',
-  template: ` <ng-content></ng-content> `,
+    selector: 'aol-layer-vectortile',
+    template: ` <ng-content></ng-content> `
 })
 export class LayerVectorTileComponent extends LayerComponent implements OnInit, OnChanges {
   @Input()

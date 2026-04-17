@@ -1,49 +1,54 @@
 import { Component, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
-import { MapComponent, LayerVectorComponent } from 'ngx-ol';
+import { MapComponent, LayerVectorComponent, AngularOpenlayersModule } from 'ngx-ol';
 import { Fill, Stroke, Style } from 'ol/style';
 import { Layer } from 'ol/layer';
 import { Feature, MapBrowserEvent } from 'ol';
 
+
 @Component({
-  selector: 'app-color-select-hover',
-  template: `
+    selector: 'app-color-select-hover',
+    template: `
     <aol-map #map (pointerMove)="changeFeatureHovered($event)" width="100%" height="100%">
       <aol-interaction-default></aol-interaction-default>
       <aol-control-defaults></aol-control-defaults>
       <aol-interaction-select #select [style]="styleInteratiselected"></aol-interaction-select>
-
+    
       <aol-view [zoom]="5">
         <aol-coordinate [x]="1.4886" [y]="43.5554" [srid]="'EPSG:4326'"></aol-coordinate>
       </aol-view>
-
+    
       <aol-layer-tile [opacity]="1"> <aol-source-osm></aol-source-osm> </aol-layer-tile>
-
+    
       <aol-layer-group>
-        <aol-layer-vector #aoiLayerVector *ngFor="let f of features.features">
-          <aol-style *ngIf="f.id === hoveredFeatureId; else notHovered">
-            <aol-style-stroke [color]="'white'" [width]="3"></aol-style-stroke>
-            <aol-style-fill [color]="'rgba(90, 17, 26, 0.3)'"></aol-style-fill>
-          </aol-style>
-          <ng-template #notHovered>
-            <aol-style>
-              <aol-style-stroke [color]="'rgba(90, 17, 26)'" [width]="3"></aol-style-stroke>
-              <aol-style-fill [color]="'rgba(90, 17, 26, 0.5)'"></aol-style-fill>
-            </aol-style>
-          </ng-template>
-          <aol-source-vector>
-            <aol-feature [id]="f.id">
-              <aol-geometry-polygon>
-                <aol-collection-coordinates
-                  [coordinates]="f.geometry.coordinates"
-                  [srid]="'EPSG:4326'"
-                ></aol-collection-coordinates>
-              </aol-geometry-polygon>
-            </aol-feature>
-          </aol-source-vector>
-        </aol-layer-vector>
+        @for (f of features.features; track f) {
+          <aol-layer-vector #aoiLayerVector>
+            @if (f.id === hoveredFeatureId) {
+              <aol-style>
+                <aol-style-stroke [color]="'white'" [width]="3"></aol-style-stroke>
+                <aol-style-fill [color]="'rgba(90, 17, 26, 0.3)'"></aol-style-fill>
+              </aol-style>
+            } @else {
+              <aol-style>
+                <aol-style-stroke [color]="'rgba(90, 17, 26)'" [width]="3"></aol-style-stroke>
+                <aol-style-fill [color]="'rgba(90, 17, 26, 0.5)'"></aol-style-fill>
+              </aol-style>
+            }
+            <aol-source-vector>
+              <aol-feature [id]="f.id">
+                <aol-geometry-polygon>
+                  <aol-collection-coordinates
+                    [coordinates]="f.geometry.coordinates"
+                    [srid]="'EPSG:4326'"
+                  ></aol-collection-coordinates>
+                </aol-geometry-polygon>
+              </aol-feature>
+            </aol-source-vector>
+          </aol-layer-vector>
+        }
       </aol-layer-group>
     </aol-map>
-  `,
+    `,
+    imports: [AngularOpenlayersModule]
 })
 export class ColorSelectHoverComponent implements OnInit {
   constructor() {}

@@ -258,8 +258,7 @@ const COMPONENTS = [
 ];
 
 @NgModule({
-  declarations: COMPONENTS,
-  imports: [CommonModule],
-  exports: COMPONENTS,
+    imports: [CommonModule, ...COMPONENTS],
+    exports: COMPONENTS,
 })
 export class AngularOpenlayersModule {}

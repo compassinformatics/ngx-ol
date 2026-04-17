@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { AngularOpenlayersModule } from 'ngx-ol';
 
 @Component({
-  selector: 'app-display-geojson-source',
-  template: `
+    selector: 'app-display-geojson-source',
+    template: `
     <aol-map #map width="100%" height="100%">
       <aol-interaction-default></aol-interaction-default>
       <aol-control-defaults></aol-control-defaults>
@@ -25,6 +26,7 @@ import { Component, OnInit } from '@angular/core';
       </aol-layer-group>
     </aol-map>
   `,
+    imports: [AngularOpenlayersModule]
 })
 export class DisplayGeojsonSourceComponent implements OnInit {
   constructor() {}

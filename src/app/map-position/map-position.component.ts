@@ -1,12 +1,12 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MapComponent, ViewComponent } from 'ngx-ol';
-import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
+import { MapComponent, ViewComponent, AngularOpenlayersModule } from 'ngx-ol';
+import { UntypedFormBuilder, UntypedFormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { transform } from 'ol/proj';
 import Projection from 'ol/proj/Projection';
 
 @Component({
-  selector: 'app-map-position',
-  template: `
+    selector: 'app-map-position',
+    template: `
     <aol-map
       #map
       width="100%"
@@ -51,8 +51,8 @@ import Projection from 'ol/proj/Projection';
       </div>
     </div>
   `,
-  styles: [
-    `
+    styles: [
+        `
       :host {
         height: 100%;
         display: flex;
@@ -93,7 +93,8 @@ import Projection from 'ol/proj/Projection';
         float: left;
       }
     `,
-  ],
+    ],
+    imports: [AngularOpenlayersModule, FormsModule, ReactiveFormsModule]
 })
 export class MapPositionComponent implements OnInit {
   constructor(private fb: UntypedFormBuilder) {}

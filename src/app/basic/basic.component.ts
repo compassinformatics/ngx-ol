@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
 import { Feature, MapBrowserEvent } from 'ol';
 import { ObjectEvent } from 'ol/Object';
+import { AngularOpenlayersModule } from 'ngx-ol';
 
 @Component({
-  selector: 'app-root',
-  template: `
+    selector: 'app-root',
+    template: `
     <aol-map [width]="'100%'" [height]="'100%'">
       <aol-view
         [zoom]="zoom"
@@ -58,8 +59,8 @@ import { ObjectEvent } from 'ol/Object';
       ><button (click)="decreaseLon()">-</button><br />
     </div>
   `,
-  styles: [
-    `
+    styles: [
+        `
       :host {
         height: 100%;
         display: flex;
@@ -74,7 +75,8 @@ import { ObjectEvent } from 'ol/Object';
         padding: 1rem;
       }
     `,
-  ],
+    ],
+    imports: [AngularOpenlayersModule]
 })
 export class BasicComponent {
   public zoom = 15;

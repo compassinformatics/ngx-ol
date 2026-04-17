@@ -23,11 +23,11 @@ import BaseEvent from 'ol/events/Event';
 import { FeatureComponent } from './feature.component';
 
 @Component({
-  selector: 'aol-map',
-  template: `
+    selector: 'aol-map',
+    template: `
     <div [style.width]="width" [style.height]="height"></div>
     <ng-content></ng-content>
-  `,
+  `
 })
 export class MapComponent implements OnInit, AfterViewInit, OnChanges {
   @Input()

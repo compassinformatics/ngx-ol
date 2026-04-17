@@ -8,9 +8,9 @@ import { ProjectionLike } from 'ol/proj';
 import { LayerVectorImageComponent } from '../layers/layervectorimage.component';
 
 @Component({
-  selector: 'aol-source-geojson',
-  template: ` <ng-content></ng-content> `,
-  providers: [{ provide: SourceComponent, useExisting: forwardRef(() => SourceGeoJSONComponent) }],
+    selector: 'aol-source-geojson',
+    template: ` <ng-content></ng-content> `,
+    providers: [{ provide: SourceComponent, useExisting: forwardRef(() => SourceGeoJSONComponent) }]
 })
 export class SourceGeoJSONComponent extends SourceComponent implements OnInit {
   @Input()

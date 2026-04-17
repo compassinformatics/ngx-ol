@@ -8,8 +8,8 @@ import { StyleComponent } from './style.component';
 import { IconAnchorUnits, IconOrigin } from 'ol/style/Icon';
 
 @Component({
-  selector: 'aol-style-icon',
-  template: ` <div class="aol-style-icon"></div> `,
+    selector: 'aol-style-icon',
+    template: ` <div class="aol-style-icon"></div> `
 })
 export class StyleIconComponent implements OnInit, OnChanges {
   @Input()

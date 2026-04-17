@@ -10,8 +10,8 @@ import { transform } from 'ol/proj';
 import { ObjectEvent } from 'ol/Object';
 
 @Component({
-  selector: 'aol-collection-coordinates',
-  template: ` <div class="aol-collection-coordinates"></div> `,
+    selector: 'aol-collection-coordinates',
+    template: ` <div class="aol-collection-coordinates"></div> `
 })
 export class CollectionCoordinatesComponent implements OnChanges, OnInit {
   @Input()

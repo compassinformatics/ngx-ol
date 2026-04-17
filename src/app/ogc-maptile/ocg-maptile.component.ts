@@ -1,9 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MapComponent } from '../../../projects/ngx-ol/src/public-api';
+import { AngularOpenlayersModule } from 'ngx-ol';
 
 @Component({
-  selector: 'app-root',
-  template: `
+    selector: 'app-root',
+    template: `
     <aol-map #map width="100%" height="100%">
       <aol-interaction-default></aol-interaction-default>
       <aol-view [zoom]="9" [center]="[-907904, 7065770]"></aol-view>
@@ -16,13 +17,14 @@ import { MapComponent } from '../../../projects/ngx-ol/src/public-api';
       </aol-layer-tile>
     </aol-map>
   `,
-  styles: [
-    `
+    styles: [
+        `
       map {
         background: #e0eced;
       }
     `,
-  ],
+    ],
+    imports: [AngularOpenlayersModule]
 })
 export class OGCMapTileComponent implements OnInit {
   @ViewChild('map') mapComponent: MapComponent;

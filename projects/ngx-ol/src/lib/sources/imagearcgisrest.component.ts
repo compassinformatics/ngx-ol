@@ -17,11 +17,11 @@ import { LoadFunction } from 'ol/Image';
 import { ImageSourceEvent } from 'ol/source/Image';
 
 @Component({
-  selector: 'aol-source-imagearcgisrest',
-  template: ` <ng-content></ng-content> `,
-  providers: [
-    { provide: SourceComponent, useExisting: forwardRef(() => SourceImageArcGISRestComponent) },
-  ],
+    selector: 'aol-source-imagearcgisrest',
+    template: ` <ng-content></ng-content> `,
+    providers: [
+        { provide: SourceComponent, useExisting: forwardRef(() => SourceImageArcGISRestComponent) },
+    ]
 })
 export class SourceImageArcGISRestComponent extends SourceComponent implements OnInit, OnChanges {
   @Input() projection?: ProjectionLike | string;

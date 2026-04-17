@@ -1,25 +1,30 @@
 import { Component, OnInit } from '@angular/core';
 import { examplesList } from '../example-list';
-import { Router } from '@angular/router';
+import { Router, RouterOutlet } from '@angular/router';
+
 
 @Component({
-  selector: 'app-examples-item',
-  template: `
-    <div class="example-info" *ngIf="exampleInfo">
-      <span class="title">{{ exampleInfo.title }}</span>
-      <span class="description">{{ exampleInfo.description }}</span>
-      <div *ngIf="exampleInfo.openLayersLink" class="open-layers-link">
-        <a [href]="exampleInfo.openLayersLink" target="_blank">
-          {{ exampleInfo.openLayersLink }}
-        </a>
+    selector: 'app-examples-item',
+    template: `
+    @if (exampleInfo) {
+      <div class="example-info">
+        <span class="title">{{ exampleInfo.title }}</span>
+        <span class="description">{{ exampleInfo.description }}</span>
+        @if (exampleInfo.openLayersLink) {
+          <div class="open-layers-link">
+            <a [href]="exampleInfo.openLayersLink" target="_blank">
+              {{ exampleInfo.openLayersLink }}
+            </a>
+          </div>
+        }
       </div>
-    </div>
+    }
     <div class="example">
       <router-outlet></router-outlet>
     </div>
-  `,
-  styles: [
-    `
+    `,
+    styles: [
+        `
       :host {
         height: 100%;
         display: flex;
@@ -57,7 +62,8 @@ import { Router } from '@angular/router';
         flex: 1 1 auto;
       }
     `,
-  ],
+    ],
+    imports: [RouterOutlet]
 })
 export class ExamplesItemComponent implements OnInit {
   constructor(private router: Router) {}

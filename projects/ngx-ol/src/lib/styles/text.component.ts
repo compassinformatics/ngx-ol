@@ -5,8 +5,8 @@ import { TextJustify, TextPlacement } from 'ol/style/Text';
 import { DeclutterMode } from 'ol/style/Style';
 
 @Component({
-  selector: 'aol-style-text',
-  template: ` <div class="aol-style-text"></div> `,
+    selector: 'aol-style-text',
+    template: ` <div class="aol-style-text"></div> `
 })
 export class StyleTextComponent implements OnInit, OnChanges {
   @Input()

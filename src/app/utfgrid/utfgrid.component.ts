@@ -1,10 +1,11 @@
 import { Component, ViewChild } from '@angular/core';
-import { SourceUTFGridComponent, ViewComponent } from 'ngx-ol';
+import { SourceUTFGridComponent, ViewComponent, AngularOpenlayersModule } from 'ngx-ol';
 import { Coordinate } from 'ol/coordinate';
 
+
 @Component({
-  selector: 'app-root',
-  template: `
+    selector: 'app-root',
+    template: `
     <aol-map (pointerMove)="displayInfo($event.coordinate)">
       <aol-interaction-default></aol-interaction-default>
       <aol-control-defaults></aol-control-defaults>
@@ -15,20 +16,22 @@ import { Coordinate } from 'ol/coordinate';
         <aol-source-utfgrid
           #UTFGrid
           [url]="
-            'https://api.tiles.mapbox.com/v4/mapbox.geography-class.json?secure&access_token=' + key
+            'https://api.tiles.mapbox.com/v4/mapbox.geography-class.json'
           "
         ></aol-source-utfgrid>
       </aol-layer-tile>
-      <aol-overlay *ngIf="coords && info" [positioning]="'bottom-right'" [stopEvent]="false">
-        <aol-coordinate [x]="coords[0]" [y]="coords[1]" [srid]="'EPSG:3857'"> </aol-coordinate>
-        <aol-content>
-          <img [src]="'data:image/png;base64,' + info['flag_png']" />
-        </aol-content>
-      </aol-overlay>
+      @if (coords && info) {
+        <aol-overlay [positioning]="'bottom-right'" [stopEvent]="false">
+          <aol-coordinate [x]="coords[0]" [y]="coords[1]" [srid]="'EPSG:3857'"> </aol-coordinate>
+          <aol-content>
+            <img [src]="'data:image/png;base64,' + info['flag_png']" />
+          </aol-content>
+        </aol-overlay>
+      }
     </aol-map>
-  `,
-  styles: [
-    `
+    `,
+    styles: [
+        `
       :host {
         height: 100%;
         display: flex;
@@ -39,7 +42,8 @@ import { Coordinate } from 'ol/coordinate';
         height: 100%;
       }
     `,
-  ],
+    ],
+    imports: [AngularOpenlayersModule]
 })
 export class UTFGridComponent {
   @ViewChild('UTFGrid', { static: true }) UTFGrid: SourceUTFGridComponent;
@@ -47,7 +51,6 @@ export class UTFGridComponent {
 
   info: any;
   coords: Coordinate;
-  key = 'pk.eyJ1IjoieWFrb3VzdCIsImEiOiJjanVkc3Y0b2cwNWppM3lwaXd5M3JidHRzIn0.rJmuWPJnuKA9MJ9z5RPKZw';
 
   displayInfo(c: Coordinate) {
     this.UTFGrid.instance.forDataAtCoordinateAndResolution(

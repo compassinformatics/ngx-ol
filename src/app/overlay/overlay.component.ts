@@ -3,10 +3,11 @@ import { GeoJSON } from 'ol/format';
 import { Feature, Feature as OlFeature } from 'ol';
 import { fromExtent } from 'ol/geom/Polygon';
 import { Geometry } from 'ol/geom';
+import { AngularOpenlayersModule } from 'ngx-ol';
 
 @Component({
-  selector: 'app-display-overlay',
-  template: `
+    selector: 'app-display-overlay',
+    template: `
     <aol-map #map width="100%" height="100%">
       <aol-interaction-default></aol-interaction-default>
       <aol-control-defaults></aol-control-defaults>
@@ -38,8 +39,8 @@ import { Geometry } from 'ol/geom';
       </aol-overlay>
     </aol-map>
   `,
-  styles: [
-    `
+    styles: [
+        `
       .tooltip {
         margin-top: 35%;
         right: 50%;
@@ -56,7 +57,8 @@ import { Geometry } from 'ol/geom';
         border: 1px solid white;
       }
     `,
-  ],
+    ],
+    imports: [AngularOpenlayersModule]
 })
 export class OverlayComponent implements OnInit {
   constructor() {}

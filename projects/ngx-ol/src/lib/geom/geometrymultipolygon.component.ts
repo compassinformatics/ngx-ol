@@ -5,8 +5,8 @@ import { MapComponent } from '../map.component';
 import { MultiPolygon } from 'ol/geom';
 
 @Component({
-  selector: 'aol-geometry-multipolygon',
-  template: ` <ng-content></ng-content> `,
+    selector: 'aol-geometry-multipolygon',
+    template: ` <ng-content></ng-content> `
 })
 export class GeometryMultiPolygonComponent extends SimpleGeometryComponent implements OnInit {
   public componentType = 'geometry-multipolygon';
