@@ -1,11 +1,12 @@
 import { Component, Input, Host, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { Icon } from 'ol/style';
 
-// TODO https://github.com/openlayers/openlayers/issues/12694
-// import IconAnchorUnits from 'ol/style/IconAnchorUnits';
-// import IconOrigin from 'ol/style/IconOrigin';
+
 import { StyleComponent } from './style.component';
 import { IconAnchorUnits, IconOrigin } from 'ol/style/Icon';
+import { Size } from 'ol/size';
+import { Color } from 'ol/color';
+import { DeclutterMode } from 'ol/style/Style';
 
 @Component({
   selector: 'aol-style-icon',
@@ -21,11 +22,13 @@ export class StyleIconComponent implements OnInit, OnChanges {
   @Input()
   anchorOrigin: IconOrigin;
   @Input()
-  color: [number, number, number, number];
+  color: string | Color;
   @Input()
-  crossOrigin: IconOrigin;
+  crossOrigin: string | null;
   @Input()
-  img: HTMLCanvasElement | HTMLImageElement;
+  img: HTMLCanvasElement | HTMLImageElement | ImageBitmap;
+  @Input()
+  displacement: number[];
   @Input()
   offset: [number, number];
   @Input()
@@ -33,17 +36,19 @@ export class StyleIconComponent implements OnInit, OnChanges {
   @Input()
   opacity: number;
   @Input()
-  scale: number;
+  width: number;
   @Input()
-  snapToPixel: boolean;
+  height: number;
+  @Input()
+  scale: number | Size;
+  @Input()
+  declutterMode: DeclutterMode;
   @Input()
   rotateWithView: boolean;
   @Input()
   rotation: number;
   @Input()
   size: [number, number];
-  @Input()
-  imgSize: [number, number];
   @Input()
   src: string;
 

@@ -16,6 +16,7 @@ import { LayerVectorImageComponent } from '../layers/layervectorimage.component'
 import { Collection } from 'ol';
 import { FeatureLike } from 'ol/Feature';
 import FeatureFormat from 'ol/format/Feature';
+import { FeatureLoader, FeatureUrlFunction } from 'ol/featureloader';
 
 @Component({
   selector: 'aol-source-vector',
@@ -32,7 +33,9 @@ export class SourceVectorComponent extends SourceComponent implements OnInit, On
   @Input()
   wrapX: boolean;
   @Input()
-  url?: string;
+  loader?: FeatureLoader<FeatureLike>;
+  @Input()
+  url?: string | FeatureUrlFunction;
   @Input()
   format?: FeatureFormat<any>;
   @Input()

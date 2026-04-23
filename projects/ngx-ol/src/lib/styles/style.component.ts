@@ -3,7 +3,7 @@ import { Fill, Image, Stroke, Style, Text } from 'ol/style';
 import { Geometry } from 'ol/geom';
 import { FeatureComponent } from '../feature.component';
 import { LayerVectorComponent } from '../layers/layervector.component';
-import { GeometryFunction } from 'ol/style/Style';
+import { GeometryFunction, RenderFunction } from 'ol/style/Style';
 import { LayerVectorImageComponent } from '../layers/layervectorimage.component';
 
 @Component({
@@ -17,6 +17,10 @@ export class StyleComponent implements OnInit {
   fill: Fill;
   @Input()
   image: Image;
+  @Input()
+  renderer: RenderFunction;
+  @Input()
+  hitDetectionRenderer: RenderFunction;
   @Input()
   stroke: Stroke;
   @Input()

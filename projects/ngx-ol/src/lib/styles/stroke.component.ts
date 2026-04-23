@@ -18,6 +18,8 @@ export class StyleStrokeComponent implements OnInit, OnChanges {
   @Input()
   lineDash: number[];
   @Input()
+  lineDashOffset: number | undefined;
+  @Input()
   lineJoin: CanvasLineJoin | undefined;
   @Input()
   miterLimit: number;
@@ -79,6 +81,9 @@ export class StyleStrokeComponent implements OnInit, OnChanges {
     }
     if (changes.lineDash) {
       this.instance.setLineDash(changes.lineDash.currentValue);
+    }
+    if (changes.lineDashOffset) {
+      this.instance.setLineDashOffset(changes.lineDashOffset.currentValue);
     }
     if (changes.lineJoin) {
       this.instance.setLineJoin(changes.lineJoin.currentValue);

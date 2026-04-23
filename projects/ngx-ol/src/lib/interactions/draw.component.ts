@@ -8,6 +8,7 @@ import { DrawEvent, GeometryFunction } from 'ol/interaction/Draw';
 import { StyleFunction, StyleLike } from 'ol/style/Style';
 import { Condition } from 'ol/events/condition';
 import { Type } from 'ol/geom/Geometry';
+import { GeometryLayout } from 'ol/geom/Geometry';
 import { ObjectEvent } from 'ol/Object';
 import BaseEvent from 'ol/events/Event';
 import { FlatStyleLike } from 'ol/style/flat';
@@ -24,7 +25,11 @@ export class DrawInteractionComponent implements OnInit, OnDestroy {
   @Input()
   source?: Vector;
   @Input()
+  dragVertexDelay?: number;
+  @Input()
   snapTolerance?: number;
+  @Input()
+  stopClick?: boolean;
   @Input()
   type: Type;
   @Input()
@@ -46,7 +51,13 @@ export class DrawInteractionComponent implements OnInit, OnDestroy {
   @Input()
   freehand?: boolean;
   @Input()
+  trace?: boolean | Condition;
+  @Input()
+  traceSource?: Vector;
+  @Input()
   wrapX?: boolean;
+  @Input()
+  geometryLayout?: GeometryLayout;
 
   @Output()
   olChange = new EventEmitter<BaseEvent>();

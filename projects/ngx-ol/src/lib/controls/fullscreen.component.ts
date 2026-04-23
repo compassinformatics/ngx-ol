@@ -10,13 +10,21 @@ export class ControlFullScreenComponent implements OnInit, OnDestroy {
   @Input()
   className: string;
   @Input()
-  label: string;
+  label: string | HTMLElement | Text;
   @Input()
-  labelActive: string;
+  labelActive: string | HTMLElement | Text;
+  @Input()
+  activeClassName: string;
+  @Input()
+  inactiveClassName: string;
   @Input()
   tipLabel: string;
   @Input()
   keys: boolean;
+  @Input()
+  target: string | HTMLElement;
+  @Input()
+  source: string | HTMLElement;
 
   instance: FullScreen;
 

@@ -1,5 +1,7 @@
 import { Component, Input, OnDestroy, OnInit, OnChanges, SimpleChanges } from '@angular/core';
-import { Layer } from 'ol/layer';
+import Collection from 'ol/Collection';
+import MapEvent from 'ol/MapEvent';
+import BaseLayer from 'ol/layer/Base';
 import { View } from 'ol';
 import { OverviewMap } from 'ol/control';
 import { MapComponent } from '../map.component';
@@ -10,17 +12,23 @@ import { MapComponent } from '../map.component';
 })
 export class ControlOverviewMapComponent implements OnInit, OnChanges, OnDestroy {
   @Input()
+  className: string;
+  @Input()
   collapsed: boolean;
   @Input()
-  collapseLabel: string;
+  collapseLabel: string | HTMLElement;
   @Input()
   collapsible: boolean;
   @Input()
-  label: string;
+  label: string | HTMLElement;
   @Input()
-  layers: Layer[];
+  layers: BaseLayer[] | Collection<BaseLayer>;
   @Input()
-  target: HTMLElement;
+  render?: (event: MapEvent) => void;
+  @Input()
+  rotateWithView: boolean;
+  @Input()
+  target: string | HTMLElement;
   @Input()
   tipLabel: string;
   @Input()

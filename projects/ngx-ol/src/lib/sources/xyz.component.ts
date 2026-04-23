@@ -16,6 +16,8 @@ import { XYZ } from 'ol/source';
 import { TileSourceEvent } from 'ol/source/Tile';
 import { LoadFunction, UrlFunction } from 'ol/Tile';
 import TileGrid from 'ol/tilegrid/TileGrid';
+import { ProjectionLike } from 'ol/proj';
+import { NearestDirectionFunction } from 'ol/array';
 
 import { LayerTileComponent } from '../layers/layertile.component';
 import { TileGridComponent } from '../tilegrid.component';
@@ -32,11 +34,15 @@ export class SourceXYZComponent extends SourceComponent implements AfterContentI
   @Input()
   crossOrigin?: null | string;
   @Input()
-  opaque: boolean;
+  gutter: number;
   @Input()
-  projection?: string;
+  interpolate: boolean;
+  @Input()
+  projection?: ProjectionLike;
   @Input()
   reprojectionErrorThreshold: number;
+  @Input()
+  maxResolution: number;
   @Input()
   minZoom: number;
   @Input()
@@ -52,11 +58,15 @@ export class SourceXYZComponent extends SourceComponent implements AfterContentI
   @Input()
   tileUrlFunction?: UrlFunction;
   @Input()
+  transition: number;
+  @Input()
   url?: string;
   @Input()
   urls?: string[];
   @Input()
   wrapX: boolean;
+  @Input()
+  zDirection: number | NearestDirectionFunction;
 
   @ContentChild(TileGridComponent, { static: false })
   tileGridXYZ: TileGridComponent;

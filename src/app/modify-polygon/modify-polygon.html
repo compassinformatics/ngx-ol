@@ -7,7 +7,7 @@
     </aol-layer-tile>
 
     <aol-interaction-default></aol-interaction-default>
-    <aol-interaction-select [wrapX]="true" #select></aol-interaction-select>
+    <aol-interaction-select #select></aol-interaction-select>
     <aol-interaction-modify
       [features]="select.instance.getFeatures()"
       (olModifyEnd)="modifyEnd($event.features.getArray()[0])"

@@ -8,7 +8,7 @@ import {
   EventEmitter,
   Output,
 } from '@angular/core';
-import View from 'ol/View';
+import View, { ViewOptions } from 'ol/View';
 import { MapComponent } from './map.component';
 import { ObjectEvent } from 'ol/Object';
 import { Extent } from 'ol/extent';
@@ -62,6 +62,8 @@ export class ViewComponent implements OnInit, OnChanges, OnDestroy {
   showFullExtent: boolean;
   @Input()
   multiWorld: boolean;
+  @Input()
+  padding?: number[];
 
   @Input()
   zoomAnimation = false;
@@ -86,7 +88,7 @@ export class ViewComponent implements OnInit, OnChanges, OnDestroy {
 
   ngOnInit() {
     // console.log('creating ol.View instance with: ', this);
-    this.instance = new View(this);
+    this.instance = new View(this.createOptions());
     this.host.instance.setView(this.instance);
 
     this.instance.on('change', (event: BaseEvent) => this.olChange.emit(event));
@@ -107,6 +109,8 @@ export class ViewComponent implements OnInit, OnChanges, OnDestroy {
     for (const key in changes) {
       if (changes.hasOwnProperty(key)) {
         switch (key) {
+          case 'zoomAnimation':
+            break;
           case 'zoom':
             /** Work-around: setting the zoom via setProperties does not work. */
             if (this.zoomAnimation) {
@@ -116,7 +120,7 @@ export class ViewComponent implements OnInit, OnChanges, OnDestroy {
             }
             break;
           case 'projection':
-            this.instance = new View(this);
+            this.instance = new View(this.createOptions());
             this.host.instance.setView(this.instance);
             break;
           case 'center':
@@ -126,7 +130,9 @@ export class ViewComponent implements OnInit, OnChanges, OnDestroy {
           default:
             break;
         }
-        properties[key] = changes[key].currentValue;
+        if (key !== 'zoomAnimation') {
+          properties[key] = changes[key].currentValue;
+        }
       }
     }
     // console.log('changes detected in aol-view, setting new properties: ', properties);
@@ -135,5 +141,55 @@ export class ViewComponent implements OnInit, OnChanges, OnDestroy {
 
   ngOnDestroy() {
     // console.log('removing aol-view');
+  }
+
+  private createOptions(): ViewOptions {
+    const {
+      center,
+      constrainOnlyCenter,
+      constrainResolution,
+      constrainRotation,
+      enableRotation,
+      extent,
+      maxResolution,
+      maxZoom,
+      minResolution,
+      minZoom,
+      multiWorld,
+      padding,
+      projection,
+      resolution,
+      resolutions,
+      rotation,
+      showFullExtent,
+      smoothExtentConstraint,
+      smoothResolutionConstraint,
+      zoom,
+      zoomFactor,
+    } = this;
+
+    return {
+      center,
+      constrainOnlyCenter,
+      constrainResolution,
+      constrainRotation,
+      enableRotation,
+      extent,
+      maxResolution,
+      maxZoom,
+      minResolution,
+      minZoom,
+      multiWorld,
+      padding,
+      projection,
+      resolution,
+      resolutions,
+      rotation,
+      showFullExtent,
+      smoothExtentConstraint,
+      smoothResolutionConstraint,
+      zoom,
+      zoomFactor,
+    };
   }
 }

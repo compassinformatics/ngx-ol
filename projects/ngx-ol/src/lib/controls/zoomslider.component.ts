@@ -1,4 +1,5 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import MapEvent from 'ol/MapEvent';
 import { ZoomSlider } from 'ol/control';
 import { MapComponent } from '../map.component';
 
@@ -12,9 +13,9 @@ export class ControlZoomSliderComponent implements OnInit, OnDestroy {
   @Input()
   duration: number;
   @Input()
-  maxResolution: number;
+  render?: (event: MapEvent) => void;
   @Input()
-  minResolution: number;
+  target: string | HTMLElement;
 
   instance: ZoomSlider;
 

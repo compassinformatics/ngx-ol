@@ -1,4 +1,5 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import MapEvent from 'ol/MapEvent';
 import { Rotate } from 'ol/control';
 import { MapComponent } from '../map.component';
 
@@ -10,13 +11,21 @@ export class ControlRotateComponent implements OnInit, OnDestroy {
   @Input()
   className: string;
   @Input()
-  label: string;
+  label: string | HTMLElement;
   @Input()
   tipLabel: string;
+  @Input()
+  compassClassName: string;
   @Input()
   duration: number;
   @Input()
   autoHide: boolean;
+  @Input()
+  render?: (event: MapEvent) => void;
+  @Input()
+  resetNorth?: () => void;
+  @Input()
+  target: string | HTMLElement;
 
   instance: Rotate;
 

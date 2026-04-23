@@ -11,6 +11,8 @@ export class ControlZoomToExtentComponent implements OnInit, OnDestroy {
   @Input()
   className: string;
   @Input()
+  target: string | HTMLElement;
+  @Input()
   label: string | HTMLElement;
   @Input()
   tipLabel: string;

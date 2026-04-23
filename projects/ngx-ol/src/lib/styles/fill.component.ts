@@ -4,7 +4,7 @@ import { StyleComponent } from './style.component';
 import { StyleCircleComponent } from './circle.component';
 import { StyleTextComponent } from './text.component';
 import { Color } from 'ol/color';
-import { ColorLike } from 'ol/colorlike';
+import { ColorLike, PatternDescriptor } from 'ol/colorlike';
 
 @Component({
   selector: 'aol-style-fill',
@@ -12,7 +12,7 @@ import { ColorLike } from 'ol/colorlike';
 })
 export class StyleFillComponent implements OnInit, OnChanges {
   @Input()
-  color: Color | ColorLike;
+  color: Color | ColorLike | PatternDescriptor | null;
 
   public instance: Fill;
   private readonly host: StyleComponent | StyleCircleComponent | StyleTextComponent;

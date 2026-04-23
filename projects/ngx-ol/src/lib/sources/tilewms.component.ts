@@ -12,6 +12,9 @@ import { SourceComponent } from './source.component';
 import { TileWMS } from 'ol/source';
 import TileGrid from 'ol/tilegrid/TileGrid';
 import { LoadFunction } from 'ol/Tile';
+import ImageTile from 'ol/ImageTile';
+import { NearestDirectionFunction } from 'ol/array';
+import { ProjectionLike } from 'ol/proj';
 import { ServerType } from 'ol/source/wms';
 
 @Component({
@@ -29,13 +32,17 @@ export class SourceTileWMSComponent extends SourceComponent implements OnChanges
   @Input()
   hidpi: boolean;
   @Input()
+  interpolate: boolean;
+  @Input()
   params: { [key: string]: any };
   @Input()
-  projection?: string;
+  projection?: ProjectionLike;
   @Input()
   reprojectionErrorThreshold: number;
   @Input()
   serverType?: ServerType;
+  @Input()
+  tileClass?: typeof ImageTile;
   @Input()
   tileGrid?: TileGrid;
   @Input()
@@ -46,6 +53,10 @@ export class SourceTileWMSComponent extends SourceComponent implements OnChanges
   urls: string[];
   @Input()
   wrapX?: boolean;
+  @Input()
+  transition?: number;
+  @Input()
+  zDirection?: number | NearestDirectionFunction;
 
   instance: TileWMS;
 

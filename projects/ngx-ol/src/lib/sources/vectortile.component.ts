@@ -1,15 +1,18 @@
 import { Component, Host, Input, forwardRef, ContentChild, AfterContentInit } from '@angular/core';
 import { VectorTile } from 'ol/source';
-import Feature from 'ol/format/Feature';
 import TileGrid from 'ol/tilegrid/TileGrid';
+import OlVectorTile from 'ol/VectorTile';
 import { LayerVectorTileComponent } from '../layers/layervectortile.component';
 import { TileGridComponent } from '../tilegrid.component';
 import { SourceComponent } from './source.component';
 import { ProjectionLike } from 'ol/proj';
 import { LoadFunction, UrlFunction } from 'ol/Tile';
+import { NearestDirectionFunction } from 'ol/array';
+import { Extent } from 'ol/extent';
+import { Size } from 'ol/size';
+import { State } from 'ol/source/Source';
 import { FormatGeoJSONComponent } from '../formats/geojson.component';
 import { FormatMVTComponent } from '../formats/mvt.component';
-import FeatureFormat from 'ol/format/Feature';
 
 @Component({
   selector: 'aol-source-vectortile',
@@ -22,11 +25,23 @@ export class SourceVectorTileComponent extends SourceComponent implements AfterC
   @Input()
   cacheSize?: number;
   @Input()
+  extent?: Extent;
+  @Input()
   overlaps: boolean;
   @Input()
   projection?: ProjectionLike;
   @Input()
-  tilePixelRatio: number;
+  state?: State;
+  @Input()
+  tileClass?: typeof OlVectorTile;
+  @Input()
+  maxZoom?: number;
+  @Input()
+  minZoom?: number;
+  @Input()
+  tileSize?: number | Size;
+  @Input()
+  maxResolution?: number;
   @Input()
   tileUrlFunction?: UrlFunction;
   @Input()
@@ -36,7 +51,11 @@ export class SourceVectorTileComponent extends SourceComponent implements AfterC
   @Input()
   urls?: string[];
   @Input()
+  transition?: number;
+  @Input()
   wrapX: boolean;
+  @Input()
+  zDirection?: number | NearestDirectionFunction;
   @Input()
   format?: any;
 

@@ -3,6 +3,7 @@ import MousePosition from 'ol/control/MousePosition';
 import { MapComponent } from '../map.component';
 import { CoordinateFormat } from 'ol/coordinate';
 import { ProjectionLike } from 'ol/proj';
+import MapEvent from 'ol/MapEvent';
 
 @Component({
   selector: 'aol-control-mouseposition',
@@ -10,9 +11,17 @@ import { ProjectionLike } from 'ol/proj';
 })
 export class ControlMousePositionComponent implements OnInit, OnDestroy {
   @Input()
+  className: string;
+  @Input()
   coordinateFormat: CoordinateFormat;
   @Input()
   projection: ProjectionLike;
+  @Input()
+  render?: (event: MapEvent) => void;
+  @Input()
+  placeholder: string;
+  @Input()
+  wrapX: boolean;
 
   instance: MousePosition;
   target: HTMLElement;

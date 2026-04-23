@@ -3,6 +3,7 @@ import { Fill, Stroke, Text } from 'ol/style';
 import { StyleComponent } from './style.component';
 import { TextJustify, TextPlacement } from 'ol/style/Text';
 import { DeclutterMode } from 'ol/style/Style';
+import { Size } from 'ol/size';
 
 @Component({
   selector: 'aol-style-text',
@@ -24,7 +25,7 @@ export class StyleTextComponent implements OnInit, OnChanges {
   @Input()
   repeat: number | undefined;
   @Input()
-  scale: number | undefined;
+  scale: number | Size | undefined;
   @Input()
   rotateWithView: boolean | undefined;
   @Input()

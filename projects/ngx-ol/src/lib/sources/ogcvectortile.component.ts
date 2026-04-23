@@ -4,6 +4,8 @@ import TileGrid from 'ol/tilegrid/TileGrid';
 import { LayerVectorTileComponent } from '../layers/layervectortile.component';
 import { SourceComponent } from './source.component';
 import { ProjectionLike } from 'ol/proj';
+import VectorTile from 'ol/VectorTile';
+import { NearestDirectionFunction } from 'ol/array';
 import { FormatMVTComponent } from '../formats/mvt.component';
 import { FormatGeoJSONComponent } from '../formats/geojson.component';
 
@@ -21,10 +23,10 @@ export class SourceOGCVectorTileComponent extends SourceComponent implements Aft
   @Input() cacheSize?: number;
   @Input() overlaps?: boolean;
   @Input() projection?: ProjectionLike;
-  @Input() tileClass?: any;
+  @Input() tileClass?: typeof VectorTile;
   @Input() transition?: number;
   @Input() wrapX?: boolean;
-  @Input() zDirection?: number;
+  @Input() zDirection?: number | NearestDirectionFunction;
   @Input() collections?: string[];
   @Input() format?: any;
 

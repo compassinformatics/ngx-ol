@@ -11,6 +11,7 @@ import {
 import { OSM } from 'ol/source';
 import { TileSourceEvent } from 'ol/source/Tile';
 import { LoadFunction } from 'ol/Tile';
+import { NearestDirectionFunction } from 'ol/array';
 import { LayerTileComponent } from '../layers/layertile.component';
 import { SourceComponent } from './source.component';
 import { SourceXYZComponent } from './xyz.component';
@@ -30,8 +31,6 @@ export class SourceOsmComponent extends SourceXYZComponent implements AfterConte
   @Input()
   maxZoom: number;
   @Input()
-  opaque: boolean;
-  @Input()
   reprojectionErrorThreshold: number;
   @Input()
   tileLoadFunction?: LoadFunction;
@@ -42,7 +41,7 @@ export class SourceOsmComponent extends SourceXYZComponent implements AfterConte
   @Input()
   wrapX: boolean;
   @Input()
-  zDirection: number;
+  zDirection: number | NearestDirectionFunction;
 
   @Output()
   tileLoadStart = new EventEmitter<TileSourceEvent>();

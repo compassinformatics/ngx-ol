@@ -1,5 +1,6 @@
 import { Component, ElementRef, Input, OnDestroy, OnInit } from '@angular/core';
 import { Attribution } from 'ol/control';
+import MapEvent from 'ol/MapEvent';
 import { MapComponent } from '../map.component';
 
 @Component({
@@ -8,7 +9,23 @@ import { MapComponent } from '../map.component';
 })
 export class ControlAttributionComponent implements OnInit, OnDestroy {
   @Input()
+  className: string;
+  @Input()
   collapsible: boolean;
+  @Input()
+  collapsed: boolean;
+  @Input()
+  tipLabel: string;
+  @Input()
+  label: string | HTMLElement;
+  @Input()
+  expandClassName: string;
+  @Input()
+  collapseLabel: string | HTMLElement;
+  @Input()
+  collapseClassName: string;
+  @Input()
+  render?: (event: MapEvent) => void;
 
   public componentType = 'control';
   instance: Attribution;

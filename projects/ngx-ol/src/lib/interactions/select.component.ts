@@ -34,8 +34,6 @@ export class SelectInteractionComponent implements OnInit, OnDestroy {
   filter?: FilterFunction;
   @Input()
   hitTolerance?: number;
-  @Input()
-  wrapX?: boolean;
 
   @Output()
   olChange = new EventEmitter<BaseEvent>();

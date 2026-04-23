@@ -6,6 +6,8 @@ import { TranslateEvent } from 'ol/interaction/Translate';
 import { MapComponent } from '../map.component';
 import BaseEvent from 'ol/events/Event';
 import { ObjectEvent } from 'ol/Object';
+import { Condition } from 'ol/events/condition';
+import { FilterFunction } from 'ol/interaction/Select';
 
 @Component({
   selector: 'aol-interaction-translate',
@@ -13,9 +15,13 @@ import { ObjectEvent } from 'ol/Object';
 })
 export class TranslateInteractionComponent implements OnInit, OnDestroy {
   @Input()
+  condition?: Condition;
+  @Input()
   features?: Collection<Feature>;
   @Input()
   layers?: Layer[] | ((layer: Layer) => boolean);
+  @Input()
+  filter?: FilterFunction;
   @Input()
   hitTolerance?: number;
 

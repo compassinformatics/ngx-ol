@@ -10,6 +10,8 @@ import {
 import { Circle, Fill, Stroke } from 'ol/style';
 import { StyleComponent } from './style.component';
 import ImageStyle from 'ol/style/Image';
+import { Size } from 'ol/size';
+import { DeclutterMode } from 'ol/style/Style';
 
 @Component({
   selector: 'aol-style-circle',
@@ -21,9 +23,17 @@ export class StyleCircleComponent implements AfterContentInit, OnChanges, OnDest
   @Input()
   radius: number;
   @Input()
-  snapToPixel: boolean;
-  @Input()
   stroke: Stroke;
+  @Input()
+  displacement: number[];
+  @Input()
+  scale: number | Size;
+  @Input()
+  rotation: number;
+  @Input()
+  rotateWithView: boolean;
+  @Input()
+  declutterMode: DeclutterMode;
 
   public componentType = 'style-circle';
   public instance: Circle;
