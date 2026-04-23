@@ -1,0 +1,29 @@
+:host {
+  display: block;
+  position: relative;
+  height: 100%;
+}
+
+.map {
+  display: block;
+  height: 100%;
+  min-height: 24rem;
+}
+
+.swipe-button {
+  position: absolute;
+  top: 60%;
+  left: calc(50% - 20px);
+  width: 2.5rem;
+  height: 2.5rem;
+  border: 0;
+  border-radius: 999px;
+  background: #0a2340;
+  color: #fff;
+  cursor: grab;
+  touch-action: none;
+}
+
+.swipe-button:active {
+  cursor: grabbing;
+}

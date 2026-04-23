@@ -1,0 +1,23 @@
+<main class="home">
+  <section class="hero">
+    <label for="demo-search" style="display: none;">Search demos</label>
+    <input
+      id="demo-search"
+      type="search"
+      [value]="searchTerm()"
+      placeholder="Search by title or keyword"
+      (input)="setSearchTerm($any($event.target).value)"
+    />
+  </section>
+
+  <section class="demo-grid" aria-label="Demo examples">
+    @for (demo of filteredDemos(); track demo.path) {
+      <a class="demo-card" [routerLink]="demo.path">
+        <h2>{{ demo.label }}</h2>
+        <p>{{ demo.description }}</p>
+      </a>
+    } @empty {
+      <p class="empty">No demos match that search.</p>
+    }
+  </section>
+</main>

@@ -1,0 +1,30 @@
+<aol-map class="map">
+  <aol-view [zoom]="zoom()" [center]="center()"></aol-view>
+
+  <aol-layer-tile>
+    <aol-source-osm></aol-source-osm>
+  </aol-layer-tile>
+
+  <aol-layer-vector>
+    <aol-source-vector>
+      <aol-feature [feature]="markerFeature()">
+        <aol-style>
+          <aol-style-icon
+            src="/marker.svg"
+            [anchor]="[0.5, 1]"
+            anchorXUnits="fraction"
+            anchorYUnits="fraction"
+            [scale]="2"
+            anchorOrigin="top-left"
+          >
+          </aol-style-icon>
+        </aol-style>
+      </aol-feature>
+    </aol-source-vector>
+  </aol-layer-vector>
+
+  <aol-interaction-default></aol-interaction-default>
+  <aol-control-scaleline></aol-control-scaleline>
+  <aol-control-zoom></aol-control-zoom>
+  <aol-control-attribution></aol-control-attribution>
+</aol-map>

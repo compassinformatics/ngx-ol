@@ -1,0 +1,53 @@
+<ol>
+  @for (layer of sortedLayers(); track layer.id) {
+    <li
+      [class.is-drop-target]="dropTargetLayerId() === layer.id"
+      (dragover)="allowDrop($event, layer.id)"
+      (drop)="dropLayer($event, layer.id)"
+    >
+      <details class="layer-item">
+        <summary class="layer-row" [class.is-dragging]="draggedLayerId() === layer.id">
+          <button
+            type="button"
+            class="drag-handle"
+            draggable="true"
+            aria-label="Drag to reorder layer"
+            (click)="$event.preventDefault(); $event.stopPropagation()"
+            (dragstart)="startDragging($event, layer.id)"
+            (dragend)="endDragging()"
+          >
+            ⋮⋮
+          </button>
+
+          <label class="layer-visibility" (click)="$event.stopPropagation()">
+            <input
+              #visibilityToggle
+              type="checkbox"
+              [checked]="layer.isVisible"
+              (change)="setLayerVisibility(layer.id, visibilityToggle.checked)"
+            />
+            <span>{{ layer.name }}</span>
+          </label>
+
+          <span class="layer-toggle" aria-hidden="true"></span>
+        </summary>
+
+        <div class="layer-details">
+          <label class="opacity-control">
+            <span>Opacity</span>
+            <input
+              #opacitySlider
+              type="range"
+              min="0"
+              max="1"
+              step="0.05"
+              [value]="layer.opacity"
+              (input)="setLayerOpacity(layer.id, opacitySlider.valueAsNumber)"
+            />
+            <span>{{ formatOpacity(layer.opacity) }}</span>
+          </label>
+        </div>
+      </details>
+    </li>
+  }
+</ol>

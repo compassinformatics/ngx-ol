@@ -1,0 +1,20 @@
+<div class="layout demo-layout">
+  <aol-map class="map demo-map">
+    <aol-view [projection]="projection()" [zoom]="zoom()" [center]="center()"></aol-view>
+
+    <aol-layer-image [opacity]="opacity()" [extent]="extent()">
+      <aol-source-imagestatic [url]="url()" [projection]="projection()" [imageExtent]="extent()">
+      </aol-source-imagestatic>
+    </aol-layer-image>
+  </aol-map>
+
+  <aside class="panel demo-panel">
+    <h2>Static image</h2>
+    <label for="image-static-select">Current image URL</label>
+    <select id="image-static-select" [value]="url()" (change)="setUrl($event)">
+      @for (option of imageOptions(); track option.url) {
+        <option [value]="option.url">{{ option.label }}</option>
+      }
+    </select>
+  </aside>
+</div>

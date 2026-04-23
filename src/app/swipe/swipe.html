@@ -1,0 +1,30 @@
+<aol-map #map class="map">
+  <aol-view [zoom]="zoom()" [center]="center()"></aol-view>
+
+  <aol-layer-tile>
+    <aol-source-osm></aol-source-osm>
+  </aol-layer-tile>
+
+  <aol-layer-tile [prerender]="prerenderFunction" [postrender]="postrenderFunction">
+    <aol-source-xyz
+      url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
+    >
+    </aol-source-xyz>
+  </aol-layer-tile>
+
+  <aol-interaction-default></aol-interaction-default>
+  <aol-control-scaleline></aol-control-scaleline>
+  <aol-control-zoom></aol-control-zoom>
+  <aol-control-attribution></aol-control-attribution>
+</aol-map>
+
+<button
+  type="button"
+  class="swipe-button"
+  aria-label="Swipe layers"
+  [style.marginLeft.px]="swipeOffsetToCenter()"
+  (panstart)="onPanStart()"
+  (panmove)="onPan($event)"
+>
+  &#8596;
+</button>

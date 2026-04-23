@@ -1,0 +1,20 @@
+<aol-map [runOutsideAngular]="true">
+  <aol-view [zoom]="zoom()" [center]="center()"></aol-view>
+
+  <aol-layer-tile>
+    <aol-source-osm></aol-source-osm>
+  </aol-layer-tile>
+
+  <aol-layer-tile>
+    <aol-source-tilewms
+      url="https://gis.epa.ie/geoserver/EPA/wms"
+      [params]="{ LAYERS: 'EPA:WFD_RIVERWATERBODIES_CYCLE3', TILED: true }"
+    >
+    </aol-source-tilewms>
+  </aol-layer-tile>
+
+  <aol-interaction-default></aol-interaction-default>
+  <aol-control-scaleline></aol-control-scaleline>
+  <aol-control-zoom></aol-control-zoom>
+  <aol-control-attribution></aol-control-attribution>
+</aol-map>

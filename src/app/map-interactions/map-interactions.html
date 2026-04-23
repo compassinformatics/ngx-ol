@@ -1,0 +1,72 @@
+<div class="layout demo-layout">
+  <aol-map class="map demo-map" tabindex="0">
+    <aol-view [zoom]="zoom()" [center]="center()"></aol-view>
+
+    <aol-layer-tile>
+      <aol-source-osm></aol-source-osm>
+    </aol-layer-tile>
+
+    @if (isEnabled('defaults')) {
+      <aol-interaction-default></aol-interaction-default>
+    }
+    @if (isEnabled('doubleClickZoom')) {
+      <aol-interaction-doubleclickzoom></aol-interaction-doubleclickzoom>
+    }
+    @if (isEnabled('dragAndDrop')) {
+      <aol-interaction-draganddrop></aol-interaction-draganddrop>
+    }
+    @if (isEnabled('dragBox')) {
+      <aol-interaction-dragbox [condition]="shiftKeyOnly"></aol-interaction-dragbox>
+    }
+    @if (isEnabled('dragPan')) {
+      <aol-interaction-dragpan></aol-interaction-dragpan>
+    }
+    @if (isEnabled('dragRotate')) {
+      <aol-interaction-dragrotate [condition]="altShiftKeysOnly"></aol-interaction-dragrotate>
+    }
+    @if (isEnabled('dragRotateAndZoom')) {
+      <aol-interaction-dragrotateandzoom
+        [condition]="altShiftKeysOnly"
+      ></aol-interaction-dragrotateandzoom>
+    }
+    @if (isEnabled('dragZoom')) {
+      <aol-interaction-dragzoom
+        [condition]="platformModifierKeyOnly"
+        [duration]="250"
+      ></aol-interaction-dragzoom>
+    }
+    @if (isEnabled('mouseWheelZoom')) {
+      <aol-interaction-mousewheelzoom></aol-interaction-mousewheelzoom>
+    }
+    @if (isEnabled('pinchZoom')) {
+      <aol-interaction-pinchzoom></aol-interaction-pinchzoom>
+    }
+
+    <aol-control-scaleline></aol-control-scaleline>
+    <aol-control-zoom></aol-control-zoom>
+    <aol-control-attribution></aol-control-attribution>
+  </aol-map>
+
+  <aside class="panel demo-panel">
+    <h2>Map interactions</h2>
+
+    <fieldset class="interaction-list">
+      <legend>Enabled</legend>
+      @for (interaction of interactionOptions; track interaction.key) {
+        <label>
+          <input
+            type="checkbox"
+            [checked]="isEnabled(interaction.key)"
+            (change)="setEnabled(interaction.key, $any($event.target).checked)"
+          />
+          {{ interaction.label }}
+        </label>
+      }
+    </fieldset>
+
+    <section class="section">
+      <h2>Notes</h2>
+      <p>Shift drag: drag box. Ctrl/Cmd drag: drag zoom. Alt+Shift drag: rotate.</p>
+    </section>
+  </aside>
+</div>

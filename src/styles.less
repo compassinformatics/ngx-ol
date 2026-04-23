@@ -1,0 +1,47 @@
+@import (css) "https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap";
+
+/* You can add global styles to this file, and also import other style files */
+html,
+body {
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  font-family: 'Manrope', 'Segoe UI', sans-serif;
+  margin: 0;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.demo-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 20rem;
+  height: 100%;
+}
+
+.demo-map {
+  min-width: 0;
+  min-height: 24rem;
+}
+
+.demo-panel {
+  padding: 1rem;
+  overflow: auto;
+  border-left: 1px solid rgb(148 163 184 / 0.2);
+}
+
+
+@media (max-width: 900px) {
+  .demo-layout {
+    grid-template-columns: 1fr;
+    grid-template-rows: minmax(18rem, 1fr) auto;
+  }
+
+  .demo-panel {
+    border-left: 0;
+    border-top: 1px solid rgb(148 163 184 / 0.2);
+  }
+}

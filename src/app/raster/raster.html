@@ -1,0 +1,77 @@
+<div class="layout demo-layout">
+  <aol-map class="map demo-map">
+    <aol-view [zoom]="zoom()" [center]="center()"></aol-view>
+
+    <aol-layer-image>
+      <aol-source-raster
+        #rasterSource
+        [threads]="4"
+        [operation]="operation"
+        operationType="image"
+        (beforeOperations)="beforeOperations($event)"
+      >
+        @if (selectedLayer() === 'osm') {
+          <aol-source-osm></aol-source-osm>
+        } @else {
+          <aol-source-xyz
+            url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
+            crossOrigin=""
+          >
+          </aol-source-xyz>
+        }
+      </aol-source-raster>
+    </aol-layer-image>
+
+    <aol-interaction-default></aol-interaction-default>
+    <aol-control-fullscreen></aol-control-fullscreen>
+    <aol-control-scaleline></aol-control-scaleline>
+    <aol-control-zoom></aol-control-zoom>
+    <aol-control-attribution></aol-control-attribution>
+  </aol-map>
+
+  <aside class="panel demo-panel">
+    <h2>Raster controls</h2>
+
+    <fieldset>
+      <legend>Base layer</legend>
+      <label>
+        <input
+          type="radio"
+          name="raster-layer"
+          [checked]="selectedLayer() === 'osm'"
+          (change)="setSelectedLayer('osm')"
+        />
+        OSM
+      </label>
+      <label>
+        <input
+          type="radio"
+          name="raster-layer"
+          [checked]="selectedLayer() === 'imagery'"
+          (change)="setSelectedLayer('imagery')"
+        />
+        ArcGIS imagery
+      </label>
+    </fieldset>
+
+    <label for="raster-contrast">Contrast: {{ contrast() }}</label>
+    <input
+      id="raster-contrast"
+      type="range"
+      min="-255"
+      max="255"
+      [value]="contrast()"
+      (input)="setContrast($any($event.target).valueAsNumber)"
+    />
+
+    <label for="raster-brightness">Brightness: {{ brightness() }}</label>
+    <input
+      id="raster-brightness"
+      type="range"
+      min="-255"
+      max="255"
+      [value]="brightness()"
+      (input)="setBrightness($any($event.target).valueAsNumber)"
+    />
+  </aside>
+</div>

@@ -1,0 +1,32 @@
+<div class="layout demo-layout">
+  <aol-map class="map demo-map">
+    <aol-view [zoom]="zoom()" [center]="center()"></aol-view>
+
+    <aol-layer-tile>
+      <aol-source-osm></aol-source-osm>
+    </aol-layer-tile>
+
+    <aol-interaction-default></aol-interaction-default>
+    <aol-interaction-select [wrapX]="true" #select></aol-interaction-select>
+    <aol-interaction-modify
+      [features]="select.instance.getFeatures()"
+      (olModifyEnd)="modifyEnd($event.features.getArray()[0])"
+    >
+    </aol-interaction-modify>
+
+    <aol-control-scaleline></aol-control-scaleline>
+    <aol-control-zoom></aol-control-zoom>
+    <aol-control-attribution></aol-control-attribution>
+
+    <aol-layer-vector>
+      <aol-source-vector>
+        <aol-feature [feature]="feature"></aol-feature>
+      </aol-source-vector>
+    </aol-layer-vector>
+  </aol-map>
+
+  <aside class="panel demo-panel">
+    <h2>Modified feature</h2>
+    <pre>{{ featureResult() | json }}</pre>
+  </aside>
+</div>

@@ -1,0 +1,21 @@
+<div class="layout demo-layout">
+  <aol-map class="map demo-map">
+    <aol-view [zoom]="zoom()" [center]="center()"></aol-view>
+
+    <aol-layer-tile [source]="xyzSource()"></aol-layer-tile>
+
+    <aol-interaction-default></aol-interaction-default>
+    <aol-control-fullscreen></aol-control-fullscreen>
+    <aol-control-scaleline></aol-control-scaleline>
+    <aol-control-zoom></aol-control-zoom>
+    <aol-control-attribution></aol-control-attribution>
+  </aol-map>
+
+  <aside class="panel demo-panel">
+    <h2>XYZ Esri</h2>
+    <p>Status: {{ isLoading() ? 'Loading tiles...' : 'Idle' }}</p>
+    <p>Last loaded: {{ lastLoadedAt() }}</p>
+    <p>Last error: {{ lastErrorAt() }}</p>
+    <p class="service-url">Tiles: {{ serviceUrl() }}</p>
+  </aside>
+</div>

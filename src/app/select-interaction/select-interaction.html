@@ -1,0 +1,30 @@
+<div class="layout demo-layout">
+  <aol-map class="map demo-map">
+    <aol-view [zoom]="zoom()" [center]="center()"></aol-view>
+
+    <aol-layer-tile>
+      <aol-source-osm></aol-source-osm>
+    </aol-layer-tile>
+
+    <aol-layer-vector #markersLayer>
+      <aol-source-vector [wrapX]="false" [features]="markerFeatures()"></aol-source-vector>
+    </aol-layer-vector>
+
+    <aol-interaction-default></aol-interaction-default>
+    <aol-interaction-select
+      [layers]="isMarkerLayer"
+      [wrapX]="false"
+      (olSelect)="select($event)"
+    >
+    </aol-interaction-select>
+    <aol-control-scaleline></aol-control-scaleline>
+    <aol-control-zoom></aol-control-zoom>
+    <aol-control-attribution></aol-control-attribution>
+  </aol-map>
+
+  <aside class="panel demo-panel">
+    <h2>Select interaction</h2>
+    <p>{{ selectionMessage() }}</p>
+    <p>Selected features: {{ selectedCount() }}</p>
+  </aside>
+</div>

@@ -1,0 +1,112 @@
+<div class="layout demo-layout">
+  <aol-map class="map demo-map">
+    <aol-view [zoom]="zoom()" [center]="center()"></aol-view>
+
+    <aol-layer-tile>
+      <aol-source-osm></aol-source-osm>
+    </aol-layer-tile>
+
+    <aol-layer-vector>
+      <aol-source-vector>
+        <aol-feature>
+          <aol-geometry-point>
+            <aol-coordinate [x]="point()[0]" [y]="point()[1]" srid="EPSG:4326"></aol-coordinate>
+          </aol-geometry-point>
+          <aol-style>
+            <aol-style-circle [radius]="7">
+              <aol-style-stroke color="#0f172a" [width]="2"></aol-style-stroke>
+              <aol-style-fill color="#38bdf8"></aol-style-fill>
+            </aol-style-circle>
+          </aol-style>
+        </aol-feature>
+
+        <aol-feature>
+          <aol-geometry-linestring>
+            <aol-collection-coordinates [coordinates]="lineString()" srid="EPSG:4326">
+            </aol-collection-coordinates>
+          </aol-geometry-linestring>
+          <aol-style>
+            <aol-style-stroke color="#ea580c" [width]="4"></aol-style-stroke>
+          </aol-style>
+        </aol-feature>
+
+        <aol-feature>
+          <aol-geometry-polygon>
+            <aol-collection-coordinates [coordinates]="polygon()" srid="EPSG:4326">
+            </aol-collection-coordinates>
+          </aol-geometry-polygon>
+          <aol-style>
+            <aol-style-stroke color="#7c3aed" [width]="2"></aol-style-stroke>
+            <aol-style-fill color="rgb(124 58 237 / 0.18)"></aol-style-fill>
+          </aol-style>
+        </aol-feature>
+
+        <aol-feature>
+          <aol-geometry-circle [radius]="circleRadius()">
+            <aol-coordinate
+              [x]="circleCenter()[0]"
+              [y]="circleCenter()[1]"
+              srid="EPSG:4326"
+            ></aol-coordinate>
+          </aol-geometry-circle>
+          <aol-style>
+            <aol-style-stroke color="#16a34a" [width]="2"></aol-style-stroke>
+            <aol-style-fill color="rgb(22 163 74 / 0.18)"></aol-style-fill>
+          </aol-style>
+        </aol-feature>
+
+        <aol-feature>
+          <aol-geometry-multipoint>
+            <aol-collection-coordinates [coordinates]="multiPoint()" srid="EPSG:4326">
+            </aol-collection-coordinates>
+          </aol-geometry-multipoint>
+          <aol-style>
+            <aol-style-circle [radius]="5">
+              <aol-style-stroke color="#14532d" [width]="1.5"></aol-style-stroke>
+              <aol-style-fill color="#86efac"></aol-style-fill>
+            </aol-style-circle>
+          </aol-style>
+        </aol-feature>
+
+        <aol-feature>
+          <aol-geometry-multilinestring>
+            <aol-collection-coordinates [coordinates]="multiLineString()" srid="EPSG:4326">
+            </aol-collection-coordinates>
+          </aol-geometry-multilinestring>
+          <aol-style>
+            <aol-style-stroke color="#0284c7" [width]="3"></aol-style-stroke>
+          </aol-style>
+        </aol-feature>
+
+        <aol-feature>
+          <aol-geometry-multipolygon>
+            <aol-collection-coordinates [coordinates]="multiPolygon()" srid="EPSG:4326">
+            </aol-collection-coordinates>
+          </aol-geometry-multipolygon>
+          <aol-style>
+            <aol-style-stroke color="#be123c" [width]="2"></aol-style-stroke>
+            <aol-style-fill color="rgb(190 24 93 / 0.18)"></aol-style-fill>
+          </aol-style>
+        </aol-feature>
+      </aol-source-vector>
+    </aol-layer-vector>
+
+    <aol-interaction-default></aol-interaction-default>
+    <aol-control-scaleline></aol-control-scaleline>
+    <aol-control-zoom></aol-control-zoom>
+    <aol-control-attribution></aol-control-attribution>
+  </aol-map>
+
+  <aside class="panel demo-panel">
+    <h2>Template Geometry Components</h2>
+    <ul class="component-list">
+      <li><code>aol-geometry-point</code></li>
+      <li><code>aol-geometry-linestring</code></li>
+      <li><code>aol-geometry-polygon</code></li>
+      <li><code>aol-geometry-circle</code></li>
+      <li><code>aol-geometry-multipoint</code></li>
+      <li><code>aol-geometry-multilinestring</code></li>
+      <li><code>aol-geometry-multipolygon</code></li>
+    </ul>
+  </aside>
+</div>

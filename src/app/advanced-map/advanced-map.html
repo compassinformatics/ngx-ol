@@ -1,0 +1,72 @@
+<aol-map [runOutsideAngular]="true">
+  <aol-view [zoom]="zoom()" [center]="center()"></aol-view>
+
+  @for (layer of layers(); track layer.id) {
+    @switch (layer.type) {
+      @case (LayerType.OSM) {
+        <aol-layer-tile
+          #maplayer
+          [id]="layer.id"
+          [zIndex]="layer.zIndex"
+          [visible]="layer.isVisible"
+          [opacity]="layer.opacity"
+          [extent]="layer.extent"
+          [minZoom]="layer.minZoom"
+          [maxZoom]="layer.maxZoom"
+        >
+          <aol-source-osm
+            [attributions]="layer.attributions!"
+            crossOrigin="anonymous"
+          ></aol-source-osm>
+        </aol-layer-tile>
+      }
+
+      @case (LayerType.TileWMS) {
+        <aol-layer-tile
+          #maplayer
+          [id]="layer.id"
+          [zIndex]="layer.zIndex"
+          [visible]="layer.isVisible"
+          [opacity]="layer.opacity"
+          [extent]="layer.extent"
+          [minZoom]="layer.minZoom"
+          [maxZoom]="layer.maxZoom"
+        >
+          <aol-source-tilewms
+            [url]="layer.url"
+            [params]="layer.params"
+            [serverType]="layer.serverType"
+            crossOrigin="anonymous"
+          ></aol-source-tilewms>
+        </aol-layer-tile>
+      }
+
+      @case (LayerType.ImageWMS) {
+        <aol-layer-image
+          #maplayer
+          [id]="layer.id"
+          [zIndex]="layer.zIndex"
+          [visible]="layer.isVisible"
+          [opacity]="layer.opacity"
+          [extent]="layer.extent"
+          [minZoom]="layer.minZoom"
+          [maxZoom]="layer.maxZoom"
+        >
+          <aol-source-imagewms
+            [url]="layer.url"
+            [params]="layer.params"
+            [serverType]="layer.serverType"
+            crossOrigin="anonymous"
+          ></aol-source-imagewms>
+        </aol-layer-image>
+      }
+    }
+  }
+
+  <aol-interaction-default></aol-interaction-default>
+  <aol-control-scaleline></aol-control-scaleline>
+  <aol-control-zoom></aol-control-zoom>
+  <aol-control-attribution></aol-control-attribution>
+</aol-map>
+
+<app-layer-list [(layers)]="layers"></app-layer-list>
