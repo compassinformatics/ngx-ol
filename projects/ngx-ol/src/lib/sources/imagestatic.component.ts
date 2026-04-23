@@ -10,6 +10,7 @@ import {
   OnInit,
 } from '@angular/core';
 import { ImageStatic } from 'ol/source';
+import { Options } from 'ol/source/ImageStatic';
 import { SourceComponent } from './source.component';
 import { LayerImageComponent } from '../layers/layerimage.component';
 import { ProjectionLike } from 'ol/proj';
@@ -52,7 +53,7 @@ export class SourceImageStaticComponent extends SourceComponent implements OnIni
   }
 
   setLayerSource(): void {
-    this.instance = new ImageStatic(this);
+    this.instance = new ImageStatic(this.createOptions());
     this.host.instance.setSource(this.instance);
     this.instance.on('imageloadstart', (event: ImageSourceEvent) =>
       this.imageLoadStart.emit(event),
@@ -86,5 +87,17 @@ export class SourceImageStaticComponent extends SourceComponent implements OnIni
       }
     }
     this.instance.setProperties(properties, false);
+  }
+
+  private createOptions(): Options {
+    return {
+      attributions: this.attributions,
+      projection: this.projection,
+      imageExtent: this.imageExtent,
+      url: this.url,
+      crossOrigin: this.crossOrigin,
+      imageLoadFunction: this.imageLoadFunction,
+      interpolate: this.interpolate,
+    };
   }
 }

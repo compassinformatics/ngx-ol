@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import GeoJSON from 'ol/format/GeoJSON.js';
+import { Options } from 'ol/format/GeoJSON';
 import { ProjectionLike } from 'ol/proj';
 
 @Component({
@@ -23,6 +24,16 @@ export class FormatGeoJSONComponent {
   instance: GeoJSON;
 
   constructor() {
-    this.instance = new GeoJSON(this);
+    this.instance = new GeoJSON(this.createOptions());
+  }
+
+  private createOptions(): Options {
+    return {
+      featureClass: this.featureClass,
+      geometryName: this.geometryName,
+      dataProjection: this.dataProjection,
+      featureProjection: this.featureProjection,
+      extractGeometryName: this.extractGeometryName,
+    };
   }
 }

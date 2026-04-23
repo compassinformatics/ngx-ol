@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit, Input } from '@angular/core';
 import { DragZoom } from 'ol/interaction';
+import { Options } from 'ol/interaction/DragZoom';
 import { MapComponent } from '../map.component';
 import { Condition } from 'ol/events/condition';
 
@@ -22,11 +23,20 @@ export class DragZoomInteractionComponent implements OnInit, OnDestroy {
   constructor(private map: MapComponent) {}
 
   ngOnInit() {
-    this.instance = new DragZoom(this);
+    this.instance = new DragZoom(this.createOptions());
     this.map.instance.addInteraction(this.instance);
   }
 
   ngOnDestroy() {
     this.map.instance.removeInteraction(this.instance);
+  }
+
+  private createOptions(): Options {
+    return {
+      className: this.className,
+      condition: this.condition,
+      duration: this.duration,
+      out: this.out,
+    };
   }
 }

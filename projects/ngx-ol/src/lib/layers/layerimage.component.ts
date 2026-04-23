@@ -1,5 +1,6 @@
 import { Component, Input, OnChanges, OnInit, Optional, SimpleChanges } from '@angular/core';
 import { Image } from 'ol/layer';
+import { Options } from 'ol/layer/BaseImage';
 import { MapComponent } from '../map.component';
 import { LayerComponent } from './layer.component';
 import { LayerGroupComponent } from './layergroup.component';
@@ -18,11 +19,18 @@ export class LayerImageComponent extends LayerComponent implements OnInit, OnCha
   }
 
   ngOnInit() {
-    this.instance = new Image(this);
+    this.instance = new Image(this.createOptions());
     super.ngOnInit();
   }
 
   ngOnChanges(changes: SimpleChanges) {
     super.ngOnChanges(changes);
+  }
+
+  private createOptions(): Options<ImageSource> {
+    return {
+      ...this.createLayerOptions(),
+      source: this.source,
+    };
   }
 }

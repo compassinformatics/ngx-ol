@@ -13,6 +13,7 @@ import {
 } from '@angular/core';
 import { Size } from 'ol/size';
 import { XYZ } from 'ol/source';
+import { Options } from 'ol/source/XYZ';
 import { TileSourceEvent } from 'ol/source/Tile';
 import { LoadFunction, UrlFunction } from 'ol/Tile';
 import TileGrid from 'ol/tilegrid/TileGrid';
@@ -114,12 +115,38 @@ export class SourceXYZComponent extends SourceComponent implements AfterContentI
   }
 
   init() {
-    this.instance = new XYZ(this);
+    this.instance = new XYZ(this.createOptions());
 
     this.instance.on('tileloadstart', (event: TileSourceEvent) => this.tileLoadStart.emit(event));
     this.instance.on('tileloadend', (event: TileSourceEvent) => this.tileLoadEnd.emit(event));
     this.instance.on('tileloaderror', (event: TileSourceEvent) => this.tileLoadError.emit(event));
 
     this.register(this.instance);
+  }
+
+  protected createOptions(): Options {
+    return {
+      attributions: this.attributions,
+      attributionsCollapsible: this.attributionsCollapsible,
+      cacheSize: this.cacheSize,
+      crossOrigin: this.crossOrigin,
+      gutter: this.gutter,
+      interpolate: this.interpolate,
+      projection: this.projection,
+      reprojectionErrorThreshold: this.reprojectionErrorThreshold,
+      maxResolution: this.maxResolution,
+      minZoom: this.minZoom,
+      maxZoom: this.maxZoom,
+      tileGrid: this.tileGrid,
+      tileLoadFunction: this.tileLoadFunction,
+      tilePixelRatio: this.tilePixelRatio,
+      tileSize: this.tileSize,
+      tileUrlFunction: this.tileUrlFunction,
+      transition: this.transition,
+      url: this.url,
+      urls: this.urls,
+      wrapX: this.wrapX,
+      zDirection: this.zDirection,
+    };
   }
 }

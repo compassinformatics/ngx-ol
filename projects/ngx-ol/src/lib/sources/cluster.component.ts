@@ -12,6 +12,7 @@ import {
 import { Feature } from 'ol';
 import { Point } from 'ol/geom';
 import { Cluster, Vector } from 'ol/source';
+import { Options } from 'ol/source/Cluster';
 
 import { LayerVectorComponent } from '../layers/layervector.component';
 import { SourceComponent } from './source.component';
@@ -51,7 +52,7 @@ export class SourceClusterComponent extends SourceComponent implements AfterCont
   ngAfterContentInit() {
     this.source = this.sourceVectorComponent.instance;
 
-    this.instance = new Cluster(this);
+    this.instance = new Cluster(this.createOptions());
     this.host.instance.setSource(this.instance);
   }
 
@@ -59,5 +60,16 @@ export class SourceClusterComponent extends SourceComponent implements AfterCont
     if (this.instance && changes.hasOwnProperty('distance')) {
       this.instance.setDistance(this.distance);
     }
+  }
+
+  private createOptions(): Options<any> {
+    return {
+      distance: this.distance,
+      minDistance: this.minDistance,
+      geometryFunction: this.geometryFunction,
+      wrapX: this.wrapX,
+      createCluster: this.createCluster,
+      source: this.source,
+    };
   }
 }

@@ -1,5 +1,6 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { FullScreen } from 'ol/control';
+import { Options } from 'ol/control/FullScreen';
 import { MapComponent } from '../map.component';
 
 @Component({
@@ -33,12 +34,26 @@ export class ControlFullScreenComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.instance = new FullScreen(this);
+    this.instance = new FullScreen(this.createOptions());
     this.map.instance.addControl(this.instance);
   }
 
   ngOnDestroy() {
     // console.log('removing aol-control-fullscreen');
     this.map.instance.removeControl(this.instance);
+  }
+
+  private createOptions(): Options {
+    return {
+      className: this.className,
+      label: this.label,
+      labelActive: this.labelActive,
+      activeClassName: this.activeClassName,
+      inactiveClassName: this.inactiveClassName,
+      tipLabel: this.tipLabel,
+      keys: this.keys,
+      target: this.target,
+      source: this.source,
+    };
   }
 }

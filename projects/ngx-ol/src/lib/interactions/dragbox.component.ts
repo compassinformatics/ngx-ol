@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit, Input } from '@angular/core';
 import { DragBox } from 'ol/interaction';
+import { Options } from 'ol/interaction/DragBox';
 import { MapComponent } from '../map.component';
 import { Condition } from 'ol/events/condition';
 import { EndCondition } from 'ol/interaction/DragBox';
@@ -21,11 +22,19 @@ export class DragBoxInteractionComponent implements OnInit, OnDestroy {
   constructor(private map: MapComponent) {}
 
   ngOnInit() {
-    this.instance = new DragBox(this);
+    this.instance = new DragBox(this.createOptions());
     this.map.instance.addInteraction(this.instance);
   }
 
   ngOnDestroy() {
     this.map.instance.removeInteraction(this.instance);
+  }
+
+  private createOptions(): Options {
+    return {
+      className: this.className,
+      condition: this.condition,
+      boxEndCondition: this.boxEndCondition,
+    };
   }
 }

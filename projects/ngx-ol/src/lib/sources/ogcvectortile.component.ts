@@ -1,5 +1,6 @@
 import { Component, Host, Input, forwardRef, ContentChild, AfterContentInit } from '@angular/core';
 import { OGCVectorTile } from 'ol/source';
+import { Options } from 'ol/source/OGCVectorTile';
 import TileGrid from 'ol/tilegrid/TileGrid';
 import { LayerVectorTileComponent } from '../layers/layervectortile.component';
 import { SourceComponent } from './source.component';
@@ -8,6 +9,7 @@ import VectorTile from 'ol/VectorTile';
 import { NearestDirectionFunction } from 'ol/array';
 import { FormatMVTComponent } from '../formats/mvt.component';
 import { FormatGeoJSONComponent } from '../formats/geojson.component';
+import FeatureFormat from 'ol/format/Feature';
 
 @Component({
   selector: 'aol-source-ogcvectortile',
@@ -28,7 +30,7 @@ export class SourceOGCVectorTileComponent extends SourceComponent implements Aft
   @Input() wrapX?: boolean;
   @Input() zDirection?: number | NearestDirectionFunction;
   @Input() collections?: string[];
-  @Input() format?: any;
+  @Input() format?: FeatureFormat<any>;
 
   @ContentChild(FormatMVTComponent, { static: false })
   formatMVTComponent: FormatMVTComponent | FormatGeoJSONComponent;
@@ -43,7 +45,7 @@ export class SourceOGCVectorTileComponent extends SourceComponent implements Aft
   }
 
   ngAfterContentInit() {
-    let format: any = this.format;
+    let format: FeatureFormat<any> | undefined = this.format;
     if (this.formatMVTComponent) {
       format = this.formatMVTComponent.instance;
     }
@@ -51,7 +53,26 @@ export class SourceOGCVectorTileComponent extends SourceComponent implements Aft
       format = this.formatGeoJSONComponent.instance;
     }
 
-    this.instance = new OGCVectorTile(Object.assign({ format }, this));
+    this.instance = new OGCVectorTile(this.createOptions(format));
     this.host.instance.setSource(this.instance);
+  }
+
+  private createOptions(format: FeatureFormat<any> | undefined): Options<any> {
+    return {
+      url: this.url,
+      context: this.context,
+      format,
+      mediaType: this.mediaType,
+      attributions: this.attributions,
+      attributionsCollapsible: this.attributionsCollapsible,
+      cacheSize: this.cacheSize,
+      overlaps: this.overlaps,
+      projection: this.projection,
+      tileClass: this.tileClass,
+      transition: this.transition,
+      wrapX: this.wrapX,
+      zDirection: this.zDirection,
+      collections: this.collections,
+    };
   }
 }

@@ -1,6 +1,7 @@
 import { AfterContentInit, Component, Host, Input, forwardRef } from '@angular/core';
 import { ProjectionLike } from 'ol/proj';
 import { OGCMapTile } from 'ol/source';
+import { Options } from 'ol/source/OGCMapTile';
 import { LoadFunction } from 'ol/Tile';
 import { SourceComponent } from './source.component';
 import { LayerTileComponent } from '../layers/layertile.component';
@@ -33,7 +34,25 @@ export class SourceOGCMapTileComponent extends SourceComponent implements AfterC
   }
 
   ngAfterContentInit() {
-    this.instance = new OGCMapTile(this);
+    this.instance = new OGCMapTile(this.createOptions());
     this.host.instance.setSource(this.instance);
+  }
+
+  private createOptions(): Options {
+    return {
+      url: this.url,
+      context: this.context,
+      mediaType: this.mediaType,
+      projection: this.projection,
+      attributions: this.attributions,
+      cacheSize: this.cacheSize,
+      crossOrigin: this.crossOrigin,
+      interpolate: this.interpolate,
+      reprojectionErrorThreshold: this.reprojectionErrorThreshold,
+      tileLoadFunction: this.tileLoadFunction,
+      wrapX: this.wrapX,
+      transition: this.transition,
+      collections: this.collections,
+    };
   }
 }

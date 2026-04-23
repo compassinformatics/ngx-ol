@@ -1,5 +1,6 @@
 import { Component, Host, Input, forwardRef, ContentChild, AfterContentInit } from '@angular/core';
 import { VectorTile } from 'ol/source';
+import { Options } from 'ol/source/VectorTile';
 import TileGrid from 'ol/tilegrid/TileGrid';
 import OlVectorTile from 'ol/VectorTile';
 import { LayerVectorTileComponent } from '../layers/layervectortile.component';
@@ -13,6 +14,7 @@ import { Size } from 'ol/size';
 import { State } from 'ol/source/Source';
 import { FormatGeoJSONComponent } from '../formats/geojson.component';
 import { FormatMVTComponent } from '../formats/mvt.component';
+import FeatureFormat from 'ol/format/Feature';
 
 @Component({
   selector: 'aol-source-vectortile',
@@ -57,7 +59,7 @@ export class SourceVectorTileComponent extends SourceComponent implements AfterC
   @Input()
   zDirection?: number | NearestDirectionFunction;
   @Input()
-  format?: any;
+  format?: FeatureFormat<any>;
 
   @ContentChild(FormatMVTComponent, { static: false })
   formatMVTComponent: FormatMVTComponent;
@@ -74,7 +76,7 @@ export class SourceVectorTileComponent extends SourceComponent implements AfterC
   }
 
   ngAfterContentInit() {
-    let format: any = this.format;
+    let format: FeatureFormat<any> | undefined = this.format;
     if (this.formatMVTComponent) {
       format = this.formatMVTComponent.instance;
     }
@@ -83,7 +85,32 @@ export class SourceVectorTileComponent extends SourceComponent implements AfterC
     }
     this.tileGrid = this.tileGridComponent.instance;
 
-    this.instance = new VectorTile(Object.assign({ format }, this));
+    this.instance = new VectorTile(this.createOptions(format));
     this.host.instance.setSource(this.instance);
+  }
+
+  private createOptions(format: FeatureFormat<any> | undefined): Options<any> {
+    return {
+      attributions: this.attributions,
+      cacheSize: this.cacheSize,
+      extent: this.extent,
+      format,
+      overlaps: this.overlaps,
+      projection: this.projection,
+      state: this.state,
+      tileClass: this.tileClass,
+      maxZoom: this.maxZoom,
+      minZoom: this.minZoom,
+      tileSize: this.tileSize,
+      maxResolution: this.maxResolution,
+      tileGrid: this.tileGrid,
+      tileUrlFunction: this.tileUrlFunction,
+      tileLoadFunction: this.tileLoadFunction,
+      url: this.url,
+      urls: this.urls,
+      transition: this.transition,
+      wrapX: this.wrapX,
+      zDirection: this.zDirection,
+    };
   }
 }

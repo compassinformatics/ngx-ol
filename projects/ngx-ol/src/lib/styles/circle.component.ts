@@ -8,6 +8,7 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import { Circle, Fill, Stroke } from 'ol/style';
+import { Options } from 'ol/style/Circle';
 import { StyleComponent } from './style.component';
 import ImageStyle from 'ol/style/Image';
 import { Size } from 'ol/size';
@@ -55,7 +56,7 @@ export class StyleCircleComponent implements AfterContentInit, OnChanges, OnDest
 
   ngAfterContentInit() {
     // console.log('creating ol.style.Circle instance with: ', this);
-    this.instance = new Circle(this);
+    this.instance = new Circle(this.createOptions());
     this.host.instance.setImage(this.instance);
     this.host.update();
   }
@@ -73,5 +74,18 @@ export class StyleCircleComponent implements AfterContentInit, OnChanges, OnDest
   ngOnDestroy() {
     // console.log('removing aol-style-circle');
     // this.host.instance.setImage(null);
+  }
+
+  private createOptions(): Options {
+    return {
+      fill: this.fill,
+      radius: this.radius,
+      stroke: this.stroke,
+      displacement: this.displacement,
+      scale: this.scale,
+      rotation: this.rotation,
+      rotateWithView: this.rotateWithView,
+      declutterMode: this.declutterMode,
+    };
   }
 }

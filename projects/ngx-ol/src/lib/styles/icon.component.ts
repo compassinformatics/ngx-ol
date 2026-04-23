@@ -3,7 +3,7 @@ import { Icon } from 'ol/style';
 
 
 import { StyleComponent } from './style.component';
-import { IconAnchorUnits, IconOrigin } from 'ol/style/Icon';
+import { IconAnchorUnits, IconOrigin, Options } from 'ol/style/Icon';
 import { Size } from 'ol/size';
 import { Color } from 'ol/color';
 import { DeclutterMode } from 'ol/style/Style';
@@ -58,7 +58,7 @@ export class StyleIconComponent implements OnInit, OnChanges {
 
   ngOnInit() {
     // console.log('creating ol.style.Icon instance with: ', this);
-    this.instance = new Icon(this);
+    this.instance = new Icon(this.createOptions());
     this.host.instance.setImage(this.instance);
   }
 
@@ -76,10 +76,34 @@ export class StyleIconComponent implements OnInit, OnChanges {
       this.instance.setScale(changes.scale.currentValue);
     }
     if (changes.src) {
-      this.instance = new Icon(this);
+      this.instance = new Icon(this.createOptions());
       this.host.instance.setImage(this.instance);
     }
     this.host.update();
     // console.log('changes detected in aol-style-icon: ', changes);
+  }
+
+  private createOptions(): Options {
+    return {
+      anchor: this.anchor,
+      anchorXUnits: this.anchorXUnits,
+      anchorYUnits: this.anchorYUnits,
+      anchorOrigin: this.anchorOrigin,
+      color: this.color,
+      crossOrigin: this.crossOrigin,
+      img: this.img,
+      displacement: this.displacement,
+      offset: this.offset,
+      offsetOrigin: this.offsetOrigin,
+      opacity: this.opacity,
+      width: this.width,
+      height: this.height,
+      scale: this.scale,
+      declutterMode: this.declutterMode,
+      rotateWithView: this.rotateWithView,
+      rotation: this.rotation,
+      size: this.size,
+      src: this.src,
+    };
   }
 }

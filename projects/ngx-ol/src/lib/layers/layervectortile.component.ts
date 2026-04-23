@@ -39,7 +39,7 @@ export class LayerVectorTileComponent extends LayerComponent implements OnInit, 
 
   ngOnInit() {
     // console.log('creating ol.layer.VectorTile instance with:', this);
-    this.instance = new VectorTile(this as Options);
+    this.instance = new VectorTile(this.createOptions());
     super.ngOnInit();
   }
 
@@ -49,5 +49,20 @@ export class LayerVectorTileComponent extends LayerComponent implements OnInit, 
     if (style && this.instance) {
       this.instance.setStyle(style.currentValue);
     }
+  }
+
+  private createOptions(): Options<VectorTileSource> {
+    return {
+      ...this.createLayerOptions(),
+      renderBuffer: this.renderBuffer,
+      renderMode: this.renderMode,
+      renderOrder: this.renderOrder,
+      style: this.style,
+      background: this.background,
+      updateWhileAnimating: this.updateWhileAnimating,
+      updateWhileInteracting: this.updateWhileInteracting,
+      visible: this.visible,
+      source: this.source,
+    };
   }
 }

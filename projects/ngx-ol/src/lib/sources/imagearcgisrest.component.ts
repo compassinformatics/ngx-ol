@@ -10,6 +10,7 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import ImageArcGISRest from 'ol/source/ImageArcGISRest';
+import { Options } from 'ol/source/ImageArcGISRest';
 import { LayerImageComponent } from '../layers/layerimage.component';
 import { SourceComponent } from './source.component';
 import { ProjectionLike } from 'ol/proj';
@@ -49,7 +50,7 @@ export class SourceImageArcGISRestComponent extends SourceComponent implements O
   }
 
   ngOnInit() {
-    this.instance = new ImageArcGISRest(this);
+    this.instance = new ImageArcGISRest(this.createOptions());
     this.host.instance.setSource(this.instance);
     this.instance.on('imageloadstart', (event: ImageSourceEvent) =>
       this.imageLoadStart.emit(event),
@@ -64,5 +65,20 @@ export class SourceImageArcGISRestComponent extends SourceComponent implements O
     if (this.instance && changes.hasOwnProperty('params')) {
       this.instance.updateParams(this.params);
     }
+  }
+
+  private createOptions(): Options {
+    return {
+      attributions: this.attributions,
+      projection: this.projection,
+      url: this.url,
+      crossOrigin: this.crossOrigin,
+      hidpi: this.hidpi,
+      imageLoadFunction: this.imageLoadFunction,
+      interpolate: this.interpolate,
+      params: this.params,
+      ratio: this.ratio,
+      resolutions: this.resolutions,
+    };
   }
 }

@@ -1,7 +1,7 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { ScaleLine } from 'ol/control';
 import { MapComponent } from '../map.component';
-import { Units } from 'ol/control/ScaleLine';
+import { Options, Units } from 'ol/control/ScaleLine';
 import MapEvent from 'ol/MapEvent';
 
 @Component({
@@ -35,11 +35,26 @@ export class ControlScaleLineComponent implements OnInit, OnDestroy {
   constructor(private map: MapComponent) {}
 
   ngOnInit() {
-    this.instance = new ScaleLine(this);
+    this.instance = new ScaleLine(this.createOptions());
     this.map.instance.addControl(this.instance);
   }
 
   ngOnDestroy() {
     this.map.instance.removeControl(this.instance);
+  }
+
+  private createOptions(): Options {
+    return {
+      className: this.className,
+      minWidth: this.minWidth,
+      maxWidth: this.maxWidth,
+      render: this.render,
+      target: this.target,
+      units: this.units,
+      bar: this.bar,
+      steps: this.steps,
+      text: this.text,
+      dpi: this.dpi,
+    };
   }
 }

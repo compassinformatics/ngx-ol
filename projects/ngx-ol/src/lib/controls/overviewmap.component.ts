@@ -4,6 +4,7 @@ import MapEvent from 'ol/MapEvent';
 import BaseLayer from 'ol/layer/Base';
 import { View } from 'ol';
 import { OverviewMap } from 'ol/control';
+import { Options } from 'ol/control/OverviewMap';
 import { MapComponent } from '../map.component';
 
 @Component({
@@ -39,7 +40,7 @@ export class ControlOverviewMapComponent implements OnInit, OnChanges, OnDestroy
   constructor(private map: MapComponent) {}
 
   ngOnInit() {
-    this.instance = new OverviewMap(this);
+    this.instance = new OverviewMap(this.createOptions());
     this.map.instance.addControl(this.instance);
   }
 
@@ -55,7 +56,23 @@ export class ControlOverviewMapComponent implements OnInit, OnChanges, OnDestroy
 
   private reloadInstance() {
     this.map.instance.removeControl(this.instance);
-    this.instance = new OverviewMap(this);
+    this.instance = new OverviewMap(this.createOptions());
     this.map.instance.addControl(this.instance);
+  }
+
+  private createOptions(): Options {
+    return {
+      className: this.className,
+      collapsed: this.collapsed,
+      collapseLabel: this.collapseLabel,
+      collapsible: this.collapsible,
+      label: this.label,
+      layers: this.layers,
+      render: this.render,
+      rotateWithView: this.rotateWithView,
+      target: this.target,
+      tipLabel: this.tipLabel,
+      view: this.view,
+    };
   }
 }

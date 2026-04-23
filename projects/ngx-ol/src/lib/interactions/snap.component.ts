@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angu
 import BaseEvent from 'ol/events/Event';
 import { SnapEvent } from 'ol/events/SnapEvent';
 import { Snap } from 'ol/interaction';
+import { Options } from 'ol/interaction/Snap';
 import { ObjectEvent } from 'ol/Object';
 import { MapComponent } from '../map.component';
 import { Collection, Feature } from 'ol';
@@ -39,7 +40,7 @@ export class SnapInteractionComponent implements OnInit, OnDestroy {
   constructor(private map: MapComponent) {}
 
   ngOnInit() {
-    this.instance = new Snap(this);
+    this.instance = new Snap(this.createOptions());
 
     this.instance.on('change', (event: BaseEvent) => this.olChange.emit(event));
     this.instance.on('change:active', (event: ObjectEvent) => this.olChangeActive.emit(event));
@@ -51,5 +52,15 @@ export class SnapInteractionComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.map.instance.removeInteraction(this.instance);
+  }
+
+  private createOptions(): Options {
+    return {
+      features: this.features,
+      edge: this.edge,
+      vertex: this.vertex,
+      pixelTolerance: this.pixelTolerance,
+      source: this.source,
+    };
   }
 }

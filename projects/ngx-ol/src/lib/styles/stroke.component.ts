@@ -1,5 +1,6 @@
 import { Component, Input, Optional, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { Stroke } from 'ol/style';
+import { Options } from 'ol/style/Stroke';
 import { StyleComponent } from './style.component';
 import { StyleCircleComponent } from './circle.component';
 import { StyleTextComponent } from './text.component';
@@ -50,7 +51,7 @@ export class StyleStrokeComponent implements OnInit, OnChanges {
 
   ngOnInit() {
     // console.log('creating ol.style.Stroke instance with: ', this);
-    this.instance = new Stroke(this);
+    this.instance = new Stroke(this.createOptions());
     switch (this.host.componentType) {
       case 'style':
         this.host.instance.setStroke(this.instance);
@@ -96,5 +97,17 @@ export class StyleStrokeComponent implements OnInit, OnChanges {
     }
     this.host.update();
     // console.log('changes detected in aol-style-stroke, setting new properties: ', changes);
+  }
+
+  private createOptions(): Options {
+    return {
+      color: this.color,
+      lineCap: this.lineCap,
+      lineDash: this.lineDash,
+      lineDashOffset: this.lineDashOffset,
+      lineJoin: this.lineJoin,
+      miterLimit: this.miterLimit,
+      width: this.width,
+    };
   }
 }

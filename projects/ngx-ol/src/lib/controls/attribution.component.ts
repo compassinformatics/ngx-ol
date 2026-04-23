@@ -1,5 +1,6 @@
 import { Component, ElementRef, Input, OnDestroy, OnInit } from '@angular/core';
 import { Attribution } from 'ol/control';
+import { Options } from 'ol/control/Attribution';
 import MapEvent from 'ol/MapEvent';
 import { MapComponent } from '../map.component';
 
@@ -39,12 +40,27 @@ export class ControlAttributionComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.target = this.element.nativeElement;
     // console.log('ol.control.Attribution init: ', this);
-    this.instance = new Attribution(this);
+    this.instance = new Attribution(this.createOptions());
     this.map.instance.addControl(this.instance);
   }
 
   ngOnDestroy() {
     // console.log('removing aol-control-attribution');
     this.map.instance.removeControl(this.instance);
+  }
+
+  private createOptions(): Options {
+    return {
+      className: this.className,
+      collapsible: this.collapsible,
+      collapsed: this.collapsed,
+      tipLabel: this.tipLabel,
+      label: this.label,
+      expandClassName: this.expandClassName,
+      collapseLabel: this.collapseLabel,
+      collapseClassName: this.collapseClassName,
+      render: this.render,
+      target: this.target,
+    };
   }
 }

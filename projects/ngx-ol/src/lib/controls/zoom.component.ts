@@ -1,5 +1,6 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Zoom } from 'ol/control';
+import { Options } from 'ol/control/Zoom';
 import { MapComponent } from '../map.component';
 
 @Component({
@@ -35,12 +36,27 @@ export class ControlZoomComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.instance = new Zoom(this);
+    this.instance = new Zoom(this.createOptions());
     this.map.instance.addControl(this.instance);
   }
 
   ngOnDestroy() {
     // console.log('removing aol-control-zoom');
     this.map.instance.removeControl(this.instance);
+  }
+
+  private createOptions(): Options {
+    return {
+      duration: this.duration,
+      className: this.className,
+      zoomInClassName: this.zoomInClassName,
+      zoomOutClassName: this.zoomOutClassName,
+      zoomInLabel: this.zoomInLabel,
+      zoomOutLabel: this.zoomOutLabel,
+      zoomInTipLabel: this.zoomInTipLabel,
+      zoomOutTipLabel: this.zoomOutTipLabel,
+      delta: this.delta,
+      target: this.target,
+    };
   }
 }

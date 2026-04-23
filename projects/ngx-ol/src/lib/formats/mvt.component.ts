@@ -24,6 +24,16 @@ export class FormatMVTComponent {
   instance: MVT;
 
   constructor() {
-    this.instance = new MVT(this as Options);
+    this.instance = new MVT(this.createOptions());
+  }
+
+  private createOptions(): Options<any> {
+    return {
+      featureClass: this.featureClass,
+      geometryName: this.geometryName,
+      layerName: this.layerName,
+      layers: this.layers,
+      idProperty: this.idProperty,
+    };
   }
 }

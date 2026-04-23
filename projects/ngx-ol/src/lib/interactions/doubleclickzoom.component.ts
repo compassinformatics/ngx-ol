@@ -1,5 +1,6 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { DoubleClickZoom } from 'ol/interaction';
+import { Options } from 'ol/interaction/DoubleClickZoom';
 import { MapComponent } from '../map.component';
 
 @Component({
@@ -17,11 +18,18 @@ export class DoubleClickZoomInteractionComponent implements OnInit, OnDestroy {
   constructor(private map: MapComponent) {}
 
   ngOnInit() {
-    this.instance = new DoubleClickZoom(this);
+    this.instance = new DoubleClickZoom(this.createOptions());
     this.map.instance.addInteraction(this.instance);
   }
 
   ngOnDestroy() {
     this.map.instance.removeInteraction(this.instance);
+  }
+
+  private createOptions(): Options {
+    return {
+      duration: this.duration,
+      delta: this.delta,
+    };
   }
 }

@@ -1,6 +1,6 @@
 import { Component, Host, Input, OnInit, forwardRef } from '@angular/core';
 import { TileJSON } from 'ol/source';
-import { Config } from 'ol/source/TileJSON';
+import { Config, Options } from 'ol/source/TileJSON';
 import { LoadFunction } from 'ol/Tile';
 import { Size } from 'ol/size';
 import { NearestDirectionFunction } from 'ol/array';
@@ -45,7 +45,25 @@ export class SourceTileJSONComponent extends SourceComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.instance = new TileJSON(this);
+    this.instance = new TileJSON(this.createOptions());
     this.host.instance.setSource(this.instance);
+  }
+
+  private createOptions(): Options {
+    return {
+      attributions: this.attributions,
+      cacheSize: this.cacheSize,
+      crossOrigin: this.crossOrigin,
+      interpolate: this.interpolate,
+      jsonp: this.jsonp,
+      reprojectionErrorThreshold: this.reprojectionErrorThreshold,
+      tileJSON: this.tileJSON,
+      tileLoadFunction: this.tileLoadFunction,
+      tileSize: this.tileSize,
+      url: this.url,
+      wrapX: this.wrapX,
+      transition: this.transition,
+      zDirection: this.zDirection,
+    };
   }
 }

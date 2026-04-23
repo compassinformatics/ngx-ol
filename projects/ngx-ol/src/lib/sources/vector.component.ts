@@ -11,7 +11,7 @@ import {
 import { Vector } from 'ol/source';
 import { LayerVectorComponent } from '../layers/layervector.component';
 import { SourceComponent } from './source.component';
-import { LoadingStrategy } from 'ol/source/Vector';
+import { LoadingStrategy, Options } from 'ol/source/Vector';
 import { LayerVectorImageComponent } from '../layers/layervectorimage.component';
 import { Collection } from 'ol';
 import { FeatureLike } from 'ol/Feature';
@@ -51,7 +51,7 @@ export class SourceVectorComponent extends SourceComponent implements OnInit, On
   }
 
   ngOnInit() {
-    (this.instance as Vector<FeatureLike>) = new Vector(this);
+    (this.instance as Vector<FeatureLike>) = new Vector(this.createOptions());
     this.host.instance.setSource(this.instance);
   }
 
@@ -62,5 +62,19 @@ export class SourceVectorComponent extends SourceComponent implements OnInit, On
       this.instance.clear();
       this.instance.addFeatures(features.currentValue);
     }
+  }
+
+  private createOptions(): Options<FeatureLike> {
+    return {
+      attributions: this.attributions,
+      overlaps: this.overlaps,
+      features: this.features,
+      useSpatialIndex: this.useSpatialIndex,
+      wrapX: this.wrapX,
+      loader: this.loader,
+      url: this.url,
+      format: this.format,
+      strategy: this.strategy,
+    };
   }
 }

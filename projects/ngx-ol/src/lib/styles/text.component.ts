@@ -1,7 +1,7 @@
 import { Component, Input, Optional, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { Fill, Stroke, Text } from 'ol/style';
 import { StyleComponent } from './style.component';
-import { TextJustify, TextPlacement } from 'ol/style/Text';
+import { Options, TextJustify, TextPlacement } from 'ol/style/Text';
 import { DeclutterMode } from 'ol/style/Style';
 import { Size } from 'ol/size';
 
@@ -63,7 +63,7 @@ export class StyleTextComponent implements OnInit, OnChanges {
 
   ngOnInit() {
     // console.log('creating ol.style.Text instance with: ', this);
-    this.instance = new Text(this);
+    this.instance = new Text(this.createOptions());
     this.host.instance.setText(this.instance);
   }
 
@@ -100,4 +100,29 @@ export class StyleTextComponent implements OnInit, OnChanges {
   }
 
   update() {}
+
+  private createOptions(): Options {
+    return {
+      font: this.font,
+      maxAngle: this.maxAngle,
+      offsetX: this.offsetX,
+      offsetY: this.offsetY,
+      overflow: this.overflow,
+      placement: this.placement,
+      repeat: this.repeat,
+      scale: this.scale,
+      rotateWithView: this.rotateWithView,
+      rotation: this.rotation,
+      text: this.text,
+      textAlign: this.textAlign,
+      justify: this.justify,
+      textBaseline: this.textBaseline,
+      fill: this.fill,
+      stroke: this.stroke,
+      backgroundFill: this.backgroundFill,
+      backgroundStroke: this.backgroundStroke,
+      padding: this.padding,
+      declutterMode: this.declutterMode,
+    };
+  }
 }

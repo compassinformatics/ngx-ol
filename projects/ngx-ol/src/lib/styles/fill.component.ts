@@ -1,5 +1,6 @@
 import { Component, Input, Optional, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { Fill } from 'ol/style';
+import { Options } from 'ol/style/Fill';
 import { StyleComponent } from './style.component';
 import { StyleCircleComponent } from './circle.component';
 import { StyleTextComponent } from './text.component';
@@ -37,7 +38,7 @@ export class StyleFillComponent implements OnInit, OnChanges {
 
   ngOnInit() {
     // console.log('creating ol.style.Fill instance with: ', this);
-    this.instance = new Fill(this);
+    this.instance = new Fill(this.createOptions());
     switch (this.host.componentType) {
       case 'style':
         this.host.instance.setFill(this.instance);
@@ -64,5 +65,11 @@ export class StyleFillComponent implements OnInit, OnChanges {
     }
     this.host.update();
     // console.log('changes detected in aol-style-fill, setting new color: ', changes);
+  }
+
+  private createOptions(): Options {
+    return {
+      color: this.color,
+    };
   }
 }

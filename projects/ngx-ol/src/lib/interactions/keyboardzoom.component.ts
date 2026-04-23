@@ -1,9 +1,10 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { KeyboardZoom } from 'ol/interaction';
+import { Options } from 'ol/interaction/KeyboardZoom';
 import { MapComponent } from '../map.component';
 
 @Component({
-  selector: 'aol-interaction-keyboardpan',
+  selector: 'aol-interaction-keyboardzoom',
   template: '',
   standalone: false,
 })
@@ -18,11 +19,18 @@ export class KeyboardZoomInteractionComponent implements OnInit, OnDestroy {
   constructor(private map: MapComponent) {}
 
   ngOnInit() {
-    this.instance = new KeyboardZoom(this);
+    this.instance = new KeyboardZoom(this.createOptions());
     this.map.instance.addInteraction(this.instance);
   }
 
   ngOnDestroy() {
     this.map.instance.removeInteraction(this.instance);
+  }
+
+  private createOptions(): Options {
+    return {
+      duration: this.duration,
+      delta: this.delta,
+    };
   }
 }

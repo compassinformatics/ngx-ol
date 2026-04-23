@@ -10,6 +10,7 @@ import {
 import { LayerTileComponent } from '../layers/layertile.component';
 import { SourceComponent } from './source.component';
 import { TileWMS } from 'ol/source';
+import { Options } from 'ol/source/TileWMS';
 import TileGrid from 'ol/tilegrid/TileGrid';
 import { LoadFunction } from 'ol/Tile';
 import ImageTile from 'ol/ImageTile';
@@ -65,7 +66,7 @@ export class SourceTileWMSComponent extends SourceComponent implements OnChanges
   }
 
   ngOnInit() {
-    this.instance = new TileWMS(this);
+    this.instance = new TileWMS(this.createOptions());
     this.host.instance.setSource(this.instance);
   }
 
@@ -73,5 +74,29 @@ export class SourceTileWMSComponent extends SourceComponent implements OnChanges
     if (this.instance && changes.hasOwnProperty('params')) {
       this.instance.updateParams(this.params);
     }
+  }
+
+  private createOptions(): Options {
+    return {
+      attributions: this.attributions,
+      attributionsCollapsible: this.attributionsCollapsible,
+      cacheSize: this.cacheSize,
+      crossOrigin: this.crossOrigin,
+      gutter: this.gutter,
+      hidpi: this.hidpi,
+      interpolate: this.interpolate,
+      params: this.params,
+      projection: this.projection,
+      reprojectionErrorThreshold: this.reprojectionErrorThreshold,
+      serverType: this.serverType,
+      tileClass: this.tileClass,
+      tileGrid: this.tileGrid,
+      tileLoadFunction: this.tileLoadFunction,
+      url: this.url,
+      urls: this.urls,
+      wrapX: this.wrapX,
+      transition: this.transition,
+      zDirection: this.zDirection,
+    };
   }
 }

@@ -9,6 +9,7 @@ import {
   Output,
 } from '@angular/core';
 import { OSM } from 'ol/source';
+import { Options } from 'ol/source/OSM';
 import { TileSourceEvent } from 'ol/source/Tile';
 import { LoadFunction } from 'ol/Tile';
 import { NearestDirectionFunction } from 'ol/array';
@@ -64,10 +65,26 @@ export class SourceOsmComponent extends SourceXYZComponent implements AfterConte
     if (this.tileGridXYZ) {
       this.tileGrid = this.tileGridXYZ.instance;
     }
-    this.instance = new OSM(this);
+    this.instance = new OSM(this.createOptions());
     this.instance.on('tileloadstart', (event: TileSourceEvent) => this.tileLoadStart.emit(event));
     this.instance.on('tileloadend', (event: TileSourceEvent) => this.tileLoadEnd.emit(event));
     this.instance.on('tileloaderror', (event: TileSourceEvent) => this.tileLoadError.emit(event));
     this.register(this.instance);
+  }
+
+  protected override createOptions(): Options {
+    return {
+      attributions: this.attributions,
+      cacheSize: this.cacheSize,
+      crossOrigin: this.crossOrigin,
+      interpolate: this.interpolate,
+      maxZoom: this.maxZoom,
+      reprojectionErrorThreshold: this.reprojectionErrorThreshold,
+      tileLoadFunction: this.tileLoadFunction,
+      transition: this.transition,
+      url: this.url,
+      wrapX: this.wrapX,
+      zDirection: this.zDirection,
+    };
   }
 }

@@ -1,5 +1,6 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { MouseWheelZoom } from 'ol/interaction';
+import { Options } from 'ol/interaction/MouseWheelZoom';
 import { MapComponent } from '../map.component';
 
 @Component({
@@ -19,11 +20,19 @@ export class MouseWheelZoomInteractionComponent implements OnInit, OnDestroy {
   constructor(private map: MapComponent) {}
 
   ngOnInit() {
-    this.instance = new MouseWheelZoom(this);
+    this.instance = new MouseWheelZoom(this.createOptions());
     this.map.instance.addInteraction(this.instance);
   }
 
   ngOnDestroy() {
     this.map.instance.removeInteraction(this.instance);
+  }
+
+  private createOptions(): Options {
+    return {
+      duration: this.duration,
+      timeout: this.timeout,
+      useAnchor: this.useAnchor,
+    };
   }
 }
