@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, signal, viewChild } from '@angular/core';
-import { AngularOpenlayersModule, MapComponent } from 'ngx-ol';
+import { AngularOpenlayersModule } from 'ngx-ol';
+import type { MapComponent } from 'ngx-ol';
 import type { Coordinate } from 'ol/coordinate';
 import type BaseEvent from 'ol/events/Event';
 import { transform } from 'ol/proj';
