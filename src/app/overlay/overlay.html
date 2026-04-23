@@ -1,0 +1,51 @@
+<aol-map [runOutsideAngular]="true" (singleClick)="showInfoPopup($event)">
+  <aol-view [zoom]="zoom()" [center]="center()"></aol-view>
+
+  <aol-layer-tile>
+    <aol-source-osm></aol-source-osm>
+  </aol-layer-tile>
+
+  <aol-layer-tile>
+    <aol-source-tilewms
+      #wmsSource
+      url="https://gis.epa.ie/geoserver/EPA/wms"
+      [params]="{ LAYERS: 'EPA:WFD_RWBStatus_20192024', TILED: true }"
+    >
+    </aol-source-tilewms>
+  </aol-layer-tile>
+
+  <aol-overlay
+    [positioning]="'bottom-center'"
+    [stopEvent]="false"
+    [position]="staticOverlayPosition()"
+  >
+    <aol-content class="overlay-card">
+      <strong>aol-overlay</strong>
+      <pre>Static overlay anchored to a coordinate.</pre>
+    </aol-content>
+  </aol-overlay>
+
+  <aol-overlay [positioning]="'bottom-center'" [stopEvent]="true" [position]="popupPosition()">
+    <aol-content class="overlay-card">
+      <div class="overlay-header">
+        <strong>{{ popupTitle() }}</strong>
+        <button type="button" class="overlay-close" aria-label="Close overlay" (click)="closePopup()">
+          ×
+        </button>
+      </div>
+      @if (isLoading()) {
+        <div class="overlay-loader">
+          <span class="overlay-spinner" aria-hidden="true"></span>
+          <span>{{ popupBody() }}</span>
+        </div>
+      } @else {
+        <pre>{{ popupBody() }}</pre>
+      }
+    </aol-content>
+  </aol-overlay>
+
+  <aol-interaction-default></aol-interaction-default>
+  <aol-control-scaleline></aol-control-scaleline>
+  <aol-control-zoom></aol-control-zoom>
+  <aol-control-attribution></aol-control-attribution>
+</aol-map>

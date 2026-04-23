@@ -1,0 +1,25 @@
+<div class="layout demo-layout">
+  <aol-map class="map demo-map" (pointerMove)="updateFeatureInfo($event)" (singleClick)="updateFeatureInfo($event)">
+    <aol-view [zoom]="zoom()" [center]="center()"></aol-view>
+
+    <aol-layer-tile [source]="baseSource()"></aol-layer-tile>
+
+    <aol-layer-vector [source]="vectorSource()" [style]="vectorStyle()" [opacity]="vectorOpacity()"></aol-layer-vector>
+
+    <aol-interaction-default></aol-interaction-default>
+    <aol-control-fullscreen></aol-control-fullscreen>
+    <aol-control-scaleline></aol-control-scaleline>
+    <aol-control-zoom></aol-control-zoom>
+    <aol-control-attribution></aol-control-attribution>
+  </aol-map>
+
+  <aside class="panel demo-panel">
+    <h2>ArcGIS REST Feature Service</h2>
+    <p>Status: {{ isLoading() ? 'Loading features...' : 'Idle' }}</p>
+    <p>Loaded features: {{ loadedFeatureCount() }}</p>
+    <p>{{ infoTitle() }}</p>
+    <p>{{ infoLine1() }}</p>
+    <p>{{ infoLine2() }}</p>
+    <p class="service-url">Service: {{ serviceUrl() }}{{ serviceLayer() }}</p>
+  </aside>
+</div>

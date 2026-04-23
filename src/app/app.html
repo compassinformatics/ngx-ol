@@ -1,0 +1,40 @@
+<header>
+  <h1 routerLink="/">ngx-ol examples</h1>
+  <details #menu class="app-menu">
+    <summary>Examples</summary>
+    <nav class="app-nav" aria-label="Examples routes">
+      @for (demo of demos; track demo.path) {
+        <a
+          routerLinkActive="is-active"
+          [routerLinkActiveOptions]="{ exact: true }"
+          [routerLink]="demo.path"
+        >
+          {{ demo.label }}
+        </a>
+      }
+    </nav>
+  </details>
+</header>
+<div class="main-container">
+  @if (activeDemo(); as demo) {
+    <div
+      class="demo-overlay"
+      [style.transform]="isDescriptionShifted() ? 'translate(-50%, calc(-100% + .75rem))' : null"
+      aria-live="polite"
+    >
+      <div [style.opacity]="isDescriptionShifted() ? 0 : null">
+        <strong>{{ demo.label }}</strong>
+        <span>{{ demo.description }}</span>
+      </div>
+      <button
+        type="button"
+        [attr.aria-label]="isDescriptionShifted() ? 'Show demo description' : 'Move demo description up'"
+        [attr.aria-pressed]="isDescriptionShifted()"
+        (click)="toggleDescriptionPosition(demo.path)"
+      >
+      {{ isDescriptionShifted() ? '▾' : '▴' }}
+      </button>
+    </div>
+  }
+  <router-outlet></router-outlet>
+</div>

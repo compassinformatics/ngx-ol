@@ -1,0 +1,53 @@
+<div class="layout demo-layout">
+  <aol-map class="map demo-map">
+    <aol-view [zoom]="zoom()" [center]="center()"></aol-view>
+
+    <aol-layer-tile>
+      <aol-source-osm></aol-source-osm>
+    </aol-layer-tile>
+
+    <aol-layer-vector>
+      <aol-source-cluster [distance]="distance()">
+        <aol-source-vector [features]="pointFeatures()"></aol-source-vector>
+
+        <aol-style>
+          <aol-style-circle [radius]="10">
+            <aol-style-stroke color="#fff"></aol-style-stroke>
+            <aol-style-fill color="#3399CC"></aol-style-fill>
+          </aol-style-circle>
+        </aol-style>
+      </aol-source-cluster>
+    </aol-layer-vector>
+
+    <aol-layer-vector>
+      <aol-source-vector>
+        <aol-feature [feature]="extentFeature()">
+          <aol-style>
+            <aol-style-stroke color="red" [width]="2"></aol-style-stroke>
+            <aol-style-fill [color]="[255, 0, 0, 0.1]"></aol-style-fill>
+          </aol-style>
+        </aol-feature>
+      </aol-source-vector>
+    </aol-layer-vector>
+
+    <aol-interaction-default></aol-interaction-default>
+    <aol-control-fullscreen></aol-control-fullscreen>
+    <aol-control-scaleline></aol-control-scaleline>
+    <aol-control-zoom></aol-control-zoom>
+    <aol-control-attribution></aol-control-attribution>
+  </aol-map>
+
+  <aside class="panel demo-panel">
+    <h2>Cluster distance</h2>
+    <label for="cluster-distance">Distance: {{ distance() }}</label>
+    <input
+      id="cluster-distance"
+      type="range"
+      min="0"
+      max="255"
+      [value]="distance()"
+      (input)="setDistance($any($event.target).valueAsNumber)"
+    />
+    <p>Source points: {{ pointCount() }}</p>
+  </aside>
+</div>

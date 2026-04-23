@@ -1,0 +1,61 @@
+<aol-map class="map">
+  <button type="button" class="update-button" (click)="moveFeature()">
+    Update feature binding
+  </button>
+
+  <aol-view [zoom]="zoom()" [center]="center()"></aol-view>
+
+  <aol-layer-tile>
+    <aol-source-osm></aol-source-osm>
+  </aol-layer-tile>
+
+  <aol-layer-vector>
+    <aol-source-vector>
+      @for (feature of features(); track $index) {
+        <aol-feature [feature]="feature">
+          @switch (feature.getGeometry()?.getType()) {
+            @case ('Polygon') {
+              <aol-style>
+                <aol-style-stroke color="rgba(90, 17, 26)" [width]="3"></aol-style-stroke>
+                <aol-style-fill color="rgba(90, 17, 26, 0.5)"></aol-style-fill>
+              </aol-style>
+            }
+            @case ('Point') {
+              <aol-style>
+                <aol-style-circle [radius]="10">
+                  <aol-style-stroke color="black" [width]="1"></aol-style-stroke>
+                  <aol-style-fill color="green"></aol-style-fill>
+                </aol-style-circle>
+              </aol-style>
+            }
+            @case ('MultiPoint') {
+              <aol-style>
+                <aol-style-circle [radius]="5">
+                  <aol-style-stroke color="black" [width]="1"></aol-style-stroke>
+                  <aol-style-fill color="green"></aol-style-fill>
+                </aol-style-circle>
+              </aol-style>
+            }
+            @case ('MultiPolygon') {
+              <aol-style>
+                <aol-style-stroke color="rgba(81, 15.3, 23.4)" [width]="2"></aol-style-stroke>
+                <aol-style-fill color="rgba(81, 15.3, 23.4, 0.4)"></aol-style-fill>
+              </aol-style>
+            }
+          }
+        </aol-feature>
+      }
+    </aol-source-vector>
+  </aol-layer-vector>
+
+  <aol-layer-vector>
+    <aol-source-vector>
+      <aol-feature [feature]="dynamicFeature()"></aol-feature>
+    </aol-source-vector>
+  </aol-layer-vector>
+
+  <aol-interaction-default></aol-interaction-default>
+  <aol-control-scaleline></aol-control-scaleline>
+  <aol-control-zoom></aol-control-zoom>
+  <aol-control-attribution></aol-control-attribution>
+</aol-map>

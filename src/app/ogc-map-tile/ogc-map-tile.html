@@ -1,0 +1,20 @@
+<div class="layout demo-layout">
+  <aol-map class="map demo-map">
+    <aol-view [zoom]="zoom()" [center]="center()"></aol-view>
+
+    <aol-layer-tile>
+      <aol-source-ogcmaptile [url]="url()" [mediaType]="mediaType()"></aol-source-ogcmaptile>
+    </aol-layer-tile>
+
+    <aol-interaction-default></aol-interaction-default>
+    <aol-control-scaleline></aol-control-scaleline>
+    <aol-control-zoom></aol-control-zoom>
+    <aol-control-attribution></aol-control-attribution>
+  </aol-map>
+
+  <aside class="panel demo-panel">
+    <h2>OGC map tile</h2>
+    <label>Tileset metadata</label>
+    <p>{{ url() }}</p>
+  </aside>
+</div>

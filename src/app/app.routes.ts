@@ -1,0 +1,75 @@
+import { Routes } from '@angular/router';
+import { ArcgisImage } from './arcgis-image/arcgis-image';
+import { BasicMap } from './basic-map/basic-map';
+import { AdvancedMap } from './advanced-map/advanced-map';
+import { ArcgisTiled } from './arcgis-tiled/arcgis-tiled';
+import { Cluster } from './cluster/cluster';
+import { ColorSelectHover } from './color-select-hover/color-select-hover';
+import { CursorPosition } from './cursor-position/cursor-position';
+import { DisplayGeojsonSource } from './display-geojson-source/display-geojson-source';
+import { DisplayGeometry } from './display-geometry/display-geometry';
+import { DrawBox } from './draw-box/draw-box';
+import { Graticule } from './graticule/graticule';
+import { GeometryComponents } from './geometry-components/geometry-components';
+import { Home } from './home/home';
+import { ImageStatic } from './image-static/image-static';
+import { ImageWms } from './image-wms/image-wms';
+import { MapPosition } from './map-position/map-position';
+import { MapInteractions } from './map-interactions/map-interactions';
+import { Marker } from './marker/marker';
+import { ModifyPolygon } from './modify-polygon/modify-polygon';
+import { OgcMapTile } from './ogc-map-tile/ogc-map-tile';
+import { OgcVectorTile } from './ogc-vector-tile/ogc-vector-tile';
+import { Overlay } from './overlay/overlay';
+import { Overview } from './overview/overview';
+import { Raster } from './raster/raster';
+import { SelectInteraction } from './select-interaction/select-interaction';
+import { SideBySide } from './side-by-side/side-by-side';
+import { Swipe } from './swipe/swipe';
+import { TileJson } from './tile-json/tile-json';
+import { TileJsonDynamic } from './tile-json-dynamic/tile-json-dynamic';
+import { Utfgrid } from './utfgrid/utfgrid';
+import { VectorEsri } from './vector-esri/vector-esri';
+import { ViewProjectionUpdate } from './view-projection-update/view-projection-update';
+import { XyzEsri } from './xyz-esri/xyz-esri';
+
+export const routes: Routes = [
+  { path: '', component: Home },
+  { path: 'basic', component: BasicMap },
+  { path: 'map-position', component: MapPosition },
+  { path: 'cursor-position', component: CursorPosition },
+  { path: 'display-geometry', component: DisplayGeometry },
+  { path: 'geometry-components', component: GeometryComponents },
+  { path: 'display-geojson-source', component: DisplayGeojsonSource },
+  { path: 'draw-box', component: DrawBox },
+  { path: 'modify-polygon', component: ModifyPolygon },
+  { path: 'side-by-side', component: SideBySide },
+  { path: 'swipe', component: Swipe },
+  { path: 'overlay', component: Overlay },
+  { path: 'color-select-hover', component: ColorSelectHover },
+  { path: 'marker', component: Marker },
+  { path: 'cluster', component: Cluster },
+  { path: 'raster', component: Raster },
+  { path: 'arcgis-image', component: ArcgisImage },
+  { path: 'arcgis-tiled', component: ArcgisTiled },
+  { path: 'image-wms', component: ImageWms },
+  { path: 'view-projection-update', component: ViewProjectionUpdate },
+  { path: 'overview', component: Overview },
+  { path: 'utf-grid', component: Utfgrid },
+  { path: 'image-static', component: ImageStatic },
+  { path: 'map-interactions', component: MapInteractions },
+  { path: 'interactions', redirectTo: 'map-interactions' },
+  { path: 'feature-interactions', redirectTo: 'map-interactions' },
+  { path: 'select-interaction', component: SelectInteraction },
+  { path: 'tile-json', component: TileJson },
+  { path: 'tile-json-dynamic', component: TileJsonDynamic },
+  { path: 'vector-esri', component: VectorEsri },
+  { path: 'graticule', component: Graticule },
+  { path: 'ogc-vector-tile', component: OgcVectorTile },
+  { path: 'ogc-map-tile', component: OgcMapTile },
+  { path: 'xyz-esri', component: XyzEsri },
+  { path: 'ogcvectortile', redirectTo: 'ogc-vector-tile' },
+  { path: 'ogcmaptile', redirectTo: 'ogc-map-tile' },
+  { path: 'advanced', component: AdvancedMap },
+  { path: '**', redirectTo: '' },
+];

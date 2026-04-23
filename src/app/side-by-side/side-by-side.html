@@ -1,0 +1,25 @@
+<div class="layout">
+  <aol-map class="map">
+    <aol-view #sharedView [zoom]="zoom()" [center]="center()"></aol-view>
+
+    <aol-layer-tile>
+      <aol-source-osm></aol-source-osm>
+    </aol-layer-tile>
+
+    <aol-interaction-default></aol-interaction-default>
+    <aol-control-scaleline></aol-control-scaleline>
+    <aol-control-zoom></aol-control-zoom>
+    <aol-control-attribution></aol-control-attribution>
+  </aol-map>
+
+  <aol-map #secondMap class="map">
+    <aol-layer-tile>
+      <aol-source-xyz
+        url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
+      >
+      </aol-source-xyz>
+    </aol-layer-tile>
+
+    <aol-interaction-default></aol-interaction-default>
+  </aol-map>
+</div>

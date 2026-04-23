@@ -1,0 +1,35 @@
+<aol-map #map class="map" (pointerMove)="changeFeatureHovered($event)">
+  <aol-view [zoom]="zoom()" [center]="center()"></aol-view>
+
+  <aol-layer-tile>
+    <aol-source-osm></aol-source-osm>
+  </aol-layer-tile>
+
+  <aol-interaction-default></aol-interaction-default>
+  <aol-interaction-select [style]="selectedStyle"></aol-interaction-select>
+  <aol-control-scaleline></aol-control-scaleline>
+  <aol-control-zoom></aol-control-zoom>
+  <aol-control-attribution></aol-control-attribution>
+
+  <aol-layer-group>
+    @for (feature of features(); track feature.getId()) {
+      <aol-layer-vector>
+        @if (feature.getId() === hoveredFeatureId()) {
+          <aol-style>
+            <aol-style-stroke color="white" [width]="3"></aol-style-stroke>
+            <aol-style-fill color="rgba(90, 17, 26, 0.3)"></aol-style-fill>
+          </aol-style>
+        } @else {
+          <aol-style>
+            <aol-style-stroke color="rgba(90, 17, 26)" [width]="3"></aol-style-stroke>
+            <aol-style-fill color="rgba(90, 17, 26, 0.5)"></aol-style-fill>
+          </aol-style>
+        }
+
+        <aol-source-vector>
+          <aol-feature [feature]="feature"></aol-feature>
+        </aol-source-vector>
+      </aol-layer-vector>
+    }
+  </aol-layer-group>
+</aol-map>

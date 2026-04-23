@@ -1,0 +1,41 @@
+<div class="layout demo-layout">
+  <aol-map class="map demo-map">
+    <aol-view [zoom]="zoom()" [center]="center()"></aol-view>
+
+    <aol-layer-tile>
+      <aol-source-osm></aol-source-osm>
+    </aol-layer-tile>
+
+    @if (feature(); as feature) {
+      <aol-layer-vector>
+        <aol-source-vector>
+          <aol-feature [feature]="feature"></aol-feature>
+        </aol-source-vector>
+      </aol-layer-vector>
+    }
+
+    <aol-interaction-default></aol-interaction-default>
+    @if (isDrawing()) {
+      <aol-interaction-draw
+        type="Circle"
+        [geometryFunction]="drawBoxGeometryFunction"
+        (drawEnd)="endDraw($event.feature)"
+      >
+      </aol-interaction-draw>
+    }
+    <aol-control-scaleline></aol-control-scaleline>
+    <aol-control-zoom></aol-control-zoom>
+    <aol-control-attribution></aol-control-attribution>
+  </aol-map>
+
+  <aside class="panel demo-panel">
+    <button type="button" class="toggle-button" (click)="toggleDrawMode()">
+      {{ isDrawing() ? 'End draw' : 'Start draw' }}
+    </button>
+
+    <section class="section">
+      <h2>Result</h2>
+      <pre>{{ featureResult() | json }}</pre>
+    </section>
+  </aside>
+</div>

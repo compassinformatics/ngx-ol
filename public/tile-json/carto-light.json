@@ -1,0 +1,11 @@
+{
+  "tilejson": "2.2.0",
+  "name": "CARTO Light",
+  "scheme": "xyz",
+  "tiles": ["https://a.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png"],
+  "minzoom": 0,
+  "maxzoom": 19,
+  "bounds": [-180, -85.05112877980659, 180, 85.05112877980659],
+  "center": [0, 0, 2],
+  "attribution": "&copy; OpenStreetMap contributors &copy; CARTO"
+}

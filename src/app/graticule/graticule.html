@@ -1,0 +1,31 @@
+<div class="layout demo-layout">
+  <aol-map class="map demo-map">
+    <aol-view [zoom]="zoom()" [center]="center()"></aol-view>
+
+    <aol-layer-tile>
+      <aol-source-osm></aol-source-osm>
+    </aol-layer-tile>
+
+    @if (shownGraticule()) {
+      <aol-graticule [strokeStyle]="graticuleStyle()" [showLabels]="true"></aol-graticule>
+    }
+
+    <aol-interaction-default></aol-interaction-default>
+    <aol-control-fullscreen></aol-control-fullscreen>
+    <aol-control-scaleline></aol-control-scaleline>
+    <aol-control-zoom></aol-control-zoom>
+    <aol-control-attribution></aol-control-attribution>
+  </aol-map>
+
+  <aside class="panel demo-panel">
+    <h2>Graticule</h2>
+    <label>
+      <input
+        type="checkbox"
+        [checked]="shownGraticule()"
+        (change)="setShownGraticule($any($event.target).checked)"
+      />
+      Show graticule
+    </label>
+  </aside>
+</div>
