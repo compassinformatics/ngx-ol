@@ -1,4 +1,12 @@
-import { ChangeDetectionStrategy, Component, ElementRef, computed, inject, signal, viewChild } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  computed,
+  inject,
+  signal,
+  viewChild,
+} from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { NavigationEnd, Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { filter, map, startWith } from 'rxjs';
@@ -27,7 +35,9 @@ export class App {
   );
 
   readonly demos = DEMOS;
-  readonly activeDemo = computed(() => this.demos.find((demo) => demo.path === this.currentPath()) ?? null);
+  readonly activeDemo = computed(
+    () => this.demos.find((demo) => demo.path === this.currentPath()) ?? null,
+  );
   readonly shiftedDescriptions = signal<ReadonlySet<string>>(new Set());
   readonly isDescriptionShifted = computed(() => {
     const demo = this.activeDemo();

@@ -21,9 +21,7 @@ type LayerVectorRef = {
 export class SelectInteraction {
   private readonly markersLayer = viewChild<LayerVectorRef>('markersLayer');
 
-  readonly center = signal<Coordinate>(
-    transform([1.4886, 43.5554], 'EPSG:4326', 'EPSG:3857'),
-  );
+  readonly center = signal<Coordinate>(transform([1.4886, 43.5554], 'EPSG:4326', 'EPSG:3857'));
   readonly zoom = signal(5);
   readonly markerFeatures = signal([
     new Feature({
@@ -33,7 +31,8 @@ export class SelectInteraction {
   readonly selectedCount = signal(0);
   readonly selectionMessage = signal('Click the marker to select it.');
 
-  protected readonly isMarkerLayer = (layer: Layer): boolean => layer === this.markersLayer()?.instance;
+  protected readonly isMarkerLayer = (layer: Layer): boolean =>
+    layer === this.markersLayer()?.instance;
 
   protected select(event: SelectEvent): void {
     this.selectedCount.set(event.selected.length);

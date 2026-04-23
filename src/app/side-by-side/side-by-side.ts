@@ -1,4 +1,10 @@
-import { afterNextRender, ChangeDetectionStrategy, Component, signal, viewChild } from '@angular/core';
+import {
+  afterNextRender,
+  ChangeDetectionStrategy,
+  Component,
+  signal,
+  viewChild,
+} from '@angular/core';
 import { AngularOpenlayersModule, MapComponent, ViewComponent } from 'ngx-ol';
 import type { Coordinate } from 'ol/coordinate';
 import { transform } from 'ol/proj';
@@ -14,9 +20,7 @@ export class SideBySide {
   private readonly secondMap = viewChild.required<MapComponent>('secondMap');
   private readonly sharedView = viewChild.required<ViewComponent>('sharedView');
 
-  readonly center = signal<Coordinate>(
-    transform([2.181539, 47.125488], 'EPSG:4326', 'EPSG:3857'),
-  );
+  readonly center = signal<Coordinate>(transform([2.181539, 47.125488], 'EPSG:4326', 'EPSG:3857'));
   readonly zoom = signal(5);
 
   constructor() {

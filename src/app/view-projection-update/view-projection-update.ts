@@ -15,9 +15,7 @@ type ProjectionCode = 'EPSG:3857' | 'EPSG:4326';
 export class ViewProjectionUpdate {
   readonly zoom = signal(6);
   readonly viewProjection = signal<ProjectionCode>('EPSG:3857');
-  readonly center = computed(
-    () => transform([5, 45], 'EPSG:4326', this.viewProjection()),
-  );
+  readonly center = computed(() => transform([5, 45], 'EPSG:4326', this.viewProjection()));
 
   protected setProjection(value: string): void {
     if (value === 'EPSG:4326' || value === 'EPSG:3857') {

@@ -18,7 +18,9 @@ export class ArcgisTiled {
 
   readonly center = signal<Coordinate>([-10997148, 4569099]);
   readonly zoom = signal(4);
-  readonly serviceUrl = signal('https://sampleserver6.arcgisonline.com/ArcGIS/rest/services/USA/MapServer');
+  readonly serviceUrl = signal(
+    'https://sampleserver6.arcgisonline.com/ArcGIS/rest/services/USA/MapServer',
+  );
   readonly serviceExtent = signal<Extent>([-13884991, 2870341, -7455066, 6338219]);
   readonly osmSource = signal(new OSM());
   readonly arcgisSource = signal(

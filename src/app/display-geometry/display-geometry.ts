@@ -24,10 +24,12 @@ export class DisplayGeometry {
   private readonly geoJson = new GeoJSON();
   readonly features = toSignal(
     this.http.get<GeoJSONFeatureCollection>('/features.json').pipe(
-      map((payload) => this.geoJson.readFeatures(payload, {
-      dataProjection: 'EPSG:4326',
-      featureProjection: 'EPSG:3857',
-    })),
+      map((payload) =>
+        this.geoJson.readFeatures(payload, {
+          dataProjection: 'EPSG:4326',
+          featureProjection: 'EPSG:3857',
+        }),
+      ),
     ),
     { initialValue: [] },
   );

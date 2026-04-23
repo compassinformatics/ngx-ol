@@ -30,9 +30,7 @@ type RasterEvent = {
 export class Raster {
   private readonly rasterSource = viewChild.required<RasterSourceRef>('rasterSource');
 
-  readonly center = signal<Coordinate>(
-    transform([1.4886, 43.5554], 'EPSG:4326', 'EPSG:3857'),
-  );
+  readonly center = signal<Coordinate>(transform([1.4886, 43.5554], 'EPSG:4326', 'EPSG:3857'));
   readonly zoom = signal(14);
   readonly brightness = signal(0);
   readonly contrast = signal(0);

@@ -17,9 +17,7 @@ import { Fill, Stroke, Style } from 'ol/style';
 export class ColorSelectHover {
   private readonly map = viewChild.required<MapComponent>('map');
 
-  readonly center = signal<Coordinate>(
-    transform([1.4886, 43.5554], 'EPSG:4326', 'EPSG:3857'),
-  );
+  readonly center = signal<Coordinate>(transform([1.4886, 43.5554], 'EPSG:4326', 'EPSG:3857'));
   readonly zoom = signal(5);
   readonly hoveredFeatureId = signal<number | null>(null);
   readonly selectedStyle = new Style({

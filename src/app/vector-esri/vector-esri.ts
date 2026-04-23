@@ -52,7 +52,9 @@ export class VectorEsri {
   readonly serviceUrl = signal(
     'https://services-eu1.arcgis.com/NPIbx47lsIiu2pqz/ArcGIS/rest/services/',
   );
-  readonly serviceLayer = signal('Neptune_Coastline_Campaign_Open_Data_Land_Use_2014/FeatureServer/0');
+  readonly serviceLayer = signal(
+    'Neptune_Coastline_Campaign_Open_Data_Land_Use_2014/FeatureServer/0',
+  );
   readonly baseSource = signal(
     new XYZ({
       attributions:
@@ -116,7 +118,11 @@ export class VectorEsri {
         }),
       ),
       url: (extent, _resolution, projection) => {
-        const srid = projection.getCode().split(/:(?=\d+$)/).pop() ?? '3857';
+        const srid =
+          projection
+            .getCode()
+            .split(/:(?=\d+$)/)
+            .pop() ?? '3857';
         return this.buildQueryUrl(extent, srid);
       },
     });

@@ -26,7 +26,13 @@ export class MapPosition {
       startWith(this.form.getRawValue()),
       map(({ x, y }) => transform([x ?? 0, y ?? 0], 'EPSG:4326', 'EPSG:3857')),
     ),
-    { initialValue: transform([this.form.controls.x.value, this.form.controls.y.value], 'EPSG:4326', 'EPSG:3857') },
+    {
+      initialValue: transform(
+        [this.form.controls.x.value, this.form.controls.y.value],
+        'EPSG:4326',
+        'EPSG:3857',
+      ),
+    },
   );
 
   readonly moving = signal(false);

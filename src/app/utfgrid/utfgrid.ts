@@ -60,15 +60,20 @@ export class Utfgrid {
     const coordinate = event.coordinate;
     const resolution = this.view().instance.getResolution() ?? 0;
 
-    this.utfGridSource().instance.forDataAtCoordinateAndResolution(coordinate, resolution, (data) => {
-      if (data && typeof data !== 'string') {
-        this.info.set(data);
-        event.map.getTargetElement().style.cursor = 'pointer';
-        return;
-      }
+    this.utfGridSource().instance.forDataAtCoordinateAndResolution(
+      coordinate,
+      resolution,
+      (data) => {
+        if (data && typeof data !== 'string') {
+          this.info.set(data);
+          event.map.getTargetElement().style.cursor = 'pointer';
+          return;
+        }
 
-      this.info.set(undefined);
-      event.map.getTargetElement().style.cursor = '';
-    }, true);
+        this.info.set(undefined);
+        event.map.getTargetElement().style.cursor = '';
+      },
+      true,
+    );
   }
 }

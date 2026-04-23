@@ -31,9 +31,7 @@ export class Swipe {
   private readonly startX = signal(0);
   private readonly paddingSize = 16;
 
-  readonly center = signal<Coordinate>(
-    transform([2.181539, 47.125488], 'EPSG:4326', 'EPSG:3857'),
-  );
+  readonly center = signal<Coordinate>(transform([2.181539, 47.125488], 'EPSG:4326', 'EPSG:3857'));
   readonly zoom = signal(5);
   readonly swipeValue = signal(50);
   readonly swipeOffsetToCenter = signal(0);
@@ -44,7 +42,12 @@ export class Swipe {
 
     renderEvent.context.save();
     renderEvent.context.beginPath();
-    renderEvent.context.rect(width, 0, renderEvent.context.canvas.width - width, renderEvent.context.canvas.height);
+    renderEvent.context.rect(
+      width,
+      0,
+      renderEvent.context.canvas.width - width,
+      renderEvent.context.canvas.height,
+    );
     renderEvent.context.clip();
   };
 
@@ -67,7 +70,8 @@ export class Swipe {
 
     swipeEvent.preventDefault();
 
-    const screenSizePx = (swipeEvent.srcEvent.view?.innerWidth ?? window.innerWidth) - this.paddingSize;
+    const screenSizePx =
+      (swipeEvent.srcEvent.view?.innerWidth ?? window.innerWidth) - this.paddingSize;
     const maxOffset = screenSizePx * 0.48;
     const offset = Math.max(-maxOffset, Math.min(maxOffset, this.startX() + swipeEvent.deltaX));
     const positionPx = screenSizePx / 2 + offset;

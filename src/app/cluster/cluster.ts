@@ -19,9 +19,7 @@ type DemoPoint = {
   styleUrl: './cluster.less',
 })
 export class Cluster {
-  readonly center = signal<Coordinate>(
-    transform([1.4886, 43.5554], 'EPSG:4326', 'EPSG:3857'),
-  );
+  readonly center = signal<Coordinate>(transform([1.4886, 43.5554], 'EPSG:4326', 'EPSG:3857'));
   readonly zoom = signal(14);
   readonly distance = signal(60);
   readonly pointFeatures = signal(this.createPointFeatures(2000));

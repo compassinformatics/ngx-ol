@@ -31,9 +31,7 @@ export class ModifyPolygon {
     ]),
   });
 
-  readonly center = signal<Coordinate>(
-    transform([1.4886, 43.5554], 'EPSG:4326', 'EPSG:3857'),
-  );
+  readonly center = signal<Coordinate>(transform([1.4886, 43.5554], 'EPSG:4326', 'EPSG:3857'));
   readonly zoom = signal(5);
   readonly featureResult = signal(
     this.format.writeFeatureObject(this.polygonFeature, {
