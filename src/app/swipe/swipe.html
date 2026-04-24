@@ -23,8 +23,10 @@
   class="swipe-button"
   aria-label="Swipe layers"
   [style.marginLeft.px]="swipeOffsetToCenter()"
-  (panstart)="onPanStart()"
-  (panmove)="onPan($event)"
+  (pointerdown)="onPointerDown($event)"
+  (pointermove)="onPointerMove($event)"
+  (pointerup)="onPointerUp($event)"
+  (pointercancel)="onPointerUp($event)"
 >
   &#8596;
 </button>
