@@ -25,21 +25,21 @@ import { ServerType } from 'ol/source/wms';
 })
 export class SourceTileWMSComponent extends SourceComponent implements OnChanges, OnInit {
   @Input()
-  cacheSize: number;
+  cacheSize?: number;
   @Input()
   crossOrigin?: null | string;
   @Input()
-  gutter: number;
+  gutter?: number;
   @Input()
-  hidpi: boolean;
+  hidpi?: boolean;
   @Input()
-  interpolate: boolean;
+  interpolate?: boolean;
   @Input()
   params: { [key: string]: any };
   @Input()
   projection?: ProjectionLike;
   @Input()
-  reprojectionErrorThreshold: number;
+  reprojectionErrorThreshold?: number;
   @Input()
   serverType?: ServerType;
   @Input()
@@ -51,7 +51,7 @@ export class SourceTileWMSComponent extends SourceComponent implements OnChanges
   @Input()
   url?: string;
   @Input()
-  urls: string[];
+  urls?: string[];
   @Input()
   wrapX?: boolean;
   @Input()

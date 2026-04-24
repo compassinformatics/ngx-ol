@@ -27,19 +27,19 @@ export class SourceImageWMSComponent extends SourceComponent implements OnChange
   @Input()
   crossOrigin?: null | string;
   @Input()
-  hidpi: boolean;
+  hidpi?: boolean;
   @Input()
   serverType?: ServerType;
   @Input()
   imageLoadFunction?: LoadFunction;
   @Input()
-  interpolate: boolean;
+  interpolate?: boolean;
   @Input()
   params?: { [key: string]: any };
   @Input()
   projection?: ProjectionLike | string;
   @Input()
-  ratio: number;
+  ratio?: number;
   @Input()
   resolutions?: Array<number>;
   @Input()

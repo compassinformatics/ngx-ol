@@ -10,21 +10,21 @@ import { MapComponent } from '../map.component';
 })
 export class ControlAttributionComponent implements OnInit, OnDestroy {
   @Input()
-  className: string;
+  className?: string;
   @Input()
-  collapsible: boolean;
+  collapsible?: boolean;
   @Input()
-  collapsed: boolean;
+  collapsed?: boolean;
   @Input()
-  tipLabel: string;
+  tipLabel?: string;
   @Input()
-  label: string | HTMLElement;
+  label?: string | HTMLElement;
   @Input()
-  expandClassName: string;
+  expandClassName?: string;
   @Input()
-  collapseLabel: string | HTMLElement;
+  collapseLabel?: string | HTMLElement;
   @Input()
-  collapseClassName: string;
+  collapseClassName?: string;
   @Input()
   render?: (event: MapEvent) => void;
 

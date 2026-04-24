@@ -10,25 +10,25 @@ import MapEvent from 'ol/MapEvent';
 })
 export class ControlScaleLineComponent implements OnInit, OnDestroy {
   @Input()
-  className: string;
+  className?: string;
   @Input()
-  minWidth: number;
+  minWidth?: number;
   @Input()
-  maxWidth: number;
+  maxWidth?: number;
   @Input()
   render?: (event: MapEvent) => void;
   @Input()
-  target: string | HTMLElement;
+  target?: string | HTMLElement;
   @Input()
-  units: Units;
+  units?: Units;
   @Input()
-  bar: boolean;
+  bar?: boolean;
   @Input()
-  steps: number;
+  steps?: number;
   @Input()
-  text: boolean;
+  text?: boolean;
   @Input()
-  dpi: number;
+  dpi?: number;
 
   instance: ScaleLine;
 

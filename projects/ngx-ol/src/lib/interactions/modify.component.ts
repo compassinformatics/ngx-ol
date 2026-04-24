@@ -35,7 +35,7 @@ export class ModifyInteractionComponent implements OnInit, OnDestroy {
   @Input()
   hitDetection?: boolean | BaseVectorLayer<any, any, any>;
   @Input()
-  snapToPointer: boolean;
+  snapToPointer?: boolean;
 
   @Output()
   olChange = new EventEmitter<BaseEvent>();

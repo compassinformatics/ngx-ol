@@ -20,21 +20,21 @@ import { DeclutterMode } from 'ol/style/Style';
 })
 export class StyleCircleComponent implements AfterContentInit, OnChanges, OnDestroy {
   @Input()
-  fill: Fill;
+  fill?: Fill;
   @Input()
   radius: number;
   @Input()
-  stroke: Stroke;
+  stroke?: Stroke;
   @Input()
-  displacement: number[];
+  displacement?: number[];
   @Input()
-  scale: number | Size;
+  scale?: number | Size;
   @Input()
-  rotation: number;
+  rotation?: number;
   @Input()
-  rotateWithView: boolean;
+  rotateWithView?: boolean;
   @Input()
-  declutterMode: DeclutterMode;
+  declutterMode?: DeclutterMode;
 
   public componentType = 'style-circle';
   public instance: Circle;

@@ -10,9 +10,9 @@ import { Condition } from 'ol/events/condition';
 })
 export class DragRotateAndZoomInteractionComponent implements OnInit, OnDestroy {
   @Input()
-  condition: Condition;
+  condition?: Condition;
   @Input()
-  duration: number;
+  duration?: number;
 
   instance: DragRotateAndZoom;
 

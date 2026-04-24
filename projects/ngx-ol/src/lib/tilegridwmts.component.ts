@@ -20,7 +20,7 @@ export class TileGridWMTSComponent extends TileGridComponent implements OnInit {
   @Input()
   sizes?: Size[];
   @Input()
-  tileSize: number | Size;
+  tileSize?: number | Size;
   @Input()
   tileSizes?: (number | Size)[];
 

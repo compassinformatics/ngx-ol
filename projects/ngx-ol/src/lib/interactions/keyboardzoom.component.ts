@@ -10,9 +10,9 @@ import { MapComponent } from '../map.component';
 })
 export class KeyboardZoomInteractionComponent implements OnInit, OnDestroy {
   @Input()
-  duration: number;
+  duration?: number;
   @Input()
-  delta: number;
+  delta?: number;
 
   instance: KeyboardZoom;
 

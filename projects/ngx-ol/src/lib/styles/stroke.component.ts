@@ -13,19 +13,19 @@ import { ColorLike } from 'ol/colorlike';
 })
 export class StyleStrokeComponent implements OnInit, OnChanges {
   @Input()
-  color: Color | ColorLike;
+  color?: Color | ColorLike;
   @Input()
-  lineCap: CanvasLineCap | undefined;
+  lineCap?: CanvasLineCap | undefined;
   @Input()
-  lineDash: number[];
+  lineDash?: number[];
   @Input()
-  lineDashOffset: number | undefined;
+  lineDashOffset?: number | undefined;
   @Input()
-  lineJoin: CanvasLineJoin | undefined;
+  lineJoin?: CanvasLineJoin | undefined;
   @Input()
-  miterLimit: number;
+  miterLimit?: number;
   @Input()
-  width: number;
+  width?: number;
 
   public instance: Stroke;
   /* the typings do not have the setters */

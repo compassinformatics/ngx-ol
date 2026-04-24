@@ -14,15 +14,15 @@ import { SourceComponent } from './source.component';
 })
 export class SourceTileJSONComponent extends SourceComponent implements OnInit {
   @Input()
-  cacheSize: number;
+  cacheSize?: number;
   @Input()
   crossOrigin?: string | null;
   @Input()
-  interpolate: boolean;
+  interpolate?: boolean;
   @Input()
-  jsonp: boolean;
+  jsonp?: boolean;
   @Input()
-  reprojectionErrorThreshold: number;
+  reprojectionErrorThreshold?: number;
   @Input()
   tileJSON?: Config;
   @Input()
@@ -32,11 +32,11 @@ export class SourceTileJSONComponent extends SourceComponent implements OnInit {
   @Input()
   url?: string;
   @Input()
-  wrapX: boolean;
+  wrapX?: boolean;
   @Input()
-  transition: number;
+  transition?: number;
   @Input()
-  zDirection: number | NearestDirectionFunction;
+  zDirection?: number | NearestDirectionFunction;
 
   instance: TileJSON;
 

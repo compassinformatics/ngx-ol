@@ -11,15 +11,15 @@ import { Size } from 'ol/size';
 })
 export class TileGridComponent implements OnInit, OnChanges {
   @Input()
-  extent: Extent;
+  extent?: Extent;
   @Input()
   maxZoom: number;
   @Input()
-  minZoom: number;
+  minZoom?: number;
   @Input()
   maxResolution: number;
   @Input()
-  tileSize: number | Size;
+  tileSize?: number | Size;
   @Input()
   origin?: Coordinate;
   @Input()

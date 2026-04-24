@@ -31,43 +31,43 @@ import { SourceComponent } from './source.component';
 })
 export class SourceXYZComponent extends SourceComponent implements AfterContentInit, OnChanges {
   @Input()
-  cacheSize: number;
+  cacheSize?: number;
   @Input()
   crossOrigin?: null | string;
   @Input()
-  gutter: number;
+  gutter?: number;
   @Input()
-  interpolate: boolean;
+  interpolate?: boolean;
   @Input()
   projection?: ProjectionLike;
   @Input()
-  reprojectionErrorThreshold: number;
+  reprojectionErrorThreshold?: number;
   @Input()
-  maxResolution: number;
+  maxResolution?: number;
   @Input()
-  minZoom: number;
+  minZoom?: number;
   @Input()
-  maxZoom: number;
+  maxZoom?: number;
   @Input()
   tileGrid?: TileGrid;
   @Input()
   tileLoadFunction?: LoadFunction;
   @Input()
-  tilePixelRatio: number;
+  tilePixelRatio?: number;
   @Input()
-  tileSize: number | Size;
+  tileSize?: number | Size;
   @Input()
   tileUrlFunction?: UrlFunction;
   @Input()
-  transition: number;
+  transition?: number;
   @Input()
   url?: string;
   @Input()
   urls?: string[];
   @Input()
-  wrapX: boolean;
+  wrapX?: boolean;
   @Input()
-  zDirection: number | NearestDirectionFunction;
+  zDirection?: number | NearestDirectionFunction;
 
   @ContentChild(TileGridComponent, { static: false })
   tileGridXYZ: TileGridComponent;

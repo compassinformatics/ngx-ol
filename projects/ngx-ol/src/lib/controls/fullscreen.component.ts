@@ -9,23 +9,23 @@ import { MapComponent } from '../map.component';
 })
 export class ControlFullScreenComponent implements OnInit, OnDestroy {
   @Input()
-  className: string;
+  className?: string;
   @Input()
-  label: string | HTMLElement | Text;
+  label?: string | HTMLElement | Text;
   @Input()
-  labelActive: string | HTMLElement | Text;
+  labelActive?: string | HTMLElement | Text;
   @Input()
-  activeClassName: string;
+  activeClassName?: string;
   @Input()
-  inactiveClassName: string;
+  inactiveClassName?: string;
   @Input()
-  tipLabel: string;
+  tipLabel?: string;
   @Input()
-  keys: boolean;
+  keys?: boolean;
   @Input()
-  target: string | HTMLElement;
+  target?: string | HTMLElement;
   @Input()
-  source: string | HTMLElement;
+  source?: string | HTMLElement;
 
   instance: FullScreen;
 

@@ -15,29 +15,29 @@ export class SourceBingmapsComponent extends SourceComponent implements OnInit {
   @Input()
   cacheSize?: number;
   @Input()
-  hidpi: boolean;
+  hidpi?: boolean;
   @Input()
-  culture: string;
+  culture?: string;
   @Input()
   key: string;
   @Input()
   imagerySet: 'Road' | 'Aerial' | 'AerialWithLabels' | 'collinsBart' | 'ordnanceSurvey' = 'Aerial';
   @Input()
-  maxZoom: number;
+  maxZoom?: number;
   @Input()
-  reprojectionErrorThreshold: number;
+  reprojectionErrorThreshold?: number;
   @Input()
   tileLoadFunction?: LoadFunction;
   @Input()
-  wrapX: boolean;
+  wrapX?: boolean;
   @Input()
-  interpolate: boolean;
+  interpolate?: boolean;
   @Input()
   placeholderTiles?: boolean;
   @Input()
   transition?: number;
   @Input()
-  zDirection: number | NearestDirectionFunction;
+  zDirection?: number | NearestDirectionFunction;
 
   instance: BingMaps;
 

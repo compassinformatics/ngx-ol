@@ -10,13 +10,13 @@ import { MapComponent } from '../map.component';
 })
 export class ControlZoomSliderComponent implements OnInit, OnDestroy {
   @Input()
-  className: string;
+  className?: string;
   @Input()
-  duration: number;
+  duration?: number;
   @Input()
   render?: (event: MapEvent) => void;
   @Input()
-  target: string | HTMLElement;
+  target?: string | HTMLElement;
 
   instance: ZoomSlider;
 

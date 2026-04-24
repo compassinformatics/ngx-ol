@@ -13,7 +13,7 @@ import { ColorLike, PatternDescriptor } from 'ol/colorlike';
 })
 export class StyleFillComponent implements OnInit, OnChanges {
   @Input()
-  color: Color | ColorLike | PatternDescriptor | null;
+  color?: Color | ColorLike | PatternDescriptor | null;
 
   public instance: Fill;
   private readonly host: StyleComponent | StyleCircleComponent | StyleTextComponent;

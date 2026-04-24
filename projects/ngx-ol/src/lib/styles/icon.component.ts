@@ -14,43 +14,43 @@ import { DeclutterMode } from 'ol/style/Style';
 })
 export class StyleIconComponent implements OnInit, OnChanges {
   @Input()
-  anchor: [number, number];
+  anchor?: [number, number];
   @Input()
-  anchorXUnits: IconAnchorUnits;
+  anchorXUnits?: IconAnchorUnits;
   @Input()
-  anchorYUnits: IconAnchorUnits;
+  anchorYUnits?: IconAnchorUnits;
   @Input()
-  anchorOrigin: IconOrigin;
+  anchorOrigin?: IconOrigin;
   @Input()
-  color: string | Color;
+  color?: string | Color;
   @Input()
-  crossOrigin: string | null;
+  crossOrigin?: string | null;
   @Input()
-  img: HTMLCanvasElement | HTMLImageElement | ImageBitmap;
+  img?: HTMLCanvasElement | HTMLImageElement | ImageBitmap;
   @Input()
-  displacement: number[];
+  displacement?: number[];
   @Input()
-  offset: [number, number];
+  offset?: [number, number];
   @Input()
-  offsetOrigin: IconOrigin;
+  offsetOrigin?: IconOrigin;
   @Input()
-  opacity: number;
+  opacity?: number;
   @Input()
-  width: number;
+  width?: number;
   @Input()
-  height: number;
+  height?: number;
   @Input()
-  scale: number | Size;
+  scale?: number | Size;
   @Input()
-  declutterMode: DeclutterMode;
+  declutterMode?: DeclutterMode;
   @Input()
-  rotateWithView: boolean;
+  rotateWithView?: boolean;
   @Input()
-  rotation: number;
+  rotation?: number;
   @Input()
-  size: [number, number];
+  size?: [number, number];
   @Input()
-  src: string;
+  src?: string;
 
   public instance: Icon;
 

@@ -11,45 +11,45 @@ import { Size } from 'ol/size';
 })
 export class StyleTextComponent implements OnInit, OnChanges {
   @Input()
-  font: string | undefined;
+  font?: string | undefined;
   @Input()
-  maxAngle: number | undefined;
+  maxAngle?: number | undefined;
   @Input()
-  offsetX: number | undefined;
+  offsetX?: number | undefined;
   @Input()
-  offsetY: number | undefined;
+  offsetY?: number | undefined;
   @Input()
-  overflow: boolean | undefined;
+  overflow?: boolean | undefined;
   @Input()
-  placement: TextPlacement | undefined;
+  placement?: TextPlacement | undefined;
   @Input()
-  repeat: number | undefined;
+  repeat?: number | undefined;
   @Input()
-  scale: number | Size | undefined;
+  scale?: number | Size | undefined;
   @Input()
-  rotateWithView: boolean | undefined;
+  rotateWithView?: boolean | undefined;
   @Input()
-  rotation: number | undefined;
+  rotation?: number | undefined;
   @Input()
-  text: string | string[] | undefined;
+  text?: string | string[] | undefined;
   @Input()
-  textAlign: CanvasTextAlign | undefined;
+  textAlign?: CanvasTextAlign | undefined;
   @Input()
-  justify: TextJustify | undefined;
+  justify?: TextJustify | undefined;
   @Input()
-  textBaseline: CanvasTextBaseline | undefined;
+  textBaseline?: CanvasTextBaseline | undefined;
   @Input()
-  fill: Fill | undefined;
+  fill?: Fill | undefined;
   @Input()
-  stroke: Stroke | undefined;
+  stroke?: Stroke | undefined;
   @Input()
-  backgroundFill: Fill | undefined;
+  backgroundFill?: Fill | undefined;
   @Input()
-  backgroundStroke: Stroke | undefined;
+  backgroundStroke?: Stroke | undefined;
   @Input()
-  padding: number[] | undefined;
+  padding?: number[] | undefined;
   @Input()
-  declutterMode: DeclutterMode | undefined;
+  declutterMode?: DeclutterMode | undefined;
 
   public instance: Text;
   public componentType = 'style-text';

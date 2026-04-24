@@ -37,7 +37,7 @@ export class SourceImageStaticComponent extends SourceComponent implements OnIni
   @Input()
   imageLoadFunction?: LoadFunction;
   @Input()
-  interpolate: boolean;
+  interpolate?: boolean;
 
   @Output()
   imageLoadStart = new EventEmitter<ImageSourceEvent>();

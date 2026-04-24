@@ -10,23 +10,23 @@ import { MapComponent } from '../map.component';
 })
 export class ControlRotateComponent implements OnInit, OnDestroy {
   @Input()
-  className: string;
+  className?: string;
   @Input()
-  label: string | HTMLElement;
+  label?: string | HTMLElement;
   @Input()
-  tipLabel: string;
+  tipLabel?: string;
   @Input()
-  compassClassName: string;
+  compassClassName?: string;
   @Input()
-  duration: number;
+  duration?: number;
   @Input()
-  autoHide: boolean;
+  autoHide?: boolean;
   @Input()
   render?: (event: MapEvent) => void;
   @Input()
   resetNorth?: () => void;
   @Input()
-  target: string | HTMLElement;
+  target?: string | HTMLElement;
 
   instance: Rotate;
 

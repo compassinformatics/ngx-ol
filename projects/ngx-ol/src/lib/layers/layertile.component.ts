@@ -20,11 +20,11 @@ import TileSource from 'ol/source/Tile';
 })
 export class LayerTileComponent extends LayerComponent implements OnInit, OnDestroy, OnChanges {
   @Input()
-  preload: number;
+  preload?: number;
   @Input()
-  useInterimTilesOnError: boolean;
+  useInterimTilesOnError?: boolean;
   @Input()
-  cacheSize: number;
+  cacheSize?: number;
   @Input()
   source?: TileSource;
 

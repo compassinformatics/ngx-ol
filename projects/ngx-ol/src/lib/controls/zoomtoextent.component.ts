@@ -10,15 +10,15 @@ import { Extent } from 'ol/extent';
 })
 export class ControlZoomToExtentComponent implements OnInit, OnDestroy {
   @Input()
-  className: string;
+  className?: string;
   @Input()
-  target: string | HTMLElement;
+  target?: string | HTMLElement;
   @Input()
-  label: string | HTMLElement;
+  label?: string | HTMLElement;
   @Input()
-  tipLabel: string;
+  tipLabel?: string;
   @Input()
-  extent: Extent;
+  extent?: Extent;
 
   instance: ZoomToExtent;
 

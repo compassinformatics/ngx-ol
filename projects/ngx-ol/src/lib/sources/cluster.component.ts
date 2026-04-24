@@ -26,15 +26,15 @@ import { LayerVectorImageComponent } from '../layers/layervectorimage.component'
 })
 export class SourceClusterComponent extends SourceComponent implements AfterContentInit, OnChanges {
   @Input()
-  distance: number;
+  distance?: number;
   @Input()
-  minDistance: number;
+  minDistance?: number;
   @Input()
   geometryFunction?: (feature: Feature) => Point;
   @Input()
   wrapX?: boolean;
   @Input()
-  createCluster: any;
+  createCluster?: any;
 
   @ContentChild(SourceVectorComponent, { static: false })
   sourceVectorComponent: SourceVectorComponent;
@@ -57,7 +57,7 @@ export class SourceClusterComponent extends SourceComponent implements AfterCont
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (this.instance && changes.hasOwnProperty('distance')) {
+    if (this.instance && changes.hasOwnProperty('distance') && this.distance !== undefined) {
       this.instance.setDistance(this.distance);
     }
   }

@@ -24,25 +24,25 @@ import { SourceXYZComponent } from './xyz.component';
 })
 export class SourceOsmComponent extends SourceXYZComponent implements AfterContentInit {
   @Input()
-  cacheSize: number;
+  cacheSize?: number;
   @Input()
-  crossOrigin: string;
+  crossOrigin?: string;
   @Input()
-  interpolate: boolean;
+  interpolate?: boolean;
   @Input()
-  maxZoom: number;
+  maxZoom?: number;
   @Input()
-  reprojectionErrorThreshold: number;
+  reprojectionErrorThreshold?: number;
   @Input()
   tileLoadFunction?: LoadFunction;
   @Input()
-  transition: number;
+  transition?: number;
   @Input()
-  url: string;
+  url?: string;
   @Input()
-  wrapX: boolean;
+  wrapX?: boolean;
   @Input()
-  zDirection: number | NearestDirectionFunction;
+  zDirection?: number | NearestDirectionFunction;
 
   @Output()
   tileLoadStart = new EventEmitter<TileSourceEvent>();

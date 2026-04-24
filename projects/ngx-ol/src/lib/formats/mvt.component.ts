@@ -9,7 +9,7 @@ import { Options } from 'ol/format/MVT';
 })
 export class FormatMVTComponent {
   @Input()
-  featureClass: FeatureClass;
+  featureClass?: FeatureClass;
   @Input()
   geometryName?: string;
   @Input()

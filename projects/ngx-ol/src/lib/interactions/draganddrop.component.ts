@@ -11,11 +11,11 @@ import { ProjectionLike } from 'ol/proj';
 })
 export class DragAndDropInteractionComponent implements OnInit, OnDestroy {
   @Input()
-  formatConstructors: FeatureFormat[];
+  formatConstructors?: FeatureFormat[];
   @Input()
-  projection: ProjectionLike;
+  projection?: ProjectionLike;
   @Input()
-  target: HTMLElement;
+  target?: HTMLElement;
 
   instance: DragAndDrop;
 

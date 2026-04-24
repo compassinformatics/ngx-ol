@@ -13,27 +13,27 @@ import { MapComponent } from '../map.component';
 })
 export class ControlOverviewMapComponent implements OnInit, OnChanges, OnDestroy {
   @Input()
-  className: string;
+  className?: string;
   @Input()
-  collapsed: boolean;
+  collapsed?: boolean;
   @Input()
-  collapseLabel: string | HTMLElement;
+  collapseLabel?: string | HTMLElement;
   @Input()
-  collapsible: boolean;
+  collapsible?: boolean;
   @Input()
-  label: string | HTMLElement;
+  label?: string | HTMLElement;
   @Input()
-  layers: BaseLayer[] | Collection<BaseLayer>;
+  layers?: BaseLayer[] | Collection<BaseLayer>;
   @Input()
   render?: (event: MapEvent) => void;
   @Input()
-  rotateWithView: boolean;
+  rotateWithView?: boolean;
   @Input()
-  target: string | HTMLElement;
+  target?: string | HTMLElement;
   @Input()
-  tipLabel: string;
+  tipLabel?: string;
   @Input()
-  view: View;
+  view?: View;
 
   instance: OverviewMap;
 

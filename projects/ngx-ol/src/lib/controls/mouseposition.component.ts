@@ -11,17 +11,17 @@ import MapEvent from 'ol/MapEvent';
 })
 export class ControlMousePositionComponent implements OnInit, OnDestroy {
   @Input()
-  className: string;
+  className?: string;
   @Input()
-  coordinateFormat: CoordinateFormat;
+  coordinateFormat?: CoordinateFormat;
   @Input()
-  projection: ProjectionLike;
+  projection?: ProjectionLike;
   @Input()
   render?: (event: MapEvent) => void;
   @Input()
-  placeholder: string;
+  placeholder?: string;
   @Input()
-  wrapX: boolean;
+  wrapX?: boolean;
 
   instance: MousePosition;
   target: HTMLElement;

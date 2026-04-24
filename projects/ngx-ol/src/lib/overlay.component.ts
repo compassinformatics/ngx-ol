@@ -21,21 +21,21 @@ export class OverlayComponent implements OnInit, OnDestroy, OnChanges {
   content: ContentComponent;
 
   @Input()
-  id: number | string | undefined;
+  id?: number | string | undefined;
   @Input()
-  offset: number[];
+  offset?: number[];
   @Input()
-  positioning: Positioning;
+  positioning?: Positioning;
   @Input()
-  stopEvent: boolean;
+  stopEvent?: boolean;
   @Input()
-  insertFirst: boolean;
+  insertFirst?: boolean;
   @Input()
-  autoPan: boolean | PanIntoViewOptions;
+  autoPan?: boolean | PanIntoViewOptions;
   @Input()
-  position: Coordinate | undefined;
+  position?: Coordinate | undefined;
   @Input()
-  className: string;
+  className?: string;
 
   componentType = 'overlay';
   instance: Overlay;

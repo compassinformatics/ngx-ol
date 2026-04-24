@@ -10,13 +10,13 @@ import { Condition } from 'ol/events/condition';
 })
 export class DragZoomInteractionComponent implements OnInit, OnDestroy {
   @Input()
-  className: string;
+  className?: string;
   @Input()
-  condition: Condition;
+  condition?: Condition;
   @Input()
-  duration: number;
+  duration?: number;
   @Input()
-  out: boolean;
+  out?: boolean;
 
   instance: DragZoom;
 

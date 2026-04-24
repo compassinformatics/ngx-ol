@@ -16,9 +16,9 @@ export class SnapInteractionComponent implements OnInit, OnDestroy {
   @Input()
   features?: Collection<Feature>;
   @Input()
-  edge: boolean;
+  edge?: boolean;
   @Input()
-  vertex: boolean;
+  vertex?: boolean;
   @Input()
   pixelTolerance?: number;
   @Input()

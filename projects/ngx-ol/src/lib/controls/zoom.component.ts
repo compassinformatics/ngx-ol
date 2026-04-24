@@ -9,25 +9,25 @@ import { MapComponent } from '../map.component';
 })
 export class ControlZoomComponent implements OnInit, OnDestroy {
   @Input()
-  duration: number;
+  duration?: number;
   @Input()
-  className: string;
+  className?: string;
   @Input()
-  zoomInClassName: string;
+  zoomInClassName?: string;
   @Input()
-  zoomOutClassName: string;
+  zoomOutClassName?: string;
   @Input()
-  zoomInLabel: string | HTMLElement;
+  zoomInLabel?: string | HTMLElement;
   @Input()
-  zoomOutLabel: string | HTMLElement;
+  zoomOutLabel?: string | HTMLElement;
   @Input()
-  zoomInTipLabel: string;
+  zoomInTipLabel?: string;
   @Input()
-  zoomOutTipLabel: string;
+  zoomOutTipLabel?: string;
   @Input()
-  delta: number;
+  delta?: number;
   @Input()
-  target: string | HTMLElement;
+  target?: string | HTMLElement;
 
   instance: Zoom;
 

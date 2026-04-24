@@ -9,9 +9,9 @@ import { MapComponent } from '../map.component';
 })
 export class DoubleClickZoomInteractionComponent implements OnInit, OnDestroy {
   @Input()
-  duration: number;
+  duration?: number;
   @Input()
-  delta: number;
+  delta?: number;
 
   instance: DoubleClickZoom;
 

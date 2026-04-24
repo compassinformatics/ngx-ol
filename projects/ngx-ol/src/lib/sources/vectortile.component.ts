@@ -29,7 +29,7 @@ export class SourceVectorTileComponent extends SourceComponent implements AfterC
   @Input()
   extent?: Extent;
   @Input()
-  overlaps: boolean;
+  overlaps?: boolean;
   @Input()
   projection?: ProjectionLike;
   @Input()
@@ -55,7 +55,7 @@ export class SourceVectorTileComponent extends SourceComponent implements AfterC
   @Input()
   transition?: number;
   @Input()
-  wrapX: boolean;
+  wrapX?: boolean;
   @Input()
   zDirection?: number | NearestDirectionFunction;
   @Input()

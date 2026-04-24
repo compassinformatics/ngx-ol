@@ -11,11 +11,11 @@ import { EndCondition } from 'ol/interaction/DragBox';
 })
 export class DragBoxInteractionComponent implements OnInit, OnDestroy {
   @Input()
-  className: string;
+  className?: string;
   @Input()
-  condition: Condition;
+  condition?: Condition;
   @Input()
-  boxEndCondition: EndCondition;
+  boxEndCondition?: EndCondition;
 
   instance: DragBox;
 

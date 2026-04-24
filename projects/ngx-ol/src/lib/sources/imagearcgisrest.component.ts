@@ -31,9 +31,9 @@ export class SourceImageArcGISRestComponent extends SourceComponent implements O
   @Input()
   hidpi?: boolean;
   @Input() imageLoadFunction?: LoadFunction;
-  @Input() interpolate: boolean;
+  @Input() interpolate?: boolean;
   @Input() params?: { [k: string]: any };
-  @Input() ratio = 1.5;
+  @Input() ratio?: number = 1.5;
   @Input() resolutions?: number[];
 
   @Output()

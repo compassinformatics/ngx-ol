@@ -12,21 +12,21 @@ import { LayerVectorImageComponent } from '../layers/layervectorimage.component'
 })
 export class StyleComponent implements OnInit {
   @Input()
-  geometry: string | Geometry | GeometryFunction;
+  geometry?: string | Geometry | GeometryFunction;
   @Input()
-  fill: Fill;
+  fill?: Fill;
   @Input()
-  image: Image;
+  image?: Image;
   @Input()
-  renderer: RenderFunction;
+  renderer?: RenderFunction;
   @Input()
-  hitDetectionRenderer: RenderFunction;
+  hitDetectionRenderer?: RenderFunction;
   @Input()
-  stroke: Stroke;
+  stroke?: Stroke;
   @Input()
-  text: Text;
+  text?: Text;
   @Input()
-  zIndex: number;
+  zIndex?: number;
 
   public instance: Style;
   public componentType = 'style';
