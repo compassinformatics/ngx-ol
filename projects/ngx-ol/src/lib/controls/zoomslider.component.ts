@@ -1,5 +1,7 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import MapEvent from 'ol/MapEvent';
 import { ZoomSlider } from 'ol/control';
+import { Options } from 'ol/control/ZoomSlider';
 import { MapComponent } from '../map.component';
 
 @Component({
@@ -8,13 +10,13 @@ import { MapComponent } from '../map.component';
 })
 export class ControlZoomSliderComponent implements OnInit, OnDestroy {
   @Input()
-  className: string;
+  className?: string;
   @Input()
-  duration: number;
+  duration?: number;
   @Input()
-  maxResolution: number;
+  render?: (event: MapEvent) => void;
   @Input()
-  minResolution: number;
+  target?: string | HTMLElement;
 
   instance: ZoomSlider;
 
@@ -23,12 +25,21 @@ export class ControlZoomSliderComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.instance = new ZoomSlider(this);
+    this.instance = new ZoomSlider(this.createOptions());
     this.map.instance.addControl(this.instance);
   }
 
   ngOnDestroy() {
     // console.log('removing aol-control-zoomslider');
     this.map.instance.removeControl(this.instance);
+  }
+
+  private createOptions(): Options {
+    return {
+      className: this.className,
+      duration: this.duration,
+      render: this.render,
+      target: this.target,
+    };
   }
 }

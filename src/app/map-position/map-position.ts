@@ -3,7 +3,8 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Coordinate } from 'ol/coordinate';
 import { transform } from 'ol/proj';
-import { AngularOpenlayersModule, ViewComponent } from 'ngx-ol';
+import { AngularOpenlayersModule } from 'ngx-ol';
+import type { ViewComponent } from 'ngx-ol';
 import { map, startWith } from 'rxjs';
 
 @Component({

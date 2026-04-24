@@ -1,7 +1,10 @@
 import { Component, Input, OnDestroy, OnInit, OnChanges, SimpleChanges } from '@angular/core';
-import { Layer } from 'ol/layer';
+import Collection from 'ol/Collection';
+import MapEvent from 'ol/MapEvent';
+import BaseLayer from 'ol/layer/Base';
 import { View } from 'ol';
 import { OverviewMap } from 'ol/control';
+import { Options } from 'ol/control/OverviewMap';
 import { MapComponent } from '../map.component';
 
 @Component({
@@ -10,28 +13,34 @@ import { MapComponent } from '../map.component';
 })
 export class ControlOverviewMapComponent implements OnInit, OnChanges, OnDestroy {
   @Input()
-  collapsed: boolean;
+  className?: string;
   @Input()
-  collapseLabel: string;
+  collapsed?: boolean;
   @Input()
-  collapsible: boolean;
+  collapseLabel?: string | HTMLElement;
   @Input()
-  label: string;
+  collapsible?: boolean;
   @Input()
-  layers: Layer[];
+  label?: string | HTMLElement;
   @Input()
-  target: HTMLElement;
+  layers?: BaseLayer[] | Collection<BaseLayer>;
   @Input()
-  tipLabel: string;
+  render?: (event: MapEvent) => void;
   @Input()
-  view: View;
+  rotateWithView?: boolean;
+  @Input()
+  target?: string | HTMLElement;
+  @Input()
+  tipLabel?: string;
+  @Input()
+  view?: View;
 
   instance: OverviewMap;
 
   constructor(private map: MapComponent) {}
 
   ngOnInit() {
-    this.instance = new OverviewMap(this);
+    this.instance = new OverviewMap(this.createOptions());
     this.map.instance.addControl(this.instance);
   }
 
@@ -47,7 +56,23 @@ export class ControlOverviewMapComponent implements OnInit, OnChanges, OnDestroy
 
   private reloadInstance() {
     this.map.instance.removeControl(this.instance);
-    this.instance = new OverviewMap(this);
+    this.instance = new OverviewMap(this.createOptions());
     this.map.instance.addControl(this.instance);
+  }
+
+  private createOptions(): Options {
+    return {
+      className: this.className,
+      collapsed: this.collapsed,
+      collapseLabel: this.collapseLabel,
+      collapsible: this.collapsible,
+      label: this.label,
+      layers: this.layers,
+      render: this.render,
+      rotateWithView: this.rotateWithView,
+      target: this.target,
+      tipLabel: this.tipLabel,
+      view: this.view,
+    };
   }
 }

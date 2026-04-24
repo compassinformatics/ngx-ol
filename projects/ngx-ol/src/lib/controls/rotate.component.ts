@@ -1,5 +1,7 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import MapEvent from 'ol/MapEvent';
 import { Rotate } from 'ol/control';
+import { Options } from 'ol/control/Rotate';
 import { MapComponent } from '../map.component';
 
 @Component({
@@ -8,15 +10,23 @@ import { MapComponent } from '../map.component';
 })
 export class ControlRotateComponent implements OnInit, OnDestroy {
   @Input()
-  className: string;
+  className?: string;
   @Input()
-  label: string;
+  label?: string | HTMLElement;
   @Input()
-  tipLabel: string;
+  tipLabel?: string;
   @Input()
-  duration: number;
+  compassClassName?: string;
   @Input()
-  autoHide: boolean;
+  duration?: number;
+  @Input()
+  autoHide?: boolean;
+  @Input()
+  render?: (event: MapEvent) => void;
+  @Input()
+  resetNorth?: () => void;
+  @Input()
+  target?: string | HTMLElement;
 
   instance: Rotate;
 
@@ -25,12 +35,26 @@ export class ControlRotateComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.instance = new Rotate(this);
+    this.instance = new Rotate(this.createOptions());
     this.map.instance.addControl(this.instance);
   }
 
   ngOnDestroy() {
     // console.log('removing aol-control-rotate');
     this.map.instance.removeControl(this.instance);
+  }
+
+  private createOptions(): Options {
+    return {
+      className: this.className,
+      label: this.label,
+      tipLabel: this.tipLabel,
+      compassClassName: this.compassClassName,
+      duration: this.duration,
+      autoHide: this.autoHide,
+      render: this.render,
+      resetNorth: this.resetNorth,
+      target: this.target,
+    };
   }
 }

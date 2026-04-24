@@ -13,9 +13,12 @@ import {
 } from '@angular/core';
 import { Size } from 'ol/size';
 import { XYZ } from 'ol/source';
+import { Options } from 'ol/source/XYZ';
 import { TileSourceEvent } from 'ol/source/Tile';
 import { LoadFunction, UrlFunction } from 'ol/Tile';
 import TileGrid from 'ol/tilegrid/TileGrid';
+import { ProjectionLike } from 'ol/proj';
+import { NearestDirectionFunction } from 'ol/array';
 
 import { LayerTileComponent } from '../layers/layertile.component';
 import { TileGridComponent } from '../tilegrid.component';
@@ -28,35 +31,43 @@ import { SourceComponent } from './source.component';
 })
 export class SourceXYZComponent extends SourceComponent implements AfterContentInit, OnChanges {
   @Input()
-  cacheSize: number;
+  cacheSize?: number;
   @Input()
   crossOrigin?: null | string;
   @Input()
-  opaque: boolean;
+  gutter?: number;
   @Input()
-  projection?: string;
+  interpolate?: boolean;
   @Input()
-  reprojectionErrorThreshold: number;
+  projection?: ProjectionLike;
   @Input()
-  minZoom: number;
+  reprojectionErrorThreshold?: number;
   @Input()
-  maxZoom: number;
+  maxResolution?: number;
+  @Input()
+  minZoom?: number;
+  @Input()
+  maxZoom?: number;
   @Input()
   tileGrid?: TileGrid;
   @Input()
   tileLoadFunction?: LoadFunction;
   @Input()
-  tilePixelRatio: number;
+  tilePixelRatio?: number;
   @Input()
-  tileSize: number | Size;
+  tileSize?: number | Size;
   @Input()
   tileUrlFunction?: UrlFunction;
+  @Input()
+  transition?: number;
   @Input()
   url?: string;
   @Input()
   urls?: string[];
   @Input()
-  wrapX: boolean;
+  wrapX?: boolean;
+  @Input()
+  zDirection?: number | NearestDirectionFunction;
 
   @ContentChild(TileGridComponent, { static: false })
   tileGridXYZ: TileGridComponent;
@@ -104,12 +115,38 @@ export class SourceXYZComponent extends SourceComponent implements AfterContentI
   }
 
   init() {
-    this.instance = new XYZ(this);
+    this.instance = new XYZ(this.createOptions());
 
     this.instance.on('tileloadstart', (event: TileSourceEvent) => this.tileLoadStart.emit(event));
     this.instance.on('tileloadend', (event: TileSourceEvent) => this.tileLoadEnd.emit(event));
     this.instance.on('tileloaderror', (event: TileSourceEvent) => this.tileLoadError.emit(event));
 
     this.register(this.instance);
+  }
+
+  protected createOptions(): Options {
+    return {
+      attributions: this.attributions,
+      attributionsCollapsible: this.attributionsCollapsible,
+      cacheSize: this.cacheSize,
+      crossOrigin: this.crossOrigin,
+      gutter: this.gutter,
+      interpolate: this.interpolate,
+      projection: this.projection,
+      reprojectionErrorThreshold: this.reprojectionErrorThreshold,
+      maxResolution: this.maxResolution,
+      minZoom: this.minZoom,
+      maxZoom: this.maxZoom,
+      tileGrid: this.tileGrid,
+      tileLoadFunction: this.tileLoadFunction,
+      tilePixelRatio: this.tilePixelRatio,
+      tileSize: this.tileSize,
+      tileUrlFunction: this.tileUrlFunction,
+      transition: this.transition,
+      url: this.url,
+      urls: this.urls,
+      wrapX: this.wrapX,
+      zDirection: this.zDirection,
+    };
   }
 }

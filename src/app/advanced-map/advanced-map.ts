@@ -1,6 +1,6 @@
 import { Component, signal } from '@angular/core';
 import { Coordinate } from 'ol/coordinate';
-import { AngularOpenlayersModule } from '../../../projects/ngx-ol/src/public-api';
+import { AngularOpenlayersModule } from 'ngx-ol';
 import { LayerList } from './layer-list/layer-list';
 import { layers as initialLayers, LayerType } from './layers';
 

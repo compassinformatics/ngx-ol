@@ -18,7 +18,8 @@ import WMTS from 'ol/tilegrid/WMTS';
 import { ProjectionLike } from 'ol/proj';
 import { LoadFunction } from 'ol/Tile';
 import { TileSourceEvent } from 'ol/source/Tile';
-import { RequestEncoding } from 'ol/source/WMTS';
+import { Options, RequestEncoding } from 'ol/source/WMTS';
+import { NearestDirectionFunction } from 'ol/array';
 
 @Component({
   selector: 'aol-source-tilewmts',
@@ -33,6 +34,8 @@ export class SourceTileWMTSComponent
   cacheSize?: number;
   @Input()
   crossOrigin?: null | string;
+  @Input()
+  interpolate?: boolean;
   @Input()
   tileGrid: WMTS;
   @Input()
@@ -65,6 +68,10 @@ export class SourceTileWMTSComponent
   urls?: string[];
   @Input()
   wrapX?: boolean;
+  @Input()
+  transition?: number;
+  @Input()
+  zDirection?: number | NearestDirectionFunction;
 
   @Output()
   tileLoadStart = new EventEmitter<TileSourceEvent>();
@@ -104,7 +111,7 @@ export class SourceTileWMTSComponent
   }
 
   setLayerSource(): void {
-    this.instance = new SourceWMTS(this);
+    this.instance = new SourceWMTS(this.createOptions());
     this.instance.on('tileloadstart', (event: TileSourceEvent) => this.tileLoadStart.emit(event));
     this.instance.on('tileloadend', (event: TileSourceEvent) => this.tileLoadEnd.emit(event));
     this.instance.on('tileloaderror', (event: TileSourceEvent) => this.tileLoadError.emit(event));
@@ -114,7 +121,37 @@ export class SourceTileWMTSComponent
   ngAfterContentInit(): void {
     if (this.tileGridWMTS) {
       this.tileGrid = this.tileGridWMTS.instance;
+    }
+    if (this.tileGrid) {
       this.setLayerSource();
     }
+  }
+
+  private createOptions(): Options {
+    return {
+      attributions: this.attributions,
+      attributionsCollapsible: this.attributionsCollapsible,
+      cacheSize: this.cacheSize,
+      crossOrigin: this.crossOrigin,
+      interpolate: this.interpolate,
+      tileGrid: this.tileGrid,
+      projection: this.projection,
+      reprojectionErrorThreshold: this.reprojectionErrorThreshold,
+      requestEncoding: this.requestEncoding,
+      layer: this.layer,
+      style: this.style,
+      tileClass: this.tileClass,
+      tilePixelRatio: this.tilePixelRatio,
+      format: this.format,
+      version: this.version,
+      matrixSet: this.matrixSet,
+      dimensions: this.dimensions,
+      url: this.url,
+      tileLoadFunction: this.tileLoadFunction,
+      urls: this.urls,
+      wrapX: this.wrapX,
+      transition: this.transition,
+      zDirection: this.zDirection,
+    };
   }
 }

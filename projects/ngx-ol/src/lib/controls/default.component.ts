@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit, Input } from '@angular/core';
 import { Control, defaults } from 'ol/control';
+import { DefaultsOptions } from 'ol/control/defaults';
 import { Collection } from 'ol';
 import { Options as AttributionOptions } from 'ol/control/Attribution';
 import { Options as RotateOptions } from 'ol/control/Rotate';
@@ -13,17 +14,17 @@ import { MapComponent } from '../map.component';
 })
 export class DefaultControlComponent implements OnInit, OnDestroy {
   @Input()
-  attribution: boolean;
+  attribution?: boolean;
   @Input()
-  attributionOptions: AttributionOptions;
+  attributionOptions?: AttributionOptions;
   @Input()
-  rotate: boolean;
+  rotate?: boolean;
   @Input()
-  rotateOptions: RotateOptions;
+  rotateOptions?: RotateOptions;
   @Input()
-  zoom: boolean;
+  zoom?: boolean;
   @Input()
-  zoomOptions: ZoomOptions;
+  zoomOptions?: ZoomOptions;
 
   instance: Collection<Control>;
 
@@ -31,12 +32,23 @@ export class DefaultControlComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     // console.log('ol.control.defaults init: ', this);
-    this.instance = defaults(this);
+    this.instance = defaults(this.createOptions());
     this.instance.forEach((c) => this.map.instance.addControl(c));
   }
 
   ngOnDestroy() {
     // console.log('removing aol-control-defaults');
     this.instance.forEach((c) => this.map.instance.removeControl(c));
+  }
+
+  private createOptions(): DefaultsOptions {
+    return {
+      attribution: this.attribution,
+      attributionOptions: this.attributionOptions,
+      rotate: this.rotate,
+      rotateOptions: this.rotateOptions,
+      zoom: this.zoom,
+      zoomOptions: this.zoomOptions,
+    };
   }
 }

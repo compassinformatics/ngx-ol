@@ -25,7 +25,12 @@
     </aol-content>
   </aol-overlay>
 
-  <aol-overlay [positioning]="'bottom-center'" [stopEvent]="true" [position]="popupPosition()">
+  <aol-overlay
+    [positioning]="'bottom-center'"
+    [stopEvent]="true"
+    [autoPan]="true"
+    [position]="popupPosition()"
+  >
     <aol-content class="overlay-card">
       <div class="overlay-header">
         <strong>{{ popupTitle() }}</strong>

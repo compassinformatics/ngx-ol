@@ -3,7 +3,7 @@ import { Fill, Image, Stroke, Style, Text } from 'ol/style';
 import { Geometry } from 'ol/geom';
 import { FeatureComponent } from '../feature.component';
 import { LayerVectorComponent } from '../layers/layervector.component';
-import { GeometryFunction } from 'ol/style/Style';
+import { GeometryFunction, Options, RenderFunction } from 'ol/style/Style';
 import { LayerVectorImageComponent } from '../layers/layervectorimage.component';
 
 @Component({
@@ -12,17 +12,21 @@ import { LayerVectorImageComponent } from '../layers/layervectorimage.component'
 })
 export class StyleComponent implements OnInit {
   @Input()
-  geometry: string | Geometry | GeometryFunction;
+  geometry?: string | Geometry | GeometryFunction;
   @Input()
-  fill: Fill;
+  fill?: Fill;
   @Input()
-  image: Image;
+  image?: Image;
   @Input()
-  stroke: Stroke;
+  renderer?: RenderFunction;
   @Input()
-  text: Text;
+  hitDetectionRenderer?: RenderFunction;
   @Input()
-  zIndex: number;
+  stroke?: Stroke;
+  @Input()
+  text?: Text;
+  @Input()
+  zIndex?: number;
 
   public instance: Style;
   public componentType = 'style';
@@ -47,7 +51,20 @@ export class StyleComponent implements OnInit {
 
   ngOnInit() {
     // console.log('creating aol-style instance with: ', this);
-    this.instance = new Style(this);
+    this.instance = new Style(this.createOptions());
     this.host.instance.setStyle(this.instance);
+  }
+
+  private createOptions(): Options {
+    return {
+      geometry: this.geometry,
+      fill: this.fill,
+      image: this.image,
+      renderer: this.renderer,
+      hitDetectionRenderer: this.hitDetectionRenderer,
+      stroke: this.stroke,
+      text: this.text,
+      zIndex: this.zIndex,
+    };
   }
 }

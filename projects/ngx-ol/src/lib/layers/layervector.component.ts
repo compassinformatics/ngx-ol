@@ -10,6 +10,7 @@ import {
 import { MapComponent } from '../map.component';
 import { Vector } from 'ol/layer';
 import { StyleLike } from 'ol/style/Style';
+import { Options } from 'ol/layer/BaseVector';
 import { LayerComponent } from './layer.component';
 import { LayerGroupComponent } from './layergroup.component';
 import { BackgroundColor } from 'ol/layer/Base';
@@ -55,7 +56,7 @@ export class LayerVectorComponent extends LayerComponent implements OnInit, OnDe
 
   ngOnInit() {
     // console.log('creating ol.layer.Vector instance with:', this);
-    this.instance = new Vector(this);
+    this.instance = new Vector(this.createOptions());
     super.ngOnInit();
   }
 
@@ -65,5 +66,20 @@ export class LayerVectorComponent extends LayerComponent implements OnInit, OnDe
     if (style && this.instance) {
       this.instance.setStyle(style.currentValue);
     }
+  }
+
+  private createOptions(): Options<any, VectorSource<any>> {
+    return {
+      ...this.createLayerOptions(),
+      renderOrder: this.renderOrder,
+      renderBuffer: this.renderBuffer,
+      style: this.style,
+      updateWhileAnimating: this.updateWhileAnimating,
+      updateWhileInteracting: this.updateWhileInteracting,
+      declutter: this.declutter,
+      background: this.background,
+      properties: this.properties,
+      source: this.source,
+    };
   }
 }

@@ -3,11 +3,11 @@ import { MapComponent } from '../map.component';
 import { Draw } from 'ol/interaction';
 import { Collection, Feature } from 'ol';
 import { Vector } from 'ol/source';
-import { Style } from 'ol/style';
-import { DrawEvent, GeometryFunction } from 'ol/interaction/Draw';
+import { DrawEvent, GeometryFunction, Options } from 'ol/interaction/Draw';
 import { StyleFunction, StyleLike } from 'ol/style/Style';
 import { Condition } from 'ol/events/condition';
 import { Type } from 'ol/geom/Geometry';
+import { GeometryLayout } from 'ol/geom/Geometry';
 import { ObjectEvent } from 'ol/Object';
 import BaseEvent from 'ol/events/Event';
 import { FlatStyleLike } from 'ol/style/flat';
@@ -24,7 +24,11 @@ export class DrawInteractionComponent implements OnInit, OnDestroy {
   @Input()
   source?: Vector;
   @Input()
+  dragVertexDelay?: number;
+  @Input()
   snapTolerance?: number;
+  @Input()
+  stopClick?: boolean;
   @Input()
   type: Type;
   @Input()
@@ -46,7 +50,13 @@ export class DrawInteractionComponent implements OnInit, OnDestroy {
   @Input()
   freehand?: boolean;
   @Input()
+  trace?: boolean | Condition;
+  @Input()
+  traceSource?: Vector;
+  @Input()
   wrapX?: boolean;
+  @Input()
+  geometryLayout?: GeometryLayout;
 
   @Output()
   olChange = new EventEmitter<BaseEvent>();
@@ -68,7 +78,7 @@ export class DrawInteractionComponent implements OnInit, OnDestroy {
   constructor(private map: MapComponent) {}
 
   ngOnInit() {
-    this.instance = new Draw(this);
+    this.instance = new Draw(this.createOptions());
     this.instance.on('change', (event: BaseEvent) => this.olChange.emit(event));
     this.instance.on('change:active', (event: ObjectEvent) => this.olChangeActive.emit(event));
     this.instance.on('drawabort', (event: DrawEvent) => this.olDrawAbort.emit(event));
@@ -81,5 +91,30 @@ export class DrawInteractionComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.map.instance.removeInteraction(this.instance);
+  }
+
+  private createOptions(): Options {
+    return {
+      clickTolerance: this.clickTolerance,
+      features: this.features,
+      source: this.source,
+      dragVertexDelay: this.dragVertexDelay,
+      snapTolerance: this.snapTolerance,
+      stopClick: this.stopClick,
+      type: this.type,
+      maxPoints: this.maxPoints,
+      minPoints: this.minPoints,
+      finishCondition: this.finishCondition,
+      style: this.style,
+      geometryFunction: this.geometryFunction,
+      geometryName: this.geometryName,
+      condition: this.condition,
+      freehandCondition: this.freehandCondition,
+      freehand: this.freehand,
+      trace: this.trace,
+      traceSource: this.traceSource,
+      wrapX: this.wrapX,
+      geometryLayout: this.geometryLayout,
+    };
   }
 }

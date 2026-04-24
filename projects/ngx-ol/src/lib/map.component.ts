@@ -13,6 +13,7 @@ import {
   NgZone,
 } from '@angular/core';
 import { Map } from 'ol';
+import type { MapOptions } from 'ol/Map';
 import MapBrowserEvent from 'ol/MapBrowserEvent';
 import MapEvent from 'ol/MapEvent';
 import { ObjectEvent } from 'ol/Object';
@@ -39,13 +40,9 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
   @Input()
   keyboardEventTarget: HTMLElement | string;
   @Input()
-  loadTilesWhileAnimating: boolean;
+  maxTilesLoading: number;
   @Input()
-  loadTilesWhileInteracting: boolean;
-  @Input()
-  logo: string | boolean;
-  @Input()
-  renderer: 'canvas' | 'webgl';
+  moveTolerance: number;
   @Input()
   runOutsideAngular = true;
 
@@ -106,7 +103,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
 
   ngOnInit() {
     const initMap = () => {
-      this.instance = new Map(this);
+      this.instance = new Map(this.createOptions());
       this.instance.setTarget(this.host.nativeElement.firstElementChild);
       this.instance.on('change', (event: BaseEvent) => this.olChange.emit(event));
       this.instance.on('change:layergroup', (event: ObjectEvent) =>
@@ -165,20 +162,27 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    const properties: { [index: string]: any } = {};
     if (!this.instance) {
       return;
     }
-    for (const key in changes) {
-      if (changes.hasOwnProperty(key)) {
-        properties[key] = changes[key].currentValue;
-      }
+
+    if (changes['width'] || changes['height']) {
+      queueMicrotask(() => this.instance.updateSize());
     }
-    // console.log('changes detected in aol-map, setting new properties: ', properties);
-    this.instance.setProperties(properties, false);
   }
 
   ngAfterViewInit() {
     this.instance.updateSize();
+  }
+
+  private createOptions(): MapOptions {
+    return {
+      controls: this.controls,
+      interactions: this.interactions,
+      keyboardEventTarget: this.keyboardEventTarget,
+      maxTilesLoading: this.maxTilesLoading,
+      moveTolerance: this.moveTolerance,
+      pixelRatio: this.pixelRatio,
+    };
   }
 }

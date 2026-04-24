@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import WMTS from 'ol/tilegrid/WMTS';
+import WMTS, { Options } from 'ol/tilegrid/WMTS';
 import { TileGridComponent } from './tilegrid.component';
 import { Coordinate } from 'ol/coordinate';
 import { Size } from 'ol/size';
@@ -20,13 +20,26 @@ export class TileGridWMTSComponent extends TileGridComponent implements OnInit {
   @Input()
   sizes?: Size[];
   @Input()
-  tileSizes?: Size[];
+  tileSize?: number | Size;
   @Input()
-  widths?: number[];
+  tileSizes?: (number | Size)[];
 
   instance: WMTS;
 
   ngOnInit() {
-    this.instance = new WMTS(this);
+    this.instance = new WMTS(this.createOptions());
+  }
+
+  private createOptions(): Options {
+    return {
+      extent: this.extent,
+      origin: this.origin,
+      origins: this.origins,
+      resolutions: this.resolutions,
+      matrixIds: this.matrixIds,
+      sizes: this.sizes,
+      tileSize: this.tileSize,
+      tileSizes: this.tileSizes,
+    };
   }
 }

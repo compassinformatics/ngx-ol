@@ -10,6 +10,7 @@ import {
   EventEmitter,
 } from '@angular/core';
 import { ImageWMS } from 'ol/source';
+import { Options } from 'ol/source/ImageWMS';
 import { LayerImageComponent } from '../layers/layerimage.component';
 import { SourceComponent } from './source.component';
 import { ProjectionLike } from 'ol/proj';
@@ -26,19 +27,19 @@ export class SourceImageWMSComponent extends SourceComponent implements OnChange
   @Input()
   crossOrigin?: null | string;
   @Input()
-  hidpi: boolean;
+  hidpi?: boolean;
   @Input()
   serverType?: ServerType;
   @Input()
   imageLoadFunction?: LoadFunction;
   @Input()
-  interpolate: boolean;
+  interpolate?: boolean;
   @Input()
   params?: { [key: string]: any };
   @Input()
   projection?: ProjectionLike | string;
   @Input()
-  ratio: number;
+  ratio?: number;
   @Input()
   resolutions?: Array<number>;
   @Input()
@@ -58,7 +59,7 @@ export class SourceImageWMSComponent extends SourceComponent implements OnChange
   }
 
   ngOnInit() {
-    this.instance = new ImageWMS(this);
+    this.instance = new ImageWMS(this.createOptions());
     this.host.instance.setSource(this.instance);
     this.instance.on('imageloadstart', (event: ImageSourceEvent) =>
       this.imageLoadStart.emit(event),
@@ -73,5 +74,21 @@ export class SourceImageWMSComponent extends SourceComponent implements OnChange
     if (this.instance && changes.hasOwnProperty('params')) {
       this.instance.updateParams(this.params);
     }
+  }
+
+  private createOptions(): Options {
+    return {
+      attributions: this.attributions,
+      crossOrigin: this.crossOrigin,
+      hidpi: this.hidpi,
+      serverType: this.serverType,
+      imageLoadFunction: this.imageLoadFunction,
+      interpolate: this.interpolate,
+      params: this.params,
+      projection: this.projection,
+      ratio: this.ratio,
+      resolutions: this.resolutions,
+      url: this.url,
+    };
   }
 }

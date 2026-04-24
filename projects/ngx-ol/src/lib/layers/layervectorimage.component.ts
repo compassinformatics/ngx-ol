@@ -10,6 +10,7 @@ import {
 import { MapComponent } from '../map.component';
 import { VectorImage } from 'ol/layer';
 import { StyleLike } from 'ol/style/Style';
+import { Options } from 'ol/layer/BaseVector';
 import { LayerComponent } from './layer.component';
 import { LayerGroupComponent } from './layergroup.component';
 import { BackgroundColor } from 'ol/layer/Base';
@@ -51,7 +52,7 @@ export class LayerVectorImageComponent
 
   ngOnInit() {
     // console.log('creating ol.layer.Vector instance with:', this);
-    this.instance = new VectorImage(this);
+    this.instance = new VectorImage(this.createOptions());
     super.ngOnInit();
   }
 
@@ -61,5 +62,18 @@ export class LayerVectorImageComponent
     if (style && this.instance) {
       this.instance.setStyle(style.currentValue);
     }
+  }
+
+  private createOptions(): Options<any, VectorSource<any>> & { imageRatio?: number } {
+    return {
+      ...this.createLayerOptions(),
+      renderBuffer: this.renderBuffer,
+      style: this.style,
+      declutter: this.declutter,
+      background: this.background,
+      imageRatio: this.imageRatio,
+      properties: this.properties,
+      source: this.source,
+    };
   }
 }

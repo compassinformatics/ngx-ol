@@ -9,7 +9,7 @@ import {
   Output,
 } from '@angular/core';
 import { Raster, Source } from 'ol/source';
-import { Operation, RasterSourceEvent } from 'ol/source/Raster';
+import { Operation, Options, RasterSourceEvent } from 'ol/source/Raster';
 
 import { LayerImageComponent } from '../layers/layerimage.component';
 import { SourceComponent } from './source.component';
@@ -62,7 +62,7 @@ export class SourceRasterComponent extends SourceComponent implements AfterConte
   }
 
   init() {
-    this.instance = new Raster(this);
+    this.instance = new Raster(this.createOptions());
     this.instance.on('beforeoperations', (event: RasterSourceEvent) =>
       this.beforeOperations.emit(event),
     );
@@ -70,5 +70,16 @@ export class SourceRasterComponent extends SourceComponent implements AfterConte
       this.afterOperations.emit(event),
     );
     this.register(this.instance);
+  }
+
+  private createOptions(): Options {
+    return {
+      sources: this.sources,
+      operation: this.operation,
+      threads: this.threads,
+      lib: this.lib,
+      operationType: this.operationType,
+      resolutions: this.resolutions,
+    };
   }
 }

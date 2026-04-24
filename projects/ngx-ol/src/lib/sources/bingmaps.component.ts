@@ -1,5 +1,6 @@
 import { Component, Host, Input, OnInit, forwardRef } from '@angular/core';
 import { BingMaps } from 'ol/source';
+import { Options } from 'ol/source/BingMaps';
 import { SourceComponent } from './source.component';
 import { LayerTileComponent } from '../layers/layertile.component';
 import { LoadFunction } from 'ol/Tile';
@@ -14,29 +15,29 @@ export class SourceBingmapsComponent extends SourceComponent implements OnInit {
   @Input()
   cacheSize?: number;
   @Input()
-  hidpi: boolean;
+  hidpi?: boolean;
   @Input()
-  culture: string;
+  culture?: string;
   @Input()
   key: string;
   @Input()
   imagerySet: 'Road' | 'Aerial' | 'AerialWithLabels' | 'collinsBart' | 'ordnanceSurvey' = 'Aerial';
   @Input()
-  maxZoom: number;
+  maxZoom?: number;
   @Input()
-  reprojectionErrorThreshold: number;
+  reprojectionErrorThreshold?: number;
   @Input()
   tileLoadFunction?: LoadFunction;
   @Input()
-  wrapX: boolean;
+  wrapX?: boolean;
   @Input()
-  interpolate: boolean;
+  interpolate?: boolean;
   @Input()
   placeholderTiles?: boolean;
   @Input()
   transition?: number;
   @Input()
-  zDirection: number | NearestDirectionFunction;
+  zDirection?: number | NearestDirectionFunction;
 
   instance: BingMaps;
 
@@ -45,7 +46,25 @@ export class SourceBingmapsComponent extends SourceComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.instance = new BingMaps(this);
+    this.instance = new BingMaps(this.createOptions());
     this.host.instance.setSource(this.instance);
+  }
+
+  private createOptions(): Options {
+    return {
+      cacheSize: this.cacheSize,
+      hidpi: this.hidpi,
+      culture: this.culture,
+      key: this.key,
+      imagerySet: this.imagerySet,
+      maxZoom: this.maxZoom,
+      reprojectionErrorThreshold: this.reprojectionErrorThreshold,
+      tileLoadFunction: this.tileLoadFunction,
+      wrapX: this.wrapX,
+      interpolate: this.interpolate,
+      placeholderTiles: this.placeholderTiles,
+      transition: this.transition,
+      zDirection: this.zDirection,
+    };
   }
 }

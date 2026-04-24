@@ -2,10 +2,12 @@ import { Component, OnDestroy, OnInit, Input, Output, EventEmitter } from '@angu
 import { Translate } from 'ol/interaction';
 import { Collection, Feature } from 'ol';
 import { Layer } from 'ol/layer';
-import { TranslateEvent } from 'ol/interaction/Translate';
+import { Options, TranslateEvent } from 'ol/interaction/Translate';
 import { MapComponent } from '../map.component';
 import BaseEvent from 'ol/events/Event';
 import { ObjectEvent } from 'ol/Object';
+import { Condition } from 'ol/events/condition';
+import { FilterFunction } from 'ol/interaction/Select';
 
 @Component({
   selector: 'aol-interaction-translate',
@@ -13,9 +15,13 @@ import { ObjectEvent } from 'ol/Object';
 })
 export class TranslateInteractionComponent implements OnInit, OnDestroy {
   @Input()
+  condition?: Condition;
+  @Input()
   features?: Collection<Feature>;
   @Input()
   layers?: Layer[] | ((layer: Layer) => boolean);
+  @Input()
+  filter?: FilterFunction;
   @Input()
   hitTolerance?: number;
 
@@ -39,7 +45,7 @@ export class TranslateInteractionComponent implements OnInit, OnDestroy {
   constructor(private map: MapComponent) {}
 
   ngOnInit() {
-    this.instance = new Translate(this);
+    this.instance = new Translate(this.createOptions());
 
     this.instance.on('change', (event: BaseEvent) => this.olChange.emit(event));
     this.instance.on('change:active', (event: ObjectEvent) => this.olChangeActive.emit(event));
@@ -54,5 +60,15 @@ export class TranslateInteractionComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.map.instance.removeInteraction(this.instance);
+  }
+
+  private createOptions(): Options {
+    return {
+      condition: this.condition,
+      features: this.features,
+      layers: this.layers,
+      filter: this.filter,
+      hitTolerance: this.hitTolerance,
+    };
   }
 }

@@ -43,6 +43,22 @@ export abstract class LayerComponent implements OnInit, OnChanges, OnDestroy {
 
   protected constructor(protected host: MapComponent | LayerGroupComponent) {}
 
+  protected createLayerOptions() {
+    return {
+      className: this.className,
+      opacity: this.opacity,
+      visible: this.visible,
+      extent: this.extent,
+      zIndex: this.zIndex,
+      minResolution: this.minResolution,
+      maxResolution: this.maxResolution,
+      minZoom: this.minZoom,
+      maxZoom: this.maxZoom,
+      render: this.render,
+      properties: this.properties,
+    };
+  }
+
   ngOnInit() {
     if (this.prerender !== null && this.prerender !== undefined) {
       this.instance.on('prerender', this.prerender);

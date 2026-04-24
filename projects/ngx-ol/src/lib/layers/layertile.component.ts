@@ -8,6 +8,7 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import { Tile } from 'ol/layer';
+import { Options } from 'ol/layer/BaseTile';
 import { MapComponent } from '../map.component';
 import { LayerComponent } from './layer.component';
 import { LayerGroupComponent } from './layergroup.component';
@@ -19,11 +20,11 @@ import TileSource from 'ol/source/Tile';
 })
 export class LayerTileComponent extends LayerComponent implements OnInit, OnDestroy, OnChanges {
   @Input()
-  preload: number;
+  preload?: number;
   @Input()
-  useInterimTilesOnError: boolean;
+  useInterimTilesOnError?: boolean;
   @Input()
-  cacheSize: number;
+  cacheSize?: number;
   @Input()
   source?: TileSource;
 
@@ -33,11 +34,21 @@ export class LayerTileComponent extends LayerComponent implements OnInit, OnDest
 
   ngOnInit() {
     // console.log('creating ol.layer.Tile instance with:', this);
-    this.instance = new Tile(this);
+    this.instance = new Tile(this.createOptions());
     super.ngOnInit();
   }
 
   ngOnChanges(changes: SimpleChanges) {
     super.ngOnChanges(changes);
+  }
+
+  private createOptions(): Options<TileSource> {
+    return {
+      ...this.createLayerOptions(),
+      preload: this.preload,
+      useInterimTilesOnError: this.useInterimTilesOnError,
+      cacheSize: this.cacheSize,
+      source: this.source,
+    };
   }
 }

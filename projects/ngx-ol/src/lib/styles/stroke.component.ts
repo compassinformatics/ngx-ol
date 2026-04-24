@@ -1,5 +1,6 @@
 import { Component, Input, Optional, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { Stroke } from 'ol/style';
+import { Options } from 'ol/style/Stroke';
 import { StyleComponent } from './style.component';
 import { StyleCircleComponent } from './circle.component';
 import { StyleTextComponent } from './text.component';
@@ -12,17 +13,19 @@ import { ColorLike } from 'ol/colorlike';
 })
 export class StyleStrokeComponent implements OnInit, OnChanges {
   @Input()
-  color: Color | ColorLike;
+  color?: Color | ColorLike;
   @Input()
-  lineCap: CanvasLineCap | undefined;
+  lineCap?: CanvasLineCap | undefined;
   @Input()
-  lineDash: number[];
+  lineDash?: number[];
   @Input()
-  lineJoin: CanvasLineJoin | undefined;
+  lineDashOffset?: number | undefined;
   @Input()
-  miterLimit: number;
+  lineJoin?: CanvasLineJoin | undefined;
   @Input()
-  width: number;
+  miterLimit?: number;
+  @Input()
+  width?: number;
 
   public instance: Stroke;
   /* the typings do not have the setters */
@@ -48,7 +51,7 @@ export class StyleStrokeComponent implements OnInit, OnChanges {
 
   ngOnInit() {
     // console.log('creating ol.style.Stroke instance with: ', this);
-    this.instance = new Stroke(this);
+    this.instance = new Stroke(this.createOptions());
     switch (this.host.componentType) {
       case 'style':
         this.host.instance.setStroke(this.instance);
@@ -80,6 +83,9 @@ export class StyleStrokeComponent implements OnInit, OnChanges {
     if (changes.lineDash) {
       this.instance.setLineDash(changes.lineDash.currentValue);
     }
+    if (changes.lineDashOffset) {
+      this.instance.setLineDashOffset(changes.lineDashOffset.currentValue);
+    }
     if (changes.lineJoin) {
       this.instance.setLineJoin(changes.lineJoin.currentValue);
     }
@@ -91,5 +97,17 @@ export class StyleStrokeComponent implements OnInit, OnChanges {
     }
     this.host.update();
     // console.log('changes detected in aol-style-stroke, setting new properties: ', changes);
+  }
+
+  private createOptions(): Options {
+    return {
+      color: this.color,
+      lineCap: this.lineCap,
+      lineDash: this.lineDash,
+      lineDashOffset: this.lineDashOffset,
+      lineJoin: this.lineJoin,
+      miterLimit: this.miterLimit,
+      width: this.width,
+    };
   }
 }

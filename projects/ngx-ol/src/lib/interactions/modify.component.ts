@@ -3,7 +3,7 @@ import { MapComponent } from '../map.component';
 import { Modify } from 'ol/interaction';
 import { Collection, Feature } from 'ol';
 import { Vector } from 'ol/source';
-import { ModifyEvent } from 'ol/interaction/Modify';
+import { ModifyEvent, Options } from 'ol/interaction/Modify';
 import { StyleLike } from 'ol/style/Style';
 import { Condition } from 'ol/events/condition';
 import { ObjectEvent } from 'ol/Object';
@@ -35,7 +35,7 @@ export class ModifyInteractionComponent implements OnInit, OnDestroy {
   @Input()
   hitDetection?: boolean | BaseVectorLayer<any, any, any>;
   @Input()
-  snapToPointer: boolean;
+  snapToPointer?: boolean;
 
   @Output()
   olChange = new EventEmitter<BaseEvent>();
@@ -55,7 +55,7 @@ export class ModifyInteractionComponent implements OnInit, OnDestroy {
   constructor(private map: MapComponent) {}
 
   ngOnInit() {
-    this.instance = new Modify(this);
+    this.instance = new Modify(this.createOptions());
     this.instance.on('change', (event: BaseEvent) => this.olChange.emit(event));
     this.instance.on('change:active', (event: ObjectEvent) => this.olChangeActive.emit(event));
     this.instance.on('error', (event: BaseEvent) => this.olError.emit(event));
@@ -67,5 +67,20 @@ export class ModifyInteractionComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.map.instance.removeInteraction(this.instance);
+  }
+
+  private createOptions(): Options {
+    return {
+      condition: this.condition,
+      deleteCondition: this.deleteCondition,
+      insertVertexCondition: this.insertVertexCondition,
+      pixelTolerance: this.pixelTolerance,
+      style: this.style,
+      features: this.features,
+      wrapX: this.wrapX,
+      source: this.source,
+      hitDetection: this.hitDetection,
+      snapToPointer: this.snapToPointer,
+    };
   }
 }

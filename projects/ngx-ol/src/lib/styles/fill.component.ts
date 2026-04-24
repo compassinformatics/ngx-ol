@@ -1,10 +1,11 @@
 import { Component, Input, Optional, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { Fill } from 'ol/style';
+import { Options } from 'ol/style/Fill';
 import { StyleComponent } from './style.component';
 import { StyleCircleComponent } from './circle.component';
 import { StyleTextComponent } from './text.component';
 import { Color } from 'ol/color';
-import { ColorLike } from 'ol/colorlike';
+import { ColorLike, PatternDescriptor } from 'ol/colorlike';
 
 @Component({
   selector: 'aol-style-fill',
@@ -12,7 +13,7 @@ import { ColorLike } from 'ol/colorlike';
 })
 export class StyleFillComponent implements OnInit, OnChanges {
   @Input()
-  color: Color | ColorLike;
+  color?: Color | ColorLike | PatternDescriptor | null;
 
   public instance: Fill;
   private readonly host: StyleComponent | StyleCircleComponent | StyleTextComponent;
@@ -37,7 +38,7 @@ export class StyleFillComponent implements OnInit, OnChanges {
 
   ngOnInit() {
     // console.log('creating ol.style.Fill instance with: ', this);
-    this.instance = new Fill(this);
+    this.instance = new Fill(this.createOptions());
     switch (this.host.componentType) {
       case 'style':
         this.host.instance.setFill(this.instance);
@@ -64,5 +65,11 @@ export class StyleFillComponent implements OnInit, OnChanges {
     }
     this.host.update();
     // console.log('changes detected in aol-style-fill, setting new color: ', changes);
+  }
+
+  private createOptions(): Options {
+    return {
+      color: this.color,
+    };
   }
 }

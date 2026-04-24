@@ -5,7 +5,8 @@ import {
   signal,
   viewChild,
 } from '@angular/core';
-import { AngularOpenlayersModule, MapComponent, ViewComponent } from 'ngx-ol';
+import { AngularOpenlayersModule } from 'ngx-ol';
+import type { MapComponent, ViewComponent } from 'ngx-ol';
 import type { Coordinate } from 'ol/coordinate';
 import { transform } from 'ol/proj';
 

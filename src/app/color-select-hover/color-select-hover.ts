@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, signal, viewChild } from '@angular/core';
-import { AngularOpenlayersModule, MapComponent } from 'ngx-ol';
+import { AngularOpenlayersModule } from 'ngx-ol';
+import type { MapComponent } from 'ngx-ol';
 import { MapBrowserEvent } from 'ol';
 import Feature from 'ol/Feature';
 import Polygon from 'ol/geom/Polygon';

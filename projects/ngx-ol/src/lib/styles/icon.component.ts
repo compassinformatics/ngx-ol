@@ -1,11 +1,12 @@
 import { Component, Input, Host, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { Icon } from 'ol/style';
 
-// TODO https://github.com/openlayers/openlayers/issues/12694
-// import IconAnchorUnits from 'ol/style/IconAnchorUnits';
-// import IconOrigin from 'ol/style/IconOrigin';
+
 import { StyleComponent } from './style.component';
-import { IconAnchorUnits, IconOrigin } from 'ol/style/Icon';
+import { IconAnchorUnits, IconOrigin, Options } from 'ol/style/Icon';
+import { Size } from 'ol/size';
+import { Color } from 'ol/color';
+import { DeclutterMode } from 'ol/style/Style';
 
 @Component({
   selector: 'aol-style-icon',
@@ -13,39 +14,43 @@ import { IconAnchorUnits, IconOrigin } from 'ol/style/Icon';
 })
 export class StyleIconComponent implements OnInit, OnChanges {
   @Input()
-  anchor: [number, number];
+  anchor?: [number, number];
   @Input()
-  anchorXUnits: IconAnchorUnits;
+  anchorXUnits?: IconAnchorUnits;
   @Input()
-  anchorYUnits: IconAnchorUnits;
+  anchorYUnits?: IconAnchorUnits;
   @Input()
-  anchorOrigin: IconOrigin;
+  anchorOrigin?: IconOrigin;
   @Input()
-  color: [number, number, number, number];
+  color?: string | Color;
   @Input()
-  crossOrigin: IconOrigin;
+  crossOrigin?: string | null;
   @Input()
-  img: HTMLCanvasElement | HTMLImageElement;
+  img?: HTMLCanvasElement | HTMLImageElement | ImageBitmap;
   @Input()
-  offset: [number, number];
+  displacement?: number[];
   @Input()
-  offsetOrigin: IconOrigin;
+  offset?: [number, number];
   @Input()
-  opacity: number;
+  offsetOrigin?: IconOrigin;
   @Input()
-  scale: number;
+  opacity?: number;
   @Input()
-  snapToPixel: boolean;
+  width?: number;
   @Input()
-  rotateWithView: boolean;
+  height?: number;
   @Input()
-  rotation: number;
+  scale?: number | Size;
   @Input()
-  size: [number, number];
+  declutterMode?: DeclutterMode;
   @Input()
-  imgSize: [number, number];
+  rotateWithView?: boolean;
   @Input()
-  src: string;
+  rotation?: number;
+  @Input()
+  size?: [number, number];
+  @Input()
+  src?: string;
 
   public instance: Icon;
 
@@ -53,7 +58,7 @@ export class StyleIconComponent implements OnInit, OnChanges {
 
   ngOnInit() {
     // console.log('creating ol.style.Icon instance with: ', this);
-    this.instance = new Icon(this);
+    this.instance = new Icon(this.createOptions());
     this.host.instance.setImage(this.instance);
   }
 
@@ -71,10 +76,34 @@ export class StyleIconComponent implements OnInit, OnChanges {
       this.instance.setScale(changes.scale.currentValue);
     }
     if (changes.src) {
-      this.instance = new Icon(this);
+      this.instance = new Icon(this.createOptions());
       this.host.instance.setImage(this.instance);
     }
     this.host.update();
     // console.log('changes detected in aol-style-icon: ', changes);
+  }
+
+  private createOptions(): Options {
+    return {
+      anchor: this.anchor,
+      anchorXUnits: this.anchorXUnits,
+      anchorYUnits: this.anchorYUnits,
+      anchorOrigin: this.anchorOrigin,
+      color: this.color,
+      crossOrigin: this.crossOrigin,
+      img: this.img,
+      displacement: this.displacement,
+      offset: this.offset,
+      offsetOrigin: this.offsetOrigin,
+      opacity: this.opacity,
+      width: this.width,
+      height: this.height,
+      scale: this.scale,
+      declutterMode: this.declutterMode,
+      rotateWithView: this.rotateWithView,
+      rotation: this.rotation,
+      size: this.size,
+      src: this.src,
+    };
   }
 }

@@ -1,5 +1,6 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { FullScreen } from 'ol/control';
+import { Options } from 'ol/control/FullScreen';
 import { MapComponent } from '../map.component';
 
 @Component({
@@ -8,15 +9,23 @@ import { MapComponent } from '../map.component';
 })
 export class ControlFullScreenComponent implements OnInit, OnDestroy {
   @Input()
-  className: string;
+  className?: string;
   @Input()
-  label: string;
+  label?: string | HTMLElement | Text;
   @Input()
-  labelActive: string;
+  labelActive?: string | HTMLElement | Text;
   @Input()
-  tipLabel: string;
+  activeClassName?: string;
   @Input()
-  keys: boolean;
+  inactiveClassName?: string;
+  @Input()
+  tipLabel?: string;
+  @Input()
+  keys?: boolean;
+  @Input()
+  target?: string | HTMLElement;
+  @Input()
+  source?: string | HTMLElement;
 
   instance: FullScreen;
 
@@ -25,12 +34,26 @@ export class ControlFullScreenComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.instance = new FullScreen(this);
+    this.instance = new FullScreen(this.createOptions());
     this.map.instance.addControl(this.instance);
   }
 
   ngOnDestroy() {
     // console.log('removing aol-control-fullscreen');
     this.map.instance.removeControl(this.instance);
+  }
+
+  private createOptions(): Options {
+    return {
+      className: this.className,
+      label: this.label,
+      labelActive: this.labelActive,
+      activeClassName: this.activeClassName,
+      inactiveClassName: this.inactiveClassName,
+      tipLabel: this.tipLabel,
+      keys: this.keys,
+      target: this.target,
+      source: this.source,
+    };
   }
 }

@@ -8,7 +8,7 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import { MapComponent } from './map.component';
-import Overlay, { PanOptions, Positioning } from 'ol/Overlay';
+import Overlay, { Options, PanIntoViewOptions, Positioning } from 'ol/Overlay';
 import { ContentComponent } from './content.component';
 import { Coordinate } from 'ol/coordinate';
 
@@ -21,23 +21,21 @@ export class OverlayComponent implements OnInit, OnDestroy, OnChanges {
   content: ContentComponent;
 
   @Input()
-  id: number | string | undefined;
+  id?: number | string | undefined;
   @Input()
-  offset: number[];
+  offset?: number[];
   @Input()
-  positioning: Positioning;
+  positioning?: Positioning;
   @Input()
-  stopEvent: boolean;
+  stopEvent?: boolean;
   @Input()
-  insertFirst: boolean;
+  insertFirst?: boolean;
   @Input()
-  autoPan: boolean;
+  autoPan?: boolean | PanIntoViewOptions;
   @Input()
-  autoPanAnimation: PanOptions;
+  position?: Coordinate | undefined;
   @Input()
-  autoPanMargin: number;
-  @Input()
-  position: Coordinate | undefined;
+  className?: string;
 
   componentType = 'overlay';
   instance: Overlay;
@@ -48,7 +46,7 @@ export class OverlayComponent implements OnInit, OnDestroy, OnChanges {
   ngOnInit() {
     if (this.content) {
       this.element = this.content.elementRef.nativeElement;
-      this.instance = new Overlay(this);
+      this.instance = new Overlay(this.createOptions());
       this.map.instance.addOverlay(this.instance);
     }
   }
@@ -65,5 +63,19 @@ export class OverlayComponent implements OnInit, OnDestroy, OnChanges {
     if (position && this.instance) {
       this.instance.setPosition(position.currentValue);
     }
+  }
+
+  private createOptions(): Options {
+    return {
+      autoPan: this.autoPan,
+      className: this.className,
+      element: this.element,
+      id: this.id,
+      insertFirst: this.insertFirst,
+      offset: this.offset,
+      position: this.position,
+      positioning: this.positioning,
+      stopEvent: this.stopEvent,
+    };
   }
 }

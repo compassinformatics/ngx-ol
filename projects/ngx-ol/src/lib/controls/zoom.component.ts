@@ -1,5 +1,6 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Zoom } from 'ol/control';
+import { Options } from 'ol/control/Zoom';
 import { MapComponent } from '../map.component';
 
 @Component({
@@ -8,17 +9,25 @@ import { MapComponent } from '../map.component';
 })
 export class ControlZoomComponent implements OnInit, OnDestroy {
   @Input()
-  duration: number;
+  duration?: number;
   @Input()
-  zoomInLabel: string | HTMLElement;
+  className?: string;
   @Input()
-  zoomOutLabel: string | HTMLElement;
+  zoomInClassName?: string;
   @Input()
-  zoomInTipLabel: string;
+  zoomOutClassName?: string;
   @Input()
-  zoomOutTipLabel: string;
+  zoomInLabel?: string | HTMLElement;
   @Input()
-  delta: number;
+  zoomOutLabel?: string | HTMLElement;
+  @Input()
+  zoomInTipLabel?: string;
+  @Input()
+  zoomOutTipLabel?: string;
+  @Input()
+  delta?: number;
+  @Input()
+  target?: string | HTMLElement;
 
   instance: Zoom;
 
@@ -27,12 +36,27 @@ export class ControlZoomComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.instance = new Zoom(this);
+    this.instance = new Zoom(this.createOptions());
     this.map.instance.addControl(this.instance);
   }
 
   ngOnDestroy() {
     // console.log('removing aol-control-zoom');
     this.map.instance.removeControl(this.instance);
+  }
+
+  private createOptions(): Options {
+    return {
+      duration: this.duration,
+      className: this.className,
+      zoomInClassName: this.zoomInClassName,
+      zoomOutClassName: this.zoomOutClassName,
+      zoomInLabel: this.zoomInLabel,
+      zoomOutLabel: this.zoomOutLabel,
+      zoomInTipLabel: this.zoomInTipLabel,
+      zoomOutTipLabel: this.zoomOutTipLabel,
+      delta: this.delta,
+      target: this.target,
+    };
   }
 }
