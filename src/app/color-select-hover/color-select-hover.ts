@@ -1,12 +1,14 @@
 import { ChangeDetectionStrategy, Component, signal, viewChild } from '@angular/core';
 import { AngularOpenlayersModule } from 'ngx-ol';
 import type { MapComponent } from 'ngx-ol';
-import { MapBrowserEvent } from 'ol';
+import MapBrowserEvent from 'ol/MapBrowserEvent';
 import Feature from 'ol/Feature';
 import Polygon from 'ol/geom/Polygon';
 import type { Coordinate } from 'ol/coordinate';
 import { transform } from 'ol/proj';
-import { Fill, Stroke, Style } from 'ol/style';
+import Fill from 'ol/style/Fill';
+import Stroke from 'ol/style/Stroke';
+import Style from 'ol/style/Style';
 
 @Component({
   selector: 'app-color-select-hover',

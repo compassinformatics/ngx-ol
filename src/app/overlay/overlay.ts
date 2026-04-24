@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, signal, viewChild } from '@angular/core';
-import { MapBrowserEvent } from 'ol';
+import MapBrowserEvent from 'ol/MapBrowserEvent';
 import { Coordinate } from 'ol/coordinate';
 import { AngularOpenlayersModule } from 'ngx-ol';
 

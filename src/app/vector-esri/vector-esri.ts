@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, DestroyRef, inject, signal } from '
 import { AngularOpenlayersModule } from 'ngx-ol';
 import { type FeatureLike } from 'ol/Feature';
 import EsriJSON from 'ol/format/EsriJSON';
-import type { MapBrowserEvent } from 'ol';
+import type MapBrowserEvent from 'ol/MapBrowserEvent';
 import { unByKey } from 'ol/Observable';
 import { transform } from 'ol/proj';
 import XYZ from 'ol/source/XYZ';
