@@ -9,7 +9,7 @@ import {
   SimpleChanges,
   OnInit,
 } from '@angular/core';
-import { ImageStatic } from 'ol/source';
+import ImageStatic from 'ol/source/ImageStatic';
 import { Options } from 'ol/source/ImageStatic';
 import { SourceComponent } from './source.component';
 import { LayerImageComponent } from '../layers/layerimage.component';

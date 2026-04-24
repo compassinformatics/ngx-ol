@@ -1,7 +1,8 @@
 import { Component, OnDestroy, OnInit, Input } from '@angular/core';
-import { Control, defaults } from 'ol/control';
+import Control from 'ol/control/Control';
+import { defaults } from 'ol/control/defaults';
 import { DefaultsOptions } from 'ol/control/defaults';
-import { Collection } from 'ol';
+import Collection from 'ol/Collection';
 import { Options as AttributionOptions } from 'ol/control/Attribution';
 import { Options as RotateOptions } from 'ol/control/Rotate';
 import { Options as ZoomOptions } from 'ol/control/Zoom';

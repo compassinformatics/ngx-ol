@@ -9,7 +9,7 @@ import {
 } from '@angular/core';
 import { LayerTileComponent } from '../layers/layertile.component';
 import { SourceComponent } from './source.component';
-import { TileWMS } from 'ol/source';
+import TileWMS from 'ol/source/TileWMS';
 import { Options } from 'ol/source/TileWMS';
 import TileGrid from 'ol/tilegrid/TileGrid';
 import { LoadFunction } from 'ol/Tile';

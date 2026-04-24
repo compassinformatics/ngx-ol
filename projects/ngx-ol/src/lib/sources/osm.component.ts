@@ -8,7 +8,7 @@ import {
   Optional,
   Output,
 } from '@angular/core';
-import { OSM } from 'ol/source';
+import OSM from 'ol/source/OSM';
 import { Options } from 'ol/source/OSM';
 import { TileSourceEvent } from 'ol/source/Tile';
 import { LoadFunction } from 'ol/Tile';

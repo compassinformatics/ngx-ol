@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit, Input } from '@angular/core';
-import { DragRotateAndZoom } from 'ol/interaction';
+import DragRotateAndZoom from 'ol/interaction/DragRotateAndZoom';
 import { Options } from 'ol/interaction/DragRotateAndZoom';
 import { MapComponent } from '../map.component';
 import { Condition } from 'ol/events/condition';

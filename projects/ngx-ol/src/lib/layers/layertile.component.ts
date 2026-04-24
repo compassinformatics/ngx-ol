@@ -7,7 +7,7 @@ import {
   OnChanges,
   SimpleChanges,
 } from '@angular/core';
-import { Tile } from 'ol/layer';
+import Tile from 'ol/layer/Tile';
 import { Options } from 'ol/layer/BaseTile';
 import { MapComponent } from '../map.component';
 import { LayerComponent } from './layer.component';

@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { MVT } from 'ol/format';
+import MVT from 'ol/format/MVT';
 import { FeatureClass } from 'ol/Feature';
 import { Options } from 'ol/format/MVT';
 

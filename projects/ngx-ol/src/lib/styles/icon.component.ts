@@ -1,5 +1,5 @@
 import { Component, Input, Host, OnInit, OnChanges, SimpleChanges } from '@angular/core';
-import { Icon } from 'ol/style';
+import Icon from 'ol/style/Icon';
 
 
 import { StyleComponent } from './style.component';

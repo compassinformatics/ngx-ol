@@ -1,8 +1,9 @@
 import { Component, Input, OnDestroy, OnInit, EventEmitter, Output } from '@angular/core';
 import { MapComponent } from '../map.component';
-import { Draw } from 'ol/interaction';
-import { Collection, Feature } from 'ol';
-import { Vector } from 'ol/source';
+import Draw from 'ol/interaction/Draw';
+import Collection from 'ol/Collection';
+import Feature from 'ol/Feature';
+import Vector from 'ol/source/Vector';
 import { DrawEvent, GeometryFunction, Options } from 'ol/interaction/Draw';
 import { StyleFunction, StyleLike } from 'ol/style/Style';
 import { Condition } from 'ol/events/condition';

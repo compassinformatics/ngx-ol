@@ -1,5 +1,5 @@
 import { Component, Input, OnChanges, OnInit, Optional, SimpleChanges } from '@angular/core';
-import { Image } from 'ol/layer';
+import Image from 'ol/layer/Image';
 import { Options } from 'ol/layer/BaseImage';
 import { MapComponent } from '../map.component';
 import { LayerComponent } from './layer.component';

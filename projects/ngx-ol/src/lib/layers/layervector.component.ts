@@ -8,7 +8,7 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import { MapComponent } from '../map.component';
-import { Vector } from 'ol/layer';
+import Vector from 'ol/layer/Vector';
 import { StyleLike } from 'ol/style/Style';
 import { Options } from 'ol/layer/BaseVector';
 import { LayerComponent } from './layer.component';

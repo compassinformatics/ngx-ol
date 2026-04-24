@@ -1,6 +1,6 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { FeatureComponent } from '../feature.component';
-import { Circle } from 'ol/geom';
+import Circle from 'ol/geom/Circle';
 import { SimpleGeometryComponent } from './simplegeometry.component';
 import { MapComponent } from '../map.component';
 import { Coordinate } from 'ol/coordinate';

@@ -1,5 +1,5 @@
 import { Component, Input, Optional, OnInit, OnChanges, SimpleChanges } from '@angular/core';
-import { Stroke } from 'ol/style';
+import Stroke from 'ol/style/Stroke';
 import { Options } from 'ol/style/Stroke';
 import { StyleComponent } from './style.component';
 import { StyleCircleComponent } from './circle.component';

@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit, Input } from '@angular/core';
-import { DragBox } from 'ol/interaction';
+import DragBox from 'ol/interaction/DragBox';
 import { Options } from 'ol/interaction/DragBox';
 import { MapComponent } from '../map.component';
 import { Condition } from 'ol/events/condition';

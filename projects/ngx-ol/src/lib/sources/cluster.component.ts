@@ -9,9 +9,10 @@ import {
   Optional,
   SimpleChanges,
 } from '@angular/core';
-import { Feature } from 'ol';
-import { Point } from 'ol/geom';
-import { Cluster, Vector } from 'ol/source';
+import Feature from 'ol/Feature';
+import Point from 'ol/geom/Point';
+import Cluster from 'ol/source/Cluster';
+import Vector from 'ol/source/Vector';
 import { Options } from 'ol/source/Cluster';
 
 import { LayerVectorComponent } from '../layers/layervector.component';

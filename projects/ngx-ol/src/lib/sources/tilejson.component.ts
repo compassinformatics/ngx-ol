@@ -1,5 +1,5 @@
 import { Component, Host, Input, OnInit, forwardRef } from '@angular/core';
-import { TileJSON } from 'ol/source';
+import TileJSON from 'ol/source/TileJSON';
 import { Config, Options } from 'ol/source/TileJSON';
 import { LoadFunction } from 'ol/Tile';
 import { Size } from 'ol/size';

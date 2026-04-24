@@ -1,5 +1,5 @@
 import { Component, Host, Input, OnInit, forwardRef } from '@angular/core';
-import { BingMaps } from 'ol/source';
+import BingMaps from 'ol/source/BingMaps';
 import { Options } from 'ol/source/BingMaps';
 import { SourceComponent } from './source.component';
 import { LayerTileComponent } from '../layers/layertile.component';

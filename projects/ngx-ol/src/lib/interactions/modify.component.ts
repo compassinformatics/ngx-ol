@@ -1,8 +1,9 @@
 import { Component, OnDestroy, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { MapComponent } from '../map.component';
-import { Modify } from 'ol/interaction';
-import { Collection, Feature } from 'ol';
-import { Vector } from 'ol/source';
+import Modify from 'ol/interaction/Modify';
+import Collection from 'ol/Collection';
+import Feature from 'ol/Feature';
+import Vector from 'ol/source/Vector';
 import { ModifyEvent, Options } from 'ol/interaction/Modify';
 import { StyleLike } from 'ol/style/Style';
 import { Condition } from 'ol/events/condition';

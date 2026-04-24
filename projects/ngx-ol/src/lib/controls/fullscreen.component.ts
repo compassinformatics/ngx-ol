@@ -1,5 +1,5 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { FullScreen } from 'ol/control';
+import FullScreen from 'ol/control/FullScreen';
 import { Options } from 'ol/control/FullScreen';
 import { MapComponent } from '../map.component';
 

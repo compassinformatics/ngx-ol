@@ -2,8 +2,8 @@ import { Component, Input, OnDestroy, OnInit, OnChanges, SimpleChanges } from '@
 import Collection from 'ol/Collection';
 import MapEvent from 'ol/MapEvent';
 import BaseLayer from 'ol/layer/Base';
-import { View } from 'ol';
-import { OverviewMap } from 'ol/control';
+import View from 'ol/View';
+import OverviewMap from 'ol/control/OverviewMap';
 import { Options } from 'ol/control/OverviewMap';
 import { MapComponent } from '../map.component';
 

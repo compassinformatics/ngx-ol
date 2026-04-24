@@ -1,6 +1,6 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import MapEvent from 'ol/MapEvent';
-import { ZoomSlider } from 'ol/control';
+import ZoomSlider from 'ol/control/ZoomSlider';
 import { Options } from 'ol/control/ZoomSlider';
 import { MapComponent } from '../map.component';
 

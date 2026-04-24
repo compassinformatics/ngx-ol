@@ -1,5 +1,5 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { Zoom } from 'ol/control';
+import Zoom from 'ol/control/Zoom';
 import { Options } from 'ol/control/Zoom';
 import { MapComponent } from '../map.component';
 

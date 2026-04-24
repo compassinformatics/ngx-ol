@@ -13,7 +13,7 @@ import {
 import { LayerTileComponent } from '../layers/layertile.component';
 import { SourceComponent } from './source.component';
 import { TileGridWMTSComponent } from '../tilegridwmts.component';
-import { WMTS as SourceWMTS } from 'ol/source';
+import SourceWMTS from 'ol/source/WMTS';
 import WMTS from 'ol/tilegrid/WMTS';
 import { ProjectionLike } from 'ol/proj';
 import { LoadFunction } from 'ol/Tile';

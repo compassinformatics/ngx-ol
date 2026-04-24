@@ -2,8 +2,8 @@ import { Component, Host, Input, OnInit, Optional, forwardRef } from '@angular/c
 import { LayerVectorComponent } from '../layers/layervector.component';
 import { SourceComponent } from './source.component';
 import FeatureFormat from 'ol/format/Feature';
-import { Vector } from 'ol/source';
-import { GeoJSON } from 'ol/format';
+import Vector from 'ol/source/Vector';
+import GeoJSON from 'ol/format/GeoJSON';
 import { Options as GeoJSONOptions } from 'ol/format/GeoJSON';
 import { ProjectionLike } from 'ol/proj';
 import { LayerVectorImageComponent } from '../layers/layervectorimage.component';

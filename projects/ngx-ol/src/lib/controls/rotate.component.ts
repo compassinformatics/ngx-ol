@@ -1,6 +1,6 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import MapEvent from 'ol/MapEvent';
-import { Rotate } from 'ol/control';
+import Rotate from 'ol/control/Rotate';
 import { Options } from 'ol/control/Rotate';
 import { MapComponent } from '../map.component';
 

@@ -1,8 +1,9 @@
 import { Component, OnDestroy, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { MapComponent } from '../map.component';
-import { Select } from 'ol/interaction';
-import { Layer } from 'ol/layer';
-import { Collection, Feature } from 'ol';
+import Select from 'ol/interaction/Select';
+import Layer from 'ol/layer/Layer';
+import Collection from 'ol/Collection';
+import Feature from 'ol/Feature';
 import { SelectEvent, FilterFunction, Options } from 'ol/interaction/Select';
 import { StyleLike } from 'ol/style/Style';
 import { Condition } from 'ol/events/condition';

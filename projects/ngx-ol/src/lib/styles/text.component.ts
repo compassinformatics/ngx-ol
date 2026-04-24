@@ -1,5 +1,7 @@
 import { Component, Input, Optional, OnInit, OnChanges, SimpleChanges } from '@angular/core';
-import { Fill, Stroke, Text } from 'ol/style';
+import Fill from 'ol/style/Fill';
+import Stroke from 'ol/style/Stroke';
+import Text from 'ol/style/Text';
 import { StyleComponent } from './style.component';
 import { Options, TextJustify, TextPlacement } from 'ol/style/Text';
 import { DeclutterMode } from 'ol/style/Style';
