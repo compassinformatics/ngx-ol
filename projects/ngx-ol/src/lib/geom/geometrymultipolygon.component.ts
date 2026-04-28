@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FeatureComponent } from '../feature.component';
 import { SimpleGeometryComponent } from './simplegeometry.component';
 import { MapComponent } from '../map.component';
-import { MultiPolygon } from 'ol/geom';
+import MultiPolygon from 'ol/geom/MultiPolygon';
 
 @Component({
   selector: 'aol-geometry-multipolygon',

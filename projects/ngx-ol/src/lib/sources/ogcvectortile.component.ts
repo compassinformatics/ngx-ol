@@ -1,5 +1,5 @@
 import { Component, Host, Input, forwardRef, ContentChild, AfterContentInit } from '@angular/core';
-import { OGCVectorTile } from 'ol/source';
+import OGCVectorTile from 'ol/source/OGCVectorTile';
 import { Options } from 'ol/source/OGCVectorTile';
 import TileGrid from 'ol/tilegrid/TileGrid';
 import { LayerVectorTileComponent } from '../layers/layervectortile.component';

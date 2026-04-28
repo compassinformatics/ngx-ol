@@ -1,13 +1,10 @@
-<aol-map class="map">
+<aol-map class="demo-map">
   <aol-view [zoom]="zoom()" [center]="center()"></aol-view>
 
-  <aol-layer-tile>
-    <aol-source-osm></aol-source-osm>
-  </aol-layer-tile>
+  <aol-layer-tile [source]="source"></aol-layer-tile>
 
   <aol-interaction-default></aol-interaction-default>
-  <aol-control-overviewmap [collapsed]="false"></aol-control-overviewmap>
-  <aol-control-scaleline></aol-control-scaleline>
+  <aol-control-overviewmap [collapsed]="false" [layers]="overviewLayers"></aol-control-overviewmap>
   <aol-control-zoom></aol-control-zoom>
   <aol-control-attribution></aol-control-attribution>
 </aol-map>

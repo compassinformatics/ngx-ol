@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit, Input } from '@angular/core';
-import { DragRotate } from 'ol/interaction';
+import DragRotate from 'ol/interaction/DragRotate';
 import { Options } from 'ol/interaction/DragRotate';
 import { MapComponent } from '../map.component';
 import { Condition } from 'ol/events/condition';

@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit, Input } from '@angular/core';
-import { DragPan } from 'ol/interaction';
+import DragPan from 'ol/interaction/DragPan';
 import { Options } from 'ol/interaction/DragPan';
 import Kinetic from 'ol/Kinetic';
 import { MapComponent } from '../map.component';

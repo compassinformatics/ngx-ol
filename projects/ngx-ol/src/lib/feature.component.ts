@@ -8,7 +8,8 @@ import {
   Output,
   EventEmitter,
 } from '@angular/core';
-import { Feature, MapBrowserEvent } from 'ol';
+import Feature from 'ol/Feature';
+import MapBrowserEvent from 'ol/MapBrowserEvent';
 import { SourceVectorComponent } from './sources/vector.component';
 
 @Component({

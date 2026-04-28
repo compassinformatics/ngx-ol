@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { AngularOpenlayersModule } from 'ngx-ol';
-import { Stroke } from 'ol/style';
+import Stroke from 'ol/style/Stroke';
 import type { Coordinate } from 'ol/coordinate';
 
 @Component({

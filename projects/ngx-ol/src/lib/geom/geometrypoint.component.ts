@@ -2,7 +2,7 @@ import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/cor
 import { FeatureComponent } from '../feature.component';
 import { SimpleGeometryComponent } from './simplegeometry.component';
 import { MapComponent } from '../map.component';
-import { Point } from 'ol/geom';
+import Point from 'ol/geom/Point';
 import { Coordinate } from 'ol/coordinate';
 import { GeometryLayout } from 'ol/geom/Geometry';
 

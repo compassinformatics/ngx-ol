@@ -6,8 +6,8 @@ import {
   SimpleChanges,
   OnDestroy,
 } from '@angular/core';
-import { Graticule } from 'ol';
-import { Stroke } from 'ol/style';
+import Graticule from 'ol/layer/Graticule';
+import Stroke from 'ol/style/Stroke';
 import { MapComponent } from './map.component';
 
 @Component({

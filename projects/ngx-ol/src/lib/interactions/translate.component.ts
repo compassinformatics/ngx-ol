@@ -1,7 +1,8 @@
 import { Component, OnDestroy, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { Translate } from 'ol/interaction';
-import { Collection, Feature } from 'ol';
-import { Layer } from 'ol/layer';
+import Translate from 'ol/interaction/Translate';
+import Collection from 'ol/Collection';
+import Feature from 'ol/Feature';
+import Layer from 'ol/layer/Layer';
 import { Options, TranslateEvent } from 'ol/interaction/Translate';
 import { MapComponent } from '../map.component';
 import BaseEvent from 'ol/events/Event';

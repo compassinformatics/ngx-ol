@@ -1,5 +1,5 @@
 import { Component, Input, Optional, OnInit, OnChanges, SimpleChanges } from '@angular/core';
-import { Fill } from 'ol/style';
+import Fill from 'ol/style/Fill';
 import { Options } from 'ol/style/Fill';
 import { StyleComponent } from './style.component';
 import { StyleCircleComponent } from './circle.component';

@@ -1,4 +1,4 @@
-<aol-map #map class="map">
+<aol-map #map class="demo-map">
   <aol-view [zoom]="zoom()" [center]="center()"></aol-view>
 
   <aol-layer-tile>
@@ -23,8 +23,10 @@
   class="swipe-button"
   aria-label="Swipe layers"
   [style.marginLeft.px]="swipeOffsetToCenter()"
-  (panstart)="onPanStart()"
-  (panmove)="onPan($event)"
+  (pointerdown)="onPointerDown($event)"
+  (pointermove)="onPointerMove($event)"
+  (pointerup)="onPointerUp($event)"
+  (pointercancel)="onPointerUp($event)"
 >
   &#8596;
 </button>

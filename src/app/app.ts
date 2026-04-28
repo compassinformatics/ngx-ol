@@ -56,6 +56,10 @@ export class App {
     menu.removeAttribute('open');
   }
 
+  protected closeMenu(): void {
+    this.menu()?.nativeElement.removeAttribute('open');
+  }
+
   protected toggleDescriptionPosition(path: string): void {
     this.shiftedDescriptions.update((shifted) => {
       const next = new Set(shifted);

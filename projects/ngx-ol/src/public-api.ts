@@ -169,10 +169,117 @@ export {
   AttributionComponent,
 };
 
-const COMPONENTS = [
-  MapComponent,
+const MAP_COMPONENTS = [MapComponent, ViewComponent];
 
-  ViewComponent,
+const CONTROL_COMPONENTS = [
+  DefaultControlComponent,
+  ControlComponent,
+  ControlAttributionComponent,
+  ControlFullScreenComponent,
+  ControlMousePositionComponent,
+  ControlOverviewMapComponent,
+  ControlRotateComponent,
+  ControlScaleLineComponent,
+  ControlZoomComponent,
+  ControlZoomSliderComponent,
+  ControlZoomToExtentComponent,
+];
+
+const MAP_INTERACTION_COMPONENTS = [
+  DefaultInteractionComponent,
+  DoubleClickZoomInteractionComponent,
+  DragBoxInteractionComponent,
+  DragPanInteractionComponent,
+  DragRotateInteractionComponent,
+  DragRotateAndZoomInteractionComponent,
+  DragZoomInteractionComponent,
+  MouseWheelZoomInteractionComponent,
+  PinchZoomInteractionComponent,
+  KeyboardPanInteractionComponent,
+  KeyboardZoomInteractionComponent,
+];
+
+const FEATURE_INTERACTION_COMPONENTS = [
+  DragAndDropInteractionComponent,
+  DrawInteractionComponent,
+  SelectInteractionComponent,
+  ModifyInteractionComponent,
+  SnapInteractionComponent,
+  TranslateInteractionComponent,
+];
+
+const TILE_LAYER_COMPONENTS = [
+  LayerGroupComponent,
+  LayerTileComponent,
+  SourceOsmComponent,
+  SourceBingmapsComponent,
+  SourceUTFGridComponent,
+  SourceXYZComponent,
+  SourceTileWMSComponent,
+  SourceTileWMTSComponent,
+  SourceTileJSONComponent,
+  SourceOGCMapTileComponent,
+  TileGridComponent,
+  TileGridWMTSComponent,
+];
+
+const IMAGE_LAYER_COMPONENTS = [
+  LayerGroupComponent,
+  LayerImageComponent,
+  SourceImageStaticComponent,
+  SourceImageWMSComponent,
+];
+
+const ARC_GIS_COMPONENTS = [
+  LayerGroupComponent,
+  LayerImageComponent,
+  SourceImageArcGISRestComponent,
+];
+
+const VECTOR_LAYER_COMPONENTS = [
+  GraticuleComponent,
+  LayerGroupComponent,
+  LayerVectorComponent,
+  LayerVectorImageComponent,
+  LayerVectorTileComponent,
+  SourceClusterComponent,
+  SourceVectorComponent,
+  SourceVectorTileComponent,
+  SourceGeoJSONComponent,
+  SourceRasterComponent,
+  SourceOGCVectorTileComponent,
+  FeatureComponent,
+  FormatGeoJSONComponent,
+  FormatMVTComponent,
+];
+
+const GEOMETRY_STYLE_COMPONENTS = [
+  GeometryLinestringComponent,
+  GeometryMultiLinestringComponent,
+  GeometryMultiPointComponent,
+  GeometryMultiPolygonComponent,
+  GeometryPointComponent,
+  GeometryPolygonComponent,
+  GeometryCircleComponent,
+  CoordinateComponent,
+  CollectionCoordinatesComponent,
+  StyleComponent,
+  StyleCircleComponent,
+  StyleFillComponent,
+  StyleIconComponent,
+  StyleStrokeComponent,
+  StyleTextComponent,
+];
+
+const OVERLAY_COMPONENTS = [
+  OverlayComponent,
+  ContentComponent,
+  AttributionsComponent,
+  AttributionComponent,
+];
+
+const COMPONENTS = [
+  ...MAP_COMPONENTS,
   GraticuleComponent,
 
   LayerGroupComponent,
@@ -246,6 +353,8 @@ const COMPONENTS = [
   MouseWheelZoomInteractionComponent,
   PinchZoomInteractionComponent,
   DrawInteractionComponent,
+  KeyboardPanInteractionComponent,
+  KeyboardZoomInteractionComponent,
   SelectInteractionComponent,
   ModifyInteractionComponent,
   SnapInteractionComponent,
@@ -256,6 +365,71 @@ const COMPONENTS = [
   AttributionsComponent,
   AttributionComponent,
 ];
+
+@NgModule({
+  imports: [CommonModule, ...MAP_COMPONENTS, ...CONTROL_COMPONENTS, ...MAP_INTERACTION_COMPONENTS],
+  exports: [...MAP_COMPONENTS, ...CONTROL_COMPONENTS, ...MAP_INTERACTION_COMPONENTS],
+})
+export class AngularOpenlayersMapModule {}
+
+@NgModule({
+  imports: [CommonModule, ...CONTROL_COMPONENTS],
+  exports: CONTROL_COMPONENTS,
+})
+export class AngularOpenlayersControlsModule {}
+
+@NgModule({
+  imports: [CommonModule, ...MAP_INTERACTION_COMPONENTS],
+  exports: MAP_INTERACTION_COMPONENTS,
+})
+export class AngularOpenlayersMapInteractionsModule {}
+
+@NgModule({
+  imports: [CommonModule, ...FEATURE_INTERACTION_COMPONENTS],
+  exports: FEATURE_INTERACTION_COMPONENTS,
+})
+export class AngularOpenlayersFeatureInteractionsModule {}
+
+@NgModule({
+  imports: [CommonModule, ...TILE_LAYER_COMPONENTS],
+  exports: TILE_LAYER_COMPONENTS,
+})
+export class AngularOpenlayersTileLayersModule {}
+
+@NgModule({
+  imports: [CommonModule, ...IMAGE_LAYER_COMPONENTS],
+  exports: IMAGE_LAYER_COMPONENTS,
+})
+export class AngularOpenlayersImageLayersModule {}
+
+@NgModule({
+  imports: [CommonModule, ...ARC_GIS_COMPONENTS],
+  exports: ARC_GIS_COMPONENTS,
+})
+export class AngularOpenlayersArcGisModule {}
+
+@NgModule({
+  imports: [
+    CommonModule,
+    ...VECTOR_LAYER_COMPONENTS,
+    ...GEOMETRY_STYLE_COMPONENTS,
+    ...FEATURE_INTERACTION_COMPONENTS,
+  ],
+  exports: [...VECTOR_LAYER_COMPONENTS, ...GEOMETRY_STYLE_COMPONENTS, ...FEATURE_INTERACTION_COMPONENTS],
+})
+export class AngularOpenlayersVectorLayersModule {}
+
+@NgModule({
+  imports: [CommonModule, ...GEOMETRY_STYLE_COMPONENTS],
+  exports: GEOMETRY_STYLE_COMPONENTS,
+})
+export class AngularOpenlayersGeometryStylesModule {}
+
+@NgModule({
+  imports: [CommonModule, ...OVERLAY_COMPONENTS],
+  exports: OVERLAY_COMPONENTS,
+})
+export class AngularOpenlayersOverlayModule {}
 
 @NgModule({
   imports: [CommonModule, ...COMPONENTS],

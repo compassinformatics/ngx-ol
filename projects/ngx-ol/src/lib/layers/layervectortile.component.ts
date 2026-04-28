@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Optional, SimpleChanges, OnChanges } from '@angular/core';
-import { VectorTile } from 'ol/layer';
+import VectorTile from 'ol/layer/VectorTile';
 import { MapComponent } from '../map.component';
 import { LayerComponent } from './layer.component';
 import { LayerGroupComponent } from './layergroup.component';

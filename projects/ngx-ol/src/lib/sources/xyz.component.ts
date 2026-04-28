@@ -12,7 +12,7 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import { Size } from 'ol/size';
-import { XYZ } from 'ol/source';
+import XYZ from 'ol/source/XYZ';
 import { Options } from 'ol/source/XYZ';
 import { TileSourceEvent } from 'ol/source/Tile';
 import { LoadFunction, UrlFunction } from 'ol/Tile';

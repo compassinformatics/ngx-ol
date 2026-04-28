@@ -1,7 +1,8 @@
 import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { AngularOpenlayersModule } from 'ngx-ol';
 import type { Coordinate } from 'ol/coordinate';
-import { transform } from 'ol/proj';
+import TileLayer from 'ol/layer/Tile.js';
+import OSM from 'ol/source/OSM.js';
 
 @Component({
   selector: 'app-overview',
@@ -11,6 +12,8 @@ import { transform } from 'ol/proj';
   styleUrl: './overview.less',
 })
 export class Overview {
-  readonly center = signal<Coordinate>(transform([5, 45], 'EPSG:4326', 'EPSG:3857'));
-  readonly zoom = signal(15);
+  readonly center = signal<Coordinate>([500000, 6000000]);
+  readonly zoom = signal(7);
+  readonly source = new OSM();
+  readonly overviewLayers = [new TileLayer({ source: this.source })];
 }

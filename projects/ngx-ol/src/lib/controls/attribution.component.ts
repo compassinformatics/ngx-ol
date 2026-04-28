@@ -1,5 +1,5 @@
 import { Component, ElementRef, Input, OnDestroy, OnInit } from '@angular/core';
-import { Attribution } from 'ol/control';
+import Attribution from 'ol/control/Attribution';
 import { Options } from 'ol/control/Attribution';
 import MapEvent from 'ol/MapEvent';
 import { MapComponent } from '../map.component';

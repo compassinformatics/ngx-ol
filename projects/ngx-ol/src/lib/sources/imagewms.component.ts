@@ -9,7 +9,7 @@ import {
   Output,
   EventEmitter,
 } from '@angular/core';
-import { ImageWMS } from 'ol/source';
+import ImageWMS from 'ol/source/ImageWMS';
 import { Options } from 'ol/source/ImageWMS';
 import { LayerImageComponent } from '../layers/layerimage.component';
 import { SourceComponent } from './source.component';

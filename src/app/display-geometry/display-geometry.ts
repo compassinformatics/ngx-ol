@@ -2,10 +2,10 @@ import { HttpClient } from '@angular/common/http';
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { AngularOpenlayersModule } from 'ngx-ol';
-import { Feature } from 'ol';
+import Feature from 'ol/Feature';
 import { Coordinate } from 'ol/coordinate';
 import GeoJSON, { GeoJSONFeatureCollection } from 'ol/format/GeoJSON';
-import { Point } from 'ol/geom';
+import Point from 'ol/geom/Point';
 import { transform } from 'ol/proj';
 import { map } from 'rxjs';
 

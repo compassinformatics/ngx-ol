@@ -1,6 +1,10 @@
 import { Component, Input, Optional, OnInit } from '@angular/core';
-import { Fill, Image, Stroke, Style, Text } from 'ol/style';
-import { Geometry } from 'ol/geom';
+import Fill from 'ol/style/Fill';
+import Image from 'ol/style/Image';
+import Stroke from 'ol/style/Stroke';
+import Style from 'ol/style/Style';
+import Text from 'ol/style/Text';
+import Geometry from 'ol/geom/Geometry';
 import { FeatureComponent } from '../feature.component';
 import { LayerVectorComponent } from '../layers/layervector.component';
 import { GeometryFunction, Options, RenderFunction } from 'ol/style/Style';

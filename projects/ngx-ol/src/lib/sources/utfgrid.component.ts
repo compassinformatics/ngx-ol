@@ -1,7 +1,7 @@
 import { Component, Host, Input, OnInit, forwardRef } from '@angular/core';
 import { SourceComponent } from './source.component';
 import { LayerTileComponent } from '../layers/layertile.component';
-import { UTFGrid } from 'ol/source';
+import UTFGrid from 'ol/source/UTFGrid';
 import { Config } from 'ol/source/TileJSON';
 import { Options } from 'ol/source/UTFGrid';
 import { NearestDirectionFunction } from 'ol/array';

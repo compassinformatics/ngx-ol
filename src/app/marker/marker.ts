@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, computed, signal } from '@angular/core';
 import { AngularOpenlayersModule } from 'ngx-ol';
-import { Feature } from 'ol';
-import { Point } from 'ol/geom';
+import Feature from 'ol/Feature';
+import Point from 'ol/geom/Point';
 import type { Coordinate } from 'ol/coordinate';
 import { transform } from 'ol/proj';
 

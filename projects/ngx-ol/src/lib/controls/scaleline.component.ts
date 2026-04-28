@@ -1,5 +1,5 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { ScaleLine } from 'ol/control';
+import ScaleLine from 'ol/control/ScaleLine';
 import { MapComponent } from '../map.component';
 import { Options, Units } from 'ol/control/ScaleLine';
 import MapEvent from 'ol/MapEvent';

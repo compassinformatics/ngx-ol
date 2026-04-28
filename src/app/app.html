@@ -1,17 +1,29 @@
 <header>
   <h1 routerLink="/">ngx-ol examples</h1>
   <details #menu class="app-menu">
-    <summary>Examples</summary>
+    <summary aria-label="Menu">
+      <span class="app-menu-label">Menu</span>
+      <span class="app-menu-icon" aria-hidden="true">▦</span>
+    </summary>
     <nav class="app-nav" aria-label="Examples routes">
-      @for (demo of demos; track demo.path) {
-        <a
-          routerLinkActive="is-active"
-          [routerLinkActiveOptions]="{ exact: true }"
-          [routerLink]="demo.path"
-        >
-          {{ demo.label }}
-        </a>
-      }
+      <div class="app-nav-intro">
+        <strong>Explore the demos</strong>
+        <span>Browse the examples by feature and jump straight into the ones you need.</span>
+      </div>
+      <div class="app-nav-grid">
+        @for (demo of demos; track demo.path) {
+          <a
+            class="app-nav-card"
+            routerLinkActive="is-active"
+            [routerLinkActiveOptions]="{ exact: true }"
+            [routerLink]="demo.path"
+            (click)="closeMenu()"
+          >
+            <strong>{{ demo.label }}</strong>
+            <span>{{ demo.description }}</span>
+          </a>
+        }
+      </div>
     </nav>
   </details>
 </header>
@@ -25,6 +37,14 @@
       <div [style.opacity]="isDescriptionShifted() ? 0 : null">
         <strong>{{ demo.label }}</strong>
         <span>{{ demo.description }}</span>
+        <a
+          class="demo-overlay-source"
+          [href]="demo.sourceUrl"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          View source
+        </a>
       </div>
       <button
         type="button"
@@ -32,7 +52,7 @@
         [attr.aria-pressed]="isDescriptionShifted()"
         (click)="toggleDescriptionPosition(demo.path)"
       >
-      {{ isDescriptionShifted() ? '▾' : '▴' }}
+        {{ isDescriptionShifted() ? '▾' : '▴' }}
       </button>
     </div>
   }

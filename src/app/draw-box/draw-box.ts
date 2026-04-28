@@ -1,6 +1,6 @@
 import { JsonPipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, signal } from '@angular/core';
-import { Feature } from 'ol';
+import Feature from 'ol/Feature';
 import { Coordinate } from 'ol/coordinate';
 import GeoJSON, { GeoJSONFeature } from 'ol/format/GeoJSON';
 import { createBox } from 'ol/interaction/Draw';

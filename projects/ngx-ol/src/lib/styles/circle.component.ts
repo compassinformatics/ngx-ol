@@ -7,7 +7,9 @@ import {
   OnDestroy,
   SimpleChanges,
 } from '@angular/core';
-import { Circle, Fill, Stroke } from 'ol/style';
+import Circle from 'ol/style/Circle';
+import Fill from 'ol/style/Fill';
+import Stroke from 'ol/style/Stroke';
 import { Options } from 'ol/style/Circle';
 import { StyleComponent } from './style.component';
 import ImageStyle from 'ol/style/Image';

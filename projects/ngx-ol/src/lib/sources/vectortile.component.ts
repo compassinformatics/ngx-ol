@@ -1,5 +1,5 @@
 import { Component, Host, Input, forwardRef, ContentChild, AfterContentInit } from '@angular/core';
-import { VectorTile } from 'ol/source';
+import VectorTile from 'ol/source/VectorTile';
 import { Options } from 'ol/source/VectorTile';
 import TileGrid from 'ol/tilegrid/TileGrid';
 import OlVectorTile from 'ol/VectorTile';

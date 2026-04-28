@@ -12,14 +12,14 @@ import {
   QueryList,
   NgZone,
 } from '@angular/core';
-import { Map } from 'ol';
+import Map from 'ol/Map';
 import type { MapOptions } from 'ol/Map';
 import MapBrowserEvent from 'ol/MapBrowserEvent';
 import MapEvent from 'ol/MapEvent';
 import { ObjectEvent } from 'ol/Object';
 import RenderEvent from 'ol/render/Event';
-import { Control } from 'ol/control';
-import { Interaction } from 'ol/interaction';
+import Control from 'ol/control/Control';
+import Interaction from 'ol/interaction/Interaction';
 import BaseEvent from 'ol/events/Event';
 import { FeatureComponent } from './feature.component';
 

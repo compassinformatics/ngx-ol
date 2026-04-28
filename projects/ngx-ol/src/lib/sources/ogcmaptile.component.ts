@@ -1,6 +1,6 @@
 import { AfterContentInit, Component, Host, Input, forwardRef } from '@angular/core';
 import { ProjectionLike } from 'ol/proj';
-import { OGCMapTile } from 'ol/source';
+import OGCMapTile from 'ol/source/OGCMapTile';
 import { Options } from 'ol/source/OGCMapTile';
 import { LoadFunction } from 'ol/Tile';
 import { SourceComponent } from './source.component';

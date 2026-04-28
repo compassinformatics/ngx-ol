@@ -1,5 +1,5 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { DoubleClickZoom } from 'ol/interaction';
+import DoubleClickZoom from 'ol/interaction/DoubleClickZoom';
 import { Options } from 'ol/interaction/DoubleClickZoom';
 import { MapComponent } from '../map.component';
 

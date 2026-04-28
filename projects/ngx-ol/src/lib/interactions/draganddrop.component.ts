@@ -1,5 +1,5 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { DragAndDrop } from 'ol/interaction';
+import DragAndDrop from 'ol/interaction/DragAndDrop';
 import { Options } from 'ol/interaction/DragAndDrop';
 import FeatureFormat from 'ol/format/Feature';
 import { MapComponent } from '../map.component';

@@ -8,12 +8,12 @@ import {
   SimpleChanges,
   forwardRef,
 } from '@angular/core';
-import { Vector } from 'ol/source';
+import Vector from 'ol/source/Vector';
 import { LayerVectorComponent } from '../layers/layervector.component';
 import { SourceComponent } from './source.component';
 import { LoadingStrategy, Options } from 'ol/source/Vector';
 import { LayerVectorImageComponent } from '../layers/layervectorimage.component';
-import { Collection } from 'ol';
+import Collection from 'ol/Collection';
 import { FeatureLike } from 'ol/Feature';
 import FeatureFormat from 'ol/format/Feature';
 import { FeatureLoader, FeatureUrlFunction } from 'ol/featureloader';
