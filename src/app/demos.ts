@@ -3,15 +3,52 @@ export type Demo = {
   label: string;
   description: string;
   keywords: readonly string[];
+  sourceUrl: string;
 };
 
-export const DEMOS: readonly Demo[] = [
+type DemoDefinition = Omit<Demo, 'sourceUrl'>;
+
+const GITHUB_SOURCE_BASE = 'https://github.com/compassinformatics/ngx-ol/blob/main/';
+
+const SOURCE_PATH_OVERRIDES: Readonly<Record<string, string>> = {
+  '/basic': 'src/app/basic-map/basic-map.ts',
+  '/advanced': 'src/app/advanced-map/advanced-map.ts',
+  '/utf-grid': 'src/app/utfgrid/utfgrid.ts',
+};
+
+function buildSourceUrl(path: string): string {
+  const override = SOURCE_PATH_OVERRIDES[path];
+
+  if (override) {
+    return `${GITHUB_SOURCE_BASE}${override}`;
+  }
+
+  const segment = path.replace(/^\//, '');
+
+  return `${GITHUB_SOURCE_BASE}src/app/${segment}/${segment}.ts`;
+}
+
+const DEMO_DEFINITIONS: readonly DemoDefinition[] = [
   // Core maps and navigation
   {
     path: '/basic',
     label: 'Basic',
     description: 'A minimal map with an OSM base layer and standard controls.',
     keywords: ['osm', 'tile', 'view', 'controls'],
+  },
+  {
+    path: '/sub-modules',
+    label: 'Sub Modules',
+    description:
+      'Shows how to replace AngularOpenlayersModule with smaller grouped NgModules such as map and tile layers.',
+    keywords: ['modules', 'imports', 'ngmodule', 'subset', 'bundle'],
+  },
+  {
+    path: '/individual-imports',
+    label: 'Individual Imports',
+    description:
+      'Shows how to import standalone ngx-ol components directly when you only need a minimal set.',
+    keywords: ['imports', 'standalone', 'components', 'bundle', 'explicit'],
   },
   {
     path: '/advanced',
@@ -59,16 +96,16 @@ export const DEMOS: readonly Demo[] = [
     keywords: ['geojson', 'features', 'geometry', 'vector'],
   },
   {
-    path: '/display-geojson-source',
-    label: 'GeoJSON Source',
-    description: 'Loads a GeoJSON source directly and lets OpenLayers render the features.',
-    keywords: ['geojson', 'source', 'vector', 'features'],
-  },
-  {
     path: '/geometry-components',
     label: 'Geometry Components',
     description: 'Demonstrates every template-based geometry component exposed by ngx-ol.',
     keywords: ['geometry', 'template', 'point', 'polygon', 'line'],
+  },
+  {
+    path: '/display-geojson-source',
+    label: 'GeoJSON Source',
+    description: 'Loads a GeoJSON source directly and lets OpenLayers render the features.',
+    keywords: ['geojson', 'source', 'vector', 'features'],
   },
   {
     path: '/cluster',
@@ -212,3 +249,8 @@ export const DEMOS: readonly Demo[] = [
     keywords: ['swipe', 'compare', 'layers', 'clip'],
   },
 ];
+
+export const DEMOS: readonly Demo[] = DEMO_DEFINITIONS.map((demo) => ({
+  ...demo,
+  sourceUrl: buildSourceUrl(demo.path),
+}));

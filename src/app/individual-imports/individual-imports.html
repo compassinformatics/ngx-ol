@@ -1,0 +1,27 @@
+<div class="layout demo-layout">
+  <aol-map class="map demo-map" [runOutsideAngular]="true">
+    <aol-view [zoom]="zoom()" [center]="center()"></aol-view>
+
+    <aol-layer-tile>
+      <aol-source-osm></aol-source-osm>
+    </aol-layer-tile>
+
+    <aol-interaction-default></aol-interaction-default>
+    <aol-control-scaleline></aol-control-scaleline>
+    <aol-control-zoom></aol-control-zoom>
+    <aol-control-attribution></aol-control-attribution>
+  </aol-map>
+
+  <aside class="panel demo-panel">
+    <section class="section">
+      <h2>Used in this demo</h2>
+      <p>This page imports each standalone `ngx-ol` component directly instead of using `AngularOpenlayersModule` or one of the grouped sub-modules.</p>
+      <ul class="component-list">
+        @for (componentName of usedComponents; track componentName) {
+          <li><code>{{ componentName }}</code></li>
+        }
+      </ul>
+      <p>This is the smallest and most explicit import style when you only need a few building blocks.</p>
+    </section>
+  </aside>
+</div>

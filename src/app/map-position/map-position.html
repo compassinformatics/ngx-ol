@@ -1,6 +1,6 @@
 <div class="layout demo-layout">
-  <aol-map class="map demo-map" (moveStart)="startMoving()" (moveEnd)="displayCoordinates()">
-    <aol-view #view [zoom]="form.controls.zoom.value" [center]="center()"></aol-view>
+  <aol-map class="map demo-map" (moveEnd)="syncFormToMap()">
+    <aol-view #view [zoom]="zoom()" [center]="center()"></aol-view>
 
     <aol-layer-tile>
       <aol-source-osm></aol-source-osm>
@@ -14,14 +14,7 @@
 
   <aside class="panel demo-panel">
     <section class="section">
-      <h2>Map coordinates</h2>
-      <p>Longitude: {{ moving() ? '----' : currentLongitude().toFixed(6) }}</p>
-      <p>Latitude: {{ moving() ? '----' : currentLatitude().toFixed(6) }}</p>
-      <p>Zoom: {{ moving() ? '----' : currentZoom() }}</p>
-    </section>
-
-    <section class="section">
-      <h2>Update coordinates</h2>
+      <h2>Map position</h2>
       <form class="form" [formGroup]="form">
         <label class="field">
           <span>Longitude</span>

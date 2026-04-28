@@ -29,6 +29,56 @@ Here is a "minimal" map example that fetches tiles from OpenStreetMap and center
 
 See `/src/app` for examples
 
+## Sub Modules
+
+The library also exposes smaller grouped modules so an app does not need to import `AngularOpenlayersModule` for every demo or feature.
+
+### Available grouped modules
+
+- `AngularOpenlayersMapModule`
+  Includes `MapComponent`, `ViewComponent`, all control components, and the map-level interaction components.
+- `AngularOpenlayersControlsModule`
+  Includes the control components only.
+- `AngularOpenlayersMapInteractionsModule`
+  Includes map navigation and viewport interactions only.
+- `AngularOpenlayersFeatureInteractionsModule`
+  Includes `DragAndDropInteractionComponent`, `DrawInteractionComponent`, `SelectInteractionComponent`, `ModifyInteractionComponent`, `SnapInteractionComponent`, and `TranslateInteractionComponent`.
+- `AngularOpenlayersTileLayersModule`
+  Includes `LayerGroupComponent`, `LayerTileComponent`, tiled source components, and tile grid helpers.
+- `AngularOpenlayersImageLayersModule`
+  Includes `LayerGroupComponent`, `LayerImageComponent`, `SourceImageStaticComponent`, and `SourceImageWMSComponent`.
+- `AngularOpenlayersArcGisModule`
+  Includes `LayerGroupComponent`, `LayerImageComponent`, and `SourceImageArcGISRestComponent`.
+- `AngularOpenlayersVectorLayersModule`
+  Includes vector layer components, vector source components, `FeatureComponent`, format components, geometry components, style components, and feature interaction components.
+- `AngularOpenlayersGeometryStylesModule`
+  Includes template-based geometry and style components only.
+- `AngularOpenlayersOverlayModule`
+  Includes `OverlayComponent`, `ContentComponent`, `AttributionsComponent`, and `AttributionComponent`.
+
+### Not included in grouped modules
+
+These remain direct exports and are not included in the grouped modules because they are abstract base building blocks:
+
+- `LayerComponent`
+- `SourceComponent`
+- `SimpleGeometryComponent`
+
+### Example
+
+```ts
+import {
+  AngularOpenlayersMapModule,
+  AngularOpenlayersTileLayersModule,
+} from '@compassinformatics/ngx-ol';
+
+@Component({
+  imports: [AngularOpenlayersMapModule, AngularOpenlayersTileLayersModule],
+  templateUrl: './basic-map.html',
+})
+export class BasicMap {}
+```
+
 ## Development
 
 TODO

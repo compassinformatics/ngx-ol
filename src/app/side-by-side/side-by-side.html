@@ -1,5 +1,5 @@
 <div class="layout">
-  <aol-map class="map">
+  <aol-map class="demo-map">
     <aol-view #sharedView [zoom]="zoom()" [center]="center()"></aol-view>
 
     <aol-layer-tile>
@@ -12,7 +12,7 @@
     <aol-control-attribution></aol-control-attribution>
   </aol-map>
 
-  <aol-map #secondMap class="map">
+  <aol-map #secondMap class="demo-map">
     <aol-layer-tile>
       <aol-source-xyz
         url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"

@@ -14,6 +14,7 @@ import { GeometryComponents } from './geometry-components/geometry-components';
 import { Home } from './home/home';
 import { ImageStatic } from './image-static/image-static';
 import { ImageWms } from './image-wms/image-wms';
+import { IndividualImports } from './individual-imports/individual-imports';
 import { MapPosition } from './map-position/map-position';
 import { MapInteractions } from './map-interactions/map-interactions';
 import { Marker } from './marker/marker';
@@ -26,6 +27,7 @@ import { Raster } from './raster/raster';
 import { SelectInteraction } from './select-interaction/select-interaction';
 import { SideBySide } from './side-by-side/side-by-side';
 import { Swipe } from './swipe/swipe';
+import { SubModules } from './sub-modules/sub-modules';
 import { TileJson } from './tile-json/tile-json';
 import { TileJsonDynamic } from './tile-json-dynamic/tile-json-dynamic';
 import { Utfgrid } from './utfgrid/utfgrid';
@@ -36,6 +38,8 @@ import { XyzEsri } from './xyz-esri/xyz-esri';
 export const routes: Routes = [
   { path: '', component: Home },
   { path: 'basic', component: BasicMap },
+  { path: 'individual-imports', component: IndividualImports },
+  { path: 'sub-modules', component: SubModules },
   { path: 'map-position', component: MapPosition },
   { path: 'cursor-position', component: CursorPosition },
   { path: 'display-geometry', component: DisplayGeometry },
