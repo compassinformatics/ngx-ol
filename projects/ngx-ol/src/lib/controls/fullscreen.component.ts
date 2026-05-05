@@ -8,24 +8,15 @@ import { MapComponent } from '../map.component';
   template: ` <ng-content></ng-content> `,
 })
 export class ControlFullScreenComponent implements OnInit, OnDestroy {
-  @Input()
-  className?: string;
-  @Input()
-  label?: string | HTMLElement | Text;
-  @Input()
-  labelActive?: string | HTMLElement | Text;
-  @Input()
-  activeClassName?: string;
-  @Input()
-  inactiveClassName?: string;
-  @Input()
-  tipLabel?: string;
-  @Input()
-  keys?: boolean;
-  @Input()
-  target?: string | HTMLElement;
-  @Input()
-  source?: string | HTMLElement;
+  @Input() className?: string;
+  @Input() label?: string | HTMLElement | Text;
+  @Input() labelActive?: string | HTMLElement | Text;
+  @Input() activeClassName?: string;
+  @Input() inactiveClassName?: string;
+  @Input() tipLabel?: string;
+  @Input() keys?: boolean;
+  @Input() target?: string | HTMLElement;
+  @Input() source?: string | HTMLElement;
 
   instance: FullScreen;
 

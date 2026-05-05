@@ -22,64 +22,36 @@ import { ProjectionLike } from 'ol/proj';
   template: ` <ng-content></ng-content> `,
 })
 export class ViewComponent implements OnInit, OnChanges, OnDestroy {
-  @Input()
-  constrainRotation: boolean | number;
-  @Input()
-  enableRotation: boolean;
-  @Input()
-  extent?: Extent;
-  @Input()
-  maxResolution: number;
-  @Input()
-  minResolution: number;
-  @Input()
-  maxZoom: number;
-  @Input()
-  minZoom: number;
-  @Input()
-  resolution?: number;
-  @Input()
-  resolutions: number[] | undefined;
-  @Input()
-  rotation: number;
-  @Input()
-  zoom?: number;
-  @Input()
-  zoomFactor: number;
-  @Input()
-  center?: Coordinate;
-  @Input()
-  projection: ProjectionLike;
-  @Input()
-  constrainOnlyCenter: boolean;
-  @Input()
-  smoothExtentConstraint: boolean;
-  @Input()
-  constrainResolution: boolean;
-  @Input()
-  smoothResolutionConstraint: boolean;
-  @Input()
-  showFullExtent: boolean;
-  @Input()
-  multiWorld: boolean;
-  @Input()
-  padding?: number[];
+  @Input() constrainRotation: boolean | number;
+  @Input() enableRotation: boolean;
+  @Input() extent?: Extent;
+  @Input() maxResolution: number;
+  @Input() minResolution: number;
+  @Input() maxZoom: number;
+  @Input() minZoom: number;
+  @Input() resolution?: number;
+  @Input() resolutions: number[] | undefined;
+  @Input() rotation: number;
+  @Input() zoom?: number;
+  @Input() zoomFactor: number;
+  @Input() center?: Coordinate;
+  @Input() projection: ProjectionLike;
+  @Input() constrainOnlyCenter: boolean;
+  @Input() smoothExtentConstraint: boolean;
+  @Input() constrainResolution: boolean;
+  @Input() smoothResolutionConstraint: boolean;
+  @Input() showFullExtent: boolean;
+  @Input() multiWorld: boolean;
+  @Input() padding?: number[];
 
-  @Input()
-  zoomAnimation = false;
+  @Input() zoomAnimation = false;
 
-  @Output()
-  olChange = new EventEmitter<BaseEvent>();
-  @Output()
-  changeCenter = new EventEmitter<ObjectEvent>();
-  @Output()
-  changeResolution = new EventEmitter<ObjectEvent>();
-  @Output()
-  changeRotation = new EventEmitter<ObjectEvent>();
-  @Output()
-  olError = new EventEmitter<BaseEvent>();
-  @Output()
-  propertyChange = new EventEmitter<ObjectEvent>();
+  @Output() olChange = new EventEmitter<BaseEvent>();
+  @Output() changeCenter = new EventEmitter<ObjectEvent>();
+  @Output() changeResolution = new EventEmitter<ObjectEvent>();
+  @Output() changeRotation = new EventEmitter<ObjectEvent>();
+  @Output() olError = new EventEmitter<BaseEvent>();
+  @Output() propertyChange = new EventEmitter<ObjectEvent>();
 
   public instance: View;
   public componentType = 'view';

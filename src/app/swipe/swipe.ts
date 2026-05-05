@@ -63,7 +63,8 @@ export class Swipe {
     this.dragStartOffset.set(this.swipeOffsetToCenter());
     this.dragStartClientX.set(event.clientX);
     event.preventDefault();
-    event.currentTarget instanceof HTMLElement && event.currentTarget.setPointerCapture(event.pointerId);
+    event.currentTarget instanceof HTMLElement &&
+      event.currentTarget.setPointerCapture(event.pointerId);
   }
 
   protected onPointerMove(event: PointerEvent): void {

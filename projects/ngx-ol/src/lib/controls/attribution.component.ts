@@ -9,24 +9,15 @@ import { MapComponent } from '../map.component';
   template: ``,
 })
 export class ControlAttributionComponent implements OnInit, OnDestroy {
-  @Input()
-  className?: string;
-  @Input()
-  collapsible?: boolean;
-  @Input()
-  collapsed?: boolean;
-  @Input()
-  tipLabel?: string;
-  @Input()
-  label?: string | HTMLElement;
-  @Input()
-  expandClassName?: string;
-  @Input()
-  collapseLabel?: string | HTMLElement;
-  @Input()
-  collapseClassName?: string;
-  @Input()
-  render?: (event: MapEvent) => void;
+  @Input() className?: string;
+  @Input() collapsible?: boolean;
+  @Input() collapsed?: boolean;
+  @Input() tipLabel?: string;
+  @Input() label?: string | HTMLElement;
+  @Input() expandClassName?: string;
+  @Input() collapseLabel?: string | HTMLElement;
+  @Input() collapseClassName?: string;
+  @Input() render?: (event: MapEvent) => void;
 
   public componentType = 'control';
   instance: Attribution;

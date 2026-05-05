@@ -25,26 +25,19 @@ export class LayerVectorImageComponent
   extends LayerComponent
   implements OnInit, OnDestroy, OnChanges
 {
-  @Input()
-  renderBuffer: number;
+  @Input() renderBuffer: number;
 
-  @Input()
-  style: StyleLike | FlatStyleLike | null | undefined;
+  @Input() style: StyleLike | FlatStyleLike | null | undefined;
 
-  @Input()
-  declutter: boolean | string | number;
+  @Input() declutter: boolean | string | number;
 
-  @Input()
-  background?: BackgroundColor;
+  @Input() background?: BackgroundColor;
 
-  @Input()
-  imageRatio: number;
+  @Input() imageRatio: number;
 
-  @Input()
-  properties: Record<string, any>;
+  @Input() properties: Record<string, any>;
 
-  @Input()
-  source?: VectorSource;
+  @Input() source?: VectorSource;
 
   constructor(map: MapComponent, @Optional() group?: LayerGroupComponent) {
     super(group || map);

@@ -15,37 +15,22 @@ import BaseEvent from 'ol/events/Event';
   template: '',
 })
 export class SelectInteractionComponent implements OnInit, OnDestroy {
-  @Input()
-  addCondition?: Condition;
-  @Input()
-  condition?: Condition;
-  @Input()
-  layers?: Layer[] | ((layer: Layer) => boolean);
-  @Input()
-  style?: StyleLike | null | undefined;
-  @Input()
-  removeCondition?: Condition;
-  @Input()
-  toggleCondition?: Condition;
-  @Input()
-  multi?: boolean;
-  @Input()
-  features?: Collection<Feature>;
-  @Input()
-  filter?: FilterFunction;
-  @Input()
-  hitTolerance?: number;
+  @Input() addCondition?: Condition;
+  @Input() condition?: Condition;
+  @Input() layers?: Layer[] | ((layer: Layer) => boolean);
+  @Input() style?: StyleLike | null | undefined;
+  @Input() removeCondition?: Condition;
+  @Input() toggleCondition?: Condition;
+  @Input() multi?: boolean;
+  @Input() features?: Collection<Feature>;
+  @Input() filter?: FilterFunction;
+  @Input() hitTolerance?: number;
 
-  @Output()
-  olChange = new EventEmitter<BaseEvent>();
-  @Output()
-  olChangeActive = new EventEmitter<ObjectEvent>();
-  @Output()
-  olError = new EventEmitter<BaseEvent>();
-  @Output()
-  propertyChange = new EventEmitter<ObjectEvent>();
-  @Output()
-  olSelect = new EventEmitter<SelectEvent>();
+  @Output() olChange = new EventEmitter<BaseEvent>();
+  @Output() olChangeActive = new EventEmitter<ObjectEvent>();
+  @Output() olError = new EventEmitter<BaseEvent>();
+  @Output() propertyChange = new EventEmitter<ObjectEvent>();
+  @Output() olSelect = new EventEmitter<SelectEvent>();
 
   instance: Select;
 

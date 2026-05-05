@@ -31,63 +31,35 @@ import { FeatureComponent } from './feature.component';
   `,
 })
 export class MapComponent implements OnInit, AfterViewInit, OnChanges {
-  @Input()
-  width = '100%';
-  @Input()
-  height = '100%';
-  @Input()
-  pixelRatio: number;
-  @Input()
-  keyboardEventTarget: HTMLElement | string;
-  @Input()
-  maxTilesLoading: number;
-  @Input()
-  moveTolerance: number;
-  @Input()
-  runOutsideAngular = true;
+  @Input() width = '100%';
+  @Input() height = '100%';
+  @Input() pixelRatio: number;
+  @Input() keyboardEventTarget: HTMLElement | string;
+  @Input() maxTilesLoading: number;
+  @Input() moveTolerance: number;
+  @Input() runOutsideAngular = true;
 
-  @Output()
-  olChange = new EventEmitter<BaseEvent>();
-  @Output()
-  olChangeLayerGroup = new EventEmitter<ObjectEvent>();
-  @Output()
-  olChangeSize = new EventEmitter<ObjectEvent>();
-  @Output()
-  olChangeTarget = new EventEmitter<ObjectEvent>();
-  @Output()
-  olChangeView = new EventEmitter<ObjectEvent>();
-  @Output()
-  olClick = new EventEmitter<MapBrowserEvent<MouseEvent> | any>();
-  @Output()
-  dblClick = new EventEmitter<MapBrowserEvent<MouseEvent> | any>();
-  @Output()
-  olError = new EventEmitter<BaseEvent>();
-  @Output()
-  loadEnd = new EventEmitter<MapEvent>();
-  @Output()
-  loadStart = new EventEmitter<MapEvent>();
-  @Output()
-  moveEnd = new EventEmitter<MapEvent>();
-  @Output()
-  moveStart = new EventEmitter<MapEvent>();
-  @Output()
-  pointerDrag = new EventEmitter<MapBrowserEvent<MouseEvent> | any>();
-  @Output()
-  pointerMove = new EventEmitter<MapBrowserEvent<MouseEvent> | any>();
-  @Output()
-  olPostCompose = new EventEmitter<RenderEvent>();
-  @Output()
-  olPostRender = new EventEmitter<RenderEvent>();
-  @Output()
-  olPreCompose = new EventEmitter<RenderEvent>();
-  @Output()
-  olPropertyChange = new EventEmitter<ObjectEvent>();
-  @Output()
-  postRender = new EventEmitter<MapEvent>();
-  @Output()
-  propertyChange = new EventEmitter<ObjectEvent>();
-  @Output()
-  singleClick = new EventEmitter<MapBrowserEvent<MouseEvent> | any>();
+  @Output() olChange = new EventEmitter<BaseEvent>();
+  @Output() olChangeLayerGroup = new EventEmitter<ObjectEvent>();
+  @Output() olChangeSize = new EventEmitter<ObjectEvent>();
+  @Output() olChangeTarget = new EventEmitter<ObjectEvent>();
+  @Output() olChangeView = new EventEmitter<ObjectEvent>();
+  @Output() olClick = new EventEmitter<MapBrowserEvent<MouseEvent> | any>();
+  @Output() dblClick = new EventEmitter<MapBrowserEvent<MouseEvent> | any>();
+  @Output() olError = new EventEmitter<BaseEvent>();
+  @Output() loadEnd = new EventEmitter<MapEvent>();
+  @Output() loadStart = new EventEmitter<MapEvent>();
+  @Output() moveEnd = new EventEmitter<MapEvent>();
+  @Output() moveStart = new EventEmitter<MapEvent>();
+  @Output() pointerDrag = new EventEmitter<MapBrowserEvent<MouseEvent> | any>();
+  @Output() pointerMove = new EventEmitter<MapBrowserEvent<MouseEvent> | any>();
+  @Output() olPostCompose = new EventEmitter<RenderEvent>();
+  @Output() olPostRender = new EventEmitter<RenderEvent>();
+  @Output() olPreCompose = new EventEmitter<RenderEvent>();
+  @Output() olPropertyChange = new EventEmitter<ObjectEvent>();
+  @Output() postRender = new EventEmitter<MapEvent>();
+  @Output() propertyChange = new EventEmitter<ObjectEvent>();
+  @Output() singleClick = new EventEmitter<MapBrowserEvent<MouseEvent> | any>();
 
   public instance: Map;
   public componentType = 'map';

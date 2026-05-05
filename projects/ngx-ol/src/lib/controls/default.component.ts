@@ -14,18 +14,12 @@ import { MapComponent } from '../map.component';
   template: '',
 })
 export class DefaultControlComponent implements OnInit, OnDestroy {
-  @Input()
-  attribution?: boolean;
-  @Input()
-  attributionOptions?: AttributionOptions;
-  @Input()
-  rotate?: boolean;
-  @Input()
-  rotateOptions?: RotateOptions;
-  @Input()
-  zoom?: boolean;
-  @Input()
-  zoomOptions?: ZoomOptions;
+  @Input() attribution?: boolean;
+  @Input() attributionOptions?: AttributionOptions;
+  @Input() rotate?: boolean;
+  @Input() rotateOptions?: RotateOptions;
+  @Input() zoom?: boolean;
+  @Input() zoomOptions?: ZoomOptions;
 
   instance: Collection<Control>;
 

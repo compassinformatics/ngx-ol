@@ -8,8 +8,7 @@ import { FeatureComponent } from '../feature.component';
   template: ` <ng-content></ng-content> `,
 })
 export class GeometryCollectionComponent implements OnInit, OnChanges {
-  @Input()
-  geometries: Geometry[] = [];
+  @Input() geometries: Geometry[] = [];
 
   public componentType = 'geometry-collection';
   public instance: GeometryCollection;

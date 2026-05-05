@@ -19,50 +19,38 @@ import { SourceComponent } from './source.component';
 @Component({
   selector: 'aol-source-tilearcgisrest',
   template: ` <ng-content></ng-content> `,
-  providers: [{ provide: SourceComponent, useExisting: forwardRef(() => SourceTileArcGISRestComponent) }],
+  providers: [
+    { provide: SourceComponent, useExisting: forwardRef(() => SourceTileArcGISRestComponent) },
+  ],
 })
 export class SourceTileArcGISRestComponent extends SourceComponent implements OnInit, OnChanges {
-  @Input()
-  cacheSize?: number;
+  @Input() cacheSize?: number;
 
-  @Input()
-  crossOrigin?: string | null;
+  @Input() crossOrigin?: string | null;
 
-  @Input()
-  interpolate?: boolean;
+  @Input() interpolate?: boolean;
 
-  @Input()
-  params?: { [key: string]: any };
+  @Input() params?: { [key: string]: any };
 
-  @Input()
-  hidpi?: boolean;
+  @Input() hidpi?: boolean;
 
-  @Input()
-  tileGrid?: TileGrid;
+  @Input() tileGrid?: TileGrid;
 
-  @Input()
-  projection?: ProjectionLike;
+  @Input() projection?: ProjectionLike;
 
-  @Input()
-  reprojectionErrorThreshold?: number;
+  @Input() reprojectionErrorThreshold?: number;
 
-  @Input()
-  tileLoadFunction?: LoadFunction;
+  @Input() tileLoadFunction?: LoadFunction;
 
-  @Input()
-  url?: string;
+  @Input() url?: string;
 
-  @Input()
-  wrapX?: boolean;
+  @Input() wrapX?: boolean;
 
-  @Input()
-  transition?: number;
+  @Input() transition?: number;
 
-  @Input()
-  urls?: string[];
+  @Input() urls?: string[];
 
-  @Input()
-  zDirection?: number | NearestDirectionFunction;
+  @Input() zDirection?: number | NearestDirectionFunction;
 
   instance: TileArcGISRest;
 

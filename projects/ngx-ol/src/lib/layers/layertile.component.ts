@@ -19,14 +19,10 @@ import TileSource from 'ol/source/Tile';
   template: ` <ng-content></ng-content> `,
 })
 export class LayerTileComponent extends LayerComponent implements OnInit, OnDestroy, OnChanges {
-  @Input()
-  preload?: number;
-  @Input()
-  useInterimTilesOnError?: boolean;
-  @Input()
-  cacheSize?: number;
-  @Input()
-  source?: TileSource;
+  @Input() preload?: number;
+  @Input() useInterimTilesOnError?: boolean;
+  @Input() cacheSize?: number;
+  @Input() source?: TileSource;
 
   constructor(map: MapComponent, @Optional() group?: LayerGroupComponent) {
     super(group || map);

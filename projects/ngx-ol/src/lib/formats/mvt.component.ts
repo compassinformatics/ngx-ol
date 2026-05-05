@@ -8,16 +8,11 @@ import { Options } from 'ol/format/MVT';
   template: '',
 })
 export class FormatMVTComponent {
-  @Input()
-  featureClass?: FeatureClass;
-  @Input()
-  geometryName?: string;
-  @Input()
-  layerName?: string;
-  @Input()
-  layers?: string[];
-  @Input()
-  idProperty?: string;
+  @Input() featureClass?: FeatureClass;
+  @Input() geometryName?: string;
+  @Input() layerName?: string;
+  @Input() layers?: string[];
+  @Input() idProperty?: string;
 
   public componentType = 'format';
 

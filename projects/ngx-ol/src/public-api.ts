@@ -465,7 +465,11 @@ export class AngularOpenlayersArcGisModule {}
     ...GEOMETRY_STYLE_COMPONENTS,
     ...FEATURE_INTERACTION_COMPONENTS,
   ],
-  exports: [...VECTOR_LAYER_COMPONENTS, ...GEOMETRY_STYLE_COMPONENTS, ...FEATURE_INTERACTION_COMPONENTS],
+  exports: [
+    ...VECTOR_LAYER_COMPONENTS,
+    ...GEOMETRY_STYLE_COMPONENTS,
+    ...FEATURE_INTERACTION_COMPONENTS,
+  ],
 })
 export class AngularOpenlayersVectorLayersModule {}
 

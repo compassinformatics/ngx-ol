@@ -12,20 +12,13 @@ import { ColorLike } from 'ol/colorlike';
   template: ` <div class="aol-style-stroke"></div> `,
 })
 export class StyleStrokeComponent implements OnInit, OnChanges {
-  @Input()
-  color?: Color | ColorLike;
-  @Input()
-  lineCap?: CanvasLineCap | undefined;
-  @Input()
-  lineDash?: number[];
-  @Input()
-  lineDashOffset?: number | undefined;
-  @Input()
-  lineJoin?: CanvasLineJoin | undefined;
-  @Input()
-  miterLimit?: number;
-  @Input()
-  width?: number;
+  @Input() color?: Color | ColorLike;
+  @Input() lineCap?: CanvasLineCap | undefined;
+  @Input() lineDash?: number[];
+  @Input() lineDashOffset?: number | undefined;
+  @Input() lineJoin?: CanvasLineJoin | undefined;
+  @Input() miterLimit?: number;
+  @Input() width?: number;
 
   public instance: Stroke;
   /* the typings do not have the setters */

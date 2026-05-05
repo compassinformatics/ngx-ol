@@ -1,8 +1,12 @@
-import { AfterViewInit, ChangeDetectionStrategy, Component, OnDestroy, signal, viewChild } from '@angular/core';
 import {
-  AngularOpenlayersMapModule,
-  AngularOpenlayersTileLayersModule,
-} from 'ngx-ol';
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  Component,
+  OnDestroy,
+  signal,
+  viewChild,
+} from '@angular/core';
+import { AngularOpenlayersMapModule, AngularOpenlayersTileLayersModule } from 'ngx-ol';
 import type { MapComponent } from 'ngx-ol';
 import type { LayerWebGLTileComponent } from 'ngx-ol';
 import type { Style } from 'ol/layer/WebGLTile';

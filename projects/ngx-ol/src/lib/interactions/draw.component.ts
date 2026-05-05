@@ -18,61 +18,34 @@ import { FlatStyleLike } from 'ol/style/flat';
   template: '',
 })
 export class DrawInteractionComponent implements OnInit, OnDestroy {
-  @Input()
-  clickTolerance?: number;
-  @Input()
-  features?: Collection<Feature>;
-  @Input()
-  source?: Vector;
-  @Input()
-  dragVertexDelay?: number;
-  @Input()
-  snapTolerance?: number;
-  @Input()
-  stopClick?: boolean;
-  @Input()
-  type: Type;
-  @Input()
-  maxPoints?: number;
-  @Input()
-  minPoints?: number;
-  @Input()
-  finishCondition?: Condition;
-  @Input()
-  style?: StyleLike | FlatStyleLike | undefined;
-  @Input()
-  geometryFunction?: GeometryFunction;
-  @Input()
-  geometryName?: string;
-  @Input()
-  condition?: Condition;
-  @Input()
-  freehandCondition?: Condition;
-  @Input()
-  freehand?: boolean;
-  @Input()
-  trace?: boolean | Condition;
-  @Input()
-  traceSource?: Vector;
-  @Input()
-  wrapX?: boolean;
-  @Input()
-  geometryLayout?: GeometryLayout;
+  @Input() clickTolerance?: number;
+  @Input() features?: Collection<Feature>;
+  @Input() source?: Vector;
+  @Input() dragVertexDelay?: number;
+  @Input() snapTolerance?: number;
+  @Input() stopClick?: boolean;
+  @Input() type: Type;
+  @Input() maxPoints?: number;
+  @Input() minPoints?: number;
+  @Input() finishCondition?: Condition;
+  @Input() style?: StyleLike | FlatStyleLike | undefined;
+  @Input() geometryFunction?: GeometryFunction;
+  @Input() geometryName?: string;
+  @Input() condition?: Condition;
+  @Input() freehandCondition?: Condition;
+  @Input() freehand?: boolean;
+  @Input() trace?: boolean | Condition;
+  @Input() traceSource?: Vector;
+  @Input() wrapX?: boolean;
+  @Input() geometryLayout?: GeometryLayout;
 
-  @Output()
-  olChange = new EventEmitter<BaseEvent>();
-  @Output()
-  olChangeActive = new EventEmitter<ObjectEvent>();
-  @Output()
-  olDrawAbort = new EventEmitter<DrawEvent>();
-  @Output()
-  drawEnd = new EventEmitter<DrawEvent>();
-  @Output()
-  drawStart = new EventEmitter<DrawEvent>();
-  @Output()
-  olError = new EventEmitter<BaseEvent>();
-  @Output()
-  propertyChange = new EventEmitter<ObjectEvent>();
+  @Output() olChange = new EventEmitter<BaseEvent>();
+  @Output() olChangeActive = new EventEmitter<ObjectEvent>();
+  @Output() olDrawAbort = new EventEmitter<DrawEvent>();
+  @Output() drawEnd = new EventEmitter<DrawEvent>();
+  @Output() drawStart = new EventEmitter<DrawEvent>();
+  @Output() olError = new EventEmitter<BaseEvent>();
+  @Output() propertyChange = new EventEmitter<ObjectEvent>();
 
   instance: Draw;
 

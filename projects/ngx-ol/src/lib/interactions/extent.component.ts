@@ -11,26 +11,19 @@ import { MapComponent } from '../map.component';
   template: '',
 })
 export class ExtentInteractionComponent implements OnInit, OnDestroy {
-  @Input()
-  condition?: Condition;
+  @Input() condition?: Condition;
 
-  @Input()
-  extent?: ExtentType;
+  @Input() extent?: ExtentType;
 
-  @Input()
-  boxStyle?: StyleLike;
+  @Input() boxStyle?: StyleLike;
 
-  @Input()
-  pixelTolerance?: number;
+  @Input() pixelTolerance?: number;
 
-  @Input()
-  pointerStyle?: StyleLike;
+  @Input() pointerStyle?: StyleLike;
 
-  @Input()
-  wrapX?: boolean;
+  @Input() wrapX?: boolean;
 
-  @Output()
-  extentChanged = new EventEmitter<ExtentEvent>();
+  @Output() extentChanged = new EventEmitter<ExtentEvent>();
 
   instance: ExtentInteraction;
 

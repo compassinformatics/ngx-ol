@@ -23,33 +23,20 @@ import { SourceXYZComponent } from './xyz.component';
   providers: [{ provide: SourceComponent, useExisting: forwardRef(() => SourceOsmComponent) }],
 })
 export class SourceOsmComponent extends SourceXYZComponent implements AfterContentInit {
-  @Input()
-  cacheSize?: number;
-  @Input()
-  crossOrigin?: string;
-  @Input()
-  interpolate?: boolean;
-  @Input()
-  maxZoom?: number;
-  @Input()
-  reprojectionErrorThreshold?: number;
-  @Input()
-  tileLoadFunction?: LoadFunction;
-  @Input()
-  transition?: number;
-  @Input()
-  url?: string;
-  @Input()
-  wrapX?: boolean;
-  @Input()
-  zDirection?: number | NearestDirectionFunction;
+  @Input() cacheSize?: number;
+  @Input() crossOrigin?: string;
+  @Input() interpolate?: boolean;
+  @Input() maxZoom?: number;
+  @Input() reprojectionErrorThreshold?: number;
+  @Input() tileLoadFunction?: LoadFunction;
+  @Input() transition?: number;
+  @Input() url?: string;
+  @Input() wrapX?: boolean;
+  @Input() zDirection?: number | NearestDirectionFunction;
 
-  @Output()
-  tileLoadStart = new EventEmitter<TileSourceEvent>();
-  @Output()
-  tileLoadEnd = new EventEmitter<TileSourceEvent>();
-  @Output()
-  tileLoadError = new EventEmitter<TileSourceEvent>();
+  @Output() tileLoadStart = new EventEmitter<TileSourceEvent>();
+  @Output() tileLoadEnd = new EventEmitter<TileSourceEvent>();
+  @Output() tileLoadError = new EventEmitter<TileSourceEvent>();
 
   instance: OSM;
 

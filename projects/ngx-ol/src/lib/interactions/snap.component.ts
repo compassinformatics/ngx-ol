@@ -14,27 +14,17 @@ import Vector from 'ol/source/Vector';
   template: '',
 })
 export class SnapInteractionComponent implements OnInit, OnDestroy {
-  @Input()
-  features?: Collection<Feature>;
-  @Input()
-  edge?: boolean;
-  @Input()
-  vertex?: boolean;
-  @Input()
-  pixelTolerance?: number;
-  @Input()
-  source?: Vector;
+  @Input() features?: Collection<Feature>;
+  @Input() edge?: boolean;
+  @Input() vertex?: boolean;
+  @Input() pixelTolerance?: number;
+  @Input() source?: Vector;
 
-  @Output()
-  olChange = new EventEmitter<BaseEvent>();
-  @Output()
-  olChangeActive = new EventEmitter<ObjectEvent>();
-  @Output()
-  olError = new EventEmitter<BaseEvent>();
-  @Output()
-  propertyChange = new EventEmitter<ObjectEvent>();
-  @Output()
-  olSnap = new EventEmitter<SnapEvent>();
+  @Output() olChange = new EventEmitter<BaseEvent>();
+  @Output() olChangeActive = new EventEmitter<ObjectEvent>();
+  @Output() olError = new EventEmitter<BaseEvent>();
+  @Output() propertyChange = new EventEmitter<ObjectEvent>();
+  @Output() olSnap = new EventEmitter<SnapEvent>();
 
   instance: Snap;
 

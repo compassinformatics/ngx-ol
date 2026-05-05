@@ -6,11 +6,9 @@ import { LayerComponent } from '../layers/layer.component';
 @Directive()
 // eslint-disable-next-line @angular-eslint/directive-class-suffix
 export abstract class SourceComponent implements OnDestroy {
-  @Input()
-  attributions?: AttributionLike;
+  @Input() attributions?: AttributionLike;
 
-  @Input()
-  attributionsCollapsible?: boolean;
+  @Input() attributionsCollapsible?: boolean;
 
   public instance: Source;
   public componentType = 'source';

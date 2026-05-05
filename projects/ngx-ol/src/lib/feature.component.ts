@@ -17,24 +17,26 @@ import { SourceVectorComponent } from './sources/vector.component';
   template: ` <ng-content></ng-content> `,
 })
 export class FeatureComponent implements OnInit, OnDestroy, OnChanges {
-  @Input()
-  id: string | number | undefined;
+  @Input() id: string | number | undefined;
 
-  @Input()
-  properties: Record<any, any>;
+  @Input() properties: Record<any, any>;
 
-  @Input()
-  feature: Feature;
+  @Input() feature: Feature;
 
-  @Input()
-  clickable: boolean;
+  @Input() clickable: boolean;
 
-  @Output()
-  olClick = new EventEmitter<{ event: MapBrowserEvent<MouseEvent> | any; feature: Feature }>();
-  @Output()
-  singleClick = new EventEmitter<{ event: MapBrowserEvent<MouseEvent> | any; feature: Feature }>();
-  @Output()
-  dblClick = new EventEmitter<{ event: MapBrowserEvent<MouseEvent> | any; feature: Feature }>();
+  @Output() olClick = new EventEmitter<{
+    event: MapBrowserEvent<MouseEvent> | any;
+    feature: Feature;
+  }>();
+  @Output() singleClick = new EventEmitter<{
+    event: MapBrowserEvent<MouseEvent> | any;
+    feature: Feature;
+  }>();
+  @Output() dblClick = new EventEmitter<{
+    event: MapBrowserEvent<MouseEvent> | any;
+    feature: Feature;
+  }>();
 
   public componentType = 'feature';
   public instance: Feature;

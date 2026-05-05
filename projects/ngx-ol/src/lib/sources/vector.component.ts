@@ -1,4 +1,13 @@
-import { Component, Host, Input, OnChanges, OnInit, Optional, SimpleChanges, forwardRef } from '@angular/core';
+import {
+  Component,
+  Host,
+  Input,
+  OnChanges,
+  OnInit,
+  Optional,
+  SimpleChanges,
+  forwardRef,
+} from '@angular/core';
 import Collection from 'ol/Collection.js';
 import type { FeatureLike } from 'ol/Feature.js';
 import type FeatureFormat from 'ol/format/Feature.js';
@@ -16,22 +25,14 @@ import { LayerHeatmapComponent } from '../layers/layerheatmap.component';
   providers: [{ provide: SourceComponent, useExisting: forwardRef(() => SourceVectorComponent) }],
 })
 export class SourceVectorComponent extends SourceComponent implements OnInit, OnChanges {
-  @Input()
-  overlaps: boolean;
-  @Input()
-  features: FeatureLike[] | Collection<FeatureLike> | undefined;
-  @Input()
-  useSpatialIndex: boolean;
-  @Input()
-  wrapX: boolean;
-  @Input()
-  loader?: FeatureLoader<FeatureLike>;
-  @Input()
-  url?: string | FeatureUrlFunction;
-  @Input()
-  format?: FeatureFormat<any>;
-  @Input()
-  strategy?: LoadingStrategy;
+  @Input() overlaps: boolean;
+  @Input() features: FeatureLike[] | Collection<FeatureLike> | undefined;
+  @Input() useSpatialIndex: boolean;
+  @Input() wrapX: boolean;
+  @Input() loader?: FeatureLoader<FeatureLike>;
+  @Input() url?: string | FeatureUrlFunction;
+  @Input() format?: FeatureFormat<any>;
+  @Input() strategy?: LoadingStrategy;
 
   instance: Vector;
 

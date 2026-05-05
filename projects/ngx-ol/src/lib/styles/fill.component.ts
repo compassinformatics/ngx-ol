@@ -12,8 +12,7 @@ import { ColorLike, PatternDescriptor } from 'ol/colorlike';
   template: ` <div class="aol-style-fill"></div> `,
 })
 export class StyleFillComponent implements OnInit, OnChanges {
-  @Input()
-  color?: Color | ColorLike | PatternDescriptor | null;
+  @Input() color?: Color | ColorLike | PatternDescriptor | null;
 
   public instance: Fill;
   private readonly host: StyleComponent | StyleCircleComponent | StyleTextComponent;

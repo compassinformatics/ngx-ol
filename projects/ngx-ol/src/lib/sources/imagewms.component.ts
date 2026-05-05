@@ -24,33 +24,20 @@ import { ServerType } from 'ol/source/wms';
   providers: [{ provide: SourceComponent, useExisting: forwardRef(() => SourceImageWMSComponent) }],
 })
 export class SourceImageWMSComponent extends SourceComponent implements OnChanges, OnInit {
-  @Input()
-  crossOrigin?: null | string;
-  @Input()
-  hidpi?: boolean;
-  @Input()
-  serverType?: ServerType;
-  @Input()
-  imageLoadFunction?: LoadFunction;
-  @Input()
-  interpolate?: boolean;
-  @Input()
-  params?: { [key: string]: any };
-  @Input()
-  projection?: ProjectionLike | string;
-  @Input()
-  ratio?: number;
-  @Input()
-  resolutions?: Array<number>;
-  @Input()
-  url?: string;
+  @Input() crossOrigin?: null | string;
+  @Input() hidpi?: boolean;
+  @Input() serverType?: ServerType;
+  @Input() imageLoadFunction?: LoadFunction;
+  @Input() interpolate?: boolean;
+  @Input() params?: { [key: string]: any };
+  @Input() projection?: ProjectionLike | string;
+  @Input() ratio?: number;
+  @Input() resolutions?: Array<number>;
+  @Input() url?: string;
 
-  @Output()
-  imageLoadStart = new EventEmitter<ImageSourceEvent>();
-  @Output()
-  imageLoadEnd = new EventEmitter<ImageSourceEvent>();
-  @Output()
-  imageLoadError = new EventEmitter<ImageSourceEvent>();
+  @Output() imageLoadStart = new EventEmitter<ImageSourceEvent>();
+  @Output() imageLoadEnd = new EventEmitter<ImageSourceEvent>();
+  @Output() imageLoadError = new EventEmitter<ImageSourceEvent>();
 
   instance: ImageWMS;
 

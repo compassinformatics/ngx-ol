@@ -17,39 +17,23 @@ import BaseVectorLayer from 'ol/layer/BaseVector';
   template: '',
 })
 export class ModifyInteractionComponent implements OnInit, OnDestroy {
-  @Input()
-  condition?: Condition;
-  @Input()
-  deleteCondition?: Condition;
-  @Input()
-  insertVertexCondition?: Condition;
-  @Input()
-  pixelTolerance?: number;
-  @Input()
-  style?: StyleLike | FlatStyleLike | undefined;
-  @Input()
-  features?: Collection<Feature>;
-  @Input()
-  wrapX?: boolean;
-  @Input()
-  source?: Vector;
-  @Input()
-  hitDetection?: boolean | BaseVectorLayer<any, any, any>;
-  @Input()
-  snapToPointer?: boolean;
+  @Input() condition?: Condition;
+  @Input() deleteCondition?: Condition;
+  @Input() insertVertexCondition?: Condition;
+  @Input() pixelTolerance?: number;
+  @Input() style?: StyleLike | FlatStyleLike | undefined;
+  @Input() features?: Collection<Feature>;
+  @Input() wrapX?: boolean;
+  @Input() source?: Vector;
+  @Input() hitDetection?: boolean | BaseVectorLayer<any, any, any>;
+  @Input() snapToPointer?: boolean;
 
-  @Output()
-  olChange = new EventEmitter<BaseEvent>();
-  @Output()
-  olChangeActive = new EventEmitter<ObjectEvent>();
-  @Output()
-  olError = new EventEmitter<BaseEvent>();
-  @Output()
-  olModifyEnd = new EventEmitter<ModifyEvent>();
-  @Output()
-  olModifyStart = new EventEmitter<ModifyEvent>();
-  @Output()
-  propertyChange = new EventEmitter<ObjectEvent>();
+  @Output() olChange = new EventEmitter<BaseEvent>();
+  @Output() olChangeActive = new EventEmitter<ObjectEvent>();
+  @Output() olError = new EventEmitter<BaseEvent>();
+  @Output() olModifyEnd = new EventEmitter<ModifyEvent>();
+  @Output() olModifyStart = new EventEmitter<ModifyEvent>();
+  @Output() propertyChange = new EventEmitter<ObjectEvent>();
 
   instance: Modify;
 

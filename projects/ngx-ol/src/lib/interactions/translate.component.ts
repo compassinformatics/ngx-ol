@@ -15,31 +15,19 @@ import { FilterFunction } from 'ol/interaction/Select';
   template: '',
 })
 export class TranslateInteractionComponent implements OnInit, OnDestroy {
-  @Input()
-  condition?: Condition;
-  @Input()
-  features?: Collection<Feature>;
-  @Input()
-  layers?: Layer[] | ((layer: Layer) => boolean);
-  @Input()
-  filter?: FilterFunction;
-  @Input()
-  hitTolerance?: number;
+  @Input() condition?: Condition;
+  @Input() features?: Collection<Feature>;
+  @Input() layers?: Layer[] | ((layer: Layer) => boolean);
+  @Input() filter?: FilterFunction;
+  @Input() hitTolerance?: number;
 
-  @Output()
-  olChange = new EventEmitter<BaseEvent>();
-  @Output()
-  olChangeActive = new EventEmitter<ObjectEvent>();
-  @Output()
-  olError = new EventEmitter<BaseEvent>();
-  @Output()
-  propertyChange = new EventEmitter<ObjectEvent>();
-  @Output()
-  translateEnd = new EventEmitter<TranslateEvent>();
-  @Output()
-  translateStart = new EventEmitter<TranslateEvent>();
-  @Output()
-  translating = new EventEmitter<TranslateEvent>();
+  @Output() olChange = new EventEmitter<BaseEvent>();
+  @Output() olChangeActive = new EventEmitter<ObjectEvent>();
+  @Output() olError = new EventEmitter<BaseEvent>();
+  @Output() propertyChange = new EventEmitter<ObjectEvent>();
+  @Output() translateEnd = new EventEmitter<TranslateEvent>();
+  @Output() translateStart = new EventEmitter<TranslateEvent>();
+  @Output() translating = new EventEmitter<TranslateEvent>();
 
   instance: Translate;
 
