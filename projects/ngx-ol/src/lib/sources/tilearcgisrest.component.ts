@@ -3,10 +3,10 @@ import {
   Component,
   forwardRef,
   Host,
-  Input,
   OnChanges,
   OnInit,
   SimpleChanges,
+  input,
 } from '@angular/core';
 import type { NearestDirectionFunction } from 'ol/array';
 import type { ProjectionLike } from 'ol/proj';
@@ -25,39 +25,37 @@ import { SourceComponent } from './source.component';
   ],
 })
 export class SourceTileArcGISRestComponent extends SourceComponent implements OnInit, OnChanges {
-  @Input() cacheSize?: number;
+  cacheSize = input<number>();
 
-  @Input() crossOrigin?: string | null;
+  crossOrigin = input<string | null>();
 
-  @Input() interpolate?: boolean;
+  interpolate = input<boolean>();
 
-  @Input() params?: { [key: string]: any };
+  params = input<{ [key: string]: any }>();
 
-  @Input() hidpi?: boolean;
+  hidpi = input<boolean>();
 
-  @Input() tileGrid?: TileGrid;
+  tileGrid = input<TileGrid>();
 
-  @Input() projection?: ProjectionLike;
+  projection = input<ProjectionLike>();
 
-  @Input() reprojectionErrorThreshold?: number;
+  reprojectionErrorThreshold = input<number>();
 
-  @Input() tileLoadFunction?: LoadFunction;
+  tileLoadFunction = input<LoadFunction>();
 
-  @Input() url?: string;
+  url = input<string>();
 
-  @Input() wrapX?: boolean;
+  wrapX = input<boolean>();
 
-  @Input() transition?: number;
+  transition = input<number>();
 
-  @Input() urls?: string[];
+  urls = input<string[]>();
 
-  @Input() zDirection?: number | NearestDirectionFunction;
+  zDirection = input<number | NearestDirectionFunction>();
 
   instance: TileArcGISRest;
 
-  protected readonly _instanceSignal = signal<
-    TileArcGISRest | undefined
-  >(undefined);
+  protected readonly _instanceSignal = signal<TileArcGISRest | undefined>(undefined);
 
   readonly instanceSignal = this._instanceSignal.asReadonly();
 
@@ -79,28 +77,28 @@ export class SourceTileArcGISRestComponent extends SourceComponent implements On
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (this.instance && changes.hasOwnProperty('params') && this.params) {
-      this.instance.updateParams(this.params);
+    if (this.instance && changes.hasOwnProperty('params') && this.params()) {
+      this.instance.updateParams(this.params());
     }
   }
 
   private createOptions(): Options {
     return {
-      attributions: this.attributions,
-      cacheSize: this.cacheSize,
-      crossOrigin: this.crossOrigin,
-      interpolate: this.interpolate,
-      params: this.params,
-      hidpi: this.hidpi,
-      tileGrid: this.tileGrid,
-      projection: this.projection,
-      reprojectionErrorThreshold: this.reprojectionErrorThreshold,
-      tileLoadFunction: this.tileLoadFunction,
-      url: this.url,
-      wrapX: this.wrapX,
-      transition: this.transition,
-      urls: this.urls,
-      zDirection: this.zDirection,
+      attributions: this.attributions(),
+      cacheSize: this.cacheSize(),
+      crossOrigin: this.crossOrigin(),
+      interpolate: this.interpolate(),
+      params: this.params(),
+      hidpi: this.hidpi(),
+      tileGrid: this.tileGrid(),
+      projection: this.projection(),
+      reprojectionErrorThreshold: this.reprojectionErrorThreshold(),
+      tileLoadFunction: this.tileLoadFunction(),
+      url: this.url(),
+      wrapX: this.wrapX(),
+      transition: this.transition(),
+      urls: this.urls(),
+      zDirection: this.zDirection(),
     };
   }
 }

@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit, signal } from '@angular/core';
+import { Component, OnDestroy, OnInit, signal, input } from '@angular/core';
 import DoubleClickZoom from 'ol/interaction/DoubleClickZoom';
 import { Options } from 'ol/interaction/DoubleClickZoom';
 import { MapComponent } from '../map.component';
@@ -8,14 +8,12 @@ import { MapComponent } from '../map.component';
   template: '',
 })
 export class DoubleClickZoomInteractionComponent implements OnInit, OnDestroy {
-  @Input() duration?: number;
-  @Input() delta?: number;
+  duration = input<number>();
+  delta = input<number>();
 
   instance: DoubleClickZoom;
 
-  protected readonly _instanceSignal = signal<
-    DoubleClickZoom | undefined
-  >(undefined);
+  protected readonly _instanceSignal = signal<DoubleClickZoom | undefined>(undefined);
 
   readonly instanceSignal = this._instanceSignal.asReadonly();
 
@@ -40,8 +38,8 @@ export class DoubleClickZoomInteractionComponent implements OnInit, OnDestroy {
 
   private createOptions(): Options {
     return {
-      duration: this.duration,
-      delta: this.delta,
+      duration: this.duration(),
+      delta: this.delta(),
     };
   }
 }

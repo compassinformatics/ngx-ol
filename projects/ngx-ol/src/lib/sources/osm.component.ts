@@ -5,9 +5,9 @@ import {
   EventEmitter,
   forwardRef,
   Host,
-  Input,
   Optional,
   Output,
+  input,
 } from '@angular/core';
 import OSM from 'ol/source/OSM';
 import { Options } from 'ol/source/OSM';
@@ -24,16 +24,16 @@ import { SourceXYZComponent } from './xyz.component';
   providers: [{ provide: SourceComponent, useExisting: forwardRef(() => SourceOsmComponent) }],
 })
 export class SourceOsmComponent extends SourceXYZComponent implements AfterContentInit {
-  @Input() cacheSize?: number;
-  @Input() crossOrigin?: string;
-  @Input() interpolate?: boolean;
-  @Input() maxZoom?: number;
-  @Input() reprojectionErrorThreshold?: number;
-  @Input() tileLoadFunction?: LoadFunction;
-  @Input() transition?: number;
-  @Input() url?: string;
-  @Input() wrapX?: boolean;
-  @Input() zDirection?: number | NearestDirectionFunction;
+  cacheSize = input<number>();
+  crossOrigin = input<string | null>();
+  interpolate = input<boolean>();
+  maxZoom = input<number>();
+  reprojectionErrorThreshold = input<number>();
+  tileLoadFunction = input<LoadFunction>();
+  transition = input<number>();
+  url = input<string>();
+  wrapX = input<boolean>();
+  zDirection = input<number | NearestDirectionFunction>();
 
   @Output() tileLoadStart = new EventEmitter<TileSourceEvent>();
   @Output() tileLoadEnd = new EventEmitter<TileSourceEvent>();
@@ -62,9 +62,6 @@ export class SourceOsmComponent extends SourceXYZComponent implements AfterConte
   }
 
   ngAfterContentInit() {
-    if (this.tileGridXYZ) {
-      this.tileGrid = this.tileGridXYZ.instance;
-    }
     this.setInstance(new OSM(this.createOptions()));
     this.instance.on('tileloadstart', (event: TileSourceEvent) => this.tileLoadStart.emit(event));
     this.instance.on('tileloadend', (event: TileSourceEvent) => this.tileLoadEnd.emit(event));
@@ -74,17 +71,17 @@ export class SourceOsmComponent extends SourceXYZComponent implements AfterConte
 
   protected override createOptions(): Options {
     return {
-      attributions: this.attributions,
-      cacheSize: this.cacheSize,
-      crossOrigin: this.crossOrigin,
-      interpolate: this.interpolate,
-      maxZoom: this.maxZoom,
-      reprojectionErrorThreshold: this.reprojectionErrorThreshold,
-      tileLoadFunction: this.tileLoadFunction,
-      transition: this.transition,
-      url: this.url,
-      wrapX: this.wrapX,
-      zDirection: this.zDirection,
+      attributions: this.attributions(),
+      cacheSize: this.cacheSize(),
+      crossOrigin: this.crossOrigin(),
+      interpolate: this.interpolate(),
+      maxZoom: this.maxZoom(),
+      reprojectionErrorThreshold: this.reprojectionErrorThreshold(),
+      tileLoadFunction: this.tileLoadFunction(),
+      transition: this.transition(),
+      url: this.url(),
+      wrapX: this.wrapX(),
+      zDirection: this.zDirection(),
     };
   }
 }

@@ -2,13 +2,13 @@ import {
   signal,
   Component,
   Host,
-  Input,
   forwardRef,
   Output,
   EventEmitter,
   OnChanges,
   SimpleChanges,
   OnInit,
+  input,
 } from '@angular/core';
 import ImageStatic from 'ol/source/ImageStatic';
 import { Options } from 'ol/source/ImageStatic';
@@ -27,12 +27,12 @@ import { ImageSourceEvent } from 'ol/source/Image';
   ],
 })
 export class SourceImageStaticComponent extends SourceComponent implements OnInit, OnChanges {
-  @Input() projection?: ProjectionLike | string;
-  @Input() imageExtent: Extent;
-  @Input() url: string;
-  @Input() crossOrigin?: null | string;
-  @Input() imageLoadFunction?: LoadFunction;
-  @Input() interpolate?: boolean;
+  projection = input<ProjectionLike | string>();
+  imageExtent = input.required<Extent>();
+  url = input.required<string>();
+  crossOrigin = input<null | string>();
+  imageLoadFunction = input<LoadFunction>();
+  interpolate = input<boolean>();
 
   @Output() imageLoadStart = new EventEmitter<ImageSourceEvent>();
   @Output() imageLoadEnd = new EventEmitter<ImageSourceEvent>();
@@ -40,9 +40,7 @@ export class SourceImageStaticComponent extends SourceComponent implements OnIni
 
   instance: ImageStatic;
 
-  protected readonly _instanceSignal = signal<ImageStatic | undefined>(
-    undefined,
-  );
+  protected readonly _instanceSignal = signal<ImageStatic | undefined>(undefined);
 
   readonly instanceSignal = this._instanceSignal.asReadonly();
 
@@ -83,7 +81,6 @@ export class SourceImageStaticComponent extends SourceComponent implements OnIni
       if (changes.hasOwnProperty(key)) {
         switch (key) {
           case 'url':
-            this.url = changes[key].currentValue;
             this.setLayerSource();
             break;
           default:
@@ -97,13 +94,13 @@ export class SourceImageStaticComponent extends SourceComponent implements OnIni
 
   private createOptions(): Options {
     return {
-      attributions: this.attributions,
-      projection: this.projection,
-      imageExtent: this.imageExtent,
-      url: this.url,
-      crossOrigin: this.crossOrigin,
-      imageLoadFunction: this.imageLoadFunction,
-      interpolate: this.interpolate,
+      attributions: this.attributions(),
+      projection: this.projection(),
+      imageExtent: this.imageExtent(),
+      url: this.url(),
+      crossOrigin: this.crossOrigin(),
+      imageLoadFunction: this.imageLoadFunction(),
+      interpolate: this.interpolate(),
     };
   }
 }

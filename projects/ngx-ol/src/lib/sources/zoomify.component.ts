@@ -1,4 +1,4 @@
-import { Component, forwardRef, Host, Input, OnInit, Optional, signal } from '@angular/core';
+import { Component, forwardRef, Host, OnInit, Optional, signal, input } from '@angular/core';
 import type { NearestDirectionFunction } from 'ol/array';
 import type { Extent } from 'ol/extent';
 import type { ProjectionLike } from 'ol/proj';
@@ -14,31 +14,31 @@ import { SourceComponent } from './source.component';
   providers: [{ provide: SourceComponent, useExisting: forwardRef(() => SourceZoomifyComponent) }],
 })
 export class SourceZoomifyComponent extends SourceComponent implements OnInit {
-  @Input() cacheSize?: number;
+  cacheSize = input<number>();
 
-  @Input() crossOrigin?: string | null;
+  crossOrigin = input<string | null>();
 
-  @Input() interpolate?: boolean;
+  interpolate = input<boolean>();
 
-  @Input() projection?: ProjectionLike;
+  projection = input<ProjectionLike>();
 
-  @Input() tilePixelRatio?: number;
+  tilePixelRatio = input<number>();
 
-  @Input() reprojectionErrorThreshold?: number;
+  reprojectionErrorThreshold = input<number>();
 
-  @Input() url!: string;
+  url = input.required<string>();
 
-  @Input() tierSizeCalculation?: TierSizeCalculation;
+  tierSizeCalculation = input<TierSizeCalculation>();
 
-  @Input() size!: Size;
+  size = input.required<Size>();
 
-  @Input() extent?: Extent;
+  extent = input<Extent>();
 
-  @Input() transition?: number;
+  transition = input<number>();
 
-  @Input() tileSize?: number;
+  tileSize = input<number>();
 
-  @Input() zDirection?: number | NearestDirectionFunction;
+  zDirection = input<number | NearestDirectionFunction>();
 
   instance: Zoomify;
 
@@ -65,20 +65,20 @@ export class SourceZoomifyComponent extends SourceComponent implements OnInit {
 
   private createOptions(): Options {
     return {
-      attributions: this.attributions,
-      cacheSize: this.cacheSize,
-      crossOrigin: this.crossOrigin,
-      interpolate: this.interpolate,
-      projection: this.projection,
-      tilePixelRatio: this.tilePixelRatio,
-      reprojectionErrorThreshold: this.reprojectionErrorThreshold,
-      url: this.url,
-      tierSizeCalculation: this.tierSizeCalculation,
-      size: this.size,
-      extent: this.extent,
-      transition: this.transition,
-      tileSize: this.tileSize,
-      zDirection: this.zDirection,
+      attributions: this.attributions(),
+      cacheSize: this.cacheSize(),
+      crossOrigin: this.crossOrigin(),
+      interpolate: this.interpolate(),
+      projection: this.projection(),
+      tilePixelRatio: this.tilePixelRatio(),
+      reprojectionErrorThreshold: this.reprojectionErrorThreshold(),
+      url: this.url(),
+      tierSizeCalculation: this.tierSizeCalculation(),
+      size: this.size(),
+      extent: this.extent(),
+      transition: this.transition(),
+      tileSize: this.tileSize(),
+      zDirection: this.zDirection(),
     };
   }
 }

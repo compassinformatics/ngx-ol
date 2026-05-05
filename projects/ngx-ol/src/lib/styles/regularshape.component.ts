@@ -3,10 +3,10 @@ import {
   AfterContentInit,
   Component,
   Host,
-  Input,
   OnChanges,
   OnDestroy,
   SimpleChanges,
+  input,
 } from '@angular/core';
 import type { Size } from 'ol/size';
 import Fill from 'ol/style/Fill';
@@ -21,34 +21,32 @@ import { StyleComponent } from './style.component';
   template: ` <ng-content></ng-content> `,
 })
 export class StyleRegularShapeComponent implements AfterContentInit, OnChanges, OnDestroy {
-  @Input() fill?: Fill;
+  fill = input<Fill>();
 
-  @Input() points: number;
+  points = input.required<number>();
 
-  @Input() radius: number;
+  radius = input.required<number>();
 
-  @Input() radius2?: number;
+  radius2 = input<number>();
 
-  @Input() angle?: number;
+  angle = input<number>();
 
-  @Input() displacement?: number[];
+  displacement = input<number[]>();
 
-  @Input() stroke?: Stroke;
+  stroke = input<Stroke>();
 
-  @Input() rotation?: number;
+  rotation = input<number>();
 
-  @Input() rotateWithView?: boolean;
+  rotateWithView = input<boolean>();
 
-  @Input() scale?: number | Size;
+  scale = input<number | Size>();
 
-  @Input() declutterMode?: DeclutterMode;
+  declutterMode = input<DeclutterMode>();
 
   public componentType = 'style-regularshape';
   instance: RegularShape;
 
-  protected readonly _instanceSignal = signal<RegularShape | undefined>(
-    undefined,
-  );
+  protected readonly _instanceSignal = signal<RegularShape | undefined>(undefined);
 
   readonly instanceSignal = this._instanceSignal.asReadonly();
 
@@ -103,17 +101,17 @@ export class StyleRegularShapeComponent implements AfterContentInit, OnChanges, 
 
   private createOptions(): Options {
     return {
-      fill: this.fill,
-      points: this.points,
-      radius: this.radius,
-      radius2: this.radius2,
-      angle: this.angle,
-      displacement: this.displacement,
-      stroke: this.stroke,
-      rotation: this.rotation,
-      rotateWithView: this.rotateWithView,
-      scale: this.scale,
-      declutterMode: this.declutterMode,
+      fill: this.fill(),
+      points: this.points(),
+      radius: this.radius(),
+      radius2: this.radius2(),
+      angle: this.angle(),
+      displacement: this.displacement(),
+      stroke: this.stroke(),
+      rotation: this.rotation(),
+      rotateWithView: this.rotateWithView(),
+      scale: this.scale(),
+      declutterMode: this.declutterMode(),
     };
   }
 }

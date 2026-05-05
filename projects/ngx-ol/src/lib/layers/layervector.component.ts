@@ -2,10 +2,10 @@ import {
   Component,
   OnDestroy,
   OnInit,
-  Input,
   Optional,
   OnChanges,
   SimpleChanges,
+  input,
 } from '@angular/core';
 import { MapComponent } from '../map.component';
 import Vector from 'ol/layer/Vector';
@@ -23,23 +23,23 @@ import VectorSource from 'ol/source/Vector';
   template: ` <ng-content></ng-content> `,
 })
 export class LayerVectorComponent extends LayerComponent implements OnInit, OnDestroy, OnChanges {
-  @Input() renderOrder?: OrderFunction;
+  renderOrder = input<OrderFunction>();
 
-  @Input() renderBuffer: number;
+  renderBuffer = input<number>();
 
-  @Input() style: StyleLike | FlatStyleLike | null | undefined;
+  style = input<StyleLike | FlatStyleLike | null | undefined>();
 
-  @Input() updateWhileAnimating: boolean;
+  updateWhileAnimating = input<boolean>();
 
-  @Input() updateWhileInteracting: boolean;
+  updateWhileInteracting = input<boolean>();
 
-  @Input() declutter: boolean | string | number;
+  declutter = input<boolean | string | number>();
 
-  @Input() background?: BackgroundColor;
+  background = input<BackgroundColor>();
 
-  @Input() properties: Record<string, any>;
+  properties = input<Record<string, any>>();
 
-  @Input() source?: VectorSource;
+  source = input<VectorSource>();
 
   constructor(map: MapComponent, @Optional() group?: LayerGroupComponent) {
     super(group || map);
@@ -62,15 +62,15 @@ export class LayerVectorComponent extends LayerComponent implements OnInit, OnDe
   private createOptions(): Options<any, VectorSource<any>> {
     return {
       ...this.createLayerOptions(),
-      renderOrder: this.renderOrder,
-      renderBuffer: this.renderBuffer,
-      style: this.style,
-      updateWhileAnimating: this.updateWhileAnimating,
-      updateWhileInteracting: this.updateWhileInteracting,
-      declutter: this.declutter,
-      background: this.background,
-      properties: this.properties,
-      source: this.source,
+      renderOrder: this.renderOrder(),
+      renderBuffer: this.renderBuffer(),
+      style: this.style(),
+      updateWhileAnimating: this.updateWhileAnimating(),
+      updateWhileInteracting: this.updateWhileInteracting(),
+      declutter: this.declutter(),
+      background: this.background(),
+      properties: this.properties(),
+      source: this.source(),
     };
   }
 }

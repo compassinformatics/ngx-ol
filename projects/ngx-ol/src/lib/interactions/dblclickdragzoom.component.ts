@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit, signal } from '@angular/core';
+import { Component, OnDestroy, OnInit, signal, input } from '@angular/core';
 import DblClickDragZoom from 'ol/interaction/DblClickDragZoom';
 import type { Options } from 'ol/interaction/DblClickDragZoom';
 import { MapComponent } from '../map.component';
@@ -8,17 +8,15 @@ import { MapComponent } from '../map.component';
   template: '',
 })
 export class DblClickDragZoomInteractionComponent implements OnInit, OnDestroy {
-  @Input() duration?: number;
+  duration = input<number>();
 
-  @Input() delta?: number;
+  delta = input<number>();
 
-  @Input() stopDown?: (handled: boolean) => boolean;
+  stopDown = input<(handled: boolean) => boolean>();
 
   instance: DblClickDragZoom;
 
-  protected readonly _instanceSignal = signal<
-    DblClickDragZoom | undefined
-  >(undefined);
+  protected readonly _instanceSignal = signal<DblClickDragZoom | undefined>(undefined);
 
   readonly instanceSignal = this._instanceSignal.asReadonly();
 
@@ -43,9 +41,9 @@ export class DblClickDragZoomInteractionComponent implements OnInit, OnDestroy {
 
   private createOptions(): Options {
     return {
-      duration: this.duration,
-      delta: this.delta,
-      stopDown: this.stopDown,
+      duration: this.duration(),
+      delta: this.delta(),
+      stopDown: this.stopDown(),
     };
   }
 }

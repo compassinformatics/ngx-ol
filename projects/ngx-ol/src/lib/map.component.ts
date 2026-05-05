@@ -3,13 +3,13 @@ import {
   Component,
   OnInit,
   ElementRef,
-  Input,
   Output,
   EventEmitter,
   AfterViewInit,
   SimpleChanges,
   OnChanges,
   NgZone,
+  input,
 } from '@angular/core';
 import Map from 'ol/Map';
 import type { MapOptions } from 'ol/Map';
@@ -24,18 +24,18 @@ import BaseEvent from 'ol/events/Event';
 @Component({
   selector: 'aol-map',
   template: `
-    <div [style.width]="width" [style.height]="height"></div>
+    <div [style.width]="width()" [style.height]="height()"></div>
     <ng-content></ng-content>
   `,
 })
 export class MapComponent implements OnInit, AfterViewInit, OnChanges {
-  @Input() width = '100%';
-  @Input() height = '100%';
-  @Input() pixelRatio: number;
-  @Input() keyboardEventTarget: HTMLElement | string;
-  @Input() maxTilesLoading: number;
-  @Input() moveTolerance: number;
-  @Input() runOutsideAngular = true;
+  width = input('100%');
+  height = input('100%');
+  pixelRatio = input<number>();
+  keyboardEventTarget = input<HTMLElement | string>();
+  maxTilesLoading = input<number>();
+  moveTolerance = input<number>();
+  runOutsideAngular = input(true);
 
   @Output() olChange = new EventEmitter<BaseEvent>();
   @Output() changeLayerGroup = new EventEmitter<ObjectEvent>();
@@ -133,7 +133,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
       });
     };
 
-    if (this.runOutsideAngular) {
+    if (this.runOutsideAngular()) {
       this.ngZone.runOutsideAngular(initMap);
     } else {
       initMap();
@@ -158,10 +158,10 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
     return {
       controls: this.controls,
       interactions: this.interactions,
-      keyboardEventTarget: this.keyboardEventTarget,
-      maxTilesLoading: this.maxTilesLoading,
-      moveTolerance: this.moveTolerance,
-      pixelRatio: this.pixelRatio,
+      keyboardEventTarget: this.keyboardEventTarget(),
+      maxTilesLoading: this.maxTilesLoading(),
+      moveTolerance: this.moveTolerance(),
+      pixelRatio: this.pixelRatio(),
     };
   }
 }

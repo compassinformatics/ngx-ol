@@ -2,11 +2,11 @@ import {
   signal,
   Component,
   ContentChild,
-  Input,
   OnChanges,
   OnDestroy,
   OnInit,
   SimpleChanges,
+  input,
 } from '@angular/core';
 import { MapComponent } from './map.component';
 import Overlay, { Options, PanIntoViewOptions, Positioning } from 'ol/Overlay';
@@ -20,14 +20,14 @@ import { Coordinate } from 'ol/coordinate';
 export class OverlayComponent implements OnInit, OnDestroy, OnChanges {
   @ContentChild(ContentComponent, { static: true }) content: ContentComponent;
 
-  @Input() id?: number | string | undefined;
-  @Input() offset?: number[];
-  @Input() positioning?: Positioning;
-  @Input() stopEvent?: boolean;
-  @Input() insertFirst?: boolean;
-  @Input() autoPan?: boolean | PanIntoViewOptions;
-  @Input() position?: Coordinate | undefined;
-  @Input() className?: string;
+  id = input<number | string | undefined>();
+  offset = input<number[]>();
+  positioning = input<Positioning>();
+  stopEvent = input<boolean>();
+  insertFirst = input<boolean>();
+  autoPan = input<boolean | PanIntoViewOptions>();
+  position = input<Coordinate | undefined>();
+  className = input<string>();
 
   componentType = 'overlay';
   instance: Overlay;
@@ -71,15 +71,15 @@ export class OverlayComponent implements OnInit, OnDestroy, OnChanges {
 
   private createOptions(): Options {
     return {
-      autoPan: this.autoPan,
-      className: this.className,
+      autoPan: this.autoPan(),
+      className: this.className(),
       element: this.element,
-      id: this.id,
-      insertFirst: this.insertFirst,
-      offset: this.offset,
-      position: this.position,
-      positioning: this.positioning,
-      stopEvent: this.stopEvent,
+      id: this.id(),
+      insertFirst: this.insertFirst(),
+      offset: this.offset(),
+      position: this.position(),
+      positioning: this.positioning(),
+      stopEvent: this.stopEvent(),
     };
   }
 }

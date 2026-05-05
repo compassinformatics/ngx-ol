@@ -1,11 +1,11 @@
 import {
   Component,
-  Input,
   OnDestroy,
   OnInit,
   OnChanges,
   SimpleChanges,
   signal,
+  input,
 } from '@angular/core';
 import Collection from 'ol/Collection';
 import MapEvent from 'ol/MapEvent';
@@ -20,23 +20,21 @@ import { MapComponent } from '../map.component';
   template: ` <ng-content></ng-content> `,
 })
 export class ControlOverviewMapComponent implements OnInit, OnChanges, OnDestroy {
-  @Input() className?: string;
-  @Input() collapsed?: boolean;
-  @Input() collapseLabel?: string | HTMLElement;
-  @Input() collapsible?: boolean;
-  @Input() label?: string | HTMLElement;
-  @Input() layers?: BaseLayer[] | Collection<BaseLayer>;
-  @Input() render?: (event: MapEvent) => void;
-  @Input() rotateWithView?: boolean;
-  @Input() target?: string | HTMLElement;
-  @Input() tipLabel?: string;
-  @Input() view?: View;
+  className = input<string>();
+  collapsed = input<boolean>();
+  collapseLabel = input<string | HTMLElement>();
+  collapsible = input<boolean>();
+  label = input<string | HTMLElement>();
+  layers = input<BaseLayer[] | Collection<BaseLayer>>();
+  render = input<(event: MapEvent) => void>();
+  rotateWithView = input<boolean>();
+  target = input<string | HTMLElement>();
+  tipLabel = input<string>();
+  view = input<View>();
 
   instance: OverviewMap;
 
-  protected readonly _instanceSignal = signal<OverviewMap | undefined>(
-    undefined,
-  );
+  protected readonly _instanceSignal = signal<OverviewMap | undefined>(undefined);
 
   readonly instanceSignal = this._instanceSignal.asReadonly();
 
@@ -73,17 +71,17 @@ export class ControlOverviewMapComponent implements OnInit, OnChanges, OnDestroy
 
   private createOptions(): Options {
     return {
-      className: this.className,
-      collapsed: this.collapsed,
-      collapseLabel: this.collapseLabel,
-      collapsible: this.collapsible,
-      label: this.label,
-      layers: this.layers,
-      render: this.render,
-      rotateWithView: this.rotateWithView,
-      target: this.target,
-      tipLabel: this.tipLabel,
-      view: this.view,
+      className: this.className(),
+      collapsed: this.collapsed(),
+      collapseLabel: this.collapseLabel(),
+      collapsible: this.collapsible(),
+      label: this.label(),
+      layers: this.layers(),
+      render: this.render(),
+      rotateWithView: this.rotateWithView(),
+      target: this.target(),
+      tipLabel: this.tipLabel(),
+      view: this.view(),
     };
   }
 }

@@ -1,4 +1,4 @@
-import { Component, Input, Optional, OnInit, signal } from '@angular/core';
+import { Component, Optional, OnInit, signal, input } from '@angular/core';
 import Fill from 'ol/style/Fill';
 import Image from 'ol/style/Image';
 import Stroke from 'ol/style/Stroke';
@@ -15,14 +15,14 @@ import { LayerVectorImageComponent } from '../layers/layervectorimage.component'
   template: ` <ng-content></ng-content> `,
 })
 export class StyleComponent implements OnInit {
-  @Input() geometry?: string | Geometry | GeometryFunction;
-  @Input() fill?: Fill;
-  @Input() image?: Image;
-  @Input() renderer?: RenderFunction;
-  @Input() hitDetectionRenderer?: RenderFunction;
-  @Input() stroke?: Stroke;
-  @Input() text?: Text;
-  @Input() zIndex?: number;
+  geometry = input<string | Geometry | GeometryFunction>();
+  fill = input<Fill>();
+  image = input<Image>();
+  renderer = input<RenderFunction>();
+  hitDetectionRenderer = input<RenderFunction>();
+  stroke = input<Stroke>();
+  text = input<Text>();
+  zIndex = input<number>();
 
   instance: Style;
 
@@ -65,14 +65,14 @@ export class StyleComponent implements OnInit {
 
   private createOptions(): Options {
     return {
-      geometry: this.geometry,
-      fill: this.fill,
-      image: this.image,
-      renderer: this.renderer,
-      hitDetectionRenderer: this.hitDetectionRenderer,
-      stroke: this.stroke,
-      text: this.text,
-      zIndex: this.zIndex,
+      geometry: this.geometry(),
+      fill: this.fill(),
+      image: this.image(),
+      renderer: this.renderer(),
+      hitDetectionRenderer: this.hitDetectionRenderer(),
+      stroke: this.stroke(),
+      text: this.text(),
+      zIndex: this.zIndex(),
     };
   }
 }

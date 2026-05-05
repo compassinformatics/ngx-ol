@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, Input, signal } from '@angular/core';
+import { Component, OnDestroy, OnInit, signal, input } from '@angular/core';
 import Control from 'ol/control/Control';
 import { defaults } from 'ol/control/defaults';
 import { DefaultsOptions } from 'ol/control/defaults';
@@ -14,18 +14,16 @@ import { MapComponent } from '../map.component';
   template: '',
 })
 export class DefaultControlComponent implements OnInit, OnDestroy {
-  @Input() attribution?: boolean;
-  @Input() attributionOptions?: AttributionOptions;
-  @Input() rotate?: boolean;
-  @Input() rotateOptions?: RotateOptions;
-  @Input() zoom?: boolean;
-  @Input() zoomOptions?: ZoomOptions;
+  attribution = input<boolean>();
+  attributionOptions = input<AttributionOptions>();
+  rotate = input<boolean>();
+  rotateOptions = input<RotateOptions>();
+  zoom = input<boolean>();
+  zoomOptions = input<ZoomOptions>();
 
   instance: Collection<Control>;
 
-  protected readonly _instanceSignal = signal<Collection<Control> | undefined>(
-    undefined,
-  );
+  protected readonly _instanceSignal = signal<Collection<Control> | undefined>(undefined);
 
   readonly instanceSignal = this._instanceSignal.asReadonly();
 
@@ -52,12 +50,12 @@ export class DefaultControlComponent implements OnInit, OnDestroy {
 
   private createOptions(): DefaultsOptions {
     return {
-      attribution: this.attribution,
-      attributionOptions: this.attributionOptions,
-      rotate: this.rotate,
-      rotateOptions: this.rotateOptions,
-      zoom: this.zoom,
-      zoomOptions: this.zoomOptions,
+      attribution: this.attribution(),
+      attributionOptions: this.attributionOptions(),
+      rotate: this.rotate(),
+      rotateOptions: this.rotateOptions(),
+      zoom: this.zoom(),
+      zoomOptions: this.zoomOptions(),
     };
   }
 }

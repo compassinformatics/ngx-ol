@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, Input, signal } from '@angular/core';
+import { Component, OnDestroy, OnInit, signal, input } from '@angular/core';
 import PinchZoom from 'ol/interaction/PinchZoom';
 import { Options } from 'ol/interaction/PinchZoom';
 import { MapComponent } from '../map.component';
@@ -8,13 +8,11 @@ import { MapComponent } from '../map.component';
   template: '',
 })
 export class PinchZoomInteractionComponent implements OnInit, OnDestroy {
-  @Input() duration?: number;
+  duration = input<number>();
 
   instance: PinchZoom;
 
-  protected readonly _instanceSignal = signal<PinchZoom | undefined>(
-    undefined,
-  );
+  protected readonly _instanceSignal = signal<PinchZoom | undefined>(undefined);
 
   readonly instanceSignal = this._instanceSignal.asReadonly();
 
@@ -39,7 +37,7 @@ export class PinchZoomInteractionComponent implements OnInit, OnDestroy {
 
   private createOptions(): Options {
     return {
-      duration: this.duration,
+      duration: this.duration(),
     };
   }
 }

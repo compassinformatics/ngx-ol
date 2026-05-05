@@ -12,9 +12,7 @@ export class GeometryMultiPolygonComponent extends SimpleGeometryComponent imple
   public componentType = 'geometry-multipolygon';
   instance: MultiPolygon;
 
-  protected readonly _instanceSignal = signal<MultiPolygon | undefined>(
-    undefined,
-  );
+  protected readonly _instanceSignal = signal<MultiPolygon | undefined>(undefined);
 
   readonly instanceSignal = this._instanceSignal.asReadonly();
 

@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit, signal } from '@angular/core';
+import { Component, OnDestroy, OnInit, signal, input } from '@angular/core';
 import ScaleLine from 'ol/control/ScaleLine';
 import { MapComponent } from '../map.component';
 import { Options, Units } from 'ol/control/ScaleLine';
@@ -9,22 +9,20 @@ import MapEvent from 'ol/MapEvent';
   template: ` <ng-content></ng-content> `,
 })
 export class ControlScaleLineComponent implements OnInit, OnDestroy {
-  @Input() className?: string;
-  @Input() minWidth?: number;
-  @Input() maxWidth?: number;
-  @Input() render?: (event: MapEvent) => void;
-  @Input() target?: string | HTMLElement;
-  @Input() units?: Units;
-  @Input() bar?: boolean;
-  @Input() steps?: number;
-  @Input() text?: boolean;
-  @Input() dpi?: number;
+  className = input<string>();
+  minWidth = input<number>();
+  maxWidth = input<number>();
+  render = input<(event: MapEvent) => void>();
+  target = input<string | HTMLElement>();
+  units = input<Units>();
+  bar = input<boolean>();
+  steps = input<number>();
+  text = input<boolean>();
+  dpi = input<number>();
 
   instance: ScaleLine;
 
-  protected readonly _instanceSignal = signal<ScaleLine | undefined>(
-    undefined,
-  );
+  protected readonly _instanceSignal = signal<ScaleLine | undefined>(undefined);
 
   readonly instanceSignal = this._instanceSignal.asReadonly();
 
@@ -49,16 +47,16 @@ export class ControlScaleLineComponent implements OnInit, OnDestroy {
 
   private createOptions(): Options {
     return {
-      className: this.className,
-      minWidth: this.minWidth,
-      maxWidth: this.maxWidth,
-      render: this.render,
-      target: this.target,
-      units: this.units,
-      bar: this.bar,
-      steps: this.steps,
-      text: this.text,
-      dpi: this.dpi,
+      className: this.className(),
+      minWidth: this.minWidth(),
+      maxWidth: this.maxWidth(),
+      render: this.render(),
+      target: this.target(),
+      units: this.units(),
+      bar: this.bar(),
+      steps: this.steps(),
+      text: this.text(),
+      dpi: this.dpi(),
     };
   }
 }

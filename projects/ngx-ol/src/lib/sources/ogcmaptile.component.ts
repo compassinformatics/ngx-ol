@@ -1,4 +1,4 @@
-import { AfterContentInit, Component, Host, Input, forwardRef, signal } from '@angular/core';
+import { AfterContentInit, Component, Host, forwardRef, signal, input } from '@angular/core';
 import { ProjectionLike } from 'ol/proj';
 import OGCMapTile from 'ol/source/OGCMapTile';
 import { Options } from 'ol/source/OGCMapTile';
@@ -14,24 +14,22 @@ import { LayerTileComponent } from '../layers/layertile.component';
   ],
 })
 export class SourceOGCMapTileComponent extends SourceComponent implements AfterContentInit {
-  @Input() url: string;
-  @Input() context?: any;
-  @Input() mediaType?: string;
-  @Input() projection?: ProjectionLike;
-  @Input() cacheSize?: number;
-  @Input() crossOrigin?: null | string;
-  @Input() interpolate?: boolean;
-  @Input() reprojectionErrorThreshold?: number;
-  @Input() tileLoadFunction?: LoadFunction;
-  @Input() wrapX?: boolean;
-  @Input() transition?: number;
-  @Input() collections?: string[];
+  url = input.required<string>();
+  context = input<any>();
+  mediaType = input<string>();
+  projection = input<ProjectionLike>();
+  cacheSize = input<number>();
+  crossOrigin = input<null | string>();
+  interpolate = input<boolean>();
+  reprojectionErrorThreshold = input<number>();
+  tileLoadFunction = input<LoadFunction>();
+  wrapX = input<boolean>();
+  transition = input<number>();
+  collections = input<string[]>();
 
   instance: OGCMapTile;
 
-  protected readonly _instanceSignal = signal<OGCMapTile | undefined>(
-    undefined,
-  );
+  protected readonly _instanceSignal = signal<OGCMapTile | undefined>(undefined);
 
   readonly instanceSignal = this._instanceSignal.asReadonly();
 
@@ -54,19 +52,19 @@ export class SourceOGCMapTileComponent extends SourceComponent implements AfterC
 
   private createOptions(): Options {
     return {
-      url: this.url,
-      context: this.context,
-      mediaType: this.mediaType,
-      projection: this.projection,
-      attributions: this.attributions,
-      cacheSize: this.cacheSize,
-      crossOrigin: this.crossOrigin,
-      interpolate: this.interpolate,
-      reprojectionErrorThreshold: this.reprojectionErrorThreshold,
-      tileLoadFunction: this.tileLoadFunction,
-      wrapX: this.wrapX,
-      transition: this.transition,
-      collections: this.collections,
+      url: this.url(),
+      context: this.context(),
+      mediaType: this.mediaType(),
+      projection: this.projection(),
+      attributions: this.attributions(),
+      cacheSize: this.cacheSize(),
+      crossOrigin: this.crossOrigin(),
+      interpolate: this.interpolate(),
+      reprojectionErrorThreshold: this.reprojectionErrorThreshold(),
+      tileLoadFunction: this.tileLoadFunction(),
+      wrapX: this.wrapX(),
+      transition: this.transition(),
+      collections: this.collections(),
     };
   }
 }

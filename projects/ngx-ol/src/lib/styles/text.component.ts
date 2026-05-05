@@ -1,11 +1,11 @@
 import {
   Component,
-  Input,
   Optional,
   OnInit,
   OnChanges,
   SimpleChanges,
   signal,
+  input,
 } from '@angular/core';
 import Fill from 'ol/style/Fill';
 import Stroke from 'ol/style/Stroke';
@@ -20,26 +20,26 @@ import { Size } from 'ol/size';
   template: ` <div class="aol-style-text"></div> `,
 })
 export class StyleTextComponent implements OnInit, OnChanges {
-  @Input() font?: string | undefined;
-  @Input() maxAngle?: number | undefined;
-  @Input() offsetX?: number | undefined;
-  @Input() offsetY?: number | undefined;
-  @Input() overflow?: boolean | undefined;
-  @Input() placement?: TextPlacement | undefined;
-  @Input() repeat?: number | undefined;
-  @Input() scale?: number | Size | undefined;
-  @Input() rotateWithView?: boolean | undefined;
-  @Input() rotation?: number | undefined;
-  @Input() text?: string | string[] | undefined;
-  @Input() textAlign?: CanvasTextAlign | undefined;
-  @Input() justify?: TextJustify | undefined;
-  @Input() textBaseline?: CanvasTextBaseline | undefined;
-  @Input() fill?: Fill | undefined;
-  @Input() stroke?: Stroke | undefined;
-  @Input() backgroundFill?: Fill | undefined;
-  @Input() backgroundStroke?: Stroke | undefined;
-  @Input() padding?: number[] | undefined;
-  @Input() declutterMode?: DeclutterMode | undefined;
+  font = input<string | undefined>();
+  maxAngle = input<number | undefined>();
+  offsetX = input<number | undefined>();
+  offsetY = input<number | undefined>();
+  overflow = input<boolean | undefined>();
+  placement = input<TextPlacement | undefined>();
+  repeat = input<number | undefined>();
+  scale = input<number | Size | undefined>();
+  rotateWithView = input<boolean | undefined>();
+  rotation = input<number | undefined>();
+  text = input<string | string[] | undefined>();
+  textAlign = input<CanvasTextAlign | undefined>();
+  justify = input<TextJustify | undefined>();
+  textBaseline = input<CanvasTextBaseline | undefined>();
+  fill = input<Fill | undefined>();
+  stroke = input<Stroke | undefined>();
+  backgroundFill = input<Fill | undefined>();
+  backgroundStroke = input<Stroke | undefined>();
+  padding = input<number[] | undefined>();
+  declutterMode = input<DeclutterMode | undefined>();
 
   instance: Text;
 
@@ -105,26 +105,26 @@ export class StyleTextComponent implements OnInit, OnChanges {
 
   private createOptions(): Options {
     return {
-      font: this.font,
-      maxAngle: this.maxAngle,
-      offsetX: this.offsetX,
-      offsetY: this.offsetY,
-      overflow: this.overflow,
-      placement: this.placement,
-      repeat: this.repeat,
-      scale: this.scale,
-      rotateWithView: this.rotateWithView,
-      rotation: this.rotation,
-      text: this.text,
-      textAlign: this.textAlign,
-      justify: this.justify,
-      textBaseline: this.textBaseline,
-      fill: this.fill,
-      stroke: this.stroke,
-      backgroundFill: this.backgroundFill,
-      backgroundStroke: this.backgroundStroke,
-      padding: this.padding,
-      declutterMode: this.declutterMode,
+      font: this.font(),
+      maxAngle: this.maxAngle(),
+      offsetX: this.offsetX(),
+      offsetY: this.offsetY(),
+      overflow: this.overflow(),
+      placement: this.placement(),
+      repeat: this.repeat(),
+      scale: this.scale(),
+      rotateWithView: this.rotateWithView(),
+      rotation: this.rotation(),
+      text: this.text(),
+      textAlign: this.textAlign(),
+      justify: this.justify(),
+      textBaseline: this.textBaseline(),
+      fill: this.fill(),
+      stroke: this.stroke(),
+      backgroundFill: this.backgroundFill(),
+      backgroundStroke: this.backgroundStroke(),
+      padding: this.padding(),
+      declutterMode: this.declutterMode(),
     };
   }
 }

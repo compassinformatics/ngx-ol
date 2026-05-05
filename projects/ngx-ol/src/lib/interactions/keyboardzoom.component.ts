@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit, signal } from '@angular/core';
+import { Component, OnDestroy, OnInit, signal, input } from '@angular/core';
 import KeyboardZoom from 'ol/interaction/KeyboardZoom';
 import { Options } from 'ol/interaction/KeyboardZoom';
 import { MapComponent } from '../map.component';
@@ -8,14 +8,12 @@ import { MapComponent } from '../map.component';
   template: '',
 })
 export class KeyboardZoomInteractionComponent implements OnInit, OnDestroy {
-  @Input() duration?: number;
-  @Input() delta?: number;
+  duration = input<number>();
+  delta = input<number>();
 
   instance: KeyboardZoom;
 
-  protected readonly _instanceSignal = signal<
-    KeyboardZoom | undefined
-  >(undefined);
+  protected readonly _instanceSignal = signal<KeyboardZoom | undefined>(undefined);
 
   readonly instanceSignal = this._instanceSignal.asReadonly();
 
@@ -40,8 +38,8 @@ export class KeyboardZoomInteractionComponent implements OnInit, OnDestroy {
 
   private createOptions(): Options {
     return {
-      duration: this.duration,
-      delta: this.delta,
+      duration: this.duration(),
+      delta: this.delta(),
     };
   }
 }

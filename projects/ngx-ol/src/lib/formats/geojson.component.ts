@@ -1,4 +1,4 @@
-import { Component, Input, signal } from '@angular/core';
+import { Component, signal, input } from '@angular/core';
 import GeoJSON from 'ol/format/GeoJSON.js';
 import { Options } from 'ol/format/GeoJSON';
 import { ProjectionLike } from 'ol/proj';
@@ -8,11 +8,11 @@ import { ProjectionLike } from 'ol/proj';
   template: '',
 })
 export class FormatGeoJSONComponent {
-  @Input() featureClass: any;
-  @Input() geometryName?: string;
-  @Input() dataProjection?: ProjectionLike;
-  @Input() featureProjection?: ProjectionLike;
-  @Input() extractGeometryName?: boolean;
+  featureClass = input<any>();
+  geometryName = input<string>();
+  dataProjection = input<ProjectionLike>();
+  featureProjection = input<ProjectionLike>();
+  extractGeometryName = input<boolean>();
 
   public componentType = 'format';
 
@@ -36,11 +36,11 @@ export class FormatGeoJSONComponent {
 
   private createOptions(): Options {
     return {
-      featureClass: this.featureClass,
-      geometryName: this.geometryName,
-      dataProjection: this.dataProjection,
-      featureProjection: this.featureProjection,
-      extractGeometryName: this.extractGeometryName,
+      featureClass: this.featureClass(),
+      geometryName: this.geometryName(),
+      dataProjection: this.dataProjection(),
+      featureProjection: this.featureProjection(),
+      extractGeometryName: this.extractGeometryName(),
     };
   }
 }

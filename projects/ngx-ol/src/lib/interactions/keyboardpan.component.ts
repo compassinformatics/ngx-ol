@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit, signal } from '@angular/core';
+import { Component, OnDestroy, OnInit, signal, input } from '@angular/core';
 import KeyboardPan from 'ol/interaction/KeyboardPan';
 import { Options } from 'ol/interaction/KeyboardPan';
 import { MapComponent } from '../map.component';
@@ -8,14 +8,12 @@ import { MapComponent } from '../map.component';
   template: '',
 })
 export class KeyboardPanInteractionComponent implements OnInit, OnDestroy {
-  @Input() duration?: number;
-  @Input() pixelDelta?: number;
+  duration = input<number>();
+  pixelDelta = input<number>();
 
   instance: KeyboardPan;
 
-  protected readonly _instanceSignal = signal<KeyboardPan | undefined>(
-    undefined,
-  );
+  protected readonly _instanceSignal = signal<KeyboardPan | undefined>(undefined);
 
   readonly instanceSignal = this._instanceSignal.asReadonly();
 
@@ -40,8 +38,8 @@ export class KeyboardPanInteractionComponent implements OnInit, OnDestroy {
 
   private createOptions(): Options {
     return {
-      duration: this.duration,
-      pixelDelta: this.pixelDelta,
+      duration: this.duration(),
+      pixelDelta: this.pixelDelta(),
     };
   }
 }

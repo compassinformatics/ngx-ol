@@ -12,9 +12,7 @@ export class GeometryLinestringComponent extends SimpleGeometryComponent impleme
   public componentType = 'geometry-linestring';
   instance: LineString;
 
-  protected readonly _instanceSignal = signal<LineString | undefined>(
-    undefined,
-  );
+  protected readonly _instanceSignal = signal<LineString | undefined>(undefined);
 
   readonly instanceSignal = this._instanceSignal.asReadonly();
 

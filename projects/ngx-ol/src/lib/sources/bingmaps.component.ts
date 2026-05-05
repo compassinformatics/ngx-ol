@@ -1,4 +1,4 @@
-import { Component, Host, Input, OnInit, forwardRef, signal } from '@angular/core';
+import { Component, Host, OnInit, forwardRef, signal, input } from '@angular/core';
 import BingMaps from 'ol/source/BingMaps';
 import { Options } from 'ol/source/BingMaps';
 import { SourceComponent } from './source.component';
@@ -12,20 +12,21 @@ import { NearestDirectionFunction } from 'ol/array';
   providers: [{ provide: SourceComponent, useExisting: forwardRef(() => SourceBingmapsComponent) }],
 })
 export class SourceBingmapsComponent extends SourceComponent implements OnInit {
-  @Input() cacheSize?: number;
-  @Input() hidpi?: boolean;
-  @Input() culture?: string;
-  @Input() key: string;
-  @Input() imagerySet: 'Road' | 'Aerial' | 'AerialWithLabels' | 'collinsBart' | 'ordnanceSurvey' =
-    'Aerial';
-  @Input() maxZoom?: number;
-  @Input() reprojectionErrorThreshold?: number;
-  @Input() tileLoadFunction?: LoadFunction;
-  @Input() wrapX?: boolean;
-  @Input() interpolate?: boolean;
-  @Input() placeholderTiles?: boolean;
-  @Input() transition?: number;
-  @Input() zDirection?: number | NearestDirectionFunction;
+  cacheSize = input<number>();
+  hidpi = input<boolean>();
+  culture = input<string>();
+  key = input.required<string>();
+  imagerySet = input<'Road' | 'Aerial' | 'AerialWithLabels' | 'collinsBart' | 'ordnanceSurvey'>(
+    'Aerial',
+  );
+  maxZoom = input<number>();
+  reprojectionErrorThreshold = input<number>();
+  tileLoadFunction = input<LoadFunction>();
+  wrapX = input<boolean>();
+  interpolate = input<boolean>();
+  placeholderTiles = input<boolean>();
+  transition = input<number>();
+  zDirection = input<number | NearestDirectionFunction>();
 
   instance: BingMaps;
 
@@ -52,19 +53,19 @@ export class SourceBingmapsComponent extends SourceComponent implements OnInit {
 
   private createOptions(): Options {
     return {
-      cacheSize: this.cacheSize,
-      hidpi: this.hidpi,
-      culture: this.culture,
-      key: this.key,
-      imagerySet: this.imagerySet,
-      maxZoom: this.maxZoom,
-      reprojectionErrorThreshold: this.reprojectionErrorThreshold,
-      tileLoadFunction: this.tileLoadFunction,
-      wrapX: this.wrapX,
-      interpolate: this.interpolate,
-      placeholderTiles: this.placeholderTiles,
-      transition: this.transition,
-      zDirection: this.zDirection,
+      cacheSize: this.cacheSize(),
+      hidpi: this.hidpi(),
+      culture: this.culture(),
+      key: this.key(),
+      imagerySet: this.imagerySet(),
+      maxZoom: this.maxZoom(),
+      reprojectionErrorThreshold: this.reprojectionErrorThreshold(),
+      tileLoadFunction: this.tileLoadFunction(),
+      wrapX: this.wrapX(),
+      interpolate: this.interpolate(),
+      placeholderTiles: this.placeholderTiles(),
+      transition: this.transition(),
+      zDirection: this.zDirection(),
     };
   }
 }

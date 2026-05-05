@@ -6,8 +6,8 @@ import {
   EventEmitter,
   forwardRef,
   Host,
-  Input,
   Output,
+  input,
 } from '@angular/core';
 import Raster from 'ol/source/Raster';
 import Source from 'ol/source/Source';
@@ -27,11 +27,11 @@ import { SourceComponent } from './source.component';
   ],
 })
 export class SourceRasterComponent extends SourceComponent implements AfterContentInit {
-  @Input() operation?: Operation;
-  @Input() threads?: number;
-  @Input() lib?: any;
-  @Input() operationType?: 'pixel' | 'image';
-  @Input() resolutions?: number[] | null;
+  operation = input<Operation>();
+  threads = input<number>();
+  lib = input<any>();
+  operationType = input<'pixel' | 'image'>();
+  resolutions = input<number[] | null>();
 
   @Output() beforeOperations = new EventEmitter<RasterSourceEvent>();
   @Output() afterOperations = new EventEmitter<RasterSourceEvent>();
@@ -81,11 +81,11 @@ export class SourceRasterComponent extends SourceComponent implements AfterConte
   private createOptions(): Options {
     return {
       sources: this.sources,
-      operation: this.operation,
-      threads: this.threads,
-      lib: this.lib,
-      operationType: this.operationType,
-      resolutions: this.resolutions,
+      operation: this.operation(),
+      threads: this.threads(),
+      lib: this.lib(),
+      operationType: this.operationType(),
+      resolutions: this.resolutions(),
     };
   }
 }

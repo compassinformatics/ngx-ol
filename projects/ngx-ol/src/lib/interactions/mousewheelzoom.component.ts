@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit, signal } from '@angular/core';
+import { Component, OnDestroy, OnInit, signal, input } from '@angular/core';
 import MouseWheelZoom from 'ol/interaction/MouseWheelZoom';
 import { Options } from 'ol/interaction/MouseWheelZoom';
 import { MapComponent } from '../map.component';
@@ -8,15 +8,13 @@ import { MapComponent } from '../map.component';
   template: '',
 })
 export class MouseWheelZoomInteractionComponent implements OnInit, OnDestroy {
-  @Input() duration?: number;
-  @Input() timeout?: number;
-  @Input() useAnchor?: boolean;
+  duration = input<number>();
+  timeout = input<number>();
+  useAnchor = input<boolean>();
 
   instance: MouseWheelZoom;
 
-  protected readonly _instanceSignal = signal<
-    MouseWheelZoom | undefined
-  >(undefined);
+  protected readonly _instanceSignal = signal<MouseWheelZoom | undefined>(undefined);
 
   readonly instanceSignal = this._instanceSignal.asReadonly();
 
@@ -41,9 +39,9 @@ export class MouseWheelZoomInteractionComponent implements OnInit, OnDestroy {
 
   private createOptions(): Options {
     return {
-      duration: this.duration,
-      timeout: this.timeout,
-      useAnchor: this.useAnchor,
+      duration: this.duration(),
+      timeout: this.timeout(),
+      useAnchor: this.useAnchor(),
     };
   }
 }
