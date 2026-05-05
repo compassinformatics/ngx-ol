@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges, signal } from '@angular/core';
 import { FeatureComponent } from '../feature.component';
 import { SimpleGeometryComponent } from './simplegeometry.component';
 import { MapComponent } from '../map.component';
@@ -15,14 +15,26 @@ export class GeometryPointComponent extends SimpleGeometryComponent implements O
   @Input() layout: GeometryLayout;
 
   public componentType = 'geometry-point';
-  public instance: Point;
+  instance: Point;
+
+  protected readonly _instanceSignal = signal<Point | undefined>(undefined);
+
+  readonly instanceSignal = this._instanceSignal.asReadonly();
+
+  protected setInstance(instance: Point): Point {
+    this.instance = instance;
+
+    this._instanceSignal.set(instance);
+
+    return instance;
+  }
 
   constructor(map: MapComponent, host: FeatureComponent) {
     super(map, host);
   }
 
   ngOnInit() {
-    this.instance = new Point(this.coordinates, this.layout);
+    this.setInstance(new Point(this.coordinates, this.layout));
     super.ngOnInit();
   }
 

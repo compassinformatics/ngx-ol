@@ -1,4 +1,5 @@
 import {
+  signal,
   AfterContentInit,
   Component,
   ContentChild,
@@ -36,6 +37,18 @@ export class SourceRasterComponent extends SourceComponent implements AfterConte
   @Output() afterOperations = new EventEmitter<RasterSourceEvent>();
 
   instance: Raster;
+
+  protected readonly _instanceSignal = signal<Raster | undefined>(undefined);
+
+  readonly instanceSignal = this._instanceSignal.asReadonly();
+
+  protected setInstance(instance: Raster): Raster {
+    this.instance = instance;
+
+    this._instanceSignal.set(instance);
+
+    return instance;
+  }
   sources: Source[] = [];
 
   @ContentChild(SourceComponent, { static: false }) set source(sourceComponent: SourceComponent) {
@@ -55,7 +68,7 @@ export class SourceRasterComponent extends SourceComponent implements AfterConte
   }
 
   init() {
-    this.instance = new Raster(this.createOptions());
+    this.setInstance(new Raster(this.createOptions()));
     this.instance.on('beforeoperations', (event: RasterSourceEvent) =>
       this.beforeOperations.emit(event),
     );

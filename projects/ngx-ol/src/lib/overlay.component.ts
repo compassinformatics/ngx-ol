@@ -1,4 +1,5 @@
 import {
+  signal,
   Component,
   ContentChild,
   Input,
@@ -30,6 +31,18 @@ export class OverlayComponent implements OnInit, OnDestroy, OnChanges {
 
   componentType = 'overlay';
   instance: Overlay;
+
+  protected readonly _instanceSignal = signal<Overlay | undefined>(undefined);
+
+  readonly instanceSignal = this._instanceSignal.asReadonly();
+
+  protected setInstance(instance: Overlay): Overlay {
+    this.instance = instance;
+
+    this._instanceSignal.set(instance);
+
+    return instance;
+  }
   element: HTMLElement;
 
   constructor(private map: MapComponent) {}
@@ -37,7 +50,7 @@ export class OverlayComponent implements OnInit, OnDestroy, OnChanges {
   ngOnInit() {
     if (this.content) {
       this.element = this.content.elementRef.nativeElement;
-      this.instance = new Overlay(this.createOptions());
+      this.setInstance(new Overlay(this.createOptions()));
       this.map.instance.addOverlay(this.instance);
     }
   }

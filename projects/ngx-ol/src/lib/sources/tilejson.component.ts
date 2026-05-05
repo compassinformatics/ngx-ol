@@ -1,4 +1,4 @@
-import { Component, Host, Input, OnInit, forwardRef } from '@angular/core';
+import { Component, Host, Input, OnInit, forwardRef, signal } from '@angular/core';
 import TileJSON from 'ol/source/TileJSON';
 import { Config, Options } from 'ol/source/TileJSON';
 import { LoadFunction } from 'ol/Tile';
@@ -28,12 +28,24 @@ export class SourceTileJSONComponent extends SourceComponent implements OnInit {
 
   instance: TileJSON;
 
+  protected readonly _instanceSignal = signal<TileJSON | undefined>(undefined);
+
+  readonly instanceSignal = this._instanceSignal.asReadonly();
+
+  protected setInstance(instance: TileJSON): TileJSON {
+    this.instance = instance;
+
+    this._instanceSignal.set(instance);
+
+    return instance;
+  }
+
   constructor(@Host() layer: LayerTileComponent) {
     super(layer);
   }
 
   ngOnInit() {
-    this.instance = new TileJSON(this.createOptions());
+    this.setInstance(new TileJSON(this.createOptions()));
     this.host.instance.setSource(this.instance);
   }
 

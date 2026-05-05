@@ -1,4 +1,5 @@
 import {
+  signal,
   Component,
   Input,
   OnChanges,
@@ -42,12 +43,26 @@ export class LayerWebGLTileComponent
 
   instance: WebGLTileLayer;
 
+  protected readonly _instanceSignal = signal<WebGLTileLayer | undefined>(
+    undefined,
+  );
+
+  readonly instanceSignal = this._instanceSignal.asReadonly();
+
+  protected setInstance(instance: WebGLTileLayer): WebGLTileLayer {
+    this.instance = instance;
+
+    this._instanceSignal.set(instance);
+
+    return instance;
+  }
+
   constructor(map: MapComponent, @Optional() group?: LayerGroupComponent) {
     super(group || map);
   }
 
   ngOnInit() {
-    this.instance = new WebGLTileLayer(this.createOptions());
+    this.setInstance(new WebGLTileLayer(this.createOptions()));
     super.ngOnInit();
   }
 

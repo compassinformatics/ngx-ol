@@ -1,4 +1,4 @@
-import { Input, OnDestroy, Directive } from '@angular/core';
+import { Input, OnDestroy, Directive, signal } from '@angular/core';
 import Source, { AttributionLike } from 'ol/source/Source';
 
 import { LayerComponent } from '../layers/layer.component';
@@ -10,7 +10,19 @@ export abstract class SourceComponent implements OnDestroy {
 
   @Input() attributionsCollapsible?: boolean;
 
-  public instance: Source;
+  instance: Source;
+
+  protected readonly _instanceSignal = signal<Source | undefined>(undefined);
+
+  readonly instanceSignal = this._instanceSignal.asReadonly();
+
+  protected setInstance(instance: Source): Source {
+    this.instance = instance;
+
+    this._instanceSignal.set(instance);
+
+    return instance;
+  }
   public componentType = 'source';
 
   protected constructor(protected host: LayerComponent) {}

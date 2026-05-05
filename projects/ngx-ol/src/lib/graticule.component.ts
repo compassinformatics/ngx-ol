@@ -1,4 +1,5 @@
 import {
+  signal,
   Component,
   Input,
   AfterContentInit,
@@ -21,6 +22,18 @@ export class GraticuleComponent implements AfterContentInit, OnChanges, OnDestro
   @Input() latLabelPosition: number;
 
   instance: any;
+
+  protected readonly _instanceSignal = signal<any | undefined>(undefined);
+
+  readonly instanceSignal = this._instanceSignal.asReadonly();
+
+  protected setInstance(instance: any): any {
+    this.instance = instance;
+
+    this._instanceSignal.set(instance);
+
+    return instance;
+  }
   public componentType = 'graticule';
 
   constructor(private map: MapComponent) {}
@@ -39,18 +52,20 @@ export class GraticuleComponent implements AfterContentInit, OnChanges, OnDestro
     }
 
     if (properties) {
-      this.instance = new Graticule(properties);
+      this.setInstance(new Graticule(properties));
     }
     this.instance.setMap(this.map.instance);
   }
 
   ngAfterContentInit(): void {
-    this.instance = new Graticule({
-      strokeStyle: this.strokeStyle,
-      showLabels: this.showLabels,
-      lonLabelPosition: this.lonLabelPosition,
-      latLabelPosition: this.latLabelPosition,
-    });
+    this.setInstance(
+      new Graticule({
+        strokeStyle: this.strokeStyle,
+        showLabels: this.showLabels,
+        lonLabelPosition: this.lonLabelPosition,
+        latLabelPosition: this.latLabelPosition,
+      }),
+    );
     this.instance.setMap(this.map.instance);
   }
 

@@ -1,4 +1,12 @@
-import { Component, Host, Input, forwardRef, ContentChild, AfterContentInit } from '@angular/core';
+import {
+  Component,
+  Host,
+  Input,
+  forwardRef,
+  ContentChild,
+  AfterContentInit,
+  signal,
+} from '@angular/core';
 import VectorTile from 'ol/source/VectorTile';
 import { Options } from 'ol/source/VectorTile';
 import TileGrid from 'ol/tilegrid/TileGrid';
@@ -48,7 +56,21 @@ export class SourceVectorTileComponent extends SourceComponent implements AfterC
   formatGeoJSONComponent: FormatGeoJSONComponent;
   @ContentChild(TileGridComponent, { static: false }) tileGridComponent: TileGridComponent;
 
-  public instance: VectorTile;
+  instance: VectorTile;
+
+  protected readonly _instanceSignal = signal<VectorTile | undefined>(
+    undefined,
+  );
+
+  readonly instanceSignal = this._instanceSignal.asReadonly();
+
+  protected setInstance(instance: VectorTile): VectorTile {
+    this.instance = instance;
+
+    this._instanceSignal.set(instance);
+
+    return instance;
+  }
   tileGrid: TileGrid;
 
   constructor(@Host() layer: LayerVectorTileComponent) {
@@ -65,7 +87,7 @@ export class SourceVectorTileComponent extends SourceComponent implements AfterC
     }
     this.tileGrid = this.tileGridComponent.instance;
 
-    this.instance = new VectorTile(this.createOptions(format));
+    this.setInstance(new VectorTile(this.createOptions(format)));
     this.host.instance.setSource(this.instance);
   }
 

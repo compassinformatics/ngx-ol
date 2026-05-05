@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, signal } from '@angular/core';
 import MapEvent from 'ol/MapEvent';
 import ZoomSlider from 'ol/control/ZoomSlider';
 import { Options } from 'ol/control/ZoomSlider';
@@ -16,12 +16,26 @@ export class ControlZoomSliderComponent implements OnInit, OnDestroy {
 
   instance: ZoomSlider;
 
+  protected readonly _instanceSignal = signal<ZoomSlider | undefined>(
+    undefined,
+  );
+
+  readonly instanceSignal = this._instanceSignal.asReadonly();
+
+  protected setInstance(instance: ZoomSlider): ZoomSlider {
+    this.instance = instance;
+
+    this._instanceSignal.set(instance);
+
+    return instance;
+  }
+
   constructor(private map: MapComponent) {
     // console.log('instancing aol-control-zoomslider');
   }
 
   ngOnInit() {
-    this.instance = new ZoomSlider(this.createOptions());
+    this.setInstance(new ZoomSlider(this.createOptions()));
     this.map.instance.addControl(this.instance);
   }
 

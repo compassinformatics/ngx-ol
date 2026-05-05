@@ -30,7 +30,7 @@ export class LayerTileComponent extends LayerComponent implements OnInit, OnDest
 
   ngOnInit() {
     // console.log('creating ol.layer.Tile instance with:', this);
-    this.instance = new Tile(this.createOptions());
+    this.setInstance(new Tile(this.createOptions()));
     super.ngOnInit();
   }
 

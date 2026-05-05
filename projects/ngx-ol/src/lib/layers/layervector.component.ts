@@ -47,7 +47,7 @@ export class LayerVectorComponent extends LayerComponent implements OnInit, OnDe
 
   ngOnInit() {
     // console.log('creating ol.layer.Vector instance with:', this);
-    this.instance = new Vector(this.createOptions());
+    this.setInstance(new Vector(this.createOptions()));
     super.ngOnInit();
   }
 

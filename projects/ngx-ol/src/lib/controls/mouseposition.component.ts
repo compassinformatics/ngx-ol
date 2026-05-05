@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, ElementRef, Input, OnDestroy, OnInit, signal } from '@angular/core';
 import MousePosition, { Options } from 'ol/control/MousePosition';
 import { MapComponent } from '../map.component';
 import { CoordinateFormat } from 'ol/coordinate';
@@ -18,6 +18,20 @@ export class ControlMousePositionComponent implements OnInit, OnDestroy {
   @Input() wrapX?: boolean;
 
   instance: MousePosition;
+
+  protected readonly _instanceSignal = signal<MousePosition | undefined>(
+    undefined,
+  );
+
+  readonly instanceSignal = this._instanceSignal.asReadonly();
+
+  protected setInstance(instance: MousePosition): MousePosition {
+    this.instance = instance;
+
+    this._instanceSignal.set(instance);
+
+    return instance;
+  }
   target: HTMLElement;
 
   constructor(
@@ -28,7 +42,7 @@ export class ControlMousePositionComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.target = this.element.nativeElement;
     // console.log('ol.control.MousePosition init: ', this);
-    this.instance = new MousePosition(this.createOptions());
+    this.setInstance(new MousePosition(this.createOptions()));
     this.map.instance.addControl(this.instance);
   }
 

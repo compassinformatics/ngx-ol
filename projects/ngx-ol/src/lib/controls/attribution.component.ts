@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, ElementRef, Input, OnDestroy, OnInit, signal } from '@angular/core';
 import Attribution from 'ol/control/Attribution';
 import { Options } from 'ol/control/Attribution';
 import MapEvent from 'ol/MapEvent';
@@ -21,6 +21,20 @@ export class ControlAttributionComponent implements OnInit, OnDestroy {
 
   public componentType = 'control';
   instance: Attribution;
+
+  protected readonly _instanceSignal = signal<Attribution | undefined>(
+    undefined,
+  );
+
+  readonly instanceSignal = this._instanceSignal.asReadonly();
+
+  protected setInstance(instance: Attribution): Attribution {
+    this.instance = instance;
+
+    this._instanceSignal.set(instance);
+
+    return instance;
+  }
   target: HTMLElement;
 
   constructor(
@@ -31,7 +45,7 @@ export class ControlAttributionComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.target = this.element.nativeElement;
     // console.log('ol.control.Attribution init: ', this);
-    this.instance = new Attribution(this.createOptions());
+    this.setInstance(new Attribution(this.createOptions()));
     this.map.instance.addControl(this.instance);
   }
 

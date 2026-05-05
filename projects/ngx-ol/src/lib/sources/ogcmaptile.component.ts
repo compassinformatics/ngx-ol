@@ -1,4 +1,4 @@
-import { AfterContentInit, Component, Host, Input, forwardRef } from '@angular/core';
+import { AfterContentInit, Component, Host, Input, forwardRef, signal } from '@angular/core';
 import { ProjectionLike } from 'ol/proj';
 import OGCMapTile from 'ol/source/OGCMapTile';
 import { Options } from 'ol/source/OGCMapTile';
@@ -27,14 +27,28 @@ export class SourceOGCMapTileComponent extends SourceComponent implements AfterC
   @Input() transition?: number;
   @Input() collections?: string[];
 
-  public instance: OGCMapTile;
+  instance: OGCMapTile;
+
+  protected readonly _instanceSignal = signal<OGCMapTile | undefined>(
+    undefined,
+  );
+
+  readonly instanceSignal = this._instanceSignal.asReadonly();
+
+  protected setInstance(instance: OGCMapTile): OGCMapTile {
+    this.instance = instance;
+
+    this._instanceSignal.set(instance);
+
+    return instance;
+  }
 
   constructor(@Host() layer: LayerTileComponent) {
     super(layer);
   }
 
   ngAfterContentInit() {
-    this.instance = new OGCMapTile(this.createOptions());
+    this.setInstance(new OGCMapTile(this.createOptions()));
     this.host.instance.setSource(this.instance);
   }
 

@@ -45,7 +45,7 @@ export class LayerVectorImageComponent
 
   ngOnInit() {
     // console.log('creating ol.layer.Vector instance with:', this);
-    this.instance = new VectorImage(this.createOptions());
+    this.setInstance(new VectorImage(this.createOptions()));
     super.ngOnInit();
   }
 

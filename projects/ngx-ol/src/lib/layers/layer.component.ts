@@ -1,4 +1,12 @@
-import { OnDestroy, OnInit, OnChanges, Input, SimpleChanges, Directive } from '@angular/core';
+import {
+  OnDestroy,
+  OnInit,
+  OnChanges,
+  Input,
+  SimpleChanges,
+  Directive,
+  signal,
+} from '@angular/core';
 import Event from 'ol/events/Event';
 import { MapComponent } from '../map.component';
 import { LayerGroupComponent } from './layergroup.component';
@@ -24,7 +32,19 @@ export abstract class LayerComponent implements OnInit, OnChanges, OnDestroy {
   @Input() prerender: (evt: Event) => void;
   @Input() postrender: (evt: Event) => void;
 
-  public instance: any;
+  instance: any;
+
+  protected readonly _instanceSignal = signal<any | undefined>(undefined);
+
+  readonly instanceSignal = this._instanceSignal.asReadonly();
+
+  protected setInstance(instance: any): any {
+    this.instance = instance;
+
+    this._instanceSignal.set(instance);
+
+    return instance;
+  }
   public componentType = 'layer';
 
   protected constructor(protected host: MapComponent | LayerGroupComponent) {}

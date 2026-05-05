@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ContentChildren, Host, QueryList } from '@angular/core';
+import { AfterViewInit, Component, ContentChildren, Host, QueryList, signal } from '@angular/core';
 import { SourceComponent } from './sources/source.component';
 import { AttributionComponent } from './attribution.component';
 
@@ -11,12 +11,26 @@ export class AttributionsComponent implements AfterViewInit {
 
   instance: Array<string>;
 
+  protected readonly _instanceSignal = signal<Array<string> | undefined>(
+    undefined,
+  );
+
+  readonly instanceSignal = this._instanceSignal.asReadonly();
+
+  protected setInstance(instance: Array<string>): Array<string> {
+    this.instance = instance;
+
+    this._instanceSignal.set(instance);
+
+    return instance;
+  }
+
   constructor(@Host() private source: SourceComponent) {}
 
   /* we can do this at the very end */
   ngAfterViewInit() {
     if (this.attributions.length) {
-      this.instance = this.attributions.map((cmp) => cmp.label);
+      this.setInstance(this.attributions.map((cmp) => cmp.label));
       // console.log('setting attributions:', this.instance);
       this.source.instance.setAttributions(this.instance);
     }

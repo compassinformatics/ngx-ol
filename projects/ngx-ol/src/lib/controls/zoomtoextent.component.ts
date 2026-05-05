@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, signal } from '@angular/core';
 import ZoomToExtent from 'ol/control/ZoomToExtent';
 import { Options } from 'ol/control/ZoomToExtent';
 import { MapComponent } from '../map.component';
@@ -17,12 +17,26 @@ export class ControlZoomToExtentComponent implements OnInit, OnDestroy {
 
   instance: ZoomToExtent;
 
+  protected readonly _instanceSignal = signal<ZoomToExtent | undefined>(
+    undefined,
+  );
+
+  readonly instanceSignal = this._instanceSignal.asReadonly();
+
+  protected setInstance(instance: ZoomToExtent): ZoomToExtent {
+    this.instance = instance;
+
+    this._instanceSignal.set(instance);
+
+    return instance;
+  }
+
   constructor(private map: MapComponent) {
     // console.log('instancing aol-control-zoomtoextent');
   }
 
   ngOnInit() {
-    this.instance = new ZoomToExtent(this.createOptions());
+    this.setInstance(new ZoomToExtent(this.createOptions()));
     this.map.instance.addControl(this.instance);
   }
 

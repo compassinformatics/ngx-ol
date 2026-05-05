@@ -18,7 +18,7 @@ export class LayerImageComponent extends LayerComponent implements OnInit, OnCha
   }
 
   ngOnInit() {
-    this.instance = new Image(this.createOptions());
+    this.setInstance(new Image(this.createOptions()));
     super.ngOnInit();
   }
 

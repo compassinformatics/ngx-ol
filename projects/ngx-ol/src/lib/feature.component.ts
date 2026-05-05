@@ -1,4 +1,5 @@
 import {
+  signal,
   Component,
   OnInit,
   OnDestroy,
@@ -39,12 +40,24 @@ export class FeatureComponent implements OnInit, OnDestroy, OnChanges {
   }>();
 
   public componentType = 'feature';
-  public instance: Feature;
+  instance: Feature;
+
+  protected readonly _instanceSignal = signal<Feature | undefined>(undefined);
+
+  readonly instanceSignal = this._instanceSignal.asReadonly();
+
+  protected setInstance(instance: Feature): Feature {
+    this.instance = instance;
+
+    this._instanceSignal.set(instance);
+
+    return instance;
+  }
 
   constructor(private host: SourceVectorComponent) {}
 
   ngOnInit() {
-    this.instance = this.feature || new Feature();
+    this.setInstance(this.feature || new Feature());
     if (this.properties) {
       this.instance.setProperties(this.properties);
     }
@@ -71,7 +84,7 @@ export class FeatureComponent implements OnInit, OnDestroy, OnChanges {
     if (feature && !feature.firstChange) {
       this.instance.set('__aol-feature', null);
       this.host.instance.removeFeature(this.instance);
-      this.instance = feature.currentValue;
+      this.setInstance(feature.currentValue);
       if (this.clickable) {
         this.instance.set('__aol-feature', this);
       }

@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, signal } from '@angular/core';
 import FullScreen from 'ol/control/FullScreen';
 import { Options } from 'ol/control/FullScreen';
 import { MapComponent } from '../map.component';
@@ -20,12 +20,26 @@ export class ControlFullScreenComponent implements OnInit, OnDestroy {
 
   instance: FullScreen;
 
+  protected readonly _instanceSignal = signal<FullScreen | undefined>(
+    undefined,
+  );
+
+  readonly instanceSignal = this._instanceSignal.asReadonly();
+
+  protected setInstance(instance: FullScreen): FullScreen {
+    this.instance = instance;
+
+    this._instanceSignal.set(instance);
+
+    return instance;
+  }
+
   constructor(private map: MapComponent) {
     // console.log('instancing aol-control-fullscreen');
   }
 
   ngOnInit() {
-    this.instance = new FullScreen(this.createOptions());
+    this.setInstance(new FullScreen(this.createOptions()));
     this.map.instance.addControl(this.instance);
   }
 

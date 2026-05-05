@@ -1,4 +1,5 @@
 import {
+  signal,
   Component,
   EventEmitter,
   forwardRef,
@@ -41,12 +42,26 @@ export class SourceImageArcGISRestComponent extends SourceComponent implements O
 
   instance: ImageArcGISRest;
 
+  protected readonly _instanceSignal = signal<
+    ImageArcGISRest | undefined
+  >(undefined);
+
+  readonly instanceSignal = this._instanceSignal.asReadonly();
+
+  protected setInstance(instance: ImageArcGISRest): ImageArcGISRest {
+    this.instance = instance;
+
+    this._instanceSignal.set(instance);
+
+    return instance;
+  }
+
   constructor(@Host() layer: LayerImageComponent) {
     super(layer);
   }
 
   ngOnInit() {
-    this.instance = new ImageArcGISRest(this.createOptions());
+    this.setInstance(new ImageArcGISRest(this.createOptions()));
     this.host.instance.setSource(this.instance);
     this.instance.on('imageloadstart', (event: ImageSourceEvent) =>
       this.imageLoadStart.emit(event),

@@ -1,4 +1,5 @@
 import {
+  signal,
   Component,
   Host,
   Input,
@@ -35,6 +36,18 @@ export class SourceVectorComponent extends SourceComponent implements OnInit, On
   @Input() strategy?: LoadingStrategy;
 
   instance: Vector;
+
+  protected readonly _instanceSignal = signal<Vector | undefined>(undefined);
+
+  readonly instanceSignal = this._instanceSignal.asReadonly();
+
+  protected setInstance(instance: Vector): Vector {
+    this.instance = instance;
+
+    this._instanceSignal.set(instance);
+
+    return instance;
+  }
 
   constructor(
     @Optional() @Host() vectorLayer: LayerVectorComponent,

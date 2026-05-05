@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges, signal } from '@angular/core';
 import { createXYZ, XYZOptions } from 'ol/tilegrid';
 import TileGrid, { Options } from 'ol/tilegrid/TileGrid';
 import { Extent } from 'ol/extent';
@@ -23,6 +23,18 @@ export class TileGridComponent implements OnInit, OnChanges {
 
   instance: TileGrid;
 
+  protected readonly _instanceSignal = signal<TileGrid | undefined>(undefined);
+
+  readonly instanceSignal = this._instanceSignal.asReadonly();
+
+  protected setInstance(instance: TileGrid): TileGrid {
+    this.instance = instance;
+
+    this._instanceSignal.set(instance);
+
+    return instance;
+  }
+
   ngOnInit() {
     this.createInstance();
   }
@@ -33,9 +45,9 @@ export class TileGridComponent implements OnInit, OnChanges {
 
   protected createInstance() {
     if (!this.resolutions) {
-      this.instance = createXYZ(this.createXYZOptions());
+      this.setInstance(createXYZ(this.createXYZOptions()));
     } else {
-      this.instance = new TileGrid(this.createTileGridOptions());
+      this.setInstance(new TileGrid(this.createTileGridOptions()));
     }
   }
 

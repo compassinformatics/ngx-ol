@@ -1,4 +1,4 @@
-import { Component, ContentChild, OnDestroy, OnInit } from '@angular/core';
+import { Component, ContentChild, OnDestroy, OnInit, signal } from '@angular/core';
 import Control from 'ol/control/Control';
 import { Options } from 'ol/control/Control';
 import { MapComponent } from '../map.component';
@@ -13,6 +13,18 @@ export class ControlComponent implements OnInit, OnDestroy {
 
   public componentType = 'control';
   instance: Control;
+
+  protected readonly _instanceSignal = signal<Control | undefined>(undefined);
+
+  readonly instanceSignal = this._instanceSignal.asReadonly();
+
+  protected setInstance(instance: Control): Control {
+    this.instance = instance;
+
+    this._instanceSignal.set(instance);
+
+    return instance;
+  }
   element: HTMLElement;
 
   constructor(private map: MapComponent) {}
@@ -20,7 +32,7 @@ export class ControlComponent implements OnInit, OnDestroy {
   ngOnInit() {
     if (this.content) {
       this.element = this.content.elementRef.nativeElement;
-      this.instance = new Control(this.createOptions());
+      this.setInstance(new Control(this.createOptions()));
       this.map.instance.addControl(this.instance);
     }
   }

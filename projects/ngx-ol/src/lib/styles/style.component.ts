@@ -1,4 +1,4 @@
-import { Component, Input, Optional, OnInit } from '@angular/core';
+import { Component, Input, Optional, OnInit, signal } from '@angular/core';
 import Fill from 'ol/style/Fill';
 import Image from 'ol/style/Image';
 import Stroke from 'ol/style/Stroke';
@@ -24,7 +24,19 @@ export class StyleComponent implements OnInit {
   @Input() text?: Text;
   @Input() zIndex?: number;
 
-  public instance: Style;
+  instance: Style;
+
+  protected readonly _instanceSignal = signal<Style | undefined>(undefined);
+
+  readonly instanceSignal = this._instanceSignal.asReadonly();
+
+  protected setInstance(instance: Style): Style {
+    this.instance = instance;
+
+    this._instanceSignal.set(instance);
+
+    return instance;
+  }
   public componentType = 'style';
   private readonly host: FeatureComponent | LayerVectorComponent;
 
@@ -47,7 +59,7 @@ export class StyleComponent implements OnInit {
 
   ngOnInit() {
     // console.log('creating aol-style instance with: ', this);
-    this.instance = new Style(this.createOptions());
+    this.setInstance(new Style(this.createOptions()));
     this.host.instance.setStyle(this.instance);
   }
 

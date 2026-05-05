@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, signal } from '@angular/core';
 import Link from 'ol/interaction/Link';
 import type { Options, Params } from 'ol/interaction/Link';
 import type { AnimationOptions } from 'ol/View';
@@ -19,10 +19,22 @@ export class LinkInteractionComponent implements OnInit, OnDestroy {
 
   instance: Link;
 
+  protected readonly _instanceSignal = signal<Link | undefined>(undefined);
+
+  readonly instanceSignal = this._instanceSignal.asReadonly();
+
+  protected setInstance(instance: Link): Link {
+    this.instance = instance;
+
+    this._instanceSignal.set(instance);
+
+    return instance;
+  }
+
   constructor(private map: MapComponent) {}
 
   ngOnInit() {
-    this.instance = new Link(this.createOptions());
+    this.setInstance(new Link(this.createOptions()));
     this.map.instance.addInteraction(this.instance);
   }
 

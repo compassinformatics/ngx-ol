@@ -1,4 +1,4 @@
-import { Component, Host, Input, OnInit, forwardRef } from '@angular/core';
+import { Component, Host, Input, OnInit, forwardRef, signal } from '@angular/core';
 import BingMaps from 'ol/source/BingMaps';
 import { Options } from 'ol/source/BingMaps';
 import { SourceComponent } from './source.component';
@@ -29,12 +29,24 @@ export class SourceBingmapsComponent extends SourceComponent implements OnInit {
 
   instance: BingMaps;
 
+  protected readonly _instanceSignal = signal<BingMaps | undefined>(undefined);
+
+  readonly instanceSignal = this._instanceSignal.asReadonly();
+
+  protected setInstance(instance: BingMaps): BingMaps {
+    this.instance = instance;
+
+    this._instanceSignal.set(instance);
+
+    return instance;
+  }
+
   constructor(@Host() layer: LayerTileComponent) {
     super(layer);
   }
 
   ngOnInit() {
-    this.instance = new BingMaps(this.createOptions());
+    this.setInstance(new BingMaps(this.createOptions()));
     this.host.instance.setSource(this.instance);
   }
 

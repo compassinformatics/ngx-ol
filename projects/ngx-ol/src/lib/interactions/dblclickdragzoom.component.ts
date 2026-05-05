@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, signal } from '@angular/core';
 import DblClickDragZoom from 'ol/interaction/DblClickDragZoom';
 import type { Options } from 'ol/interaction/DblClickDragZoom';
 import { MapComponent } from '../map.component';
@@ -16,10 +16,24 @@ export class DblClickDragZoomInteractionComponent implements OnInit, OnDestroy {
 
   instance: DblClickDragZoom;
 
+  protected readonly _instanceSignal = signal<
+    DblClickDragZoom | undefined
+  >(undefined);
+
+  readonly instanceSignal = this._instanceSignal.asReadonly();
+
+  protected setInstance(instance: DblClickDragZoom): DblClickDragZoom {
+    this.instance = instance;
+
+    this._instanceSignal.set(instance);
+
+    return instance;
+  }
+
   constructor(private map: MapComponent) {}
 
   ngOnInit() {
-    this.instance = new DblClickDragZoom(this.createOptions());
+    this.setInstance(new DblClickDragZoom(this.createOptions()));
     this.map.instance.addInteraction(this.instance);
   }
 

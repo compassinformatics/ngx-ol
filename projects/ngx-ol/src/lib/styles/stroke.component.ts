@@ -1,4 +1,12 @@
-import { Component, Input, Optional, OnInit, OnChanges, SimpleChanges } from '@angular/core';
+import {
+  Component,
+  Input,
+  Optional,
+  OnInit,
+  OnChanges,
+  SimpleChanges,
+  signal,
+} from '@angular/core';
 import Stroke from 'ol/style/Stroke';
 import { Options } from 'ol/style/Stroke';
 import { StyleComponent } from './style.component';
@@ -20,7 +28,19 @@ export class StyleStrokeComponent implements OnInit, OnChanges {
   @Input() miterLimit?: number;
   @Input() width?: number;
 
-  public instance: Stroke;
+  instance: Stroke;
+
+  protected readonly _instanceSignal = signal<Stroke | undefined>(undefined);
+
+  readonly instanceSignal = this._instanceSignal.asReadonly();
+
+  protected setInstance(instance: Stroke): Stroke {
+    this.instance = instance;
+
+    this._instanceSignal.set(instance);
+
+    return instance;
+  }
   /* the typings do not have the setters */
   private readonly host: StyleComponent | StyleCircleComponent | StyleTextComponent;
 
@@ -44,7 +64,7 @@ export class StyleStrokeComponent implements OnInit, OnChanges {
 
   ngOnInit() {
     // console.log('creating ol.style.Stroke instance with: ', this);
-    this.instance = new Stroke(this.createOptions());
+    this.setInstance(new Stroke(this.createOptions()));
     switch (this.host.componentType) {
       case 'style':
         this.host.instance.setStroke(this.instance);

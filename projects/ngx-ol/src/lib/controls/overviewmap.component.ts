@@ -1,4 +1,12 @@
-import { Component, Input, OnDestroy, OnInit, OnChanges, SimpleChanges } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnDestroy,
+  OnInit,
+  OnChanges,
+  SimpleChanges,
+  signal,
+} from '@angular/core';
 import Collection from 'ol/Collection';
 import MapEvent from 'ol/MapEvent';
 import BaseLayer from 'ol/layer/Base';
@@ -26,10 +34,24 @@ export class ControlOverviewMapComponent implements OnInit, OnChanges, OnDestroy
 
   instance: OverviewMap;
 
+  protected readonly _instanceSignal = signal<OverviewMap | undefined>(
+    undefined,
+  );
+
+  readonly instanceSignal = this._instanceSignal.asReadonly();
+
+  protected setInstance(instance: OverviewMap): OverviewMap {
+    this.instance = instance;
+
+    this._instanceSignal.set(instance);
+
+    return instance;
+  }
+
   constructor(private map: MapComponent) {}
 
   ngOnInit() {
-    this.instance = new OverviewMap(this.createOptions());
+    this.setInstance(new OverviewMap(this.createOptions()));
     this.map.instance.addControl(this.instance);
   }
 
@@ -45,7 +67,7 @@ export class ControlOverviewMapComponent implements OnInit, OnChanges, OnDestroy
 
   private reloadInstance() {
     this.map.instance.removeControl(this.instance);
-    this.instance = new OverviewMap(this.createOptions());
+    this.setInstance(new OverviewMap(this.createOptions()));
     this.map.instance.addControl(this.instance);
   }
 

@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges, signal } from '@angular/core';
 import { FeatureComponent } from '../feature.component';
 import Circle from 'ol/geom/Circle';
 import { SimpleGeometryComponent } from './simplegeometry.component';
@@ -16,14 +16,26 @@ export class GeometryCircleComponent extends SimpleGeometryComponent implements 
   @Input() radius: number;
 
   public componentType = 'geometry-circle';
-  public instance: Circle;
+  instance: Circle;
+
+  protected readonly _instanceSignal = signal<Circle | undefined>(undefined);
+
+  readonly instanceSignal = this._instanceSignal.asReadonly();
+
+  protected setInstance(instance: Circle): Circle {
+    this.instance = instance;
+
+    this._instanceSignal.set(instance);
+
+    return instance;
+  }
 
   constructor(map: MapComponent, host: FeatureComponent) {
     super(map, host);
   }
 
   ngOnInit() {
-    this.instance = new Circle(this.center, this.radius, this.layout);
+    this.setInstance(new Circle(this.center, this.radius, this.layout));
     super.ngOnInit();
   }
 

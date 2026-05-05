@@ -1,4 +1,5 @@
 import {
+  signal,
   AfterContentInit,
   Component,
   EventEmitter,
@@ -40,6 +41,18 @@ export class SourceOsmComponent extends SourceXYZComponent implements AfterConte
 
   instance: OSM;
 
+  protected readonly _instanceSignal = signal<OSM | undefined>(undefined);
+
+  readonly instanceSignal = this._instanceSignal.asReadonly();
+
+  protected setInstance(instance: OSM): OSM {
+    this.instance = instance;
+
+    this._instanceSignal.set(instance);
+
+    return instance;
+  }
+
   constructor(
     @Optional()
     @Host()
@@ -52,7 +65,7 @@ export class SourceOsmComponent extends SourceXYZComponent implements AfterConte
     if (this.tileGridXYZ) {
       this.tileGrid = this.tileGridXYZ.instance;
     }
-    this.instance = new OSM(this.createOptions());
+    this.setInstance(new OSM(this.createOptions()));
     this.instance.on('tileloadstart', (event: TileSourceEvent) => this.tileLoadStart.emit(event));
     this.instance.on('tileloadend', (event: TileSourceEvent) => this.tileLoadEnd.emit(event));
     this.instance.on('tileloaderror', (event: TileSourceEvent) => this.tileLoadError.emit(event));

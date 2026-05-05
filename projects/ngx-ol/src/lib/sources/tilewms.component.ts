@@ -1,4 +1,5 @@
 import {
+  signal,
   Component,
   Host,
   Input,
@@ -44,12 +45,24 @@ export class SourceTileWMSComponent extends SourceComponent implements OnChanges
 
   instance: TileWMS;
 
+  protected readonly _instanceSignal = signal<TileWMS | undefined>(undefined);
+
+  readonly instanceSignal = this._instanceSignal.asReadonly();
+
+  protected setInstance(instance: TileWMS): TileWMS {
+    this.instance = instance;
+
+    this._instanceSignal.set(instance);
+
+    return instance;
+  }
+
   constructor(@Host() layer: LayerTileComponent) {
     super(layer);
   }
 
   ngOnInit() {
-    this.instance = new TileWMS(this.createOptions());
+    this.setInstance(new TileWMS(this.createOptions()));
     this.host.instance.setSource(this.instance);
   }
 

@@ -1,4 +1,5 @@
 import {
+  signal,
   Component,
   Host,
   Input,
@@ -60,6 +61,20 @@ export class SourceTileWMTSComponent
 
   instance: SourceWMTS;
 
+  protected readonly _instanceSignal = signal<SourceWMTS | undefined>(
+    undefined,
+  );
+
+  readonly instanceSignal = this._instanceSignal.asReadonly();
+
+  protected setInstance(instance: SourceWMTS): SourceWMTS {
+    this.instance = instance;
+
+    this._instanceSignal.set(instance);
+
+    return instance;
+  }
+
   constructor(@Host() layer: LayerTileComponent) {
     super(layer);
   }
@@ -86,7 +101,7 @@ export class SourceTileWMTSComponent
   }
 
   setLayerSource(): void {
-    this.instance = new SourceWMTS(this.createOptions());
+    this.setInstance(new SourceWMTS(this.createOptions()));
     this.instance.on('tileloadstart', (event: TileSourceEvent) => this.tileLoadStart.emit(event));
     this.instance.on('tileloadend', (event: TileSourceEvent) => this.tileLoadEnd.emit(event));
     this.instance.on('tileloaderror', (event: TileSourceEvent) => this.tileLoadError.emit(event));

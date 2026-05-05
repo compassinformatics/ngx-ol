@@ -1,4 +1,5 @@
 import {
+  signal,
   AfterContentInit,
   Component,
   ContentChild,
@@ -36,6 +37,20 @@ export class SourceClusterComponent extends SourceComponent implements AfterCont
   sourceVectorComponent: SourceVectorComponent;
 
   instance: Cluster<any>;
+
+  protected readonly _instanceSignal = signal<Cluster<any> | undefined>(
+    undefined,
+  );
+
+  readonly instanceSignal = this._instanceSignal.asReadonly();
+
+  protected setInstance(instance: Cluster<any>): Cluster<any> {
+    this.instance = instance;
+
+    this._instanceSignal.set(instance);
+
+    return instance;
+  }
   source: Vector<any>;
 
   constructor(
@@ -48,7 +63,7 @@ export class SourceClusterComponent extends SourceComponent implements AfterCont
   ngAfterContentInit() {
     this.source = this.sourceVectorComponent.instance;
 
-    this.instance = new Cluster(this.createOptions());
+    this.setInstance(new Cluster(this.createOptions()));
     this.host.instance.setSource(this.instance);
   }
 

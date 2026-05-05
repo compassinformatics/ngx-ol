@@ -1,4 +1,5 @@
 import {
+  signal,
   AfterContentInit,
   Component,
   Host,
@@ -43,20 +44,34 @@ export class StyleRegularShapeComponent implements AfterContentInit, OnChanges, 
   @Input() declutterMode?: DeclutterMode;
 
   public componentType = 'style-regularshape';
-  public instance: RegularShape;
+  instance: RegularShape;
+
+  protected readonly _instanceSignal = signal<RegularShape | undefined>(
+    undefined,
+  );
+
+  readonly instanceSignal = this._instanceSignal.asReadonly();
+
+  protected setInstance(instance: RegularShape): RegularShape {
+    this.instance = instance;
+
+    this._instanceSignal.set(instance);
+
+    return instance;
+  }
 
   constructor(@Host() private host: StyleComponent) {}
 
   update() {
     if (this.instance) {
-      this.instance = new RegularShape(this.createOptions());
+      this.setInstance(new RegularShape(this.createOptions()));
       this.host.instance.setImage(this.instance);
     }
     this.host.update();
   }
 
   ngAfterContentInit() {
-    this.instance = new RegularShape(this.createOptions());
+    this.setInstance(new RegularShape(this.createOptions()));
     this.host.instance.setImage(this.instance);
     this.host.update();
   }
@@ -79,7 +94,7 @@ export class StyleRegularShapeComponent implements AfterContentInit, OnChanges, 
       return;
     }
 
-    this.instance = new RegularShape(this.createOptions());
+    this.setInstance(new RegularShape(this.createOptions()));
     this.host.instance.setImage(this.instance);
     this.host.update();
   }
