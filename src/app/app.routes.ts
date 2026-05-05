@@ -6,15 +6,22 @@ import { ArcgisTiled } from './arcgis-tiled/arcgis-tiled';
 import { Cluster } from './cluster/cluster';
 import { ColorSelectHover } from './color-select-hover/color-select-hover';
 import { CursorPosition } from './cursor-position/cursor-position';
+import { DblClickDragZoomDemo } from './dbl-click-drag-zoom/dbl-click-drag-zoom';
 import { DisplayGeojsonSource } from './display-geojson-source/display-geojson-source';
 import { DisplayGeometry } from './display-geometry/display-geometry';
 import { DrawBox } from './draw-box/draw-box';
+import { ExtentInteractionDemo } from './extent-interaction/extent-interaction';
+import { Geotiff } from './geotiff/geotiff';
+import { GeometryCollectionDemo } from './geometry-collection/geometry-collection';
 import { Graticule } from './graticule/graticule';
 import { GeometryComponents } from './geometry-components/geometry-components';
+import { Heatmap } from './heatmap/heatmap';
 import { Home } from './home/home';
 import { ImageStatic } from './image-static/image-static';
 import { ImageWms } from './image-wms/image-wms';
 import { IndividualImports } from './individual-imports/individual-imports';
+import { Iiif } from './iiif/iiif';
+import { LinkInteractionDemo } from './link-interaction/link-interaction';
 import { MapPosition } from './map-position/map-position';
 import { MapInteractions } from './map-interactions/map-interactions';
 import { Marker } from './marker/marker';
@@ -23,17 +30,22 @@ import { OgcMapTile } from './ogc-map-tile/ogc-map-tile';
 import { OgcVectorTile } from './ogc-vector-tile/ogc-vector-tile';
 import { Overlay } from './overlay/overlay';
 import { Overview } from './overview/overview';
+import { PinchRotateDemo } from './pinch-rotate/pinch-rotate';
 import { Raster } from './raster/raster';
+import { RegularShapeDemo } from './regular-shape/regular-shape';
 import { SelectInteraction } from './select-interaction/select-interaction';
 import { SideBySide } from './side-by-side/side-by-side';
 import { Swipe } from './swipe/swipe';
 import { SubModules } from './sub-modules/sub-modules';
+import { TileArcgisRest } from './tile-arcgis-rest/tile-arcgis-rest';
 import { TileJson } from './tile-json/tile-json';
 import { TileJsonDynamic } from './tile-json-dynamic/tile-json-dynamic';
 import { Utfgrid } from './utfgrid/utfgrid';
 import { VectorEsri } from './vector-esri/vector-esri';
 import { ViewProjectionUpdate } from './view-projection-update/view-projection-update';
+import { WebglTile } from './webgl-tile/webgl-tile';
 import { XyzEsri } from './xyz-esri/xyz-esri';
+import { ZoomifyDemo } from './zoomify/zoomify';
 
 export const routes: Routes = [
   { path: '', component: Home },
@@ -44,8 +56,12 @@ export const routes: Routes = [
   { path: 'cursor-position', component: CursorPosition },
   { path: 'display-geometry', component: DisplayGeometry },
   { path: 'geometry-components', component: GeometryComponents },
+  { path: 'geometry-collection', component: GeometryCollectionDemo },
   { path: 'display-geojson-source', component: DisplayGeojsonSource },
+  { path: 'regular-shape', component: RegularShapeDemo },
+  { path: 'heatmap', component: Heatmap },
   { path: 'draw-box', component: DrawBox },
+  { path: 'extent-interaction', component: ExtentInteractionDemo },
   { path: 'modify-polygon', component: ModifyPolygon },
   { path: 'side-by-side', component: SideBySide },
   { path: 'swipe', component: Swipe },
@@ -56,12 +72,18 @@ export const routes: Routes = [
   { path: 'raster', component: Raster },
   { path: 'arcgis-image', component: ArcgisImage },
   { path: 'arcgis-tiled', component: ArcgisTiled },
+  { path: 'tile-arcgis-rest', component: TileArcgisRest },
+  { path: 'webgl-tile', component: WebglTile },
+  { path: 'iiif', component: Iiif },
   { path: 'image-wms', component: ImageWms },
   { path: 'view-projection-update', component: ViewProjectionUpdate },
   { path: 'overview', component: Overview },
   { path: 'utf-grid', component: Utfgrid },
   { path: 'image-static', component: ImageStatic },
   { path: 'map-interactions', component: MapInteractions },
+  { path: 'dbl-click-drag-zoom', component: DblClickDragZoomDemo },
+  { path: 'pinch-rotate', component: PinchRotateDemo },
+  { path: 'link-interaction', component: LinkInteractionDemo },
   { path: 'interactions', redirectTo: 'map-interactions' },
   { path: 'feature-interactions', redirectTo: 'map-interactions' },
   { path: 'select-interaction', component: SelectInteraction },
@@ -72,6 +94,8 @@ export const routes: Routes = [
   { path: 'ogc-vector-tile', component: OgcVectorTile },
   { path: 'ogc-map-tile', component: OgcMapTile },
   { path: 'xyz-esri', component: XyzEsri },
+  { path: 'geotiff', component: Geotiff },
+  { path: 'zoomify', component: ZoomifyDemo },
   { path: 'ogcvectortile', redirectTo: 'ogc-vector-tile' },
   { path: 'ogcmaptile', redirectTo: 'ogc-map-tile' },
   { path: 'advanced', component: AdvancedMap },

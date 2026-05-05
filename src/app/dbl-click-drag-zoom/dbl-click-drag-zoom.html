@@ -1,0 +1,23 @@
+<div class="layout demo-layout">
+  <aol-map class="demo-map">
+    <aol-view [zoom]="zoom()" [center]="center()"></aol-view>
+
+    <aol-layer-tile>
+      <aol-source-osm></aol-source-osm>
+    </aol-layer-tile>
+
+    <aol-interaction-dragpan></aol-interaction-dragpan>
+    <aol-interaction-mousewheelzoom></aol-interaction-mousewheelzoom>
+    <aol-interaction-dblclickdragzoom [duration]="duration()" [delta]="delta()"></aol-interaction-dblclickdragzoom>
+    <aol-control-scaleline></aol-control-scaleline>
+    <aol-control-zoom></aol-control-zoom>
+    <aol-control-attribution></aol-control-attribution>
+  </aol-map>
+
+  <aside class="panel demo-panel">
+    <section class="section">
+      <h2>DblClickDragZoom</h2>
+      <p>Double-click and hold, then drag up or down to zoom continuously around the clicked point.</p>
+    </section>
+  </aside>
+</div>

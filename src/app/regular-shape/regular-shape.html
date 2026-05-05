@@ -1,0 +1,47 @@
+<div class="layout demo-layout">
+  <aol-map class="demo-map">
+    <aol-view [zoom]="zoom()" [center]="center()"></aol-view>
+
+    <aol-layer-tile>
+      <aol-source-osm></aol-source-osm>
+    </aol-layer-tile>
+
+    <aol-layer-vector>
+      <aol-source-vector [features]="features()"></aol-source-vector>
+
+      <aol-style>
+        <aol-style-regularshape
+          [points]="points()"
+          [radius]="radius()"
+          [radius2]="radius2() > 0 ? radius2() : undefined"
+          [fill]="fill"
+          [stroke]="stroke"
+        ></aol-style-regularshape>
+      </aol-style>
+    </aol-layer-vector>
+
+    <aol-interaction-default></aol-interaction-default>
+    <aol-control-scaleline></aol-control-scaleline>
+    <aol-control-zoom></aol-control-zoom>
+    <aol-control-attribution></aol-control-attribution>
+  </aol-map>
+
+  <aside class="panel demo-panel">
+    <section class="section">
+      <h2>RegularShape settings</h2>
+      <label class="field">
+        <span>Points: {{ points() }}</span>
+        <input #pointsInput type="range" min="3" max="8" [value]="points()" (input)="setPoints(pointsInput.valueAsNumber)" />
+      </label>
+      <label class="field">
+        <span>Radius: {{ radius() }} px</span>
+        <input #radiusInput type="range" min="6" max="20" [value]="radius()" (input)="setRadius(radiusInput.valueAsNumber)" />
+      </label>
+      <label class="field">
+        <span>Star depth: {{ radius2() }} px</span>
+        <input #radius2Input type="range" min="0" max="16" [value]="radius2()" (input)="setRadius2(radius2Input.valueAsNumber)" />
+      </label>
+      <p>Set star depth to <code>0</code> for a regular polygon, or raise it to turn the marker into a star.</p>
+    </section>
+  </aside>
+</div>

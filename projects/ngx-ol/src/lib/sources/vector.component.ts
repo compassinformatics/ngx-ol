@@ -1,22 +1,14 @@
-import {
-  Component,
-  Host,
-  Input,
-  OnChanges,
-  OnInit,
-  Optional,
-  SimpleChanges,
-  forwardRef,
-} from '@angular/core';
-import Vector from 'ol/source/Vector';
+import { Component, Host, Input, OnChanges, OnInit, Optional, SimpleChanges, forwardRef } from '@angular/core';
+import Collection from 'ol/Collection.js';
+import type { FeatureLike } from 'ol/Feature.js';
+import type FeatureFormat from 'ol/format/Feature.js';
+import type { FeatureLoader, FeatureUrlFunction } from 'ol/featureloader.js';
+import Vector from 'ol/source/Vector.js';
+import type { LoadingStrategy, Options } from 'ol/source/Vector.js';
 import { LayerVectorComponent } from '../layers/layervector.component';
 import { SourceComponent } from './source.component';
-import { LoadingStrategy, Options } from 'ol/source/Vector';
 import { LayerVectorImageComponent } from '../layers/layervectorimage.component';
-import Collection from 'ol/Collection';
-import { FeatureLike } from 'ol/Feature';
-import FeatureFormat from 'ol/format/Feature';
-import { FeatureLoader, FeatureUrlFunction } from 'ol/featureloader';
+import { LayerHeatmapComponent } from '../layers/layerheatmap.component';
 
 @Component({
   selector: 'aol-source-vector',
@@ -46,8 +38,9 @@ export class SourceVectorComponent extends SourceComponent implements OnInit, On
   constructor(
     @Optional() @Host() vectorLayer: LayerVectorComponent,
     @Optional() @Host() vectorImageLayer: LayerVectorImageComponent,
+    @Optional() @Host() heatmapLayer: LayerHeatmapComponent,
   ) {
-    super(vectorLayer || vectorImageLayer);
+    super(vectorLayer || vectorImageLayer || heatmapLayer);
   }
 
   ngOnInit() {

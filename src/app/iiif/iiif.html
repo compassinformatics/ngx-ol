@@ -1,0 +1,50 @@
+<div class="layout demo-layout">
+  <aol-map #map class="demo-map">
+    @if (!viewReady()) {
+      <aol-view
+        [center]="center()"
+        [constrainOnlyCenter]="true"
+        [extent]="extent()"
+        [resolution]="resolution()"
+        [resolutions]="resolutions()"
+      ></aol-view>
+    }
+
+    @if (iiifOptions(); as options) {
+      <aol-layer-tile>
+        <aol-source-iiif
+          #iiifSource
+          [extent]="options.extent"
+          [format]="options.format"
+          [quality]="options.quality"
+          [resolutions]="resolutions()"
+          [size]="options.size"
+          [sizes]="options.sizes"
+          [supports]="options.supports"
+          [tilePixelRatio]="options.tilePixelRatio"
+          [tileSize]="options.tileSize"
+          [url]="options.url"
+          [version]="options.version"
+          [zDirection]="options.zDirection"
+          crossOrigin="anonymous"
+        ></aol-source-iiif>
+      </aol-layer-tile>
+    }
+
+    <aol-interaction-default></aol-interaction-default>
+    <aol-control-scaleline></aol-control-scaleline>
+    <aol-control-zoom></aol-control-zoom>
+    <aol-control-attribution></aol-control-attribution>
+  </aol-map>
+
+  <aside class="panel demo-panel">
+    <section class="section">
+      <h2>IIIF</h2>
+      <p>This demo parses <code>info.json</code> with OpenLayers <code>IIIFInfo</code>, then binds the result to <code>aol-source-iiif</code>.</p>
+      <p><code>{{ imageInfoUrl }}</code></p>
+      @if (error()) {
+        <p>{{ error() }}</p>
+      }
+    </section>
+  </aside>
+</div>

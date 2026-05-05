@@ -1,0 +1,23 @@
+<div class="layout demo-layout">
+  <aol-map class="demo-map">
+    <aol-view [zoom]="zoom()" [center]="center()"></aol-view>
+
+    <aol-layer-tile>
+      <aol-source-osm></aol-source-osm>
+    </aol-layer-tile>
+
+    <aol-interaction-default></aol-interaction-default>
+    <aol-interaction-link [replace]="true" [params]="['x', 'y', 'z', 'r']"></aol-interaction-link>
+    <aol-control-scaleline></aol-control-scaleline>
+    <aol-control-zoom></aol-control-zoom>
+    <aol-control-attribution></aol-control-attribution>
+  </aol-map>
+
+  <aside class="panel demo-panel">
+    <section class="section">
+      <h2>Link interaction</h2>
+      <p>Pan, zoom, or rotate the map and the URL query string updates with the current map state.</p>
+      <p>The demo uses <code>replace=true</code> so moving the map does not fill the browser history.</p>
+    </section>
+  </aside>
+</div>

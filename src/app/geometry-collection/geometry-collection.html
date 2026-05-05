@@ -1,0 +1,38 @@
+<div class="layout demo-layout">
+  <aol-map class="demo-map">
+    <aol-view [zoom]="zoom()" [center]="center()"></aol-view>
+
+    <aol-layer-tile>
+      <aol-source-osm></aol-source-osm>
+    </aol-layer-tile>
+
+    <aol-layer-vector>
+      <aol-source-vector>
+        <aol-feature>
+          <aol-geometry-collection [geometries]="geometries()"></aol-geometry-collection>
+        </aol-feature>
+      </aol-source-vector>
+
+      <aol-style>
+        <aol-style-stroke color="#0f766e" [width]="2"></aol-style-stroke>
+        <aol-style-fill color="rgba(15, 118, 110, 0.18)"></aol-style-fill>
+        <aol-style-circle [radius]="5">
+          <aol-style-fill color="#115e59"></aol-style-fill>
+        </aol-style-circle>
+      </aol-style>
+    </aol-layer-vector>
+
+    <aol-interaction-default></aol-interaction-default>
+    <aol-control-scaleline></aol-control-scaleline>
+    <aol-control-zoom></aol-control-zoom>
+    <aol-control-attribution></aol-control-attribution>
+  </aol-map>
+
+  <aside class="panel demo-panel">
+    <section class="section">
+      <h2>GeometryCollection</h2>
+      <p>This single feature contains a point, a line string, and a polygon inside <code>aol-geometry-collection</code>.</p>
+      <p>The shared style is applied once at the layer level and OpenLayers renders each child geometry type.</p>
+    </section>
+  </aside>
+</div>

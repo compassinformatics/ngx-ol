@@ -1,0 +1,49 @@
+<div class="layout demo-layout">
+  <aol-map class="demo-map">
+    <aol-view [zoom]="zoom()" [center]="center()"></aol-view>
+
+    <aol-layer-tile>
+      <aol-source-osm></aol-source-osm>
+    </aol-layer-tile>
+
+    <aol-interaction-dragpan></aol-interaction-dragpan>
+    <aol-interaction-mousewheelzoom></aol-interaction-mousewheelzoom>
+    <aol-interaction-pinchzoom [duration]="duration()"></aol-interaction-pinchzoom>
+    <aol-interaction-pinchrotate [duration]="duration()" [threshold]="threshold()"></aol-interaction-pinchrotate>
+    <aol-control-rotate></aol-control-rotate>
+    <aol-control-scaleline></aol-control-scaleline>
+    <aol-control-zoom></aol-control-zoom>
+    <aol-control-attribution></aol-control-attribution>
+  </aol-map>
+
+  <aside class="panel demo-panel">
+    <section class="section">
+      <h2>PinchRotate settings</h2>
+      <label class="field">
+        <span>Threshold: {{ threshold().toFixed(2) }} rad</span>
+        <input
+          #thresholdInput
+          type="range"
+          min="0.05"
+          max="1"
+          step="0.05"
+          [value]="threshold()"
+          (input)="setThreshold(thresholdInput.valueAsNumber)"
+        />
+      </label>
+      <label class="field">
+        <span>Duration: {{ duration() }} ms</span>
+        <input
+          #durationInput
+          type="range"
+          min="0"
+          max="600"
+          step="25"
+          [value]="duration()"
+          (input)="setDuration(durationInput.valueAsNumber)"
+        />
+      </label>
+      <p>Use two fingers on a touch device to twist the map. The rotate control lets you reset back to north-up.</p>
+    </section>
+  </aside>
+</div>

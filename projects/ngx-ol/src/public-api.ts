@@ -11,6 +11,8 @@ import { LayerGroupComponent } from './lib/layers/layergroup.component';
 import { LayerImageComponent } from './lib/layers/layerimage.component';
 import { LayerTileComponent } from './lib/layers/layertile.component';
 import { MapComponent } from './lib/map.component';
+import { LayerHeatmapComponent } from './lib/layers/layerheatmap.component';
+import { LayerWebGLTileComponent } from './lib/layers/layerwebgltile.component';
 import { LayerVectorComponent } from './lib/layers/layervector.component';
 import { LayerVectorTileComponent } from './lib/layers/layervectortile.component';
 import { LayerVectorImageComponent } from './lib/layers/layervectorimage.component';
@@ -23,6 +25,10 @@ import { SourceTileWMTSComponent } from './lib/sources/tilewmts.component';
 import { SourceVectorTileComponent } from './lib/sources/vectortile.component';
 import { SourceTileWMSComponent } from './lib/sources/tilewms.component';
 import { SourceTileJSONComponent } from './lib/sources/tilejson.component';
+import { SourceTileArcGISRestComponent } from './lib/sources/tilearcgisrest.component';
+import { SourceImageTileComponent } from './lib/sources/imagetile.component';
+import { SourceIIIFComponent } from './lib/sources/iiif.component';
+import { SourceZoomifyComponent } from './lib/sources/zoomify.component';
 import { SourceGeoJSONComponent } from './lib/sources/geojson.component';
 import { SourceImageStaticComponent } from './lib/sources/imagestatic.component';
 import { SourceImageWMSComponent } from './lib/sources/imagewms.component';
@@ -36,6 +42,7 @@ import { GeometryMultiPointComponent } from './lib/geom/geometrymultipoint.compo
 import { GeometryMultiPolygonComponent } from './lib/geom/geometrymultipolygon.component';
 import { GeometryPointComponent } from './lib/geom/geometrypoint.component';
 import { GeometryPolygonComponent } from './lib/geom/geometrypolygon.component';
+import { GeometryCollectionComponent } from './lib/geom/geometrycollection.component';
 import { CoordinateComponent } from './lib/coordinate.component';
 import { CollectionCoordinatesComponent } from './lib/collectioncoordinates.component';
 import { StyleComponent } from './lib/styles/style.component';
@@ -43,6 +50,7 @@ import { StyleCircleComponent } from './lib/styles/circle.component';
 import { StyleStrokeComponent } from './lib/styles/stroke.component';
 import { StyleIconComponent } from './lib/styles/icon.component';
 import { StyleFillComponent } from './lib/styles/fill.component';
+import { StyleRegularShapeComponent } from './lib/styles/regularshape.component';
 import { StyleTextComponent } from './lib/styles/text.component';
 import { DefaultControlComponent } from './lib/controls/default.component';
 import { ControlComponent } from './lib/controls/control.component';
@@ -67,7 +75,11 @@ import { DragRotateInteractionComponent } from './lib/interactions/dragrotate.co
 import { DragRotateAndZoomInteractionComponent } from './lib/interactions/dragrotateandzoom.component';
 import { DragZoomInteractionComponent } from './lib/interactions/dragzoom.component';
 import { MouseWheelZoomInteractionComponent } from './lib/interactions/mousewheelzoom.component';
+import { DblClickDragZoomInteractionComponent } from './lib/interactions/dblclickdragzoom.component';
+import { PinchRotateInteractionComponent } from './lib/interactions/pinchrotate.component';
 import { PinchZoomInteractionComponent } from './lib/interactions/pinchzoom.component';
+import { ExtentInteractionComponent } from './lib/interactions/extent.component';
+import { LinkInteractionComponent } from './lib/interactions/link.component';
 import { DrawInteractionComponent } from './lib/interactions/draw.component';
 import { KeyboardPanInteractionComponent } from './lib/interactions/keyboardpan.component';
 import { KeyboardZoomInteractionComponent } from './lib/interactions/keyboardzoom.component';
@@ -93,6 +105,8 @@ export {
   LayerGroupComponent,
   LayerImageComponent,
   LayerTileComponent,
+  LayerHeatmapComponent,
+  LayerWebGLTileComponent,
   LayerVectorComponent,
   LayerVectorTileComponent,
   LayerVectorImageComponent,
@@ -107,6 +121,10 @@ export {
   SourceTileWMSComponent,
   SourceTileWMTSComponent,
   SourceTileJSONComponent,
+  SourceTileArcGISRestComponent,
+  SourceImageTileComponent,
+  SourceIIIFComponent,
+  SourceZoomifyComponent,
   SourceGeoJSONComponent,
   SourceImageStaticComponent,
   SourceImageWMSComponent,
@@ -123,12 +141,14 @@ export {
   GeometryPointComponent,
   GeometryPolygonComponent,
   GeometryCircleComponent,
+  GeometryCollectionComponent,
   CoordinateComponent,
   CollectionCoordinatesComponent,
   StyleComponent,
   StyleCircleComponent,
   StyleFillComponent,
   StyleIconComponent,
+  StyleRegularShapeComponent,
   StyleStrokeComponent,
   StyleTextComponent,
   DefaultControlComponent,
@@ -155,7 +175,11 @@ export {
   DragRotateAndZoomInteractionComponent,
   DragZoomInteractionComponent,
   MouseWheelZoomInteractionComponent,
+  DblClickDragZoomInteractionComponent,
+  PinchRotateInteractionComponent,
   PinchZoomInteractionComponent,
+  ExtentInteractionComponent,
+  LinkInteractionComponent,
   DrawInteractionComponent,
   KeyboardPanInteractionComponent,
   KeyboardZoomInteractionComponent,
@@ -194,7 +218,10 @@ const MAP_INTERACTION_COMPONENTS = [
   DragRotateAndZoomInteractionComponent,
   DragZoomInteractionComponent,
   MouseWheelZoomInteractionComponent,
+  DblClickDragZoomInteractionComponent,
+  PinchRotateInteractionComponent,
   PinchZoomInteractionComponent,
+  LinkInteractionComponent,
   KeyboardPanInteractionComponent,
   KeyboardZoomInteractionComponent,
 ];
@@ -202,6 +229,7 @@ const MAP_INTERACTION_COMPONENTS = [
 const FEATURE_INTERACTION_COMPONENTS = [
   DragAndDropInteractionComponent,
   DrawInteractionComponent,
+  ExtentInteractionComponent,
   SelectInteractionComponent,
   ModifyInteractionComponent,
   SnapInteractionComponent,
@@ -211,6 +239,7 @@ const FEATURE_INTERACTION_COMPONENTS = [
 const TILE_LAYER_COMPONENTS = [
   LayerGroupComponent,
   LayerTileComponent,
+  LayerWebGLTileComponent,
   SourceOsmComponent,
   SourceBingmapsComponent,
   SourceUTFGridComponent,
@@ -218,6 +247,10 @@ const TILE_LAYER_COMPONENTS = [
   SourceTileWMSComponent,
   SourceTileWMTSComponent,
   SourceTileJSONComponent,
+  SourceTileArcGISRestComponent,
+  SourceImageTileComponent,
+  SourceIIIFComponent,
+  SourceZoomifyComponent,
   SourceOGCMapTileComponent,
   TileGridComponent,
   TileGridWMTSComponent,
@@ -233,12 +266,15 @@ const IMAGE_LAYER_COMPONENTS = [
 const ARC_GIS_COMPONENTS = [
   LayerGroupComponent,
   LayerImageComponent,
+  LayerTileComponent,
   SourceImageArcGISRestComponent,
+  SourceTileArcGISRestComponent,
 ];
 
 const VECTOR_LAYER_COMPONENTS = [
   GraticuleComponent,
   LayerGroupComponent,
+  LayerHeatmapComponent,
   LayerVectorComponent,
   LayerVectorImageComponent,
   LayerVectorTileComponent,
@@ -261,12 +297,14 @@ const GEOMETRY_STYLE_COMPONENTS = [
   GeometryPointComponent,
   GeometryPolygonComponent,
   GeometryCircleComponent,
+  GeometryCollectionComponent,
   CoordinateComponent,
   CollectionCoordinatesComponent,
   StyleComponent,
   StyleCircleComponent,
   StyleFillComponent,
   StyleIconComponent,
+  StyleRegularShapeComponent,
   StyleStrokeComponent,
   StyleTextComponent,
 ];
@@ -285,6 +323,8 @@ const COMPONENTS = [
   LayerGroupComponent,
   LayerImageComponent,
   LayerTileComponent,
+  LayerHeatmapComponent,
+  LayerWebGLTileComponent,
   LayerVectorComponent,
   LayerVectorTileComponent,
   LayerVectorImageComponent,
@@ -299,6 +339,10 @@ const COMPONENTS = [
   SourceTileWMSComponent,
   SourceTileWMTSComponent,
   SourceTileJSONComponent,
+  SourceTileArcGISRestComponent,
+  SourceImageTileComponent,
+  SourceIIIFComponent,
+  SourceZoomifyComponent,
   SourceGeoJSONComponent,
   SourceImageStaticComponent,
   SourceImageWMSComponent,
@@ -315,6 +359,7 @@ const COMPONENTS = [
   GeometryPointComponent,
   GeometryPolygonComponent,
   GeometryCircleComponent,
+  GeometryCollectionComponent,
   CoordinateComponent,
   CollectionCoordinatesComponent,
 
@@ -322,6 +367,7 @@ const COMPONENTS = [
   StyleCircleComponent,
   StyleFillComponent,
   StyleIconComponent,
+  StyleRegularShapeComponent,
   StyleStrokeComponent,
   StyleTextComponent,
 
@@ -351,7 +397,11 @@ const COMPONENTS = [
   DragRotateAndZoomInteractionComponent,
   DragZoomInteractionComponent,
   MouseWheelZoomInteractionComponent,
+  DblClickDragZoomInteractionComponent,
+  PinchRotateInteractionComponent,
   PinchZoomInteractionComponent,
+  ExtentInteractionComponent,
+  LinkInteractionComponent,
   DrawInteractionComponent,
   KeyboardPanInteractionComponent,
   KeyboardZoomInteractionComponent,
