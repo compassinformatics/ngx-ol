@@ -30,54 +30,31 @@ import { SourceComponent } from './source.component';
   providers: [{ provide: SourceComponent, useExisting: forwardRef(() => SourceXYZComponent) }],
 })
 export class SourceXYZComponent extends SourceComponent implements AfterContentInit, OnChanges {
-  @Input()
-  cacheSize?: number;
-  @Input()
-  crossOrigin?: null | string;
-  @Input()
-  gutter?: number;
-  @Input()
-  interpolate?: boolean;
-  @Input()
-  projection?: ProjectionLike;
-  @Input()
-  reprojectionErrorThreshold?: number;
-  @Input()
-  maxResolution?: number;
-  @Input()
-  minZoom?: number;
-  @Input()
-  maxZoom?: number;
-  @Input()
-  tileGrid?: TileGrid;
-  @Input()
-  tileLoadFunction?: LoadFunction;
-  @Input()
-  tilePixelRatio?: number;
-  @Input()
-  tileSize?: number | Size;
-  @Input()
-  tileUrlFunction?: UrlFunction;
-  @Input()
-  transition?: number;
-  @Input()
-  url?: string;
-  @Input()
-  urls?: string[];
-  @Input()
-  wrapX?: boolean;
-  @Input()
-  zDirection?: number | NearestDirectionFunction;
+  @Input() cacheSize?: number;
+  @Input() crossOrigin?: null | string;
+  @Input() gutter?: number;
+  @Input() interpolate?: boolean;
+  @Input() projection?: ProjectionLike;
+  @Input() reprojectionErrorThreshold?: number;
+  @Input() maxResolution?: number;
+  @Input() minZoom?: number;
+  @Input() maxZoom?: number;
+  @Input() tileGrid?: TileGrid;
+  @Input() tileLoadFunction?: LoadFunction;
+  @Input() tilePixelRatio?: number;
+  @Input() tileSize?: number | Size;
+  @Input() tileUrlFunction?: UrlFunction;
+  @Input() transition?: number;
+  @Input() url?: string;
+  @Input() urls?: string[];
+  @Input() wrapX?: boolean;
+  @Input() zDirection?: number | NearestDirectionFunction;
 
-  @ContentChild(TileGridComponent, { static: false })
-  tileGridXYZ: TileGridComponent;
+  @ContentChild(TileGridComponent, { static: false }) tileGridXYZ: TileGridComponent;
 
-  @Output()
-  tileLoadStart = new EventEmitter<TileSourceEvent>();
-  @Output()
-  tileLoadEnd = new EventEmitter<TileSourceEvent>();
-  @Output()
-  tileLoadError = new EventEmitter<TileSourceEvent>();
+  @Output() tileLoadStart = new EventEmitter<TileSourceEvent>();
+  @Output() tileLoadEnd = new EventEmitter<TileSourceEvent>();
+  @Output() tileLoadError = new EventEmitter<TileSourceEvent>();
 
   instance: XYZ;
 

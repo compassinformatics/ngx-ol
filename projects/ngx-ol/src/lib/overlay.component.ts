@@ -17,25 +17,16 @@ import { Coordinate } from 'ol/coordinate';
   template: '<ng-content></ng-content>',
 })
 export class OverlayComponent implements OnInit, OnDestroy, OnChanges {
-  @ContentChild(ContentComponent, { static: true })
-  content: ContentComponent;
+  @ContentChild(ContentComponent, { static: true }) content: ContentComponent;
 
-  @Input()
-  id?: number | string | undefined;
-  @Input()
-  offset?: number[];
-  @Input()
-  positioning?: Positioning;
-  @Input()
-  stopEvent?: boolean;
-  @Input()
-  insertFirst?: boolean;
-  @Input()
-  autoPan?: boolean | PanIntoViewOptions;
-  @Input()
-  position?: Coordinate | undefined;
-  @Input()
-  className?: string;
+  @Input() id?: number | string | undefined;
+  @Input() offset?: number[];
+  @Input() positioning?: Positioning;
+  @Input() stopEvent?: boolean;
+  @Input() insertFirst?: boolean;
+  @Input() autoPan?: boolean | PanIntoViewOptions;
+  @Input() position?: Coordinate | undefined;
+  @Input() className?: string;
 
   componentType = 'overlay';
   instance: Overlay;

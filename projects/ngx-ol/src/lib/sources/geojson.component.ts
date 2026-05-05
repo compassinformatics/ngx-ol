@@ -15,14 +15,10 @@ import { Options as VectorOptions } from 'ol/source/Vector';
   providers: [{ provide: SourceComponent, useExisting: forwardRef(() => SourceGeoJSONComponent) }],
 })
 export class SourceGeoJSONComponent extends SourceComponent implements OnInit {
-  @Input()
-  defaultDataProjection: ProjectionLike;
-  @Input()
-  featureProjection: ProjectionLike;
-  @Input()
-  geometryName: string;
-  @Input()
-  url: string;
+  @Input() defaultDataProjection: ProjectionLike;
+  @Input() featureProjection: ProjectionLike;
+  @Input() geometryName: string;
+  @Input() url: string;
 
   instance: Vector;
   format: FeatureFormat;

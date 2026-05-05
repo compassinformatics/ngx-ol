@@ -13,30 +13,18 @@ import { SourceComponent } from './source.component';
   providers: [{ provide: SourceComponent, useExisting: forwardRef(() => SourceTileJSONComponent) }],
 })
 export class SourceTileJSONComponent extends SourceComponent implements OnInit {
-  @Input()
-  cacheSize?: number;
-  @Input()
-  crossOrigin?: string | null;
-  @Input()
-  interpolate?: boolean;
-  @Input()
-  jsonp?: boolean;
-  @Input()
-  reprojectionErrorThreshold?: number;
-  @Input()
-  tileJSON?: Config;
-  @Input()
-  tileLoadFunction?: LoadFunction;
-  @Input()
-  tileSize?: number | Size;
-  @Input()
-  url?: string;
-  @Input()
-  wrapX?: boolean;
-  @Input()
-  transition?: number;
-  @Input()
-  zDirection?: number | NearestDirectionFunction;
+  @Input() cacheSize?: number;
+  @Input() crossOrigin?: string | null;
+  @Input() interpolate?: boolean;
+  @Input() jsonp?: boolean;
+  @Input() reprojectionErrorThreshold?: number;
+  @Input() tileJSON?: Config;
+  @Input() tileLoadFunction?: LoadFunction;
+  @Input() tileSize?: number | Size;
+  @Input() url?: string;
+  @Input() wrapX?: boolean;
+  @Input() transition?: number;
+  @Input() zDirection?: number | NearestDirectionFunction;
 
   instance: TileJSON;
 

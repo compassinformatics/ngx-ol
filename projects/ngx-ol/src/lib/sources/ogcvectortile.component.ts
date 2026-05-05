@@ -32,8 +32,9 @@ export class SourceOGCVectorTileComponent extends SourceComponent implements Aft
   @Input() collections?: string[];
   @Input() format?: FeatureFormat<any>;
 
-  @ContentChild(FormatMVTComponent, { static: false })
-  formatMVTComponent: FormatMVTComponent | FormatGeoJSONComponent;
+  @ContentChild(FormatMVTComponent, { static: false }) formatMVTComponent:
+    | FormatMVTComponent
+    | FormatGeoJSONComponent;
   @ContentChild(FormatGeoJSONComponent, { static: false })
   formatGeoJSONComponent: FormatGeoJSONComponent;
 

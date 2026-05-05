@@ -9,24 +9,15 @@ import { MapComponent } from '../map.component';
   template: ` <ng-content></ng-content> `,
 })
 export class ControlRotateComponent implements OnInit, OnDestroy {
-  @Input()
-  className?: string;
-  @Input()
-  label?: string | HTMLElement;
-  @Input()
-  tipLabel?: string;
-  @Input()
-  compassClassName?: string;
-  @Input()
-  duration?: number;
-  @Input()
-  autoHide?: boolean;
-  @Input()
-  render?: (event: MapEvent) => void;
-  @Input()
-  resetNorth?: () => void;
-  @Input()
-  target?: string | HTMLElement;
+  @Input() className?: string;
+  @Input() label?: string | HTMLElement;
+  @Input() tipLabel?: string;
+  @Input() compassClassName?: string;
+  @Input() duration?: number;
+  @Input() autoHide?: boolean;
+  @Input() render?: (event: MapEvent) => void;
+  @Input() resetNorth?: () => void;
+  @Input() target?: string | HTMLElement;
 
   instance: Rotate;
 

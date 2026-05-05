@@ -9,8 +9,7 @@ import { ContentComponent } from '../content.component';
   template: ` <ng-content></ng-content> `,
 })
 export class ControlComponent implements OnInit, OnDestroy {
-  @ContentChild(ContentComponent, { static: true })
-  content: ContentComponent;
+  @ContentChild(ContentComponent, { static: true }) content: ContentComponent;
 
   public componentType = 'control';
   instance: Control;

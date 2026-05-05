@@ -1,4 +1,13 @@
-import { Component, forwardRef, Host, Input, OnChanges, OnInit, Optional, SimpleChanges } from '@angular/core';
+import {
+  Component,
+  forwardRef,
+  Host,
+  Input,
+  OnChanges,
+  OnInit,
+  Optional,
+  SimpleChanges,
+} from '@angular/core';
 import type { ProjectionLike } from 'ol/proj';
 import type { Size } from 'ol/size';
 import ImageTileSource from 'ol/source/ImageTile';
@@ -12,50 +21,38 @@ import { SourceComponent } from './source.component';
 @Component({
   selector: 'aol-source-imagetile',
   template: ` <ng-content></ng-content> `,
-  providers: [{ provide: SourceComponent, useExisting: forwardRef(() => SourceImageTileComponent) }],
+  providers: [
+    { provide: SourceComponent, useExisting: forwardRef(() => SourceImageTileComponent) },
+  ],
 })
 export class SourceImageTileComponent extends SourceComponent implements OnInit, OnChanges {
-  @Input()
-  url?: UrlLike;
+  @Input() url?: UrlLike;
 
-  @Input()
-  loader?: Loader;
+  @Input() loader?: Loader;
 
-  @Input()
-  maxZoom?: number;
+  @Input() maxZoom?: number;
 
-  @Input()
-  minZoom?: number;
+  @Input() minZoom?: number;
 
-  @Input()
-  tileSize?: number | Size;
+  @Input() tileSize?: number | Size;
 
-  @Input()
-  gutter?: number;
+  @Input() gutter?: number;
 
-  @Input()
-  maxResolution?: number;
+  @Input() maxResolution?: number;
 
-  @Input()
-  projection?: ProjectionLike;
+  @Input() projection?: ProjectionLike;
 
-  @Input()
-  tileGrid?: TileGrid;
+  @Input() tileGrid?: TileGrid;
 
-  @Input()
-  state?: State;
+  @Input() state?: State;
 
-  @Input()
-  wrapX?: boolean;
+  @Input() wrapX?: boolean;
 
-  @Input()
-  transition?: number;
+  @Input() transition?: number;
 
-  @Input()
-  interpolate?: boolean;
+  @Input() interpolate?: boolean;
 
-  @Input()
-  crossOrigin?: CrossOriginAttribute;
+  @Input() crossOrigin?: CrossOriginAttribute;
 
   instance: ImageTileSource;
 

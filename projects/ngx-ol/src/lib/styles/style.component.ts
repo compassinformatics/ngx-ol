@@ -15,22 +15,14 @@ import { LayerVectorImageComponent } from '../layers/layervectorimage.component'
   template: ` <ng-content></ng-content> `,
 })
 export class StyleComponent implements OnInit {
-  @Input()
-  geometry?: string | Geometry | GeometryFunction;
-  @Input()
-  fill?: Fill;
-  @Input()
-  image?: Image;
-  @Input()
-  renderer?: RenderFunction;
-  @Input()
-  hitDetectionRenderer?: RenderFunction;
-  @Input()
-  stroke?: Stroke;
-  @Input()
-  text?: Text;
-  @Input()
-  zIndex?: number;
+  @Input() geometry?: string | Geometry | GeometryFunction;
+  @Input() fill?: Fill;
+  @Input() image?: Image;
+  @Input() renderer?: RenderFunction;
+  @Input() hitDetectionRenderer?: RenderFunction;
+  @Input() stroke?: Stroke;
+  @Input() text?: Text;
+  @Input() zIndex?: number;
 
   public instance: Style;
   public componentType = 'style';

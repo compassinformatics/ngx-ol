@@ -20,38 +20,27 @@ import { StyleComponent } from './style.component';
   template: ` <ng-content></ng-content> `,
 })
 export class StyleRegularShapeComponent implements AfterContentInit, OnChanges, OnDestroy {
-  @Input()
-  fill?: Fill;
+  @Input() fill?: Fill;
 
-  @Input()
-  points: number;
+  @Input() points: number;
 
-  @Input()
-  radius: number;
+  @Input() radius: number;
 
-  @Input()
-  radius2?: number;
+  @Input() radius2?: number;
 
-  @Input()
-  angle?: number;
+  @Input() angle?: number;
 
-  @Input()
-  displacement?: number[];
+  @Input() displacement?: number[];
 
-  @Input()
-  stroke?: Stroke;
+  @Input() stroke?: Stroke;
 
-  @Input()
-  rotation?: number;
+  @Input() rotation?: number;
 
-  @Input()
-  rotateWithView?: boolean;
+  @Input() rotateWithView?: boolean;
 
-  @Input()
-  scale?: number | Size;
+  @Input() scale?: number | Size;
 
-  @Input()
-  declutterMode?: DeclutterMode;
+  @Input() declutterMode?: DeclutterMode;
 
   public componentType = 'style-regularshape';
   public instance: RegularShape;

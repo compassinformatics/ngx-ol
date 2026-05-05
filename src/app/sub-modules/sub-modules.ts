@@ -1,8 +1,5 @@
 import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
-import {
-  AngularOpenlayersMapModule,
-  AngularOpenlayersTileLayersModule,
-} from 'ngx-ol';
+import { AngularOpenlayersMapModule, AngularOpenlayersTileLayersModule } from 'ngx-ol';
 import type { Coordinate } from 'ol/coordinate';
 
 @Component({
@@ -16,5 +13,8 @@ export class SubModules {
   readonly zoom = signal(7);
   readonly center = signal<Coordinate>([-871993.618677, 7062781.41355]);
 
-  readonly usedModules: readonly string[] = ['AngularOpenlayersMapModule', 'AngularOpenlayersTileLayersModule'];
+  readonly usedModules: readonly string[] = [
+    'AngularOpenlayersMapModule',
+    'AngularOpenlayersTileLayersModule',
+  ];
 }

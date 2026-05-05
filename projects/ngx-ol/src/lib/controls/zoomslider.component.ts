@@ -9,14 +9,10 @@ import { MapComponent } from '../map.component';
   template: ` <ng-content></ng-content> `,
 })
 export class ControlZoomSliderComponent implements OnInit, OnDestroy {
-  @Input()
-  className?: string;
-  @Input()
-  duration?: number;
-  @Input()
-  render?: (event: MapEvent) => void;
-  @Input()
-  target?: string | HTMLElement;
+  @Input() className?: string;
+  @Input() duration?: number;
+  @Input() render?: (event: MapEvent) => void;
+  @Input() target?: string | HTMLElement;
 
   instance: ZoomSlider;
 

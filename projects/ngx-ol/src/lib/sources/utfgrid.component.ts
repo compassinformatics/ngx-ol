@@ -12,18 +12,12 @@ import { NearestDirectionFunction } from 'ol/array';
   providers: [{ provide: SourceComponent, useExisting: forwardRef(() => SourceUTFGridComponent) }],
 })
 export class SourceUTFGridComponent extends SourceComponent implements OnInit {
-  @Input()
-  preemptive?: boolean;
-  @Input()
-  jsonp?: boolean;
-  @Input()
-  tileJSON?: Config;
-  @Input()
-  url?: string;
-  @Input()
-  wrapX?: boolean;
-  @Input()
-  zDirection?: number | NearestDirectionFunction;
+  @Input() preemptive?: boolean;
+  @Input() jsonp?: boolean;
+  @Input() tileJSON?: Config;
+  @Input() url?: string;
+  @Input() wrapX?: boolean;
+  @Input() zDirection?: number | NearestDirectionFunction;
 
   instance: UTFGrid;
 

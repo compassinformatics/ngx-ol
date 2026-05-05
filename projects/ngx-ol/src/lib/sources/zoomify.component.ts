@@ -14,44 +14,31 @@ import { SourceComponent } from './source.component';
   providers: [{ provide: SourceComponent, useExisting: forwardRef(() => SourceZoomifyComponent) }],
 })
 export class SourceZoomifyComponent extends SourceComponent implements OnInit {
-  @Input()
-  cacheSize?: number;
+  @Input() cacheSize?: number;
 
-  @Input()
-  crossOrigin?: string | null;
+  @Input() crossOrigin?: string | null;
 
-  @Input()
-  interpolate?: boolean;
+  @Input() interpolate?: boolean;
 
-  @Input()
-  projection?: ProjectionLike;
+  @Input() projection?: ProjectionLike;
 
-  @Input()
-  tilePixelRatio?: number;
+  @Input() tilePixelRatio?: number;
 
-  @Input()
-  reprojectionErrorThreshold?: number;
+  @Input() reprojectionErrorThreshold?: number;
 
-  @Input()
-  url!: string;
+  @Input() url!: string;
 
-  @Input()
-  tierSizeCalculation?: TierSizeCalculation;
+  @Input() tierSizeCalculation?: TierSizeCalculation;
 
-  @Input()
-  size!: Size;
+  @Input() size!: Size;
 
-  @Input()
-  extent?: Extent;
+  @Input() extent?: Extent;
 
-  @Input()
-  transition?: number;
+  @Input() transition?: number;
 
-  @Input()
-  tileSize?: number;
+  @Input() tileSize?: number;
 
-  @Input()
-  zDirection?: number | NearestDirectionFunction;
+  @Input() zDirection?: number | NearestDirectionFunction;
 
   instance: Zoomify;
 

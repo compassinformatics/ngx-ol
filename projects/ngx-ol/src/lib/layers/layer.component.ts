@@ -8,35 +8,21 @@ import { RenderFunction } from 'ol/layer/Layer';
 @Directive()
 // eslint-disable-next-line @angular-eslint/directive-class-suffix
 export abstract class LayerComponent implements OnInit, OnChanges, OnDestroy {
-  @Input()
-  id: string | number;
-  @Input()
-  className: string;
-  @Input()
-  opacity: number;
-  @Input()
-  visible: boolean;
-  @Input()
-  extent?: Extent;
-  @Input()
-  zIndex?: number;
-  @Input()
-  minResolution?: number;
-  @Input()
-  maxResolution?: number;
-  @Input()
-  minZoom?: number;
-  @Input()
-  maxZoom?: number;
-  @Input()
-  render?: RenderFunction;
-  @Input()
-  properties?: Record<string, any>;
+  @Input() id: string | number;
+  @Input() className: string;
+  @Input() opacity: number;
+  @Input() visible: boolean;
+  @Input() extent?: Extent;
+  @Input() zIndex?: number;
+  @Input() minResolution?: number;
+  @Input() maxResolution?: number;
+  @Input() minZoom?: number;
+  @Input() maxZoom?: number;
+  @Input() render?: RenderFunction;
+  @Input() properties?: Record<string, any>;
 
-  @Input()
-  prerender: (evt: Event) => void;
-  @Input()
-  postrender: (evt: Event) => void;
+  @Input() prerender: (evt: Event) => void;
+  @Input() postrender: (evt: Event) => void;
 
   public instance: any;
   public componentType = 'layer';

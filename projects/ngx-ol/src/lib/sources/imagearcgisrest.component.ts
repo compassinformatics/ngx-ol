@@ -28,20 +28,16 @@ export class SourceImageArcGISRestComponent extends SourceComponent implements O
   @Input() projection?: ProjectionLike | string;
   @Input() url?: string;
   @Input() crossOrigin?: string | null;
-  @Input()
-  hidpi?: boolean;
+  @Input() hidpi?: boolean;
   @Input() imageLoadFunction?: LoadFunction;
   @Input() interpolate?: boolean;
   @Input() params?: { [k: string]: any };
   @Input() ratio?: number = 1.5;
   @Input() resolutions?: number[];
 
-  @Output()
-  imageLoadStart = new EventEmitter<ImageSourceEvent>();
-  @Output()
-  imageLoadEnd = new EventEmitter<ImageSourceEvent>();
-  @Output()
-  imageLoadError = new EventEmitter<ImageSourceEvent>();
+  @Output() imageLoadStart = new EventEmitter<ImageSourceEvent>();
+  @Output() imageLoadEnd = new EventEmitter<ImageSourceEvent>();
+  @Output() imageLoadError = new EventEmitter<ImageSourceEvent>();
 
   instance: ImageArcGISRest;
 

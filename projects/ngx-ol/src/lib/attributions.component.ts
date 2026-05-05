@@ -7,8 +7,7 @@ import { AttributionComponent } from './attribution.component';
   template: '<ng-content></ng-content>',
 })
 export class AttributionsComponent implements AfterViewInit {
-  @ContentChildren(AttributionComponent)
-  attributions: QueryList<AttributionComponent>;
+  @ContentChildren(AttributionComponent) attributions: QueryList<AttributionComponent>;
 
   instance: Array<string>;
 

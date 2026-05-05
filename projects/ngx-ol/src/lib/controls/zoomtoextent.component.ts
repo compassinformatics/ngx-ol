@@ -9,16 +9,11 @@ import { Extent } from 'ol/extent';
   template: ` <ng-content></ng-content> `,
 })
 export class ControlZoomToExtentComponent implements OnInit, OnDestroy {
-  @Input()
-  className?: string;
-  @Input()
-  target?: string | HTMLElement;
-  @Input()
-  label?: string | HTMLElement;
-  @Input()
-  tipLabel?: string;
-  @Input()
-  extent?: Extent;
+  @Input() className?: string;
+  @Input() target?: string | HTMLElement;
+  @Input() label?: string | HTMLElement;
+  @Input() tipLabel?: string;
+  @Input() extent?: Extent;
 
   instance: ZoomToExtent;
 

@@ -9,20 +9,13 @@ import { Size } from 'ol/size';
   template: '',
 })
 export class TileGridWMTSComponent extends TileGridComponent implements OnInit {
-  @Input()
-  origin?: Coordinate;
-  @Input()
-  origins?: Coordinate[];
-  @Input()
-  resolutions: number[];
-  @Input()
-  matrixIds: string[];
-  @Input()
-  sizes?: Size[];
-  @Input()
-  tileSize?: number | Size;
-  @Input()
-  tileSizes?: (number | Size)[];
+  @Input() origin?: Coordinate;
+  @Input() origins?: Coordinate[];
+  @Input() resolutions: number[];
+  @Input() matrixIds: string[];
+  @Input() sizes?: Size[];
+  @Input() tileSize?: number | Size;
+  @Input() tileSizes?: (number | Size)[];
 
   instance: WMTS;
 

@@ -8,14 +8,11 @@ import { MapComponent } from '../map.component';
   template: '',
 })
 export class DblClickDragZoomInteractionComponent implements OnInit, OnDestroy {
-  @Input()
-  duration?: number;
+  @Input() duration?: number;
 
-  @Input()
-  delta?: number;
+  @Input() delta?: number;
 
-  @Input()
-  stopDown?: (handled: boolean) => boolean;
+  @Input() stopDown?: (handled: boolean) => boolean;
 
   instance: DblClickDragZoom;
 

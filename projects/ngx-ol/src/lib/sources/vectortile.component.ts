@@ -24,49 +24,29 @@ import FeatureFormat from 'ol/format/Feature';
   ],
 })
 export class SourceVectorTileComponent extends SourceComponent implements AfterContentInit {
-  @Input()
-  cacheSize?: number;
-  @Input()
-  extent?: Extent;
-  @Input()
-  overlaps?: boolean;
-  @Input()
-  projection?: ProjectionLike;
-  @Input()
-  state?: State;
-  @Input()
-  tileClass?: typeof OlVectorTile;
-  @Input()
-  maxZoom?: number;
-  @Input()
-  minZoom?: number;
-  @Input()
-  tileSize?: number | Size;
-  @Input()
-  maxResolution?: number;
-  @Input()
-  tileUrlFunction?: UrlFunction;
-  @Input()
-  tileLoadFunction?: LoadFunction;
-  @Input()
-  url?: string;
-  @Input()
-  urls?: string[];
-  @Input()
-  transition?: number;
-  @Input()
-  wrapX?: boolean;
-  @Input()
-  zDirection?: number | NearestDirectionFunction;
-  @Input()
-  format?: FeatureFormat<any>;
+  @Input() cacheSize?: number;
+  @Input() extent?: Extent;
+  @Input() overlaps?: boolean;
+  @Input() projection?: ProjectionLike;
+  @Input() state?: State;
+  @Input() tileClass?: typeof OlVectorTile;
+  @Input() maxZoom?: number;
+  @Input() minZoom?: number;
+  @Input() tileSize?: number | Size;
+  @Input() maxResolution?: number;
+  @Input() tileUrlFunction?: UrlFunction;
+  @Input() tileLoadFunction?: LoadFunction;
+  @Input() url?: string;
+  @Input() urls?: string[];
+  @Input() transition?: number;
+  @Input() wrapX?: boolean;
+  @Input() zDirection?: number | NearestDirectionFunction;
+  @Input() format?: FeatureFormat<any>;
 
-  @ContentChild(FormatMVTComponent, { static: false })
-  formatMVTComponent: FormatMVTComponent;
+  @ContentChild(FormatMVTComponent, { static: false }) formatMVTComponent: FormatMVTComponent;
   @ContentChild(FormatGeoJSONComponent, { static: false })
   formatGeoJSONComponent: FormatGeoJSONComponent;
-  @ContentChild(TileGridComponent, { static: false })
-  tileGridComponent: TileGridComponent;
+  @ContentChild(TileGridComponent, { static: false }) tileGridComponent: TileGridComponent;
 
   public instance: VectorTile;
   tileGrid: TileGrid;

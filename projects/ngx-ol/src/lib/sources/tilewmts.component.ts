@@ -30,58 +30,33 @@ export class SourceTileWMTSComponent
   extends SourceComponent
   implements AfterContentInit, OnChanges
 {
-  @Input()
-  cacheSize?: number;
-  @Input()
-  crossOrigin?: null | string;
-  @Input()
-  interpolate?: boolean;
-  @Input()
-  tileGrid: WMTS;
-  @Input()
-  projection?: ProjectionLike;
-  @Input()
-  reprojectionErrorThreshold?: number;
-  @Input()
-  requestEncoding?: RequestEncoding | undefined;
-  @Input()
-  layer: string;
-  @Input()
-  style: string;
-  @Input()
-  tileClass?: any;
-  @Input()
-  tilePixelRatio?: number;
-  @Input()
-  version?: string;
-  @Input()
-  format?: string;
-  @Input()
-  matrixSet: string;
-  @Input()
-  dimensions?: any;
-  @Input()
-  url?: string;
-  @Input()
-  tileLoadFunction?: LoadFunction;
-  @Input()
-  urls?: string[];
-  @Input()
-  wrapX?: boolean;
-  @Input()
-  transition?: number;
-  @Input()
-  zDirection?: number | NearestDirectionFunction;
+  @Input() cacheSize?: number;
+  @Input() crossOrigin?: null | string;
+  @Input() interpolate?: boolean;
+  @Input() tileGrid: WMTS;
+  @Input() projection?: ProjectionLike;
+  @Input() reprojectionErrorThreshold?: number;
+  @Input() requestEncoding?: RequestEncoding | undefined;
+  @Input() layer: string;
+  @Input() style: string;
+  @Input() tileClass?: any;
+  @Input() tilePixelRatio?: number;
+  @Input() version?: string;
+  @Input() format?: string;
+  @Input() matrixSet: string;
+  @Input() dimensions?: any;
+  @Input() url?: string;
+  @Input() tileLoadFunction?: LoadFunction;
+  @Input() urls?: string[];
+  @Input() wrapX?: boolean;
+  @Input() transition?: number;
+  @Input() zDirection?: number | NearestDirectionFunction;
 
-  @Output()
-  tileLoadStart = new EventEmitter<TileSourceEvent>();
-  @Output()
-  tileLoadEnd = new EventEmitter<TileSourceEvent>();
-  @Output()
-  tileLoadError = new EventEmitter<TileSourceEvent>();
+  @Output() tileLoadStart = new EventEmitter<TileSourceEvent>();
+  @Output() tileLoadEnd = new EventEmitter<TileSourceEvent>();
+  @Output() tileLoadError = new EventEmitter<TileSourceEvent>();
 
-  @ContentChild(TileGridWMTSComponent, { static: false })
-  tileGridWMTS: TileGridWMTSComponent;
+  @ContentChild(TileGridWMTSComponent, { static: false }) tileGridWMTS: TileGridWMTSComponent;
 
   instance: SourceWMTS;
 

@@ -1,8 +1,5 @@
 import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
-import {
-  AngularOpenlayersMapModule,
-  AngularOpenlayersTileLayersModule,
-} from 'ngx-ol';
+import { AngularOpenlayersMapModule, AngularOpenlayersTileLayersModule } from 'ngx-ol';
 import { fromLonLat } from 'ol/proj';
 
 @Component({

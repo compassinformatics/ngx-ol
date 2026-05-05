@@ -15,62 +15,43 @@ import { SourceComponent } from './source.component';
   providers: [{ provide: SourceComponent, useExisting: forwardRef(() => SourceIIIFComponent) }],
 })
 export class SourceIIIFComponent extends SourceComponent implements OnInit {
-  @Input()
-  cacheSize?: number;
+  @Input() cacheSize?: number;
 
-  @Input()
-  crossOrigin?: string | null;
+  @Input() crossOrigin?: string | null;
 
-  @Input()
-  extent?: Extent;
+  @Input() extent?: Extent;
 
-  @Input()
-  format?: string;
+  @Input() format?: string;
 
-  @Input()
-  interpolate?: boolean;
+  @Input() interpolate?: boolean;
 
-  @Input()
-  projection?: ProjectionLike;
+  @Input() projection?: ProjectionLike;
 
-  @Input()
-  quality?: string;
+  @Input() quality?: string;
 
-  @Input()
-  reprojectionErrorThreshold?: number;
+  @Input() reprojectionErrorThreshold?: number;
 
-  @Input()
-  resolutions?: number[];
+  @Input() resolutions?: number[];
 
-  @Input()
-  size: Size;
+  @Input() size: Size;
 
-  @Input()
-  sizes?: Size[];
+  @Input() sizes?: Size[];
 
-  @Input()
-  state?: State;
+  @Input() state?: State;
 
-  @Input()
-  supports?: string[];
+  @Input() supports?: string[];
 
-  @Input()
-  tilePixelRatio?: number;
+  @Input() tilePixelRatio?: number;
 
-  @Input()
-  tileSize?: number | Size;
+  @Input() tileSize?: number | Size;
 
-  @Input()
-  transition?: number;
+  @Input() transition?: number;
 
-  @Input()
-  url?: string;
+  @Input() url?: string;
 
-  @Input()
-  version?: string;
+  @Input() version?: string;
 
-  @Input()
-  zDirection?: number | NearestDirectionFunction;
+  @Input() zDirection?: number | NearestDirectionFunction;
 
   instance: IIIF;
 

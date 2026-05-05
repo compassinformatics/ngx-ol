@@ -8,11 +8,9 @@ import { MapComponent } from '../map.component';
   template: '',
 })
 export class PinchRotateInteractionComponent implements OnInit, OnDestroy {
-  @Input()
-  duration?: number;
+  @Input() duration?: number;
 
-  @Input()
-  threshold?: number;
+  @Input() threshold?: number;
 
   instance: PinchRotate;
 

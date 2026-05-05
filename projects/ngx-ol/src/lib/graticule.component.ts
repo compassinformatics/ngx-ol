@@ -15,14 +15,10 @@ import { MapComponent } from './map.component';
   template: '<ng-content></ng-content>',
 })
 export class GraticuleComponent implements AfterContentInit, OnChanges, OnDestroy {
-  @Input()
-  strokeStyle: Stroke;
-  @Input()
-  showLabels: boolean;
-  @Input()
-  lonLabelPosition: number;
-  @Input()
-  latLabelPosition: number;
+  @Input() strokeStyle: Stroke;
+  @Input() showLabels: boolean;
+  @Input() lonLabelPosition: number;
+  @Input() latLabelPosition: number;
 
   instance: any;
   public componentType = 'graticule';

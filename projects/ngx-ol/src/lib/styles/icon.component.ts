@@ -1,7 +1,6 @@
 import { Component, Input, Host, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import Icon from 'ol/style/Icon';
 
-
 import { StyleComponent } from './style.component';
 import { IconAnchorUnits, IconOrigin, Options } from 'ol/style/Icon';
 import { Size } from 'ol/size';
@@ -13,44 +12,25 @@ import { DeclutterMode } from 'ol/style/Style';
   template: ` <div class="aol-style-icon"></div> `,
 })
 export class StyleIconComponent implements OnInit, OnChanges {
-  @Input()
-  anchor?: [number, number];
-  @Input()
-  anchorXUnits?: IconAnchorUnits;
-  @Input()
-  anchorYUnits?: IconAnchorUnits;
-  @Input()
-  anchorOrigin?: IconOrigin;
-  @Input()
-  color?: string | Color;
-  @Input()
-  crossOrigin?: string | null;
-  @Input()
-  img?: HTMLCanvasElement | HTMLImageElement | ImageBitmap;
-  @Input()
-  displacement?: number[];
-  @Input()
-  offset?: [number, number];
-  @Input()
-  offsetOrigin?: IconOrigin;
-  @Input()
-  opacity?: number;
-  @Input()
-  width?: number;
-  @Input()
-  height?: number;
-  @Input()
-  scale?: number | Size;
-  @Input()
-  declutterMode?: DeclutterMode;
-  @Input()
-  rotateWithView?: boolean;
-  @Input()
-  rotation?: number;
-  @Input()
-  size?: [number, number];
-  @Input()
-  src?: string;
+  @Input() anchor?: [number, number];
+  @Input() anchorXUnits?: IconAnchorUnits;
+  @Input() anchorYUnits?: IconAnchorUnits;
+  @Input() anchorOrigin?: IconOrigin;
+  @Input() color?: string | Color;
+  @Input() crossOrigin?: string | null;
+  @Input() img?: HTMLCanvasElement | HTMLImageElement | ImageBitmap;
+  @Input() displacement?: number[];
+  @Input() offset?: [number, number];
+  @Input() offsetOrigin?: IconOrigin;
+  @Input() opacity?: number;
+  @Input() width?: number;
+  @Input() height?: number;
+  @Input() scale?: number | Size;
+  @Input() declutterMode?: DeclutterMode;
+  @Input() rotateWithView?: boolean;
+  @Input() rotation?: number;
+  @Input() size?: [number, number];
+  @Input() src?: string;
 
   public instance: Icon;
 

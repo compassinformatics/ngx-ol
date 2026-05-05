@@ -12,28 +12,17 @@ import { MapComponent } from '../map.component';
   template: ` <ng-content></ng-content> `,
 })
 export class ControlOverviewMapComponent implements OnInit, OnChanges, OnDestroy {
-  @Input()
-  className?: string;
-  @Input()
-  collapsed?: boolean;
-  @Input()
-  collapseLabel?: string | HTMLElement;
-  @Input()
-  collapsible?: boolean;
-  @Input()
-  label?: string | HTMLElement;
-  @Input()
-  layers?: BaseLayer[] | Collection<BaseLayer>;
-  @Input()
-  render?: (event: MapEvent) => void;
-  @Input()
-  rotateWithView?: boolean;
-  @Input()
-  target?: string | HTMLElement;
-  @Input()
-  tipLabel?: string;
-  @Input()
-  view?: View;
+  @Input() className?: string;
+  @Input() collapsed?: boolean;
+  @Input() collapseLabel?: string | HTMLElement;
+  @Input() collapsible?: boolean;
+  @Input() label?: string | HTMLElement;
+  @Input() layers?: BaseLayer[] | Collection<BaseLayer>;
+  @Input() render?: (event: MapEvent) => void;
+  @Input() rotateWithView?: boolean;
+  @Input() target?: string | HTMLElement;
+  @Input() tipLabel?: string;
+  @Input() view?: View;
 
   instance: OverviewMap;
 

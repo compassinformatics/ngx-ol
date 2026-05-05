@@ -20,23 +20,17 @@ import { LayerGroupComponent } from './layergroup.component';
   template: ` <ng-content></ng-content> `,
 })
 export class LayerHeatmapComponent extends LayerComponent implements OnInit, OnDestroy, OnChanges {
-  @Input()
-  gradient?: string[];
+  @Input() gradient?: string[];
 
-  @Input()
-  radius?: number;
+  @Input() radius?: number;
 
-  @Input()
-  blur?: number;
+  @Input() blur?: number;
 
-  @Input()
-  weight?: string | ((feature: FeatureLike) => number);
+  @Input() weight?: string | ((feature: FeatureLike) => number);
 
-  @Input()
-  source?: VectorSource<FeatureLike>;
+  @Input() source?: VectorSource<FeatureLike>;
 
-  @Input()
-  properties?: Record<string, any>;
+  @Input() properties?: Record<string, any>;
 
   instance: Heatmap<FeatureLike, VectorSource<FeatureLike>>;
 

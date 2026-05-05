@@ -8,10 +8,8 @@ import { MapComponent } from '../map.component';
   template: '',
 })
 export class DoubleClickZoomInteractionComponent implements OnInit, OnDestroy {
-  @Input()
-  duration?: number;
-  @Input()
-  delta?: number;
+  @Input() duration?: number;
+  @Input() delta?: number;
 
   instance: DoubleClickZoom;
 

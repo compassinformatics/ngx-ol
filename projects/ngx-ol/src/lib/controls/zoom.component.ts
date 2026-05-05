@@ -8,26 +8,16 @@ import { MapComponent } from '../map.component';
   template: ` <ng-content></ng-content> `,
 })
 export class ControlZoomComponent implements OnInit, OnDestroy {
-  @Input()
-  duration?: number;
-  @Input()
-  className?: string;
-  @Input()
-  zoomInClassName?: string;
-  @Input()
-  zoomOutClassName?: string;
-  @Input()
-  zoomInLabel?: string | HTMLElement;
-  @Input()
-  zoomOutLabel?: string | HTMLElement;
-  @Input()
-  zoomInTipLabel?: string;
-  @Input()
-  zoomOutTipLabel?: string;
-  @Input()
-  delta?: number;
-  @Input()
-  target?: string | HTMLElement;
+  @Input() duration?: number;
+  @Input() className?: string;
+  @Input() zoomInClassName?: string;
+  @Input() zoomOutClassName?: string;
+  @Input() zoomInLabel?: string | HTMLElement;
+  @Input() zoomOutLabel?: string | HTMLElement;
+  @Input() zoomInTipLabel?: string;
+  @Input() zoomOutTipLabel?: string;
+  @Input() delta?: number;
+  @Input() target?: string | HTMLElement;
 
   instance: Zoom;
 

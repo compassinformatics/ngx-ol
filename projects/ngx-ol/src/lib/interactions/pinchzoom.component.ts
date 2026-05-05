@@ -8,8 +8,7 @@ import { MapComponent } from '../map.component';
   template: '',
 })
 export class PinchZoomInteractionComponent implements OnInit, OnDestroy {
-  @Input()
-  duration?: number;
+  @Input() duration?: number;
 
   instance: PinchZoom;
 

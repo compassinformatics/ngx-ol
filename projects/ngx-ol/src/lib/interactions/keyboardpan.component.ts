@@ -8,10 +8,8 @@ import { MapComponent } from '../map.component';
   template: '',
 })
 export class KeyboardPanInteractionComponent implements OnInit, OnDestroy {
-  @Input()
-  duration?: number;
-  @Input()
-  pixelDelta?: number;
+  @Input() duration?: number;
+  @Input() pixelDelta?: number;
 
   instance: KeyboardPan;
 

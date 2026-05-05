@@ -1,4 +1,12 @@
-import { Component, Input, OnChanges, OnDestroy, OnInit, Optional, SimpleChanges } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  Optional,
+  SimpleChanges,
+} from '@angular/core';
 import WebGLTileLayer from 'ol/layer/WebGLTile';
 import type { Options, SourceType, Style } from 'ol/layer/WebGLTile';
 import type DataTileSource from 'ol/source/DataTile';
@@ -12,27 +20,25 @@ import { LayerGroupComponent } from './layergroup.component';
   selector: 'aol-layer-webgltile',
   template: ` <ng-content></ng-content> `,
 })
-export class LayerWebGLTileComponent extends LayerComponent implements OnInit, OnDestroy, OnChanges {
-  @Input()
-  style?: Style;
+export class LayerWebGLTileComponent
+  extends LayerComponent
+  implements OnInit, OnDestroy, OnChanges
+{
+  @Input() style?: Style;
 
-  @Input()
-  preload?: number;
+  @Input() preload?: number;
 
-  @Input()
-  source?: DataTileSource<DataTile>;
+  @Input() source?: DataTileSource<DataTile>;
 
-  @Input()
-  sources?: DataTileSource<DataTile>[] | ((extent: Extent, resolution: number) => SourceType[]);
+  @Input() sources?:
+    | DataTileSource<DataTile>[]
+    | ((extent: Extent, resolution: number) => SourceType[]);
 
-  @Input()
-  map?: MapComponent['instance'];
+  @Input() map?: MapComponent['instance'];
 
-  @Input()
-  useInterimTilesOnError?: boolean;
+  @Input() useInterimTilesOnError?: boolean;
 
-  @Input()
-  cacheSize?: number;
+  @Input() cacheSize?: number;
 
   instance: WebGLTileLayer;
 

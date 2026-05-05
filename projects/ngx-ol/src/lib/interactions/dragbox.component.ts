@@ -10,12 +10,9 @@ import { EndCondition } from 'ol/interaction/DragBox';
   template: '',
 })
 export class DragBoxInteractionComponent implements OnInit, OnDestroy {
-  @Input()
-  className?: string;
-  @Input()
-  condition?: Condition;
-  @Input()
-  boxEndCondition?: EndCondition;
+  @Input() className?: string;
+  @Input() condition?: Condition;
+  @Input() boxEndCondition?: EndCondition;
 
   instance: DragBox;
 

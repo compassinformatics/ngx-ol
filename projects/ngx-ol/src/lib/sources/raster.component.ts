@@ -26,27 +26,19 @@ import { SourceComponent } from './source.component';
   ],
 })
 export class SourceRasterComponent extends SourceComponent implements AfterContentInit {
-  @Input()
-  operation?: Operation;
-  @Input()
-  threads?: number;
-  @Input()
-  lib?: any;
-  @Input()
-  operationType?: 'pixel' | 'image';
-  @Input()
-  resolutions?: number[] | null;
+  @Input() operation?: Operation;
+  @Input() threads?: number;
+  @Input() lib?: any;
+  @Input() operationType?: 'pixel' | 'image';
+  @Input() resolutions?: number[] | null;
 
-  @Output()
-  beforeOperations = new EventEmitter<RasterSourceEvent>();
-  @Output()
-  afterOperations = new EventEmitter<RasterSourceEvent>();
+  @Output() beforeOperations = new EventEmitter<RasterSourceEvent>();
+  @Output() afterOperations = new EventEmitter<RasterSourceEvent>();
 
   instance: Raster;
   sources: Source[] = [];
 
-  @ContentChild(SourceComponent, { static: false })
-  set source(sourceComponent: SourceComponent) {
+  @ContentChild(SourceComponent, { static: false }) set source(sourceComponent: SourceComponent) {
     this.sources = [sourceComponent.instance];
     if (this.instance) {
       // Openlayer doesn't handle sources update. Just recreate Raster instance.
