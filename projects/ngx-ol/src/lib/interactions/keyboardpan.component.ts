@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, signal } from '@angular/core';
 import KeyboardPan from 'ol/interaction/KeyboardPan';
 import { Options } from 'ol/interaction/KeyboardPan';
 import { MapComponent } from '../map.component';
@@ -13,10 +13,24 @@ export class KeyboardPanInteractionComponent implements OnInit, OnDestroy {
 
   instance: KeyboardPan;
 
+  protected readonly _instanceSignal = signal<KeyboardPan | undefined>(
+    undefined,
+  );
+
+  readonly instanceSignal = this._instanceSignal.asReadonly();
+
+  protected setInstance(instance: KeyboardPan): KeyboardPan {
+    this.instance = instance;
+
+    this._instanceSignal.set(instance);
+
+    return instance;
+  }
+
   constructor(private map: MapComponent) {}
 
   ngOnInit() {
-    this.instance = new KeyboardPan(this.createOptions());
+    this.setInstance(new KeyboardPan(this.createOptions()));
     this.map.instance.addInteraction(this.instance);
   }
 

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, signal } from '@angular/core';
 import type { Condition } from 'ol/events/condition';
 import type { Extent as ExtentType } from 'ol/extent';
 import ExtentInteraction, { ExtentEvent } from 'ol/interaction/Extent';
@@ -27,10 +27,24 @@ export class ExtentInteractionComponent implements OnInit, OnDestroy {
 
   instance: ExtentInteraction;
 
+  protected readonly _instanceSignal = signal<
+    ExtentInteraction | undefined
+  >(undefined);
+
+  readonly instanceSignal = this._instanceSignal.asReadonly();
+
+  protected setInstance(instance: ExtentInteraction): ExtentInteraction {
+    this.instance = instance;
+
+    this._instanceSignal.set(instance);
+
+    return instance;
+  }
+
   constructor(private map: MapComponent) {}
 
   ngOnInit() {
-    this.instance = new ExtentInteraction(this.createOptions());
+    this.setInstance(new ExtentInteraction(this.createOptions()));
     this.instance.on('extentchanged', (event) => this.extentChanged.emit(event));
     this.map.instance.addInteraction(this.instance);
   }

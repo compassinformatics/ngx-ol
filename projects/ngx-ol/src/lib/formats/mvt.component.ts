@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, signal } from '@angular/core';
 import MVT from 'ol/format/MVT';
 import { FeatureClass } from 'ol/Feature';
 import { Options } from 'ol/format/MVT';
@@ -18,8 +18,20 @@ export class FormatMVTComponent {
 
   instance: MVT;
 
+  protected readonly _instanceSignal = signal<MVT | undefined>(undefined);
+
+  readonly instanceSignal = this._instanceSignal.asReadonly();
+
+  protected setInstance(instance: MVT): MVT {
+    this.instance = instance;
+
+    this._instanceSignal.set(instance);
+
+    return instance;
+  }
+
   constructor() {
-    this.instance = new MVT(this.createOptions());
+    this.setInstance(new MVT(this.createOptions()));
   }
 
   private createOptions(): Options<any> {

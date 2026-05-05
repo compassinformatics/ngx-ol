@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, signal } from '@angular/core';
 import { defaults } from 'ol/interaction/defaults';
 import Interaction from 'ol/interaction/Interaction';
 import { DefaultsOptions } from 'ol/interaction/defaults';
@@ -24,10 +24,24 @@ export class DefaultInteractionComponent implements OnInit, OnDestroy {
 
   instance: Collection<Interaction>;
 
+  protected readonly _instanceSignal = signal<
+    Collection<Interaction> | undefined
+  >(undefined);
+
+  readonly instanceSignal = this._instanceSignal.asReadonly();
+
+  protected setInstance(instance: Collection<Interaction>): Collection<Interaction> {
+    this.instance = instance;
+
+    this._instanceSignal.set(instance);
+
+    return instance;
+  }
+
   constructor(private map: MapComponent) {}
 
   ngOnInit() {
-    this.instance = defaults(this.createOptions());
+    this.setInstance(defaults(this.createOptions()));
     this.instance.forEach((i) => this.map.instance.addInteraction(i));
   }
 

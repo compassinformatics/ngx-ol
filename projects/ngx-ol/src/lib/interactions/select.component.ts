@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnDestroy, OnInit, Input, Output, EventEmitter, signal } from '@angular/core';
 import { MapComponent } from '../map.component';
 import Select from 'ol/interaction/Select';
 import Layer from 'ol/layer/Layer';
@@ -34,10 +34,24 @@ export class SelectInteractionComponent implements OnInit, OnDestroy {
 
   instance: Select;
 
+  protected readonly _instanceSignal = signal<Select | undefined>(
+    undefined,
+  );
+
+  readonly instanceSignal = this._instanceSignal.asReadonly();
+
+  protected setInstance(instance: Select): Select {
+    this.instance = instance;
+
+    this._instanceSignal.set(instance);
+
+    return instance;
+  }
+
   constructor(private map: MapComponent) {}
 
   ngOnInit() {
-    this.instance = new Select(this.createOptions());
+    this.setInstance(new Select(this.createOptions()));
 
     this.instance.on('change', (event: BaseEvent) => this.olChange.emit(event));
     this.instance.on('change:active', (event: ObjectEvent) => this.olChangeActive.emit(event));

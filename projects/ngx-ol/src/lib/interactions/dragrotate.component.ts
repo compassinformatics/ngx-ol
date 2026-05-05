@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, Input } from '@angular/core';
+import { Component, OnDestroy, OnInit, Input, signal } from '@angular/core';
 import DragRotate from 'ol/interaction/DragRotate';
 import { Options } from 'ol/interaction/DragRotate';
 import { MapComponent } from '../map.component';
@@ -14,10 +14,24 @@ export class DragRotateInteractionComponent implements OnInit, OnDestroy {
 
   instance: DragRotate;
 
+  protected readonly _instanceSignal = signal<DragRotate | undefined>(
+    undefined,
+  );
+
+  readonly instanceSignal = this._instanceSignal.asReadonly();
+
+  protected setInstance(instance: DragRotate): DragRotate {
+    this.instance = instance;
+
+    this._instanceSignal.set(instance);
+
+    return instance;
+  }
+
   constructor(private map: MapComponent) {}
 
   ngOnInit() {
-    this.instance = new DragRotate(this.createOptions());
+    this.setInstance(new DragRotate(this.createOptions()));
     this.map.instance.addInteraction(this.instance);
   }
 

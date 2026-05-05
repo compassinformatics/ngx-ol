@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, signal } from '@angular/core';
 import GeoJSON from 'ol/format/GeoJSON.js';
 import { Options } from 'ol/format/GeoJSON';
 import { ProjectionLike } from 'ol/proj';
@@ -18,8 +18,20 @@ export class FormatGeoJSONComponent {
 
   instance: GeoJSON;
 
+  protected readonly _instanceSignal = signal<GeoJSON | undefined>(undefined);
+
+  readonly instanceSignal = this._instanceSignal.asReadonly();
+
+  protected setInstance(instance: GeoJSON): GeoJSON {
+    this.instance = instance;
+
+    this._instanceSignal.set(instance);
+
+    return instance;
+  }
+
   constructor() {
-    this.instance = new GeoJSON(this.createOptions());
+    this.setInstance(new GeoJSON(this.createOptions()));
   }
 
   private createOptions(): Options {

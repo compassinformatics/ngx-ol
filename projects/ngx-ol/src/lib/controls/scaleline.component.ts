@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, signal } from '@angular/core';
 import ScaleLine from 'ol/control/ScaleLine';
 import { MapComponent } from '../map.component';
 import { Options, Units } from 'ol/control/ScaleLine';
@@ -22,10 +22,24 @@ export class ControlScaleLineComponent implements OnInit, OnDestroy {
 
   instance: ScaleLine;
 
+  protected readonly _instanceSignal = signal<ScaleLine | undefined>(
+    undefined,
+  );
+
+  readonly instanceSignal = this._instanceSignal.asReadonly();
+
+  protected setInstance(instance: ScaleLine): ScaleLine {
+    this.instance = instance;
+
+    this._instanceSignal.set(instance);
+
+    return instance;
+  }
+
   constructor(private map: MapComponent) {}
 
   ngOnInit() {
-    this.instance = new ScaleLine(this.createOptions());
+    this.setInstance(new ScaleLine(this.createOptions()));
     this.map.instance.addControl(this.instance);
   }
 

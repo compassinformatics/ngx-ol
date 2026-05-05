@@ -30,7 +30,7 @@ export class LayerVectorTileComponent extends LayerComponent implements OnInit, 
 
   ngOnInit() {
     // console.log('creating ol.layer.VectorTile instance with:', this);
-    this.instance = new VectorTile(this.createOptions());
+    this.setInstance(new VectorTile(this.createOptions()));
     super.ngOnInit();
   }
 

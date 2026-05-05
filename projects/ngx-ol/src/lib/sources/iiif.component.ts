@@ -1,4 +1,4 @@
-import { Component, forwardRef, Host, Input, OnInit, Optional } from '@angular/core';
+import { Component, forwardRef, Host, Input, OnInit, Optional, signal } from '@angular/core';
 import type { NearestDirectionFunction } from 'ol/array';
 import type { Extent } from 'ol/extent';
 import type { ProjectionLike } from 'ol/proj';
@@ -55,12 +55,24 @@ export class SourceIIIFComponent extends SourceComponent implements OnInit {
 
   instance: IIIF;
 
+  protected readonly _instanceSignal = signal<IIIF | undefined>(undefined);
+
+  readonly instanceSignal = this._instanceSignal.asReadonly();
+
+  protected setInstance(instance: IIIF): IIIF {
+    this.instance = instance;
+
+    this._instanceSignal.set(instance);
+
+    return instance;
+  }
+
   constructor(@Optional() @Host() layer?: LayerTileComponent) {
     super(layer!);
   }
 
   ngOnInit() {
-    this.instance = new IIIF(this.createOptions());
+    this.setInstance(new IIIF(this.createOptions()));
     this.register(this.instance);
   }
 

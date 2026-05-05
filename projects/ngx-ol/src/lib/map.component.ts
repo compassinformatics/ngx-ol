@@ -1,4 +1,5 @@
 import {
+  signal,
   Component,
   OnInit,
   ElementRef,
@@ -61,7 +62,19 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
   @Output() propertyChange = new EventEmitter<ObjectEvent>();
   @Output() singleClick = new EventEmitter<MapBrowserEvent<MouseEvent> | any>();
 
-  public instance: Map;
+  instance: Map;
+
+  protected readonly _instanceSignal = signal<Map | undefined>(undefined);
+
+  readonly instanceSignal = this._instanceSignal.asReadonly();
+
+  protected setInstance(instance: Map): Map {
+    this.instance = instance;
+
+    this._instanceSignal.set(instance);
+
+    return instance;
+  }
   public componentType = 'map';
 
   // we pass empty arrays to not get default controls/interactions because we have our own directives
@@ -75,7 +88,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
 
   ngOnInit() {
     const initMap = () => {
-      this.instance = new Map(this.createOptions());
+      this.setInstance(new Map(this.createOptions()));
       this.instance.setTarget(this.host.nativeElement.firstElementChild);
       this.instance.on('change', (event: BaseEvent) => this.olChange.emit(event));
       this.instance.on('change:layergroup', (event: ObjectEvent) =>

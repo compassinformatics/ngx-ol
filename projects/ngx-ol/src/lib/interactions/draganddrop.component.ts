@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, signal } from '@angular/core';
 import DragAndDrop from 'ol/interaction/DragAndDrop';
 import { Options } from 'ol/interaction/DragAndDrop';
 import FeatureFormat from 'ol/format/Feature';
@@ -16,10 +16,24 @@ export class DragAndDropInteractionComponent implements OnInit, OnDestroy {
 
   instance: DragAndDrop;
 
+  protected readonly _instanceSignal = signal<DragAndDrop | undefined>(
+    undefined,
+  );
+
+  readonly instanceSignal = this._instanceSignal.asReadonly();
+
+  protected setInstance(instance: DragAndDrop): DragAndDrop {
+    this.instance = instance;
+
+    this._instanceSignal.set(instance);
+
+    return instance;
+  }
+
   constructor(private map: MapComponent) {}
 
   ngOnInit() {
-    this.instance = new DragAndDrop(this.createOptions());
+    this.setInstance(new DragAndDrop(this.createOptions()));
     this.map.instance.addInteraction(this.instance);
   }
 

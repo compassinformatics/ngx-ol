@@ -1,4 +1,4 @@
-<aol-map [runOutsideAngular]="true">
+<aol-map #map [runOutsideAngular]="true" [maxTilesLoading]="10">
   <aol-view [zoom]="zoom()" [center]="center()"></aol-view>
 
   <aol-layer-tile>

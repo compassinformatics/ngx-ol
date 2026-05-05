@@ -1,4 +1,5 @@
 import {
+  signal,
   Component,
   Host,
   Input,
@@ -41,12 +42,24 @@ export class SourceImageWMSComponent extends SourceComponent implements OnChange
 
   instance: ImageWMS;
 
+  protected readonly _instanceSignal = signal<ImageWMS | undefined>(undefined);
+
+  readonly instanceSignal = this._instanceSignal.asReadonly();
+
+  protected setInstance(instance: ImageWMS): ImageWMS {
+    this.instance = instance;
+
+    this._instanceSignal.set(instance);
+
+    return instance;
+  }
+
   constructor(@Host() layer: LayerImageComponent) {
     super(layer);
   }
 
   ngOnInit() {
-    this.instance = new ImageWMS(this.createOptions());
+    this.setInstance(new ImageWMS(this.createOptions()));
     this.host.instance.setSource(this.instance);
     this.instance.on('imageloadstart', (event: ImageSourceEvent) =>
       this.imageLoadStart.emit(event),

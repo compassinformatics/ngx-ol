@@ -1,4 +1,5 @@
 import {
+  signal,
   Component,
   Host,
   Input,
@@ -39,12 +40,26 @@ export class SourceImageStaticComponent extends SourceComponent implements OnIni
 
   instance: ImageStatic;
 
+  protected readonly _instanceSignal = signal<ImageStatic | undefined>(
+    undefined,
+  );
+
+  readonly instanceSignal = this._instanceSignal.asReadonly();
+
+  protected setInstance(instance: ImageStatic): ImageStatic {
+    this.instance = instance;
+
+    this._instanceSignal.set(instance);
+
+    return instance;
+  }
+
   constructor(@Host() layer: LayerImageComponent) {
     super(layer);
   }
 
   setLayerSource(): void {
-    this.instance = new ImageStatic(this.createOptions());
+    this.setInstance(new ImageStatic(this.createOptions()));
     this.host.instance.setSource(this.instance);
     this.instance.on('imageloadstart', (event: ImageSourceEvent) =>
       this.imageLoadStart.emit(event),

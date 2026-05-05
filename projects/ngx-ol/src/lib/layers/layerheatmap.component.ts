@@ -1,4 +1,5 @@
 import {
+  signal,
   Component,
   Input,
   OnChanges,
@@ -34,12 +35,28 @@ export class LayerHeatmapComponent extends LayerComponent implements OnInit, OnD
 
   instance: Heatmap<FeatureLike, VectorSource<FeatureLike>>;
 
+  protected readonly _instanceSignal = signal<
+    Heatmap<FeatureLike, VectorSource<FeatureLike>> | undefined
+  >(undefined);
+
+  readonly instanceSignal = this._instanceSignal.asReadonly();
+
+  protected setInstance(
+    instance: Heatmap<FeatureLike, VectorSource<FeatureLike>>,
+  ): Heatmap<FeatureLike, VectorSource<FeatureLike>> {
+    this.instance = instance;
+
+    this._instanceSignal.set(instance);
+
+    return instance;
+  }
+
   constructor(map: MapComponent, @Optional() group?: LayerGroupComponent) {
     super(group || map);
   }
 
   ngOnInit() {
-    this.instance = new Heatmap(this.createOptions());
+    this.setInstance(new Heatmap(this.createOptions()));
     super.ngOnInit();
   }
 

@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, Input } from '@angular/core';
+import { Component, OnDestroy, OnInit, Input, signal } from '@angular/core';
 import DragZoom from 'ol/interaction/DragZoom';
 import { Options } from 'ol/interaction/DragZoom';
 import { MapComponent } from '../map.component';
@@ -16,10 +16,24 @@ export class DragZoomInteractionComponent implements OnInit, OnDestroy {
 
   instance: DragZoom;
 
+  protected readonly _instanceSignal = signal<DragZoom | undefined>(
+    undefined,
+  );
+
+  readonly instanceSignal = this._instanceSignal.asReadonly();
+
+  protected setInstance(instance: DragZoom): DragZoom {
+    this.instance = instance;
+
+    this._instanceSignal.set(instance);
+
+    return instance;
+  }
+
   constructor(private map: MapComponent) {}
 
   ngOnInit() {
-    this.instance = new DragZoom(this.createOptions());
+    this.setInstance(new DragZoom(this.createOptions()));
     this.map.instance.addInteraction(this.instance);
   }
 

@@ -1,4 +1,12 @@
-import { Component, Input, Optional, OnInit, OnChanges, SimpleChanges } from '@angular/core';
+import {
+  Component,
+  Input,
+  Optional,
+  OnInit,
+  OnChanges,
+  SimpleChanges,
+  signal,
+} from '@angular/core';
 import Fill from 'ol/style/Fill';
 import Stroke from 'ol/style/Stroke';
 import Text from 'ol/style/Text';
@@ -33,7 +41,19 @@ export class StyleTextComponent implements OnInit, OnChanges {
   @Input() padding?: number[] | undefined;
   @Input() declutterMode?: DeclutterMode | undefined;
 
-  public instance: Text;
+  instance: Text;
+
+  protected readonly _instanceSignal = signal<Text | undefined>(undefined);
+
+  readonly instanceSignal = this._instanceSignal.asReadonly();
+
+  protected setInstance(instance: Text): Text {
+    this.instance = instance;
+
+    this._instanceSignal.set(instance);
+
+    return instance;
+  }
   public componentType = 'style-text';
 
   constructor(@Optional() private host: StyleComponent) {
@@ -45,7 +65,7 @@ export class StyleTextComponent implements OnInit, OnChanges {
 
   ngOnInit() {
     // console.log('creating ol.style.Text instance with: ', this);
-    this.instance = new Text(this.createOptions());
+    this.setInstance(new Text(this.createOptions()));
     this.host.instance.setText(this.instance);
   }
 

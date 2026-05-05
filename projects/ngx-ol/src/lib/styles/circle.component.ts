@@ -1,4 +1,5 @@
 import {
+  signal,
   Component,
   Input,
   Host,
@@ -31,7 +32,19 @@ export class StyleCircleComponent implements AfterContentInit, OnChanges, OnDest
   @Input() declutterMode?: DeclutterMode;
 
   public componentType = 'style-circle';
-  public instance: Circle;
+  instance: Circle;
+
+  protected readonly _instanceSignal = signal<Circle | undefined>(undefined);
+
+  readonly instanceSignal = this._instanceSignal.asReadonly();
+
+  protected setInstance(instance: Circle): Circle {
+    this.instance = instance;
+
+    this._instanceSignal.set(instance);
+
+    return instance;
+  }
 
   constructor(@Host() private host: StyleComponent) {}
 
@@ -50,7 +63,7 @@ export class StyleCircleComponent implements AfterContentInit, OnChanges, OnDest
 
   ngAfterContentInit() {
     // console.log('creating ol.style.Circle instance with: ', this);
-    this.instance = new Circle(this.createOptions());
+    this.setInstance(new Circle(this.createOptions()));
     this.host.instance.setImage(this.instance);
     this.host.update();
   }

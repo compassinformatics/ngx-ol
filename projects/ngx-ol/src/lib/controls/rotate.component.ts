@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, signal } from '@angular/core';
 import MapEvent from 'ol/MapEvent';
 import Rotate from 'ol/control/Rotate';
 import { Options } from 'ol/control/Rotate';
@@ -21,12 +21,24 @@ export class ControlRotateComponent implements OnInit, OnDestroy {
 
   instance: Rotate;
 
+  protected readonly _instanceSignal = signal<Rotate | undefined>(undefined);
+
+  readonly instanceSignal = this._instanceSignal.asReadonly();
+
+  protected setInstance(instance: Rotate): Rotate {
+    this.instance = instance;
+
+    this._instanceSignal.set(instance);
+
+    return instance;
+  }
+
   constructor(private map: MapComponent) {
     // console.log('instancing aol-control-rotate');
   }
 
   ngOnInit() {
-    this.instance = new Rotate(this.createOptions());
+    this.setInstance(new Rotate(this.createOptions()));
     this.map.instance.addControl(this.instance);
   }
 

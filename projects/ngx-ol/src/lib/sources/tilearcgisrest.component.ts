@@ -1,4 +1,5 @@
 import {
+  signal,
   Component,
   forwardRef,
   Host,
@@ -54,12 +55,26 @@ export class SourceTileArcGISRestComponent extends SourceComponent implements On
 
   instance: TileArcGISRest;
 
+  protected readonly _instanceSignal = signal<
+    TileArcGISRest | undefined
+  >(undefined);
+
+  readonly instanceSignal = this._instanceSignal.asReadonly();
+
+  protected setInstance(instance: TileArcGISRest): TileArcGISRest {
+    this.instance = instance;
+
+    this._instanceSignal.set(instance);
+
+    return instance;
+  }
+
   constructor(@Host() layer: LayerTileComponent) {
     super(layer);
   }
 
   ngOnInit() {
-    this.instance = new TileArcGISRest(this.createOptions());
+    this.setInstance(new TileArcGISRest(this.createOptions()));
     this.host.instance.setSource(this.instance);
   }
 

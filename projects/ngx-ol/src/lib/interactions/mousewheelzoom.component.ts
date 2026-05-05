@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, signal } from '@angular/core';
 import MouseWheelZoom from 'ol/interaction/MouseWheelZoom';
 import { Options } from 'ol/interaction/MouseWheelZoom';
 import { MapComponent } from '../map.component';
@@ -14,10 +14,24 @@ export class MouseWheelZoomInteractionComponent implements OnInit, OnDestroy {
 
   instance: MouseWheelZoom;
 
+  protected readonly _instanceSignal = signal<
+    MouseWheelZoom | undefined
+  >(undefined);
+
+  readonly instanceSignal = this._instanceSignal.asReadonly();
+
+  protected setInstance(instance: MouseWheelZoom): MouseWheelZoom {
+    this.instance = instance;
+
+    this._instanceSignal.set(instance);
+
+    return instance;
+  }
+
   constructor(private map: MapComponent) {}
 
   ngOnInit() {
-    this.instance = new MouseWheelZoom(this.createOptions());
+    this.setInstance(new MouseWheelZoom(this.createOptions()));
     this.map.instance.addInteraction(this.instance);
   }
 

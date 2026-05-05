@@ -1,4 +1,4 @@
-import { Component, Host, Input, OnInit, forwardRef } from '@angular/core';
+import { Component, Host, Input, OnInit, forwardRef, signal } from '@angular/core';
 import { SourceComponent } from './source.component';
 import { LayerTileComponent } from '../layers/layertile.component';
 import UTFGrid from 'ol/source/UTFGrid';
@@ -21,12 +21,24 @@ export class SourceUTFGridComponent extends SourceComponent implements OnInit {
 
   instance: UTFGrid;
 
+  protected readonly _instanceSignal = signal<UTFGrid | undefined>(undefined);
+
+  readonly instanceSignal = this._instanceSignal.asReadonly();
+
+  protected setInstance(instance: UTFGrid): UTFGrid {
+    this.instance = instance;
+
+    this._instanceSignal.set(instance);
+
+    return instance;
+  }
+
   constructor(@Host() layer: LayerTileComponent) {
     super(layer);
   }
 
   ngOnInit() {
-    this.instance = new UTFGrid(this.createOptions());
+    this.setInstance(new UTFGrid(this.createOptions()));
     this.host.instance.setSource(this.instance);
   }
 

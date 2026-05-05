@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { FeatureComponent } from '../feature.component';
 import { SimpleGeometryComponent } from './simplegeometry.component';
 import { MapComponent } from '../map.component';
@@ -10,20 +10,34 @@ import Polygon from 'ol/geom/Polygon';
 })
 export class GeometryPolygonComponent extends SimpleGeometryComponent implements OnInit {
   public componentType = 'geometry-polygon';
-  public instance: Polygon;
+  instance: Polygon;
+
+  protected readonly _instanceSignal = signal<Polygon | undefined>(undefined);
+
+  readonly instanceSignal = this._instanceSignal.asReadonly();
+
+  protected setInstance(instance: Polygon): Polygon {
+    this.instance = instance;
+
+    this._instanceSignal.set(instance);
+
+    return instance;
+  }
 
   constructor(map: MapComponent, host: FeatureComponent) {
     super(map, host);
   }
 
   ngOnInit() {
-    this.instance = new Polygon([
-      [
-        [0, 0],
-        [1, 1],
-        [0, 1],
-      ],
-    ]);
+    this.setInstance(
+      new Polygon([
+        [
+          [0, 0],
+          [1, 1],
+          [0, 1],
+        ],
+      ]),
+    );
     super.ngOnInit();
   }
 }

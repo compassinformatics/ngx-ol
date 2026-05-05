@@ -1,4 +1,12 @@
-import { Component, Input, Optional, OnInit, OnChanges, SimpleChanges } from '@angular/core';
+import {
+  Component,
+  Input,
+  Optional,
+  OnInit,
+  OnChanges,
+  SimpleChanges,
+  signal,
+} from '@angular/core';
 import Fill from 'ol/style/Fill';
 import { Options } from 'ol/style/Fill';
 import { StyleComponent } from './style.component';
@@ -14,7 +22,19 @@ import { ColorLike, PatternDescriptor } from 'ol/colorlike';
 export class StyleFillComponent implements OnInit, OnChanges {
   @Input() color?: Color | ColorLike | PatternDescriptor | null;
 
-  public instance: Fill;
+  instance: Fill;
+
+  protected readonly _instanceSignal = signal<Fill | undefined>(undefined);
+
+  readonly instanceSignal = this._instanceSignal.asReadonly();
+
+  protected setInstance(instance: Fill): Fill {
+    this.instance = instance;
+
+    this._instanceSignal.set(instance);
+
+    return instance;
+  }
   private readonly host: StyleComponent | StyleCircleComponent | StyleTextComponent;
 
   constructor(
@@ -37,7 +57,7 @@ export class StyleFillComponent implements OnInit, OnChanges {
 
   ngOnInit() {
     // console.log('creating ol.style.Fill instance with: ', this);
-    this.instance = new Fill(this.createOptions());
+    this.setInstance(new Fill(this.createOptions()));
     switch (this.host.componentType) {
       case 'style':
         this.host.instance.setFill(this.instance);

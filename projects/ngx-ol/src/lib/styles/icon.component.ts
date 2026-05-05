@@ -1,4 +1,4 @@
-import { Component, Input, Host, OnInit, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, Host, OnInit, OnChanges, SimpleChanges, signal } from '@angular/core';
 import Icon from 'ol/style/Icon';
 
 import { StyleComponent } from './style.component';
@@ -32,13 +32,25 @@ export class StyleIconComponent implements OnInit, OnChanges {
   @Input() size?: [number, number];
   @Input() src?: string;
 
-  public instance: Icon;
+  instance: Icon;
+
+  protected readonly _instanceSignal = signal<Icon | undefined>(undefined);
+
+  readonly instanceSignal = this._instanceSignal.asReadonly();
+
+  protected setInstance(instance: Icon): Icon {
+    this.instance = instance;
+
+    this._instanceSignal.set(instance);
+
+    return instance;
+  }
 
   constructor(@Host() private host: StyleComponent) {}
 
   ngOnInit() {
     // console.log('creating ol.style.Icon instance with: ', this);
-    this.instance = new Icon(this.createOptions());
+    this.setInstance(new Icon(this.createOptions()));
     this.host.instance.setImage(this.instance);
   }
 
@@ -56,7 +68,7 @@ export class StyleIconComponent implements OnInit, OnChanges {
       this.instance.setScale(changes.scale.currentValue);
     }
     if (changes.src) {
-      this.instance = new Icon(this.createOptions());
+      this.setInstance(new Icon(this.createOptions()));
       this.host.instance.setImage(this.instance);
     }
     this.host.update();

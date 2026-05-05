@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, signal } from '@angular/core';
 import KeyboardZoom from 'ol/interaction/KeyboardZoom';
 import { Options } from 'ol/interaction/KeyboardZoom';
 import { MapComponent } from '../map.component';
@@ -13,10 +13,24 @@ export class KeyboardZoomInteractionComponent implements OnInit, OnDestroy {
 
   instance: KeyboardZoom;
 
+  protected readonly _instanceSignal = signal<
+    KeyboardZoom | undefined
+  >(undefined);
+
+  readonly instanceSignal = this._instanceSignal.asReadonly();
+
+  protected setInstance(instance: KeyboardZoom): KeyboardZoom {
+    this.instance = instance;
+
+    this._instanceSignal.set(instance);
+
+    return instance;
+  }
+
   constructor(private map: MapComponent) {}
 
   ngOnInit() {
-    this.instance = new KeyboardZoom(this.createOptions());
+    this.setInstance(new KeyboardZoom(this.createOptions()));
     this.map.instance.addInteraction(this.instance);
   }
 

@@ -1,4 +1,12 @@
-import { Component, Host, Input, forwardRef, ContentChild, AfterContentInit } from '@angular/core';
+import {
+  Component,
+  Host,
+  Input,
+  forwardRef,
+  ContentChild,
+  AfterContentInit,
+  signal,
+} from '@angular/core';
 import OGCVectorTile from 'ol/source/OGCVectorTile';
 import { Options } from 'ol/source/OGCVectorTile';
 import TileGrid from 'ol/tilegrid/TileGrid';
@@ -38,7 +46,21 @@ export class SourceOGCVectorTileComponent extends SourceComponent implements Aft
   @ContentChild(FormatGeoJSONComponent, { static: false })
   formatGeoJSONComponent: FormatGeoJSONComponent;
 
-  public instance: OGCVectorTile;
+  instance: OGCVectorTile;
+
+  protected readonly _instanceSignal = signal<OGCVectorTile | undefined>(
+    undefined,
+  );
+
+  readonly instanceSignal = this._instanceSignal.asReadonly();
+
+  protected setInstance(instance: OGCVectorTile): OGCVectorTile {
+    this.instance = instance;
+
+    this._instanceSignal.set(instance);
+
+    return instance;
+  }
   tileGrid: TileGrid;
 
   constructor(@Host() layer: LayerVectorTileComponent) {
@@ -54,7 +76,7 @@ export class SourceOGCVectorTileComponent extends SourceComponent implements Aft
       format = this.formatGeoJSONComponent.instance;
     }
 
-    this.instance = new OGCVectorTile(this.createOptions(format));
+    this.setInstance(new OGCVectorTile(this.createOptions(format)));
     this.host.instance.setSource(this.instance);
   }
 

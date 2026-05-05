@@ -1,4 +1,5 @@
 import {
+  signal,
   Component,
   Input,
   OnInit,
@@ -53,14 +54,26 @@ export class ViewComponent implements OnInit, OnChanges, OnDestroy {
   @Output() olError = new EventEmitter<BaseEvent>();
   @Output() propertyChange = new EventEmitter<ObjectEvent>();
 
-  public instance: View;
+  instance: View;
+
+  protected readonly _instanceSignal = signal<View | undefined>(undefined);
+
+  readonly instanceSignal = this._instanceSignal.asReadonly();
+
+  protected setInstance(instance: View): View {
+    this.instance = instance;
+
+    this._instanceSignal.set(instance);
+
+    return instance;
+  }
   public componentType = 'view';
 
   constructor(private host: MapComponent) {}
 
   ngOnInit() {
     // console.log('creating ol.View instance with: ', this);
-    this.instance = new View(this.createOptions());
+    this.setInstance(new View(this.createOptions()));
     this.host.instance.setView(this.instance);
 
     this.instance.on('change', (event: BaseEvent) => this.olChange.emit(event));
@@ -92,7 +105,7 @@ export class ViewComponent implements OnInit, OnChanges, OnDestroy {
             }
             break;
           case 'projection':
-            this.instance = new View(this.createOptions());
+            this.setInstance(new View(this.createOptions()));
             this.host.instance.setView(this.instance);
             break;
           case 'center':

@@ -1,4 +1,5 @@
 import {
+  signal,
   AfterContentInit,
   Component,
   ContentChild,
@@ -58,6 +59,18 @@ export class SourceXYZComponent extends SourceComponent implements AfterContentI
 
   instance: XYZ;
 
+  protected readonly _instanceSignal = signal<XYZ | undefined>(undefined);
+
+  readonly instanceSignal = this._instanceSignal.asReadonly();
+
+  protected setInstance(instance: XYZ): XYZ {
+    this.instance = instance;
+
+    this._instanceSignal.set(instance);
+
+    return instance;
+  }
+
   constructor(
     @Optional()
     @Host()
@@ -92,7 +105,7 @@ export class SourceXYZComponent extends SourceComponent implements AfterContentI
   }
 
   init() {
-    this.instance = new XYZ(this.createOptions());
+    this.setInstance(new XYZ(this.createOptions()));
 
     this.instance.on('tileloadstart', (event: TileSourceEvent) => this.tileLoadStart.emit(event));
     this.instance.on('tileloadend', (event: TileSourceEvent) => this.tileLoadEnd.emit(event));

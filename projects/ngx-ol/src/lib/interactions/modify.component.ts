@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnDestroy, OnInit, Input, Output, EventEmitter, signal } from '@angular/core';
 import { MapComponent } from '../map.component';
 import Modify from 'ol/interaction/Modify';
 import Collection from 'ol/Collection';
@@ -37,10 +37,24 @@ export class ModifyInteractionComponent implements OnInit, OnDestroy {
 
   instance: Modify;
 
+  protected readonly _instanceSignal = signal<Modify | undefined>(
+    undefined,
+  );
+
+  readonly instanceSignal = this._instanceSignal.asReadonly();
+
+  protected setInstance(instance: Modify): Modify {
+    this.instance = instance;
+
+    this._instanceSignal.set(instance);
+
+    return instance;
+  }
+
   constructor(private map: MapComponent) {}
 
   ngOnInit() {
-    this.instance = new Modify(this.createOptions());
+    this.setInstance(new Modify(this.createOptions()));
     this.instance.on('change', (event: BaseEvent) => this.olChange.emit(event));
     this.instance.on('change:active', (event: ObjectEvent) => this.olChangeActive.emit(event));
     this.instance.on('error', (event: BaseEvent) => this.olError.emit(event));

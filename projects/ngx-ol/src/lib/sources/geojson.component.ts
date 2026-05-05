@@ -1,4 +1,4 @@
-import { Component, Host, Input, OnInit, Optional, forwardRef } from '@angular/core';
+import { Component, Host, Input, OnInit, Optional, forwardRef, signal } from '@angular/core';
 import { LayerVectorComponent } from '../layers/layervector.component';
 import { SourceComponent } from './source.component';
 import FeatureFormat from 'ol/format/Feature';
@@ -21,6 +21,18 @@ export class SourceGeoJSONComponent extends SourceComponent implements OnInit {
   @Input() url: string;
 
   instance: Vector;
+
+  protected readonly _instanceSignal = signal<Vector | undefined>(undefined);
+
+  readonly instanceSignal = this._instanceSignal.asReadonly();
+
+  protected setInstance(instance: Vector): Vector {
+    this.instance = instance;
+
+    this._instanceSignal.set(instance);
+
+    return instance;
+  }
   format: FeatureFormat;
 
   constructor(
@@ -32,7 +44,7 @@ export class SourceGeoJSONComponent extends SourceComponent implements OnInit {
 
   ngOnInit() {
     this.format = new GeoJSON(this.createFormatOptions());
-    this.instance = new Vector(this.createVectorOptions());
+    this.setInstance(new Vector(this.createVectorOptions()));
     this.host.instance.setSource(this.instance);
   }
 

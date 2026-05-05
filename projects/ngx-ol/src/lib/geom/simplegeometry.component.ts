@@ -1,4 +1,4 @@
-import { Input, OnInit, Directive } from '@angular/core';
+import { Input, OnInit, Directive, signal } from '@angular/core';
 import { FeatureComponent } from '../feature.component';
 import { MapComponent } from '../map.component';
 import SimpleGeometry from 'ol/geom/SimpleGeometry';
@@ -8,7 +8,19 @@ import SimpleGeometry from 'ol/geom/SimpleGeometry';
 export abstract class SimpleGeometryComponent implements OnInit {
   @Input() srid: string;
 
-  public instance: SimpleGeometry;
+  instance: SimpleGeometry;
+
+  protected readonly _instanceSignal = signal<SimpleGeometry | undefined>(undefined);
+
+  readonly instanceSignal = this._instanceSignal.asReadonly();
+
+  protected setInstance(instance: SimpleGeometry): SimpleGeometry {
+    this.instance = instance;
+
+    this._instanceSignal.set(instance);
+
+    return instance;
+  }
   public componentType = 'simple-geometry';
 
   protected constructor(

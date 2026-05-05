@@ -1,4 +1,5 @@
 import {
+  signal,
   Component,
   forwardRef,
   Host,
@@ -56,12 +57,26 @@ export class SourceImageTileComponent extends SourceComponent implements OnInit,
 
   instance: ImageTileSource;
 
+  protected readonly _instanceSignal = signal<ImageTileSource | undefined>(
+    undefined,
+  );
+
+  readonly instanceSignal = this._instanceSignal.asReadonly();
+
+  protected setInstance(instance: ImageTileSource): ImageTileSource {
+    this.instance = instance;
+
+    this._instanceSignal.set(instance);
+
+    return instance;
+  }
+
   constructor(@Optional() @Host() layer?: LayerWebGLTileComponent) {
     super(layer!);
   }
 
   ngOnInit() {
-    this.instance = new ImageTileSource(this.createOptions());
+    this.setInstance(new ImageTileSource(this.createOptions()));
     this.register(this.instance);
   }
 

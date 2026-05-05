@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit, EventEmitter, Output } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, EventEmitter, Output, signal } from '@angular/core';
 import { MapComponent } from '../map.component';
 import Draw from 'ol/interaction/Draw';
 import Collection from 'ol/Collection';
@@ -49,10 +49,22 @@ export class DrawInteractionComponent implements OnInit, OnDestroy {
 
   instance: Draw;
 
+  protected readonly _instanceSignal = signal<Draw | undefined>(undefined);
+
+  readonly instanceSignal = this._instanceSignal.asReadonly();
+
+  protected setInstance(instance: Draw): Draw {
+    this.instance = instance;
+
+    this._instanceSignal.set(instance);
+
+    return instance;
+  }
+
   constructor(private map: MapComponent) {}
 
   ngOnInit() {
-    this.instance = new Draw(this.createOptions());
+    this.setInstance(new Draw(this.createOptions()));
     this.instance.on('change', (event: BaseEvent) => this.olChange.emit(event));
     this.instance.on('change:active', (event: ObjectEvent) => this.olChangeActive.emit(event));
     this.instance.on('drawabort', (event: DrawEvent) => this.olDrawAbort.emit(event));

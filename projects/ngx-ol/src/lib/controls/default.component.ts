@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, Input } from '@angular/core';
+import { Component, OnDestroy, OnInit, Input, signal } from '@angular/core';
 import Control from 'ol/control/Control';
 import { defaults } from 'ol/control/defaults';
 import { DefaultsOptions } from 'ol/control/defaults';
@@ -23,11 +23,25 @@ export class DefaultControlComponent implements OnInit, OnDestroy {
 
   instance: Collection<Control>;
 
+  protected readonly _instanceSignal = signal<Collection<Control> | undefined>(
+    undefined,
+  );
+
+  readonly instanceSignal = this._instanceSignal.asReadonly();
+
+  protected setInstance(instance: Collection<Control>): Collection<Control> {
+    this.instance = instance;
+
+    this._instanceSignal.set(instance);
+
+    return instance;
+  }
+
   constructor(private map: MapComponent) {}
 
   ngOnInit() {
     // console.log('ol.control.defaults init: ', this);
-    this.instance = defaults(this.createOptions());
+    this.setInstance(defaults(this.createOptions()));
     this.instance.forEach((c) => this.map.instance.addControl(c));
   }
 
