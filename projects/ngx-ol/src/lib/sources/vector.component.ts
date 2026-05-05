@@ -2,12 +2,12 @@ import {
   signal,
   Component,
   Host,
-  Input,
   OnChanges,
   OnInit,
   Optional,
   SimpleChanges,
   forwardRef,
+  input,
 } from '@angular/core';
 import Collection from 'ol/Collection.js';
 import type { FeatureLike } from 'ol/Feature.js';
@@ -26,14 +26,14 @@ import { LayerHeatmapComponent } from '../layers/layerheatmap.component';
   providers: [{ provide: SourceComponent, useExisting: forwardRef(() => SourceVectorComponent) }],
 })
 export class SourceVectorComponent extends SourceComponent implements OnInit, OnChanges {
-  @Input() overlaps: boolean;
-  @Input() features: FeatureLike[] | Collection<FeatureLike> | undefined;
-  @Input() useSpatialIndex: boolean;
-  @Input() wrapX: boolean;
-  @Input() loader?: FeatureLoader<FeatureLike>;
-  @Input() url?: string | FeatureUrlFunction;
-  @Input() format?: FeatureFormat<any>;
-  @Input() strategy?: LoadingStrategy;
+  overlaps = input<boolean>();
+  features = input<FeatureLike[] | Collection<FeatureLike> | undefined>();
+  useSpatialIndex = input<boolean>();
+  wrapX = input<boolean>();
+  loader = input<FeatureLoader<FeatureLike>>();
+  url = input<string | FeatureUrlFunction>();
+  format = input<FeatureFormat<any>>();
+  strategy = input<LoadingStrategy>();
 
   instance: Vector;
 
@@ -73,15 +73,15 @@ export class SourceVectorComponent extends SourceComponent implements OnInit, On
 
   private createOptions(): Options<FeatureLike> {
     return {
-      attributions: this.attributions,
-      overlaps: this.overlaps,
-      features: this.features,
-      useSpatialIndex: this.useSpatialIndex,
-      wrapX: this.wrapX,
-      loader: this.loader,
-      url: this.url,
-      format: this.format,
-      strategy: this.strategy,
+      attributions: this.attributions(),
+      overlaps: this.overlaps(),
+      features: this.features(),
+      useSpatialIndex: this.useSpatialIndex(),
+      wrapX: this.wrapX(),
+      loader: this.loader(),
+      url: this.url(),
+      format: this.format(),
+      strategy: this.strategy(),
     };
   }
 }

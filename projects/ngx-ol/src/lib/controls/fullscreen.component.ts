@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit, signal } from '@angular/core';
+import { Component, OnDestroy, OnInit, signal, input } from '@angular/core';
 import FullScreen from 'ol/control/FullScreen';
 import { Options } from 'ol/control/FullScreen';
 import { MapComponent } from '../map.component';
@@ -8,21 +8,19 @@ import { MapComponent } from '../map.component';
   template: ` <ng-content></ng-content> `,
 })
 export class ControlFullScreenComponent implements OnInit, OnDestroy {
-  @Input() className?: string;
-  @Input() label?: string | HTMLElement | Text;
-  @Input() labelActive?: string | HTMLElement | Text;
-  @Input() activeClassName?: string;
-  @Input() inactiveClassName?: string;
-  @Input() tipLabel?: string;
-  @Input() keys?: boolean;
-  @Input() target?: string | HTMLElement;
-  @Input() source?: string | HTMLElement;
+  className = input<string>();
+  label = input<string | HTMLElement | Text>();
+  labelActive = input<string | HTMLElement | Text>();
+  activeClassName = input<string>();
+  inactiveClassName = input<string>();
+  tipLabel = input<string>();
+  keys = input<boolean>();
+  target = input<string | HTMLElement>();
+  source = input<string | HTMLElement>();
 
   instance: FullScreen;
 
-  protected readonly _instanceSignal = signal<FullScreen | undefined>(
-    undefined,
-  );
+  protected readonly _instanceSignal = signal<FullScreen | undefined>(undefined);
 
   readonly instanceSignal = this._instanceSignal.asReadonly();
 
@@ -50,15 +48,15 @@ export class ControlFullScreenComponent implements OnInit, OnDestroy {
 
   private createOptions(): Options {
     return {
-      className: this.className,
-      label: this.label,
-      labelActive: this.labelActive,
-      activeClassName: this.activeClassName,
-      inactiveClassName: this.inactiveClassName,
-      tipLabel: this.tipLabel,
-      keys: this.keys,
-      target: this.target,
-      source: this.source,
+      className: this.className(),
+      label: this.label(),
+      labelActive: this.labelActive(),
+      activeClassName: this.activeClassName(),
+      inactiveClassName: this.inactiveClassName(),
+      tipLabel: this.tipLabel(),
+      keys: this.keys(),
+      target: this.target(),
+      source: this.source(),
     };
   }
 }

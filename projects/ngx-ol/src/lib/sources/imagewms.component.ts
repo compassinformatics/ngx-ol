@@ -2,13 +2,13 @@ import {
   signal,
   Component,
   Host,
-  Input,
   OnChanges,
   OnInit,
   forwardRef,
   SimpleChanges,
   Output,
   EventEmitter,
+  input,
 } from '@angular/core';
 import ImageWMS from 'ol/source/ImageWMS';
 import { Options } from 'ol/source/ImageWMS';
@@ -25,16 +25,16 @@ import { ServerType } from 'ol/source/wms';
   providers: [{ provide: SourceComponent, useExisting: forwardRef(() => SourceImageWMSComponent) }],
 })
 export class SourceImageWMSComponent extends SourceComponent implements OnChanges, OnInit {
-  @Input() crossOrigin?: null | string;
-  @Input() hidpi?: boolean;
-  @Input() serverType?: ServerType;
-  @Input() imageLoadFunction?: LoadFunction;
-  @Input() interpolate?: boolean;
-  @Input() params?: { [key: string]: any };
-  @Input() projection?: ProjectionLike | string;
-  @Input() ratio?: number;
-  @Input() resolutions?: Array<number>;
-  @Input() url?: string;
+  crossOrigin = input<null | string>();
+  hidpi = input<boolean>();
+  serverType = input<ServerType>();
+  imageLoadFunction = input<LoadFunction>();
+  interpolate = input<boolean>();
+  params = input<{ [key: string]: any }>();
+  projection = input<ProjectionLike | string>();
+  ratio = input<number>();
+  resolutions = input<Array<number>>();
+  url = input<string>();
 
   @Output() imageLoadStart = new EventEmitter<ImageSourceEvent>();
   @Output() imageLoadEnd = new EventEmitter<ImageSourceEvent>();
@@ -72,23 +72,23 @@ export class SourceImageWMSComponent extends SourceComponent implements OnChange
 
   ngOnChanges(changes: SimpleChanges) {
     if (this.instance && changes.hasOwnProperty('params')) {
-      this.instance.updateParams(this.params);
+      this.instance.updateParams(this.params());
     }
   }
 
   private createOptions(): Options {
     return {
-      attributions: this.attributions,
-      crossOrigin: this.crossOrigin,
-      hidpi: this.hidpi,
-      serverType: this.serverType,
-      imageLoadFunction: this.imageLoadFunction,
-      interpolate: this.interpolate,
-      params: this.params,
-      projection: this.projection,
-      ratio: this.ratio,
-      resolutions: this.resolutions,
-      url: this.url,
+      attributions: this.attributions(),
+      crossOrigin: this.crossOrigin(),
+      hidpi: this.hidpi(),
+      serverType: this.serverType(),
+      imageLoadFunction: this.imageLoadFunction(),
+      interpolate: this.interpolate(),
+      params: this.params(),
+      projection: this.projection(),
+      ratio: this.ratio(),
+      resolutions: this.resolutions(),
+      url: this.url(),
     };
   }
 }

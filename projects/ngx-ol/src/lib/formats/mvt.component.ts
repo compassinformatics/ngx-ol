@@ -1,4 +1,4 @@
-import { Component, Input, signal } from '@angular/core';
+import { Component, signal, input } from '@angular/core';
 import MVT from 'ol/format/MVT';
 import { FeatureClass } from 'ol/Feature';
 import { Options } from 'ol/format/MVT';
@@ -8,11 +8,11 @@ import { Options } from 'ol/format/MVT';
   template: '',
 })
 export class FormatMVTComponent {
-  @Input() featureClass?: FeatureClass;
-  @Input() geometryName?: string;
-  @Input() layerName?: string;
-  @Input() layers?: string[];
-  @Input() idProperty?: string;
+  featureClass = input<FeatureClass>();
+  geometryName = input<string>();
+  layerName = input<string>();
+  layers = input<string[]>();
+  idProperty = input<string>();
 
   public componentType = 'format';
 
@@ -36,11 +36,11 @@ export class FormatMVTComponent {
 
   private createOptions(): Options<any> {
     return {
-      featureClass: this.featureClass,
-      geometryName: this.geometryName,
-      layerName: this.layerName,
-      layers: this.layers,
-      idProperty: this.idProperty,
+      featureClass: this.featureClass(),
+      geometryName: this.geometryName(),
+      layerName: this.layerName(),
+      layers: this.layers(),
+      idProperty: this.idProperty(),
     };
   }
 }

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, signal } from '@angular/core';
+import { Component, OnInit, signal, input } from '@angular/core';
 import WMTS, { Options } from 'ol/tilegrid/WMTS';
 import { TileGridComponent } from './tilegrid.component';
 import { Coordinate } from 'ol/coordinate';
@@ -9,13 +9,13 @@ import { Size } from 'ol/size';
   template: '',
 })
 export class TileGridWMTSComponent extends TileGridComponent implements OnInit {
-  @Input() origin?: Coordinate;
-  @Input() origins?: Coordinate[];
-  @Input() resolutions: number[];
-  @Input() matrixIds: string[];
-  @Input() sizes?: Size[];
-  @Input() tileSize?: number | Size;
-  @Input() tileSizes?: (number | Size)[];
+  origin = input<Coordinate>();
+  origins = input<Coordinate[]>();
+  override resolutions = input<number[]>();
+  matrixIds = input.required<string[]>();
+  sizes = input<Size[]>();
+  tileSize = input<number | Size>();
+  tileSizes = input<(number | Size)[]>();
 
   instance: WMTS;
 
@@ -37,14 +37,14 @@ export class TileGridWMTSComponent extends TileGridComponent implements OnInit {
 
   private createOptions(): Options {
     return {
-      extent: this.extent,
-      origin: this.origin,
-      origins: this.origins,
-      resolutions: this.resolutions,
-      matrixIds: this.matrixIds,
-      sizes: this.sizes,
-      tileSize: this.tileSize,
-      tileSizes: this.tileSizes,
+      extent: this.extent(),
+      origin: this.origin(),
+      origins: this.origins(),
+      resolutions: this.resolutions()!,
+      matrixIds: this.matrixIds(),
+      sizes: this.sizes(),
+      tileSize: this.tileSize(),
+      tileSizes: this.tileSizes(),
     };
   }
 }

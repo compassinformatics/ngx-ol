@@ -1,11 +1,11 @@
 import {
   Component,
-  Input,
   Optional,
   OnInit,
   OnChanges,
   SimpleChanges,
   signal,
+  input,
 } from '@angular/core';
 import Fill from 'ol/style/Fill';
 import { Options } from 'ol/style/Fill';
@@ -20,7 +20,7 @@ import { ColorLike, PatternDescriptor } from 'ol/colorlike';
   template: ` <div class="aol-style-fill"></div> `,
 })
 export class StyleFillComponent implements OnInit, OnChanges {
-  @Input() color?: Color | ColorLike | PatternDescriptor | null;
+  color = input<Color | ColorLike | PatternDescriptor | null>();
 
   instance: Fill;
 
@@ -67,7 +67,7 @@ export class StyleFillComponent implements OnInit, OnChanges {
         this.host.instance.setFill(this.instance);
         break;
       case 'style-circle':
-        (this.host as StyleCircleComponent).fill = this.instance;
+        (this.host as StyleCircleComponent).setFill(this.instance);
         // console.log('setting ol.style.circle instance\'s fill:', this.host);
         break;
       default:
@@ -88,7 +88,7 @@ export class StyleFillComponent implements OnInit, OnChanges {
 
   private createOptions(): Options {
     return {
-      color: this.color,
+      color: this.color(),
     };
   }
 }

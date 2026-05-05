@@ -11,9 +11,7 @@ export class AttributionsComponent implements AfterViewInit {
 
   instance: Array<string>;
 
-  protected readonly _instanceSignal = signal<Array<string> | undefined>(
-    undefined,
-  );
+  protected readonly _instanceSignal = signal<Array<string> | undefined>(undefined);
 
   readonly instanceSignal = this._instanceSignal.asReadonly();
 

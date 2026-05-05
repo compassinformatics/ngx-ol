@@ -1,11 +1,11 @@
 import {
   signal,
   Component,
-  Input,
   AfterContentInit,
   OnChanges,
   SimpleChanges,
   OnDestroy,
+  input,
 } from '@angular/core';
 import Graticule from 'ol/layer/Graticule';
 import Stroke from 'ol/style/Stroke';
@@ -16,10 +16,10 @@ import { MapComponent } from './map.component';
   template: '<ng-content></ng-content>',
 })
 export class GraticuleComponent implements AfterContentInit, OnChanges, OnDestroy {
-  @Input() strokeStyle: Stroke;
-  @Input() showLabels: boolean;
-  @Input() lonLabelPosition: number;
-  @Input() latLabelPosition: number;
+  strokeStyle = input<Stroke>();
+  showLabels = input<boolean>();
+  lonLabelPosition = input<number>();
+  latLabelPosition = input<number>();
 
   instance: any;
 
@@ -60,10 +60,10 @@ export class GraticuleComponent implements AfterContentInit, OnChanges, OnDestro
   ngAfterContentInit(): void {
     this.setInstance(
       new Graticule({
-        strokeStyle: this.strokeStyle,
-        showLabels: this.showLabels,
-        lonLabelPosition: this.lonLabelPosition,
-        latLabelPosition: this.latLabelPosition,
+        strokeStyle: this.strokeStyle(),
+        showLabels: this.showLabels(),
+        lonLabelPosition: this.lonLabelPosition(),
+        latLabelPosition: this.latLabelPosition(),
       }),
     );
     this.instance.setMap(this.map.instance);

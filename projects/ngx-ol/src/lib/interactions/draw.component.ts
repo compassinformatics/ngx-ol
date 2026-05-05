@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit, EventEmitter, Output, signal } from '@angular/core';
+import { Component, OnDestroy, OnInit, EventEmitter, Output, signal, input } from '@angular/core';
 import { MapComponent } from '../map.component';
 import Draw from 'ol/interaction/Draw';
 import Collection from 'ol/Collection';
@@ -18,26 +18,26 @@ import { FlatStyleLike } from 'ol/style/flat';
   template: '',
 })
 export class DrawInteractionComponent implements OnInit, OnDestroy {
-  @Input() clickTolerance?: number;
-  @Input() features?: Collection<Feature>;
-  @Input() source?: Vector;
-  @Input() dragVertexDelay?: number;
-  @Input() snapTolerance?: number;
-  @Input() stopClick?: boolean;
-  @Input() type: Type;
-  @Input() maxPoints?: number;
-  @Input() minPoints?: number;
-  @Input() finishCondition?: Condition;
-  @Input() style?: StyleLike | FlatStyleLike | undefined;
-  @Input() geometryFunction?: GeometryFunction;
-  @Input() geometryName?: string;
-  @Input() condition?: Condition;
-  @Input() freehandCondition?: Condition;
-  @Input() freehand?: boolean;
-  @Input() trace?: boolean | Condition;
-  @Input() traceSource?: Vector;
-  @Input() wrapX?: boolean;
-  @Input() geometryLayout?: GeometryLayout;
+  clickTolerance = input<number>();
+  features = input<Collection<Feature>>();
+  source = input<Vector>();
+  dragVertexDelay = input<number>();
+  snapTolerance = input<number>();
+  stopClick = input<boolean>();
+  type = input.required<Type>();
+  maxPoints = input<number>();
+  minPoints = input<number>();
+  finishCondition = input<Condition>();
+  style = input<StyleLike | FlatStyleLike | undefined>();
+  geometryFunction = input<GeometryFunction>();
+  geometryName = input<string>();
+  condition = input<Condition>();
+  freehandCondition = input<Condition>();
+  freehand = input<boolean>();
+  trace = input<boolean | Condition>();
+  traceSource = input<Vector>();
+  wrapX = input<boolean>();
+  geometryLayout = input<GeometryLayout>();
 
   @Output() olChange = new EventEmitter<BaseEvent>();
   @Output() olChangeActive = new EventEmitter<ObjectEvent>();
@@ -81,26 +81,26 @@ export class DrawInteractionComponent implements OnInit, OnDestroy {
 
   private createOptions(): Options {
     return {
-      clickTolerance: this.clickTolerance,
-      features: this.features,
-      source: this.source,
-      dragVertexDelay: this.dragVertexDelay,
-      snapTolerance: this.snapTolerance,
-      stopClick: this.stopClick,
-      type: this.type,
-      maxPoints: this.maxPoints,
-      minPoints: this.minPoints,
-      finishCondition: this.finishCondition,
-      style: this.style,
-      geometryFunction: this.geometryFunction,
-      geometryName: this.geometryName,
-      condition: this.condition,
-      freehandCondition: this.freehandCondition,
-      freehand: this.freehand,
-      trace: this.trace,
-      traceSource: this.traceSource,
-      wrapX: this.wrapX,
-      geometryLayout: this.geometryLayout,
+      clickTolerance: this.clickTolerance(),
+      features: this.features(),
+      source: this.source(),
+      dragVertexDelay: this.dragVertexDelay(),
+      snapTolerance: this.snapTolerance(),
+      stopClick: this.stopClick(),
+      type: this.type(),
+      maxPoints: this.maxPoints(),
+      minPoints: this.minPoints(),
+      finishCondition: this.finishCondition(),
+      style: this.style(),
+      geometryFunction: this.geometryFunction(),
+      geometryName: this.geometryName(),
+      condition: this.condition(),
+      freehandCondition: this.freehandCondition(),
+      freehand: this.freehand(),
+      trace: this.trace(),
+      traceSource: this.traceSource(),
+      wrapX: this.wrapX(),
+      geometryLayout: this.geometryLayout(),
     };
   }
 }

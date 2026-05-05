@@ -13,9 +13,7 @@ export class GeometryMultiLinestringComponent extends SimpleGeometryComponent im
 
   instance: MultiLineString;
 
-  protected readonly _instanceSignal = signal<
-    MultiLineString | undefined
-  >(undefined);
+  protected readonly _instanceSignal = signal<MultiLineString | undefined>(undefined);
 
   readonly instanceSignal = this._instanceSignal.asReadonly();
 

@@ -6,11 +6,11 @@ import {
   EventEmitter,
   forwardRef,
   Host,
-  Input,
   OnChanges,
   Optional,
   Output,
   SimpleChanges,
+  input,
 } from '@angular/core';
 import { Size } from 'ol/size';
 import XYZ from 'ol/source/XYZ';
@@ -31,25 +31,25 @@ import { SourceComponent } from './source.component';
   providers: [{ provide: SourceComponent, useExisting: forwardRef(() => SourceXYZComponent) }],
 })
 export class SourceXYZComponent extends SourceComponent implements AfterContentInit, OnChanges {
-  @Input() cacheSize?: number;
-  @Input() crossOrigin?: null | string;
-  @Input() gutter?: number;
-  @Input() interpolate?: boolean;
-  @Input() projection?: ProjectionLike;
-  @Input() reprojectionErrorThreshold?: number;
-  @Input() maxResolution?: number;
-  @Input() minZoom?: number;
-  @Input() maxZoom?: number;
-  @Input() tileGrid?: TileGrid;
-  @Input() tileLoadFunction?: LoadFunction;
-  @Input() tilePixelRatio?: number;
-  @Input() tileSize?: number | Size;
-  @Input() tileUrlFunction?: UrlFunction;
-  @Input() transition?: number;
-  @Input() url?: string;
-  @Input() urls?: string[];
-  @Input() wrapX?: boolean;
-  @Input() zDirection?: number | NearestDirectionFunction;
+  cacheSize = input<number>();
+  crossOrigin = input<null | string>();
+  gutter = input<number>();
+  interpolate = input<boolean>();
+  projection = input<ProjectionLike>();
+  reprojectionErrorThreshold = input<number>();
+  maxResolution = input<number>();
+  minZoom = input<number>();
+  maxZoom = input<number>();
+  tileGrid = input<TileGrid>();
+  tileLoadFunction = input<LoadFunction>();
+  tilePixelRatio = input<number>();
+  tileSize = input<number | Size>();
+  tileUrlFunction = input<UrlFunction>();
+  transition = input<number>();
+  url = input<string>();
+  urls = input<string[]>();
+  wrapX = input<boolean>();
+  zDirection = input<number | NearestDirectionFunction>();
 
   @ContentChild(TileGridComponent, { static: false }) tileGridXYZ: TileGridComponent;
 
@@ -80,9 +80,6 @@ export class SourceXYZComponent extends SourceComponent implements AfterContentI
   }
 
   ngAfterContentInit() {
-    if (this.tileGridXYZ) {
-      this.tileGrid = this.tileGridXYZ.instance;
-    }
     this.init();
   }
 
@@ -116,27 +113,27 @@ export class SourceXYZComponent extends SourceComponent implements AfterContentI
 
   protected createOptions(): Options {
     return {
-      attributions: this.attributions,
-      attributionsCollapsible: this.attributionsCollapsible,
-      cacheSize: this.cacheSize,
-      crossOrigin: this.crossOrigin,
-      gutter: this.gutter,
-      interpolate: this.interpolate,
-      projection: this.projection,
-      reprojectionErrorThreshold: this.reprojectionErrorThreshold,
-      maxResolution: this.maxResolution,
-      minZoom: this.minZoom,
-      maxZoom: this.maxZoom,
-      tileGrid: this.tileGrid,
-      tileLoadFunction: this.tileLoadFunction,
-      tilePixelRatio: this.tilePixelRatio,
-      tileSize: this.tileSize,
-      tileUrlFunction: this.tileUrlFunction,
-      transition: this.transition,
-      url: this.url,
-      urls: this.urls,
-      wrapX: this.wrapX,
-      zDirection: this.zDirection,
+      attributions: this.attributions(),
+      attributionsCollapsible: this.attributionsCollapsible(),
+      cacheSize: this.cacheSize(),
+      crossOrigin: this.crossOrigin(),
+      gutter: this.gutter(),
+      interpolate: this.interpolate(),
+      projection: this.projection(),
+      reprojectionErrorThreshold: this.reprojectionErrorThreshold(),
+      maxResolution: this.maxResolution(),
+      minZoom: this.minZoom(),
+      maxZoom: this.maxZoom(),
+      tileGrid: this.tileGridXYZ?.instance ?? this.tileGrid(),
+      tileLoadFunction: this.tileLoadFunction(),
+      tilePixelRatio: this.tilePixelRatio(),
+      tileSize: this.tileSize(),
+      tileUrlFunction: this.tileUrlFunction(),
+      transition: this.transition(),
+      url: this.url(),
+      urls: this.urls(),
+      wrapX: this.wrapX(),
+      zDirection: this.zDirection(),
     };
   }
 }

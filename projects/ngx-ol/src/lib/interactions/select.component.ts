@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, Input, Output, EventEmitter, signal } from '@angular/core';
+import { Component, OnDestroy, OnInit, Output, EventEmitter, signal, input } from '@angular/core';
 import { MapComponent } from '../map.component';
 import Select from 'ol/interaction/Select';
 import Layer from 'ol/layer/Layer';
@@ -15,16 +15,16 @@ import BaseEvent from 'ol/events/Event';
   template: '',
 })
 export class SelectInteractionComponent implements OnInit, OnDestroy {
-  @Input() addCondition?: Condition;
-  @Input() condition?: Condition;
-  @Input() layers?: Layer[] | ((layer: Layer) => boolean);
-  @Input() style?: StyleLike | null | undefined;
-  @Input() removeCondition?: Condition;
-  @Input() toggleCondition?: Condition;
-  @Input() multi?: boolean;
-  @Input() features?: Collection<Feature>;
-  @Input() filter?: FilterFunction;
-  @Input() hitTolerance?: number;
+  addCondition = input<Condition>();
+  condition = input<Condition>();
+  layers = input<Layer[] | ((layer: Layer) => boolean)>();
+  style = input<StyleLike | null | undefined>();
+  removeCondition = input<Condition>();
+  toggleCondition = input<Condition>();
+  multi = input<boolean>();
+  features = input<Collection<Feature>>();
+  filter = input<FilterFunction>();
+  hitTolerance = input<number>();
 
   @Output() olChange = new EventEmitter<BaseEvent>();
   @Output() olChangeActive = new EventEmitter<ObjectEvent>();
@@ -34,9 +34,7 @@ export class SelectInteractionComponent implements OnInit, OnDestroy {
 
   instance: Select;
 
-  protected readonly _instanceSignal = signal<Select | undefined>(
-    undefined,
-  );
+  protected readonly _instanceSignal = signal<Select | undefined>(undefined);
 
   readonly instanceSignal = this._instanceSignal.asReadonly();
 
@@ -67,16 +65,16 @@ export class SelectInteractionComponent implements OnInit, OnDestroy {
 
   private createOptions(): Options {
     return {
-      addCondition: this.addCondition,
-      condition: this.condition,
-      layers: this.layers,
-      style: this.style,
-      removeCondition: this.removeCondition,
-      toggleCondition: this.toggleCondition,
-      multi: this.multi,
-      features: this.features,
-      filter: this.filter,
-      hitTolerance: this.hitTolerance,
+      addCondition: this.addCondition(),
+      condition: this.condition(),
+      layers: this.layers(),
+      style: this.style(),
+      removeCondition: this.removeCondition(),
+      toggleCondition: this.toggleCondition(),
+      multi: this.multi(),
+      features: this.features(),
+      filter: this.filter(),
+      hitTolerance: this.hitTolerance(),
     };
   }
 }

@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, Input, Output, EventEmitter, signal } from '@angular/core';
+import { Component, OnDestroy, OnInit, Output, EventEmitter, signal, input } from '@angular/core';
 import Translate from 'ol/interaction/Translate';
 import Collection from 'ol/Collection';
 import Feature from 'ol/Feature';
@@ -15,11 +15,11 @@ import { FilterFunction } from 'ol/interaction/Select';
   template: '',
 })
 export class TranslateInteractionComponent implements OnInit, OnDestroy {
-  @Input() condition?: Condition;
-  @Input() features?: Collection<Feature>;
-  @Input() layers?: Layer[] | ((layer: Layer) => boolean);
-  @Input() filter?: FilterFunction;
-  @Input() hitTolerance?: number;
+  condition = input<Condition>();
+  features = input<Collection<Feature>>();
+  layers = input<Layer[] | ((layer: Layer) => boolean)>();
+  filter = input<FilterFunction>();
+  hitTolerance = input<number>();
 
   @Output() olChange = new EventEmitter<BaseEvent>();
   @Output() olChangeActive = new EventEmitter<ObjectEvent>();
@@ -31,9 +31,7 @@ export class TranslateInteractionComponent implements OnInit, OnDestroy {
 
   instance: Translate;
 
-  protected readonly _instanceSignal = signal<Translate | undefined>(
-    undefined,
-  );
+  protected readonly _instanceSignal = signal<Translate | undefined>(undefined);
 
   readonly instanceSignal = this._instanceSignal.asReadonly();
 
@@ -67,11 +65,11 @@ export class TranslateInteractionComponent implements OnInit, OnDestroy {
 
   private createOptions(): Options {
     return {
-      condition: this.condition,
-      features: this.features,
-      layers: this.layers,
-      filter: this.filter,
-      hitTolerance: this.hitTolerance,
+      condition: this.condition(),
+      features: this.features(),
+      layers: this.layers(),
+      filter: this.filter(),
+      hitTolerance: this.hitTolerance(),
     };
   }
 }

@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit, signal } from '@angular/core';
+import { Component, OnDestroy, OnInit, signal, input } from '@angular/core';
 import { defaults } from 'ol/interaction/defaults';
 import Interaction from 'ol/interaction/Interaction';
 import { DefaultsOptions } from 'ol/interaction/defaults';
@@ -10,23 +10,21 @@ import { MapComponent } from '../map.component';
   template: '',
 })
 export class DefaultInteractionComponent implements OnInit, OnDestroy {
-  @Input() altShiftDragRotate?: boolean;
-  @Input() onFocusOnly?: boolean;
-  @Input() doubleClickZoom?: boolean;
-  @Input() keyboard?: boolean;
-  @Input() mouseWheelZoom?: boolean;
-  @Input() shiftDragZoom?: boolean;
-  @Input() dragPan?: boolean;
-  @Input() pinchRotate?: boolean;
-  @Input() pinchZoom?: boolean;
-  @Input() zoomDelta?: number;
-  @Input() zoomDuration?: number;
+  altShiftDragRotate = input<boolean>();
+  onFocusOnly = input<boolean>();
+  doubleClickZoom = input<boolean>();
+  keyboard = input<boolean>();
+  mouseWheelZoom = input<boolean>();
+  shiftDragZoom = input<boolean>();
+  dragPan = input<boolean>();
+  pinchRotate = input<boolean>();
+  pinchZoom = input<boolean>();
+  zoomDelta = input<number>();
+  zoomDuration = input<number>();
 
   instance: Collection<Interaction>;
 
-  protected readonly _instanceSignal = signal<
-    Collection<Interaction> | undefined
-  >(undefined);
+  protected readonly _instanceSignal = signal<Collection<Interaction> | undefined>(undefined);
 
   readonly instanceSignal = this._instanceSignal.asReadonly();
 
@@ -51,17 +49,17 @@ export class DefaultInteractionComponent implements OnInit, OnDestroy {
 
   private createOptions(): DefaultsOptions {
     return {
-      altShiftDragRotate: this.altShiftDragRotate,
-      onFocusOnly: this.onFocusOnly,
-      doubleClickZoom: this.doubleClickZoom,
-      keyboard: this.keyboard,
-      mouseWheelZoom: this.mouseWheelZoom,
-      shiftDragZoom: this.shiftDragZoom,
-      dragPan: this.dragPan,
-      pinchRotate: this.pinchRotate,
-      pinchZoom: this.pinchZoom,
-      zoomDelta: this.zoomDelta,
-      zoomDuration: this.zoomDuration,
+      altShiftDragRotate: this.altShiftDragRotate(),
+      onFocusOnly: this.onFocusOnly(),
+      doubleClickZoom: this.doubleClickZoom(),
+      keyboard: this.keyboard(),
+      mouseWheelZoom: this.mouseWheelZoom(),
+      shiftDragZoom: this.shiftDragZoom(),
+      dragPan: this.dragPan(),
+      pinchRotate: this.pinchRotate(),
+      pinchZoom: this.pinchZoom(),
+      zoomDelta: this.zoomDelta(),
+      zoomDuration: this.zoomDuration(),
     };
   }
 }

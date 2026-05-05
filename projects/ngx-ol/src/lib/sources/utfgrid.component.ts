@@ -1,4 +1,4 @@
-import { Component, Host, Input, OnInit, forwardRef, signal } from '@angular/core';
+import { Component, Host, OnInit, forwardRef, signal, input } from '@angular/core';
 import { SourceComponent } from './source.component';
 import { LayerTileComponent } from '../layers/layertile.component';
 import UTFGrid from 'ol/source/UTFGrid';
@@ -12,12 +12,12 @@ import { NearestDirectionFunction } from 'ol/array';
   providers: [{ provide: SourceComponent, useExisting: forwardRef(() => SourceUTFGridComponent) }],
 })
 export class SourceUTFGridComponent extends SourceComponent implements OnInit {
-  @Input() preemptive?: boolean;
-  @Input() jsonp?: boolean;
-  @Input() tileJSON?: Config;
-  @Input() url?: string;
-  @Input() wrapX?: boolean;
-  @Input() zDirection?: number | NearestDirectionFunction;
+  preemptive = input<boolean>();
+  jsonp = input<boolean>();
+  tileJSON = input<Config>();
+  url = input<string>();
+  wrapX = input<boolean>();
+  zDirection = input<number | NearestDirectionFunction>();
 
   instance: UTFGrid;
 
@@ -44,12 +44,12 @@ export class SourceUTFGridComponent extends SourceComponent implements OnInit {
 
   private createOptions(): Options {
     return {
-      preemptive: this.preemptive,
-      jsonp: this.jsonp,
-      tileJSON: this.tileJSON,
-      url: this.url,
-      wrapX: this.wrapX,
-      zDirection: this.zDirection,
+      preemptive: this.preemptive(),
+      jsonp: this.jsonp(),
+      tileJSON: this.tileJSON(),
+      url: this.url(),
+      wrapX: this.wrapX(),
+      zDirection: this.zDirection(),
     };
   }
 }

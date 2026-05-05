@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit, signal } from '@angular/core';
+import { Component, OnDestroy, OnInit, signal, input } from '@angular/core';
 import PinchRotate from 'ol/interaction/PinchRotate';
 import type { Options } from 'ol/interaction/PinchRotate';
 import { MapComponent } from '../map.component';
@@ -8,15 +8,13 @@ import { MapComponent } from '../map.component';
   template: '',
 })
 export class PinchRotateInteractionComponent implements OnInit, OnDestroy {
-  @Input() duration?: number;
+  duration = input<number>();
 
-  @Input() threshold?: number;
+  threshold = input<number>();
 
   instance: PinchRotate;
 
-  protected readonly _instanceSignal = signal<PinchRotate | undefined>(
-    undefined,
-  );
+  protected readonly _instanceSignal = signal<PinchRotate | undefined>(undefined);
 
   readonly instanceSignal = this._instanceSignal.asReadonly();
 
@@ -41,8 +39,8 @@ export class PinchRotateInteractionComponent implements OnInit, OnDestroy {
 
   private createOptions(): Options {
     return {
-      duration: this.duration,
-      threshold: this.threshold,
+      duration: this.duration(),
+      threshold: this.threshold(),
     };
   }
 }

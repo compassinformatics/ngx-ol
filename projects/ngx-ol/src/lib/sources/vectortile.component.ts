@@ -1,11 +1,11 @@
 import {
   Component,
   Host,
-  Input,
   forwardRef,
   ContentChild,
   AfterContentInit,
   signal,
+  input,
 } from '@angular/core';
 import VectorTile from 'ol/source/VectorTile';
 import { Options } from 'ol/source/VectorTile';
@@ -32,24 +32,24 @@ import FeatureFormat from 'ol/format/Feature';
   ],
 })
 export class SourceVectorTileComponent extends SourceComponent implements AfterContentInit {
-  @Input() cacheSize?: number;
-  @Input() extent?: Extent;
-  @Input() overlaps?: boolean;
-  @Input() projection?: ProjectionLike;
-  @Input() state?: State;
-  @Input() tileClass?: typeof OlVectorTile;
-  @Input() maxZoom?: number;
-  @Input() minZoom?: number;
-  @Input() tileSize?: number | Size;
-  @Input() maxResolution?: number;
-  @Input() tileUrlFunction?: UrlFunction;
-  @Input() tileLoadFunction?: LoadFunction;
-  @Input() url?: string;
-  @Input() urls?: string[];
-  @Input() transition?: number;
-  @Input() wrapX?: boolean;
-  @Input() zDirection?: number | NearestDirectionFunction;
-  @Input() format?: FeatureFormat<any>;
+  cacheSize = input<number>();
+  extent = input<Extent>();
+  overlaps = input<boolean>();
+  projection = input<ProjectionLike>();
+  state = input<State>();
+  tileClass = input<typeof OlVectorTile>();
+  maxZoom = input<number>();
+  minZoom = input<number>();
+  tileSize = input<number | Size>();
+  maxResolution = input<number>();
+  tileUrlFunction = input<UrlFunction>();
+  tileLoadFunction = input<LoadFunction>();
+  url = input<string>();
+  urls = input<string[]>();
+  transition = input<number>();
+  wrapX = input<boolean>();
+  zDirection = input<number | NearestDirectionFunction>();
+  format = input<FeatureFormat<any>>();
 
   @ContentChild(FormatMVTComponent, { static: false }) formatMVTComponent: FormatMVTComponent;
   @ContentChild(FormatGeoJSONComponent, { static: false })
@@ -58,9 +58,7 @@ export class SourceVectorTileComponent extends SourceComponent implements AfterC
 
   instance: VectorTile;
 
-  protected readonly _instanceSignal = signal<VectorTile | undefined>(
-    undefined,
-  );
+  protected readonly _instanceSignal = signal<VectorTile | undefined>(undefined);
 
   readonly instanceSignal = this._instanceSignal.asReadonly();
 
@@ -78,7 +76,7 @@ export class SourceVectorTileComponent extends SourceComponent implements AfterC
   }
 
   ngAfterContentInit() {
-    let format: FeatureFormat<any> | undefined = this.format;
+    let format: FeatureFormat<any> | undefined = this.format();
     if (this.formatMVTComponent) {
       format = this.formatMVTComponent.instance;
     }
@@ -93,26 +91,26 @@ export class SourceVectorTileComponent extends SourceComponent implements AfterC
 
   private createOptions(format: FeatureFormat<any> | undefined): Options<any> {
     return {
-      attributions: this.attributions,
-      cacheSize: this.cacheSize,
-      extent: this.extent,
+      attributions: this.attributions(),
+      cacheSize: this.cacheSize(),
+      extent: this.extent(),
       format,
-      overlaps: this.overlaps,
-      projection: this.projection,
-      state: this.state,
-      tileClass: this.tileClass,
-      maxZoom: this.maxZoom,
-      minZoom: this.minZoom,
-      tileSize: this.tileSize,
-      maxResolution: this.maxResolution,
+      overlaps: this.overlaps(),
+      projection: this.projection(),
+      state: this.state(),
+      tileClass: this.tileClass(),
+      maxZoom: this.maxZoom(),
+      minZoom: this.minZoom(),
+      tileSize: this.tileSize(),
+      maxResolution: this.maxResolution(),
       tileGrid: this.tileGrid,
-      tileUrlFunction: this.tileUrlFunction,
-      tileLoadFunction: this.tileLoadFunction,
-      url: this.url,
-      urls: this.urls,
-      transition: this.transition,
-      wrapX: this.wrapX,
-      zDirection: this.zDirection,
+      tileUrlFunction: this.tileUrlFunction(),
+      tileLoadFunction: this.tileLoadFunction(),
+      url: this.url(),
+      urls: this.urls(),
+      transition: this.transition(),
+      wrapX: this.wrapX(),
+      zDirection: this.zDirection(),
     };
   }
 }

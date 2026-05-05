@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, Input, signal } from '@angular/core';
+import { Component, OnDestroy, OnInit, signal, input } from '@angular/core';
 import DragBox from 'ol/interaction/DragBox';
 import { Options } from 'ol/interaction/DragBox';
 import { MapComponent } from '../map.component';
@@ -10,15 +10,13 @@ import { EndCondition } from 'ol/interaction/DragBox';
   template: '',
 })
 export class DragBoxInteractionComponent implements OnInit, OnDestroy {
-  @Input() className?: string;
-  @Input() condition?: Condition;
-  @Input() boxEndCondition?: EndCondition;
+  className = input<string>();
+  condition = input<Condition>();
+  boxEndCondition = input<EndCondition>();
 
   instance: DragBox;
 
-  protected readonly _instanceSignal = signal<DragBox | undefined>(
-    undefined,
-  );
+  protected readonly _instanceSignal = signal<DragBox | undefined>(undefined);
 
   readonly instanceSignal = this._instanceSignal.asReadonly();
 
@@ -43,9 +41,9 @@ export class DragBoxInteractionComponent implements OnInit, OnDestroy {
 
   private createOptions(): Options {
     return {
-      className: this.className,
-      condition: this.condition,
-      boxEndCondition: this.boxEndCondition,
+      className: this.className(),
+      condition: this.condition(),
+      boxEndCondition: this.boxEndCondition(),
     };
   }
 }

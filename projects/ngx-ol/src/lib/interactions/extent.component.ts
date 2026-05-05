@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, signal } from '@angular/core';
+import { Component, EventEmitter, OnDestroy, OnInit, Output, signal, input } from '@angular/core';
 import type { Condition } from 'ol/events/condition';
 import type { Extent as ExtentType } from 'ol/extent';
 import ExtentInteraction, { ExtentEvent } from 'ol/interaction/Extent';
@@ -11,25 +11,23 @@ import { MapComponent } from '../map.component';
   template: '',
 })
 export class ExtentInteractionComponent implements OnInit, OnDestroy {
-  @Input() condition?: Condition;
+  condition = input<Condition>();
 
-  @Input() extent?: ExtentType;
+  extent = input<ExtentType>();
 
-  @Input() boxStyle?: StyleLike;
+  boxStyle = input<StyleLike>();
 
-  @Input() pixelTolerance?: number;
+  pixelTolerance = input<number>();
 
-  @Input() pointerStyle?: StyleLike;
+  pointerStyle = input<StyleLike>();
 
-  @Input() wrapX?: boolean;
+  wrapX = input<boolean>();
 
   @Output() extentChanged = new EventEmitter<ExtentEvent>();
 
   instance: ExtentInteraction;
 
-  protected readonly _instanceSignal = signal<
-    ExtentInteraction | undefined
-  >(undefined);
+  protected readonly _instanceSignal = signal<ExtentInteraction | undefined>(undefined);
 
   readonly instanceSignal = this._instanceSignal.asReadonly();
 
@@ -55,12 +53,12 @@ export class ExtentInteractionComponent implements OnInit, OnDestroy {
 
   private createOptions(): Options {
     return {
-      condition: this.condition,
-      extent: this.extent,
-      boxStyle: this.boxStyle,
-      pixelTolerance: this.pixelTolerance,
-      pointerStyle: this.pointerStyle,
-      wrapX: this.wrapX,
+      condition: this.condition(),
+      extent: this.extent(),
+      boxStyle: this.boxStyle(),
+      pixelTolerance: this.pixelTolerance(),
+      pointerStyle: this.pointerStyle(),
+      wrapX: this.wrapX(),
     };
   }
 }

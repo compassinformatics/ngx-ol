@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges, signal } from '@angular/core';
+import { Component, OnChanges, OnInit, SimpleChanges, signal, input } from '@angular/core';
 import Geometry from 'ol/geom/Geometry';
 import GeometryCollection from 'ol/geom/GeometryCollection';
 import { FeatureComponent } from '../feature.component';
@@ -8,15 +8,13 @@ import { FeatureComponent } from '../feature.component';
   template: ` <ng-content></ng-content> `,
 })
 export class GeometryCollectionComponent implements OnInit, OnChanges {
-  @Input() geometries: Geometry[] = [];
+  geometries = input<Geometry[]>([]);
 
   public componentType = 'geometry-collection';
 
   instance: GeometryCollection;
 
-  protected readonly _instanceSignal = signal<
-    GeometryCollection | undefined
-  >(undefined);
+  protected readonly _instanceSignal = signal<GeometryCollection | undefined>(undefined);
 
   readonly instanceSignal = this._instanceSignal.asReadonly();
 
@@ -31,7 +29,7 @@ export class GeometryCollectionComponent implements OnInit, OnChanges {
   constructor(private host: FeatureComponent) {}
 
   ngOnInit() {
-    this.setInstance(new GeometryCollection(this.geometries));
+    this.setInstance(new GeometryCollection(this.geometries()));
     this.host.instance.setGeometry(this.instance);
   }
 

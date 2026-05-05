@@ -12,9 +12,7 @@ export class GeometryMultiPointComponent extends SimpleGeometryComponent impleme
   public componentType = 'geometry-multipoint';
   instance: MultiPoint;
 
-  protected readonly _instanceSignal = signal<MultiPoint | undefined>(
-    undefined,
-  );
+  protected readonly _instanceSignal = signal<MultiPoint | undefined>(undefined);
 
   readonly instanceSignal = this._instanceSignal.asReadonly();
 

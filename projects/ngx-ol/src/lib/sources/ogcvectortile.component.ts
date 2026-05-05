@@ -1,11 +1,11 @@
 import {
   Component,
   Host,
-  Input,
   forwardRef,
   ContentChild,
   AfterContentInit,
   signal,
+  input,
 } from '@angular/core';
 import OGCVectorTile from 'ol/source/OGCVectorTile';
 import { Options } from 'ol/source/OGCVectorTile';
@@ -27,18 +27,18 @@ import FeatureFormat from 'ol/format/Feature';
   ],
 })
 export class SourceOGCVectorTileComponent extends SourceComponent implements AfterContentInit {
-  @Input() url: string;
-  @Input() context?: any;
-  @Input() mediaType?: string;
-  @Input() cacheSize?: number;
-  @Input() overlaps?: boolean;
-  @Input() projection?: ProjectionLike;
-  @Input() tileClass?: typeof VectorTile;
-  @Input() transition?: number;
-  @Input() wrapX?: boolean;
-  @Input() zDirection?: number | NearestDirectionFunction;
-  @Input() collections?: string[];
-  @Input() format?: FeatureFormat<any>;
+  url = input.required<string>();
+  context = input<any>();
+  mediaType = input<string>();
+  cacheSize = input<number>();
+  overlaps = input<boolean>();
+  projection = input<ProjectionLike>();
+  tileClass = input<typeof VectorTile>();
+  transition = input<number>();
+  wrapX = input<boolean>();
+  zDirection = input<number | NearestDirectionFunction>();
+  collections = input<string[]>();
+  format = input<FeatureFormat<any>>();
 
   @ContentChild(FormatMVTComponent, { static: false }) formatMVTComponent:
     | FormatMVTComponent
@@ -48,9 +48,7 @@ export class SourceOGCVectorTileComponent extends SourceComponent implements Aft
 
   instance: OGCVectorTile;
 
-  protected readonly _instanceSignal = signal<OGCVectorTile | undefined>(
-    undefined,
-  );
+  protected readonly _instanceSignal = signal<OGCVectorTile | undefined>(undefined);
 
   readonly instanceSignal = this._instanceSignal.asReadonly();
 
@@ -68,7 +66,7 @@ export class SourceOGCVectorTileComponent extends SourceComponent implements Aft
   }
 
   ngAfterContentInit() {
-    let format: FeatureFormat<any> | undefined = this.format;
+    let format: FeatureFormat<any> | undefined = this.format();
     if (this.formatMVTComponent) {
       format = this.formatMVTComponent.instance;
     }
@@ -82,20 +80,20 @@ export class SourceOGCVectorTileComponent extends SourceComponent implements Aft
 
   private createOptions(format: FeatureFormat<any> | undefined): Options<any> {
     return {
-      url: this.url,
-      context: this.context,
+      url: this.url(),
+      context: this.context(),
       format,
-      mediaType: this.mediaType,
-      attributions: this.attributions,
-      attributionsCollapsible: this.attributionsCollapsible,
-      cacheSize: this.cacheSize,
-      overlaps: this.overlaps,
-      projection: this.projection,
-      tileClass: this.tileClass,
-      transition: this.transition,
-      wrapX: this.wrapX,
-      zDirection: this.zDirection,
-      collections: this.collections,
+      mediaType: this.mediaType(),
+      attributions: this.attributions(),
+      attributionsCollapsible: this.attributionsCollapsible(),
+      cacheSize: this.cacheSize(),
+      overlaps: this.overlaps(),
+      projection: this.projection(),
+      tileClass: this.tileClass(),
+      transition: this.transition(),
+      wrapX: this.wrapX(),
+      zDirection: this.zDirection(),
+      collections: this.collections(),
     };
   }
 }

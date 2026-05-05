@@ -1,12 +1,12 @@
 import {
   signal,
   Component,
-  Input,
   OnChanges,
   OnDestroy,
   OnInit,
   Optional,
   SimpleChanges,
+  input,
 } from '@angular/core';
 import type { FeatureLike } from 'ol/Feature';
 import Heatmap from 'ol/layer/Heatmap';
@@ -21,17 +21,17 @@ import { LayerGroupComponent } from './layergroup.component';
   template: ` <ng-content></ng-content> `,
 })
 export class LayerHeatmapComponent extends LayerComponent implements OnInit, OnDestroy, OnChanges {
-  @Input() gradient?: string[];
+  gradient = input<string[]>();
 
-  @Input() radius?: number;
+  radius = input<number>();
 
-  @Input() blur?: number;
+  blur = input<number>();
 
-  @Input() weight?: string | ((feature: FeatureLike) => number);
+  weight = input<string | ((feature: FeatureLike) => number)>();
 
-  @Input() source?: VectorSource<FeatureLike>;
+  source = input<VectorSource<FeatureLike>>();
 
-  @Input() properties?: Record<string, any>;
+  properties = input<Record<string, any>>();
 
   instance: Heatmap<FeatureLike, VectorSource<FeatureLike>>;
 
@@ -83,12 +83,12 @@ export class LayerHeatmapComponent extends LayerComponent implements OnInit, OnD
   private createOptions(): Options<FeatureLike, VectorSource<FeatureLike>> {
     return {
       ...this.createLayerOptions(),
-      gradient: this.gradient,
-      radius: this.radius,
-      blur: this.blur,
-      weight: this.weight,
-      source: this.source,
-      properties: this.properties,
+      gradient: this.gradient(),
+      radius: this.radius(),
+      blur: this.blur(),
+      weight: this.weight(),
+      source: this.source(),
+      properties: this.properties(),
     };
   }
 }

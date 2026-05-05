@@ -1,11 +1,11 @@
 import {
   Component,
-  Input,
   Optional,
   OnInit,
   OnChanges,
   SimpleChanges,
   signal,
+  input,
 } from '@angular/core';
 import Stroke from 'ol/style/Stroke';
 import { Options } from 'ol/style/Stroke';
@@ -20,13 +20,13 @@ import { ColorLike } from 'ol/colorlike';
   template: ` <div class="aol-style-stroke"></div> `,
 })
 export class StyleStrokeComponent implements OnInit, OnChanges {
-  @Input() color?: Color | ColorLike;
-  @Input() lineCap?: CanvasLineCap | undefined;
-  @Input() lineDash?: number[];
-  @Input() lineDashOffset?: number | undefined;
-  @Input() lineJoin?: CanvasLineJoin | undefined;
-  @Input() miterLimit?: number;
-  @Input() width?: number;
+  color = input<Color | ColorLike>();
+  lineCap = input<CanvasLineCap | undefined>();
+  lineDash = input<number[]>();
+  lineDashOffset = input<number | undefined>();
+  lineJoin = input<CanvasLineJoin | undefined>();
+  miterLimit = input<number>();
+  width = input<number>();
 
   instance: Stroke;
 
@@ -74,7 +74,7 @@ export class StyleStrokeComponent implements OnInit, OnChanges {
         this.host.instance.setStroke(this.instance);
         break;
       case 'style-circle':
-        (this.host as StyleCircleComponent).stroke = this.instance;
+        (this.host as StyleCircleComponent).setStroke(this.instance);
         // console.log('setting ol.style.circle instance\'s stroke:', this.host);
         break;
       default:
@@ -114,13 +114,13 @@ export class StyleStrokeComponent implements OnInit, OnChanges {
 
   private createOptions(): Options {
     return {
-      color: this.color,
-      lineCap: this.lineCap,
-      lineDash: this.lineDash,
-      lineDashOffset: this.lineDashOffset,
-      lineJoin: this.lineJoin,
-      miterLimit: this.miterLimit,
-      width: this.width,
+      color: this.color(),
+      lineCap: this.lineCap(),
+      lineDash: this.lineDash(),
+      lineDashOffset: this.lineDashOffset(),
+      lineJoin: this.lineJoin(),
+      miterLimit: this.miterLimit(),
+      width: this.width(),
     };
   }
 }

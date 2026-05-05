@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit, signal } from '@angular/core';
+import { Component, OnDestroy, OnInit, signal, input } from '@angular/core';
 import MapEvent from 'ol/MapEvent';
 import ZoomSlider from 'ol/control/ZoomSlider';
 import { Options } from 'ol/control/ZoomSlider';
@@ -9,16 +9,14 @@ import { MapComponent } from '../map.component';
   template: ` <ng-content></ng-content> `,
 })
 export class ControlZoomSliderComponent implements OnInit, OnDestroy {
-  @Input() className?: string;
-  @Input() duration?: number;
-  @Input() render?: (event: MapEvent) => void;
-  @Input() target?: string | HTMLElement;
+  className = input<string>();
+  duration = input<number>();
+  render = input<(event: MapEvent) => void>();
+  target = input<string | HTMLElement>();
 
   instance: ZoomSlider;
 
-  protected readonly _instanceSignal = signal<ZoomSlider | undefined>(
-    undefined,
-  );
+  protected readonly _instanceSignal = signal<ZoomSlider | undefined>(undefined);
 
   readonly instanceSignal = this._instanceSignal.asReadonly();
 
@@ -46,10 +44,10 @@ export class ControlZoomSliderComponent implements OnInit, OnDestroy {
 
   private createOptions(): Options {
     return {
-      className: this.className,
-      duration: this.duration,
-      render: this.render,
-      target: this.target,
+      className: this.className(),
+      duration: this.duration(),
+      render: this.render(),
+      target: this.target(),
     };
   }
 }

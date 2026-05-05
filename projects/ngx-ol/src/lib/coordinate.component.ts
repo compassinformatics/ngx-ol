@@ -1,4 +1,4 @@
-import { Component, Optional, OnChanges, Input, SimpleChanges, OnInit } from '@angular/core';
+import { Component, Optional, OnChanges, SimpleChanges, OnInit, input } from '@angular/core';
 import { transform } from 'ol/proj';
 import { MapComponent } from './map.component';
 import { GeometryPointComponent } from './geom/geometrypoint.component';
@@ -12,9 +12,9 @@ import { ObjectEvent } from 'ol/Object';
   template: ` <div class="aol-coordinate"></div> `,
 })
 export class CoordinateComponent implements OnChanges, OnInit {
-  @Input() x: number;
-  @Input() y: number;
-  @Input() srid = 'EPSG:3857';
+  x = input.required<number>();
+  y = input.required<number>();
+  srid = input('EPSG:3857');
 
   private host: any;
   private mapSrid = 'EPSG:3857';
@@ -56,10 +56,10 @@ export class CoordinateComponent implements OnChanges, OnInit {
   private transformCoordinates() {
     let transformedCoordinates: number[];
 
-    if (this.srid === this.mapSrid) {
-      transformedCoordinates = [this.x, this.y];
+    if (this.srid() === this.mapSrid) {
+      transformedCoordinates = [this.x(), this.y()];
     } else {
-      transformedCoordinates = transform([this.x, this.y], this.srid, this.mapSrid);
+      transformedCoordinates = transform([this.x(), this.y()], this.srid(), this.mapSrid);
     }
 
     switch (this.host.componentType) {

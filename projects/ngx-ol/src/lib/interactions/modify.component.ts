@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, Input, Output, EventEmitter, signal } from '@angular/core';
+import { Component, OnDestroy, OnInit, Output, EventEmitter, signal, input } from '@angular/core';
 import { MapComponent } from '../map.component';
 import Modify from 'ol/interaction/Modify';
 import Collection from 'ol/Collection';
@@ -17,16 +17,16 @@ import BaseVectorLayer from 'ol/layer/BaseVector';
   template: '',
 })
 export class ModifyInteractionComponent implements OnInit, OnDestroy {
-  @Input() condition?: Condition;
-  @Input() deleteCondition?: Condition;
-  @Input() insertVertexCondition?: Condition;
-  @Input() pixelTolerance?: number;
-  @Input() style?: StyleLike | FlatStyleLike | undefined;
-  @Input() features?: Collection<Feature>;
-  @Input() wrapX?: boolean;
-  @Input() source?: Vector;
-  @Input() hitDetection?: boolean | BaseVectorLayer<any, any, any>;
-  @Input() snapToPointer?: boolean;
+  condition = input<Condition>();
+  deleteCondition = input<Condition>();
+  insertVertexCondition = input<Condition>();
+  pixelTolerance = input<number>();
+  style = input<StyleLike | FlatStyleLike | undefined>();
+  features = input<Collection<Feature>>();
+  wrapX = input<boolean>();
+  source = input<Vector>();
+  hitDetection = input<boolean | BaseVectorLayer<any, any, any>>();
+  snapToPointer = input<boolean>();
 
   @Output() olChange = new EventEmitter<BaseEvent>();
   @Output() olChangeActive = new EventEmitter<ObjectEvent>();
@@ -37,9 +37,7 @@ export class ModifyInteractionComponent implements OnInit, OnDestroy {
 
   instance: Modify;
 
-  protected readonly _instanceSignal = signal<Modify | undefined>(
-    undefined,
-  );
+  protected readonly _instanceSignal = signal<Modify | undefined>(undefined);
 
   readonly instanceSignal = this._instanceSignal.asReadonly();
 
@@ -70,16 +68,16 @@ export class ModifyInteractionComponent implements OnInit, OnDestroy {
 
   private createOptions(): Options {
     return {
-      condition: this.condition,
-      deleteCondition: this.deleteCondition,
-      insertVertexCondition: this.insertVertexCondition,
-      pixelTolerance: this.pixelTolerance,
-      style: this.style,
-      features: this.features,
-      wrapX: this.wrapX,
-      source: this.source,
-      hitDetection: this.hitDetection,
-      snapToPointer: this.snapToPointer,
+      condition: this.condition(),
+      deleteCondition: this.deleteCondition(),
+      insertVertexCondition: this.insertVertexCondition(),
+      pixelTolerance: this.pixelTolerance(),
+      style: this.style(),
+      features: this.features(),
+      wrapX: this.wrapX(),
+      source: this.source(),
+      hitDetection: this.hitDetection(),
+      snapToPointer: this.snapToPointer(),
     };
   }
 }

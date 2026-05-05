@@ -1,13 +1,13 @@
 import {
   signal,
   Component,
-  Input,
   OnInit,
   OnChanges,
   OnDestroy,
   SimpleChanges,
   EventEmitter,
   Output,
+  input,
 } from '@angular/core';
 import View, { ViewOptions } from 'ol/View';
 import { MapComponent } from './map.component';
@@ -23,29 +23,29 @@ import { ProjectionLike } from 'ol/proj';
   template: ` <ng-content></ng-content> `,
 })
 export class ViewComponent implements OnInit, OnChanges, OnDestroy {
-  @Input() constrainRotation: boolean | number;
-  @Input() enableRotation: boolean;
-  @Input() extent?: Extent;
-  @Input() maxResolution: number;
-  @Input() minResolution: number;
-  @Input() maxZoom: number;
-  @Input() minZoom: number;
-  @Input() resolution?: number;
-  @Input() resolutions: number[] | undefined;
-  @Input() rotation: number;
-  @Input() zoom?: number;
-  @Input() zoomFactor: number;
-  @Input() center?: Coordinate;
-  @Input() projection: ProjectionLike;
-  @Input() constrainOnlyCenter: boolean;
-  @Input() smoothExtentConstraint: boolean;
-  @Input() constrainResolution: boolean;
-  @Input() smoothResolutionConstraint: boolean;
-  @Input() showFullExtent: boolean;
-  @Input() multiWorld: boolean;
-  @Input() padding?: number[];
+  constrainRotation = input<boolean | number>();
+  enableRotation = input<boolean>();
+  extent = input<Extent>();
+  maxResolution = input<number>();
+  minResolution = input<number>();
+  maxZoom = input<number>();
+  minZoom = input<number>();
+  resolution = input<number>();
+  resolutions = input<number[] | undefined>();
+  rotation = input<number>();
+  zoom = input<number>();
+  zoomFactor = input<number>();
+  center = input<Coordinate>();
+  projection = input<ProjectionLike>();
+  constrainOnlyCenter = input<boolean>();
+  smoothExtentConstraint = input<boolean>();
+  constrainResolution = input<boolean>();
+  smoothResolutionConstraint = input<boolean>();
+  showFullExtent = input<boolean>();
+  multiWorld = input<boolean>();
+  padding = input<number[]>();
 
-  @Input() zoomAnimation = false;
+  zoomAnimation = input(false);
 
   @Output() olChange = new EventEmitter<BaseEvent>();
   @Output() changeCenter = new EventEmitter<ObjectEvent>();
@@ -98,7 +98,7 @@ export class ViewComponent implements OnInit, OnChanges, OnDestroy {
             break;
           case 'zoom':
             /** Work-around: setting the zoom via setProperties does not work. */
-            if (this.zoomAnimation) {
+            if (this.zoomAnimation()) {
               this.instance.animate({ zoom: changes[key].currentValue });
             } else {
               this.instance.setZoom(changes[key].currentValue);
@@ -129,52 +129,28 @@ export class ViewComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   private createOptions(): ViewOptions {
-    const {
-      center,
-      constrainOnlyCenter,
-      constrainResolution,
-      constrainRotation,
-      enableRotation,
-      extent,
-      maxResolution,
-      maxZoom,
-      minResolution,
-      minZoom,
-      multiWorld,
-      padding,
-      projection,
-      resolution,
-      resolutions,
-      rotation,
-      showFullExtent,
-      smoothExtentConstraint,
-      smoothResolutionConstraint,
-      zoom,
-      zoomFactor,
-    } = this;
-
     return {
-      center,
-      constrainOnlyCenter,
-      constrainResolution,
-      constrainRotation,
-      enableRotation,
-      extent,
-      maxResolution,
-      maxZoom,
-      minResolution,
-      minZoom,
-      multiWorld,
-      padding,
-      projection,
-      resolution,
-      resolutions,
-      rotation,
-      showFullExtent,
-      smoothExtentConstraint,
-      smoothResolutionConstraint,
-      zoom,
-      zoomFactor,
+      center: this.center(),
+      constrainOnlyCenter: this.constrainOnlyCenter(),
+      constrainResolution: this.constrainResolution(),
+      constrainRotation: this.constrainRotation(),
+      enableRotation: this.enableRotation(),
+      extent: this.extent(),
+      maxResolution: this.maxResolution(),
+      maxZoom: this.maxZoom(),
+      minResolution: this.minResolution(),
+      minZoom: this.minZoom(),
+      multiWorld: this.multiWorld(),
+      padding: this.padding(),
+      projection: this.projection(),
+      resolution: this.resolution(),
+      resolutions: this.resolutions(),
+      rotation: this.rotation(),
+      showFullExtent: this.showFullExtent(),
+      smoothExtentConstraint: this.smoothExtentConstraint(),
+      smoothResolutionConstraint: this.smoothResolutionConstraint(),
+      zoom: this.zoom(),
+      zoomFactor: this.zoomFactor(),
     };
   }
 }

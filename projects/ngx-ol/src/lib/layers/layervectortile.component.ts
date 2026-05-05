@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Optional, SimpleChanges, OnChanges } from '@angular/core';
+import { Component, OnInit, Optional, SimpleChanges, OnChanges, input } from '@angular/core';
 import VectorTile from 'ol/layer/VectorTile';
 import { MapComponent } from '../map.component';
 import { LayerComponent } from './layer.component';
@@ -14,15 +14,15 @@ import VectorTileSource from 'ol/source/VectorTile';
   template: ` <ng-content></ng-content> `,
 })
 export class LayerVectorTileComponent extends LayerComponent implements OnInit, OnChanges {
-  @Input() renderBuffer: number;
-  @Input() renderMode?: VectorTileRenderType;
-  @Input() renderOrder?: OrderFunction;
-  @Input() style: StyleLike | StyleFunction | null | undefined;
-  @Input() background?: BackgroundColor;
-  @Input() updateWhileAnimating: boolean;
-  @Input() updateWhileInteracting: boolean;
-  @Input() visible: boolean;
-  @Input() source?: VectorTileSource;
+  renderBuffer = input<number>();
+  renderMode = input<VectorTileRenderType>();
+  renderOrder = input<OrderFunction>();
+  style = input<StyleLike | StyleFunction | null | undefined>();
+  background = input<BackgroundColor>();
+  updateWhileAnimating = input<boolean>();
+  updateWhileInteracting = input<boolean>();
+  visible = input<boolean>();
+  source = input<VectorTileSource>();
 
   constructor(map: MapComponent, @Optional() group?: LayerGroupComponent) {
     super(group || map);
@@ -45,15 +45,15 @@ export class LayerVectorTileComponent extends LayerComponent implements OnInit, 
   private createOptions(): Options<VectorTileSource> {
     return {
       ...this.createLayerOptions(),
-      renderBuffer: this.renderBuffer,
-      renderMode: this.renderMode,
-      renderOrder: this.renderOrder,
-      style: this.style,
-      background: this.background,
-      updateWhileAnimating: this.updateWhileAnimating,
-      updateWhileInteracting: this.updateWhileInteracting,
-      visible: this.visible,
-      source: this.source,
+      renderBuffer: this.renderBuffer(),
+      renderMode: this.renderMode(),
+      renderOrder: this.renderOrder(),
+      style: this.style(),
+      background: this.background(),
+      updateWhileAnimating: this.updateWhileAnimating(),
+      updateWhileInteracting: this.updateWhileInteracting(),
+      visible: this.visible(),
+      source: this.source(),
     };
   }
 }

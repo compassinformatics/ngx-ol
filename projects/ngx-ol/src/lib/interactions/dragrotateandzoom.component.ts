@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, Input, signal } from '@angular/core';
+import { Component, OnDestroy, OnInit, signal, input } from '@angular/core';
 import DragRotateAndZoom from 'ol/interaction/DragRotateAndZoom';
 import { Options } from 'ol/interaction/DragRotateAndZoom';
 import { MapComponent } from '../map.component';
@@ -9,14 +9,12 @@ import { Condition } from 'ol/events/condition';
   template: '',
 })
 export class DragRotateAndZoomInteractionComponent implements OnInit, OnDestroy {
-  @Input() condition?: Condition;
-  @Input() duration?: number;
+  condition = input<Condition>();
+  duration = input<number>();
 
   instance: DragRotateAndZoom;
 
-  protected readonly _instanceSignal = signal<
-    DragRotateAndZoom | undefined
-  >(undefined);
+  protected readonly _instanceSignal = signal<DragRotateAndZoom | undefined>(undefined);
 
   readonly instanceSignal = this._instanceSignal.asReadonly();
 
@@ -41,8 +39,8 @@ export class DragRotateAndZoomInteractionComponent implements OnInit, OnDestroy 
 
   private createOptions(): Options {
     return {
-      condition: this.condition,
-      duration: this.duration,
+      condition: this.condition(),
+      duration: this.duration(),
     };
   }
 }

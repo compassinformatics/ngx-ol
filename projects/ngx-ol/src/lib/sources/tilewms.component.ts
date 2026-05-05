@@ -2,11 +2,11 @@ import {
   signal,
   Component,
   Host,
-  Input,
   OnChanges,
   OnInit,
   forwardRef,
   SimpleChanges,
+  input,
 } from '@angular/core';
 import { LayerTileComponent } from '../layers/layertile.component';
 import { SourceComponent } from './source.component';
@@ -25,23 +25,23 @@ import { ServerType } from 'ol/source/wms';
   providers: [{ provide: SourceComponent, useExisting: forwardRef(() => SourceTileWMSComponent) }],
 })
 export class SourceTileWMSComponent extends SourceComponent implements OnChanges, OnInit {
-  @Input() cacheSize?: number;
-  @Input() crossOrigin?: null | string;
-  @Input() gutter?: number;
-  @Input() hidpi?: boolean;
-  @Input() interpolate?: boolean;
-  @Input() params: { [key: string]: any };
-  @Input() projection?: ProjectionLike;
-  @Input() reprojectionErrorThreshold?: number;
-  @Input() serverType?: ServerType;
-  @Input() tileClass?: typeof ImageTile;
-  @Input() tileGrid?: TileGrid;
-  @Input() tileLoadFunction?: LoadFunction;
-  @Input() url?: string;
-  @Input() urls?: string[];
-  @Input() wrapX?: boolean;
-  @Input() transition?: number;
-  @Input() zDirection?: number | NearestDirectionFunction;
+  cacheSize = input<number>();
+  crossOrigin = input<null | string>();
+  gutter = input<number>();
+  hidpi = input<boolean>();
+  interpolate = input<boolean>();
+  params = input.required<{ [key: string]: any }>();
+  projection = input<ProjectionLike>();
+  reprojectionErrorThreshold = input<number>();
+  serverType = input<ServerType>();
+  tileClass = input<typeof ImageTile>();
+  tileGrid = input<TileGrid>();
+  tileLoadFunction = input<LoadFunction>();
+  url = input<string>();
+  urls = input<string[]>();
+  wrapX = input<boolean>();
+  transition = input<number>();
+  zDirection = input<number | NearestDirectionFunction>();
 
   instance: TileWMS;
 
@@ -68,31 +68,31 @@ export class SourceTileWMSComponent extends SourceComponent implements OnChanges
 
   ngOnChanges(changes: SimpleChanges) {
     if (this.instance && changes.hasOwnProperty('params')) {
-      this.instance.updateParams(this.params);
+      this.instance.updateParams(this.params());
     }
   }
 
   private createOptions(): Options {
     return {
-      attributions: this.attributions,
-      attributionsCollapsible: this.attributionsCollapsible,
-      cacheSize: this.cacheSize,
-      crossOrigin: this.crossOrigin,
-      gutter: this.gutter,
-      hidpi: this.hidpi,
-      interpolate: this.interpolate,
-      params: this.params,
-      projection: this.projection,
-      reprojectionErrorThreshold: this.reprojectionErrorThreshold,
-      serverType: this.serverType,
-      tileClass: this.tileClass,
-      tileGrid: this.tileGrid,
-      tileLoadFunction: this.tileLoadFunction,
-      url: this.url,
-      urls: this.urls,
-      wrapX: this.wrapX,
-      transition: this.transition,
-      zDirection: this.zDirection,
+      attributions: this.attributions(),
+      attributionsCollapsible: this.attributionsCollapsible(),
+      cacheSize: this.cacheSize(),
+      crossOrigin: this.crossOrigin(),
+      gutter: this.gutter(),
+      hidpi: this.hidpi(),
+      interpolate: this.interpolate(),
+      params: this.params(),
+      projection: this.projection(),
+      reprojectionErrorThreshold: this.reprojectionErrorThreshold(),
+      serverType: this.serverType(),
+      tileClass: this.tileClass(),
+      tileGrid: this.tileGrid(),
+      tileLoadFunction: this.tileLoadFunction(),
+      url: this.url(),
+      urls: this.urls(),
+      wrapX: this.wrapX(),
+      transition: this.transition(),
+      zDirection: this.zDirection(),
     };
   }
 }

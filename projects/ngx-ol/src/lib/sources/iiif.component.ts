@@ -1,4 +1,4 @@
-import { Component, forwardRef, Host, Input, OnInit, Optional, signal } from '@angular/core';
+import { Component, forwardRef, Host, OnInit, Optional, signal, input } from '@angular/core';
 import type { NearestDirectionFunction } from 'ol/array';
 import type { Extent } from 'ol/extent';
 import type { ProjectionLike } from 'ol/proj';
@@ -15,43 +15,43 @@ import { SourceComponent } from './source.component';
   providers: [{ provide: SourceComponent, useExisting: forwardRef(() => SourceIIIFComponent) }],
 })
 export class SourceIIIFComponent extends SourceComponent implements OnInit {
-  @Input() cacheSize?: number;
+  cacheSize = input<number>();
 
-  @Input() crossOrigin?: string | null;
+  crossOrigin = input<string | null>();
 
-  @Input() extent?: Extent;
+  extent = input<Extent>();
 
-  @Input() format?: string;
+  format = input<string>();
 
-  @Input() interpolate?: boolean;
+  interpolate = input<boolean>();
 
-  @Input() projection?: ProjectionLike;
+  projection = input<ProjectionLike>();
 
-  @Input() quality?: string;
+  quality = input<string>();
 
-  @Input() reprojectionErrorThreshold?: number;
+  reprojectionErrorThreshold = input<number>();
 
-  @Input() resolutions?: number[];
+  resolutions = input<number[]>();
 
-  @Input() size: Size;
+  size = input.required<Size>();
 
-  @Input() sizes?: Size[];
+  sizes = input<Size[]>();
 
-  @Input() state?: State;
+  state = input<State>();
 
-  @Input() supports?: string[];
+  supports = input<string[]>();
 
-  @Input() tilePixelRatio?: number;
+  tilePixelRatio = input<number>();
 
-  @Input() tileSize?: number | Size;
+  tileSize = input<number | Size>();
 
-  @Input() transition?: number;
+  transition = input<number>();
 
-  @Input() url?: string;
+  url = input<string>();
 
-  @Input() version?: string;
+  version = input<string>();
 
-  @Input() zDirection?: number | NearestDirectionFunction;
+  zDirection = input<number | NearestDirectionFunction>();
 
   instance: IIIF;
 
@@ -78,27 +78,27 @@ export class SourceIIIFComponent extends SourceComponent implements OnInit {
 
   private createOptions(): Options {
     return {
-      attributions: this.attributions,
-      attributionsCollapsible: this.attributionsCollapsible,
-      cacheSize: this.cacheSize,
-      crossOrigin: this.crossOrigin,
-      extent: this.extent,
-      format: this.format,
-      interpolate: this.interpolate,
-      projection: this.projection,
-      quality: this.quality,
-      reprojectionErrorThreshold: this.reprojectionErrorThreshold,
-      resolutions: this.resolutions,
-      size: this.size,
-      sizes: this.sizes,
-      state: this.state,
-      supports: this.supports,
-      tilePixelRatio: this.tilePixelRatio,
-      tileSize: this.tileSize,
-      transition: this.transition,
-      url: this.url,
-      version: this.version,
-      zDirection: this.zDirection,
+      attributions: this.attributions(),
+      attributionsCollapsible: this.attributionsCollapsible(),
+      cacheSize: this.cacheSize(),
+      crossOrigin: this.crossOrigin(),
+      extent: this.extent(),
+      format: this.format(),
+      interpolate: this.interpolate(),
+      projection: this.projection(),
+      quality: this.quality(),
+      reprojectionErrorThreshold: this.reprojectionErrorThreshold(),
+      resolutions: this.resolutions(),
+      size: this.size(),
+      sizes: this.sizes(),
+      state: this.state(),
+      supports: this.supports(),
+      tilePixelRatio: this.tilePixelRatio(),
+      tileSize: this.tileSize(),
+      transition: this.transition(),
+      url: this.url(),
+      version: this.version(),
+      zDirection: this.zDirection(),
     };
   }
 }

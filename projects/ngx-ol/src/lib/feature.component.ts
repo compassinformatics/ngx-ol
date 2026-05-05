@@ -4,10 +4,10 @@ import {
   OnInit,
   OnDestroy,
   OnChanges,
-  Input,
   SimpleChanges,
   Output,
   EventEmitter,
+  input,
 } from '@angular/core';
 import Feature from 'ol/Feature';
 import MapBrowserEvent from 'ol/MapBrowserEvent';
@@ -18,13 +18,13 @@ import { SourceVectorComponent } from './sources/vector.component';
   template: ` <ng-content></ng-content> `,
 })
 export class FeatureComponent implements OnInit, OnDestroy, OnChanges {
-  @Input() id: string | number | undefined;
+  id = input<string | number | undefined>();
 
-  @Input() properties: Record<any, any>;
+  properties = input<Record<any, any>>();
 
-  @Input() feature: Feature;
+  feature = input<Feature>();
 
-  @Input() clickable: boolean;
+  clickable = input<boolean>();
 
   @Output() olClick = new EventEmitter<{
     event: MapBrowserEvent<MouseEvent> | any;
@@ -57,14 +57,15 @@ export class FeatureComponent implements OnInit, OnDestroy, OnChanges {
   constructor(private host: SourceVectorComponent) {}
 
   ngOnInit() {
-    this.setInstance(this.feature || new Feature());
-    if (this.properties) {
-      this.instance.setProperties(this.properties);
+    this.setInstance(this.feature() || new Feature());
+    const properties = this.properties();
+    if (properties) {
+      this.instance.setProperties(properties);
     }
-    if (this.id !== undefined) {
-      this.instance.setId(this.id);
+    if (this.id() !== undefined) {
+      this.instance.setId(this.id());
     }
-    if (this.clickable) {
+    if (this.clickable()) {
       this.instance.set('__aol-feature', this);
     }
     this.host.instance.addFeature(this.instance);
@@ -78,14 +79,14 @@ export class FeatureComponent implements OnInit, OnDestroy, OnChanges {
   ngOnChanges(changes: SimpleChanges) {
     const { feature, clickable } = changes;
     if (this.instance) {
-      this.instance.setId(this.id);
+      this.instance.setId(this.id());
     }
 
     if (feature && !feature.firstChange) {
       this.instance.set('__aol-feature', null);
       this.host.instance.removeFeature(this.instance);
       this.setInstance(feature.currentValue);
-      if (this.clickable) {
+      if (this.clickable()) {
         this.instance.set('__aol-feature', this);
       }
       this.host.instance.addFeature(this.instance);

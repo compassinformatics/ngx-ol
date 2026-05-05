@@ -3,11 +3,11 @@ import {
   Component,
   forwardRef,
   Host,
-  Input,
   OnChanges,
   OnInit,
   Optional,
   SimpleChanges,
+  input,
 } from '@angular/core';
 import type { ProjectionLike } from 'ol/proj';
 import type { Size } from 'ol/size';
@@ -27,39 +27,37 @@ import { SourceComponent } from './source.component';
   ],
 })
 export class SourceImageTileComponent extends SourceComponent implements OnInit, OnChanges {
-  @Input() url?: UrlLike;
+  url = input<UrlLike>();
 
-  @Input() loader?: Loader;
+  loader = input<Loader>();
 
-  @Input() maxZoom?: number;
+  maxZoom = input<number>();
 
-  @Input() minZoom?: number;
+  minZoom = input<number>();
 
-  @Input() tileSize?: number | Size;
+  tileSize = input<number | Size>();
 
-  @Input() gutter?: number;
+  gutter = input<number>();
 
-  @Input() maxResolution?: number;
+  maxResolution = input<number>();
 
-  @Input() projection?: ProjectionLike;
+  projection = input<ProjectionLike>();
 
-  @Input() tileGrid?: TileGrid;
+  tileGrid = input<TileGrid>();
 
-  @Input() state?: State;
+  state = input<State>();
 
-  @Input() wrapX?: boolean;
+  wrapX = input<boolean>();
 
-  @Input() transition?: number;
+  transition = input<number>();
 
-  @Input() interpolate?: boolean;
+  interpolate = input<boolean>();
 
-  @Input() crossOrigin?: CrossOriginAttribute;
+  crossOrigin = input<CrossOriginAttribute>();
 
   instance: ImageTileSource;
 
-  protected readonly _instanceSignal = signal<ImageTileSource | undefined>(
-    undefined,
-  );
+  protected readonly _instanceSignal = signal<ImageTileSource | undefined>(undefined);
 
   readonly instanceSignal = this._instanceSignal.asReadonly();
 
@@ -88,22 +86,22 @@ export class SourceImageTileComponent extends SourceComponent implements OnInit,
 
   private createOptions(): Options {
     return {
-      url: this.url,
-      loader: this.loader,
-      attributions: this.attributions,
-      attributionsCollapsible: this.attributionsCollapsible,
-      maxZoom: this.maxZoom,
-      minZoom: this.minZoom,
-      tileSize: this.tileSize,
-      gutter: this.gutter,
-      maxResolution: this.maxResolution,
-      projection: this.projection,
-      tileGrid: this.tileGrid,
-      state: this.state,
-      wrapX: this.wrapX,
-      transition: this.transition,
-      interpolate: this.interpolate,
-      crossOrigin: this.crossOrigin,
+      url: this.url(),
+      loader: this.loader(),
+      attributions: this.attributions(),
+      attributionsCollapsible: this.attributionsCollapsible(),
+      maxZoom: this.maxZoom(),
+      minZoom: this.minZoom(),
+      tileSize: this.tileSize(),
+      gutter: this.gutter(),
+      maxResolution: this.maxResolution(),
+      projection: this.projection(),
+      tileGrid: this.tileGrid(),
+      state: this.state(),
+      wrapX: this.wrapX(),
+      transition: this.transition(),
+      interpolate: this.interpolate(),
+      crossOrigin: this.crossOrigin(),
     };
   }
 }

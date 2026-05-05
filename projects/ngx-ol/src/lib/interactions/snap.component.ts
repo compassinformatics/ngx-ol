@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, signal } from '@angular/core';
+import { Component, EventEmitter, OnDestroy, OnInit, Output, signal, input } from '@angular/core';
 import BaseEvent from 'ol/events/Event';
 import { SnapEvent } from 'ol/events/SnapEvent';
 import Snap from 'ol/interaction/Snap';
@@ -14,11 +14,11 @@ import Vector from 'ol/source/Vector';
   template: '',
 })
 export class SnapInteractionComponent implements OnInit, OnDestroy {
-  @Input() features?: Collection<Feature>;
-  @Input() edge?: boolean;
-  @Input() vertex?: boolean;
-  @Input() pixelTolerance?: number;
-  @Input() source?: Vector;
+  features = input<Collection<Feature>>();
+  edge = input<boolean>();
+  vertex = input<boolean>();
+  pixelTolerance = input<number>();
+  source = input<Vector>();
 
   @Output() olChange = new EventEmitter<BaseEvent>();
   @Output() olChangeActive = new EventEmitter<ObjectEvent>();
@@ -59,11 +59,11 @@ export class SnapInteractionComponent implements OnInit, OnDestroy {
 
   private createOptions(): Options {
     return {
-      features: this.features,
-      edge: this.edge,
-      vertex: this.vertex,
-      pixelTolerance: this.pixelTolerance,
-      source: this.source,
+      features: this.features(),
+      edge: this.edge(),
+      vertex: this.vertex(),
+      pixelTolerance: this.pixelTolerance(),
+      source: this.source(),
     };
   }
 }

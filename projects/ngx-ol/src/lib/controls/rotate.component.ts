@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit, signal } from '@angular/core';
+import { Component, OnDestroy, OnInit, signal, input } from '@angular/core';
 import MapEvent from 'ol/MapEvent';
 import Rotate from 'ol/control/Rotate';
 import { Options } from 'ol/control/Rotate';
@@ -9,15 +9,15 @@ import { MapComponent } from '../map.component';
   template: ` <ng-content></ng-content> `,
 })
 export class ControlRotateComponent implements OnInit, OnDestroy {
-  @Input() className?: string;
-  @Input() label?: string | HTMLElement;
-  @Input() tipLabel?: string;
-  @Input() compassClassName?: string;
-  @Input() duration?: number;
-  @Input() autoHide?: boolean;
-  @Input() render?: (event: MapEvent) => void;
-  @Input() resetNorth?: () => void;
-  @Input() target?: string | HTMLElement;
+  className = input<string>();
+  label = input<string | HTMLElement>();
+  tipLabel = input<string>();
+  compassClassName = input<string>();
+  duration = input<number>();
+  autoHide = input<boolean>();
+  render = input<(event: MapEvent) => void>();
+  resetNorth = input<() => void>();
+  target = input<string | HTMLElement>();
 
   instance: Rotate;
 
@@ -49,15 +49,15 @@ export class ControlRotateComponent implements OnInit, OnDestroy {
 
   private createOptions(): Options {
     return {
-      className: this.className,
-      label: this.label,
-      tipLabel: this.tipLabel,
-      compassClassName: this.compassClassName,
-      duration: this.duration,
-      autoHide: this.autoHide,
-      render: this.render,
-      resetNorth: this.resetNorth,
-      target: this.target,
+      className: this.className(),
+      label: this.label(),
+      tipLabel: this.tipLabel(),
+      compassClassName: this.compassClassName(),
+      duration: this.duration(),
+      autoHide: this.autoHide(),
+      render: this.render(),
+      resetNorth: this.resetNorth(),
+      target: this.target(),
     };
   }
 }

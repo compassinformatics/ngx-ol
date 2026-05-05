@@ -2,10 +2,10 @@ import {
   Component,
   OnDestroy,
   OnInit,
-  Input,
   Optional,
   OnChanges,
   SimpleChanges,
+  input,
 } from '@angular/core';
 import Tile from 'ol/layer/Tile';
 import { Options } from 'ol/layer/BaseTile';
@@ -19,10 +19,10 @@ import TileSource from 'ol/source/Tile';
   template: ` <ng-content></ng-content> `,
 })
 export class LayerTileComponent extends LayerComponent implements OnInit, OnDestroy, OnChanges {
-  @Input() preload?: number;
-  @Input() useInterimTilesOnError?: boolean;
-  @Input() cacheSize?: number;
-  @Input() source?: TileSource;
+  preload = input<number>();
+  useInterimTilesOnError = input<boolean>();
+  cacheSize = input<number>();
+  source = input<TileSource>();
 
   constructor(map: MapComponent, @Optional() group?: LayerGroupComponent) {
     super(group || map);
@@ -41,10 +41,10 @@ export class LayerTileComponent extends LayerComponent implements OnInit, OnDest
   private createOptions(): Options<TileSource> {
     return {
       ...this.createLayerOptions(),
-      preload: this.preload,
-      useInterimTilesOnError: this.useInterimTilesOnError,
-      cacheSize: this.cacheSize,
-      source: this.source,
+      preload: this.preload(),
+      useInterimTilesOnError: this.useInterimTilesOnError(),
+      cacheSize: this.cacheSize(),
+      source: this.source(),
     };
   }
 }

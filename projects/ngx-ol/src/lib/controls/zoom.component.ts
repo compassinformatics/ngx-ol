@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit, signal } from '@angular/core';
+import { Component, OnDestroy, OnInit, signal, input } from '@angular/core';
 import Zoom from 'ol/control/Zoom';
 import { Options } from 'ol/control/Zoom';
 import { MapComponent } from '../map.component';
@@ -8,16 +8,16 @@ import { MapComponent } from '../map.component';
   template: ` <ng-content></ng-content> `,
 })
 export class ControlZoomComponent implements OnInit, OnDestroy {
-  @Input() duration?: number;
-  @Input() className?: string;
-  @Input() zoomInClassName?: string;
-  @Input() zoomOutClassName?: string;
-  @Input() zoomInLabel?: string | HTMLElement;
-  @Input() zoomOutLabel?: string | HTMLElement;
-  @Input() zoomInTipLabel?: string;
-  @Input() zoomOutTipLabel?: string;
-  @Input() delta?: number;
-  @Input() target?: string | HTMLElement;
+  duration = input<number>();
+  className = input<string>();
+  zoomInClassName = input<string>();
+  zoomOutClassName = input<string>();
+  zoomInLabel = input<string | HTMLElement>();
+  zoomOutLabel = input<string | HTMLElement>();
+  zoomInTipLabel = input<string>();
+  zoomOutTipLabel = input<string>();
+  delta = input<number>();
+  target = input<string | HTMLElement>();
 
   instance: Zoom;
 
@@ -49,16 +49,16 @@ export class ControlZoomComponent implements OnInit, OnDestroy {
 
   private createOptions(): Options {
     return {
-      duration: this.duration,
-      className: this.className,
-      zoomInClassName: this.zoomInClassName,
-      zoomOutClassName: this.zoomOutClassName,
-      zoomInLabel: this.zoomInLabel,
-      zoomOutLabel: this.zoomOutLabel,
-      zoomInTipLabel: this.zoomInTipLabel,
-      zoomOutTipLabel: this.zoomOutTipLabel,
-      delta: this.delta,
-      target: this.target,
+      duration: this.duration(),
+      className: this.className(),
+      zoomInClassName: this.zoomInClassName(),
+      zoomOutClassName: this.zoomOutClassName(),
+      zoomInLabel: this.zoomInLabel(),
+      zoomOutLabel: this.zoomOutLabel(),
+      zoomInTipLabel: this.zoomInTipLabel(),
+      zoomOutTipLabel: this.zoomOutTipLabel(),
+      delta: this.delta(),
+      target: this.target(),
     };
   }
 }

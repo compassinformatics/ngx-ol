@@ -1,12 +1,12 @@
 import {
   signal,
   Component,
-  Input,
   Host,
   AfterContentInit,
   OnChanges,
   OnDestroy,
   SimpleChanges,
+  input,
 } from '@angular/core';
 import Circle from 'ol/style/Circle';
 import Fill from 'ol/style/Fill';
@@ -22,17 +22,19 @@ import { DeclutterMode } from 'ol/style/Style';
   template: ` <ng-content></ng-content> `,
 })
 export class StyleCircleComponent implements AfterContentInit, OnChanges, OnDestroy {
-  @Input() fill?: Fill;
-  @Input() radius: number;
-  @Input() stroke?: Stroke;
-  @Input() displacement?: number[];
-  @Input() scale?: number | Size;
-  @Input() rotation?: number;
-  @Input() rotateWithView?: boolean;
-  @Input() declutterMode?: DeclutterMode;
+  fill = input<Fill>();
+  radius = input.required<number>();
+  stroke = input<Stroke>();
+  displacement = input<number[]>();
+  scale = input<number | Size>();
+  rotation = input<number>();
+  rotateWithView = input<boolean>();
+  declutterMode = input<DeclutterMode>();
 
   public componentType = 'style-circle';
   instance: Circle;
+  private childFill?: Fill;
+  private childStroke?: Stroke;
 
   protected readonly _instanceSignal = signal<Circle | undefined>(undefined);
 
@@ -56,7 +58,23 @@ export class StyleCircleComponent implements AfterContentInit, OnChanges, OnDest
   update() {
     if (!!this.instance) {
       // console.log('setting ol.style.Circle instance\'s radius');
-      this.instance.setRadius(this.radius);
+      this.instance.setRadius(this.radius());
+    }
+    this.host.update();
+  }
+
+  setFill(fill: Fill) {
+    this.childFill = fill;
+    if (this.instance) {
+      this.instance.setFill(fill);
+    }
+    this.host.update();
+  }
+
+  setStroke(stroke: Stroke) {
+    this.childStroke = stroke;
+    if (this.instance) {
+      this.instance.setStroke(stroke);
     }
     this.host.update();
   }
@@ -85,14 +103,14 @@ export class StyleCircleComponent implements AfterContentInit, OnChanges, OnDest
 
   private createOptions(): Options {
     return {
-      fill: this.fill,
-      radius: this.radius,
-      stroke: this.stroke,
-      displacement: this.displacement,
-      scale: this.scale,
-      rotation: this.rotation,
-      rotateWithView: this.rotateWithView,
-      declutterMode: this.declutterMode,
+      fill: this.childFill ?? this.fill(),
+      radius: this.radius(),
+      stroke: this.childStroke ?? this.stroke(),
+      displacement: this.displacement(),
+      scale: this.scale(),
+      rotation: this.rotation(),
+      rotateWithView: this.rotateWithView(),
+      declutterMode: this.declutterMode(),
     };
   }
 }

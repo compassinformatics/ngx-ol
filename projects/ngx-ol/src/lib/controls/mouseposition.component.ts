@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, OnDestroy, OnInit, signal } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, signal, input } from '@angular/core';
 import MousePosition, { Options } from 'ol/control/MousePosition';
 import { MapComponent } from '../map.component';
 import { CoordinateFormat } from 'ol/coordinate';
@@ -10,18 +10,16 @@ import MapEvent from 'ol/MapEvent';
   template: ``,
 })
 export class ControlMousePositionComponent implements OnInit, OnDestroy {
-  @Input() className?: string;
-  @Input() coordinateFormat?: CoordinateFormat;
-  @Input() projection?: ProjectionLike;
-  @Input() render?: (event: MapEvent) => void;
-  @Input() placeholder?: string;
-  @Input() wrapX?: boolean;
+  className = input<string>();
+  coordinateFormat = input<CoordinateFormat>();
+  projection = input<ProjectionLike>();
+  render = input<(event: MapEvent) => void>();
+  placeholder = input<string>();
+  wrapX = input<boolean>();
 
   instance: MousePosition;
 
-  protected readonly _instanceSignal = signal<MousePosition | undefined>(
-    undefined,
-  );
+  protected readonly _instanceSignal = signal<MousePosition | undefined>(undefined);
 
   readonly instanceSignal = this._instanceSignal.asReadonly();
 
@@ -53,13 +51,13 @@ export class ControlMousePositionComponent implements OnInit, OnDestroy {
 
   private createOptions(): Options {
     return {
-      className: this.className,
-      coordinateFormat: this.coordinateFormat,
-      projection: this.projection,
-      render: this.render,
+      className: this.className(),
+      coordinateFormat: this.coordinateFormat(),
+      projection: this.projection(),
+      render: this.render(),
       target: this.target,
-      placeholder: this.placeholder,
-      wrapX: this.wrapX,
+      placeholder: this.placeholder(),
+      wrapX: this.wrapX(),
     };
   }
 }
