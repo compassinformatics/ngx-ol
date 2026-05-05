@@ -1,0 +1,26 @@
+<div class="layout demo-layout">
+  <aol-map class="demo-map">
+    <aol-view [zoom]="zoom()" [center]="center()"></aol-view>
+
+    <aol-layer-tile>
+      <aol-source-osm></aol-source-osm>
+    </aol-layer-tile>
+
+    <aol-layer-tile [opacity]="0.7">
+      <aol-source-tilearcgisrest [url]="serviceUrl"></aol-source-tilearcgisrest>
+    </aol-layer-tile>
+
+    <aol-interaction-default></aol-interaction-default>
+    <aol-control-scaleline></aol-control-scaleline>
+    <aol-control-zoom></aol-control-zoom>
+    <aol-control-attribution></aol-control-attribution>
+  </aol-map>
+
+  <aside class="panel demo-panel">
+    <section class="section">
+      <h2>TileArcGISRest</h2>
+      <p>The overlay layer uses <code>aol-source-tilearcgisrest</code> against a public ArcGIS MapServer endpoint.</p>
+      <p><code>{{ serviceUrl }}</code></p>
+    </section>
+  </aside>
+</div>

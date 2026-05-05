@@ -1,0 +1,24 @@
+<div class="layout demo-layout">
+  <aol-map #map class="demo-map">
+    <aol-layer-webgltile #geotiffLayer [style]="style"></aol-layer-webgltile>
+
+    <aol-interaction-default></aol-interaction-default>
+    <aol-control-scaleline></aol-control-scaleline>
+    <aol-control-zoom></aol-control-zoom>
+    <aol-control-attribution></aol-control-attribution>
+  </aol-map>
+
+  <aside class="panel demo-panel">
+    <section class="section">
+      <h2>GeoTIFF source</h2>
+      <p>
+        Creates an OpenLayers <code>GeoTIFF</code> source directly in the component class and attaches it to
+        <code>aol-layer-webgltile</code> with a template query.
+      </p>
+      <p><code>{{ sourceUrl }}</code></p>
+      @if (isLoading()) {
+        <p>Loading GeoTIFF metadata...</p>
+      }
+    </section>
+  </aside>
+</div>

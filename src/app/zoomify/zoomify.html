@@ -1,0 +1,32 @@
+<div class="layout demo-layout">
+  <aol-map #map class="demo-map">
+    @if (!viewReady()) {
+      <aol-view [center]="[2000, -1500]" [resolution]="8"></aol-view>
+    }
+
+    <aol-layer-tile>
+      <aol-source-zoomify
+        #zoomifySource
+        [url]="serviceUrl"
+        [size]="imageSize"
+        [zDirection]="-1"
+        crossOrigin="anonymous"
+      ></aol-source-zoomify>
+    </aol-layer-tile>
+
+    <aol-interaction-default></aol-interaction-default>
+    <aol-control-scaleline></aol-control-scaleline>
+    <aol-control-zoom></aol-control-zoom>
+    <aol-control-attribution></aol-control-attribution>
+  </aol-map>
+
+  <aside class="panel demo-panel">
+    <section class="section">
+      <h2>Zoomify source</h2>
+      <p>
+        Uses <code>aol-source-zoomify</code> to display a deep-zoom image as tiles in a pixel projection.
+      </p>
+      <p><code>{{ serviceUrl }}</code></p>
+    </section>
+  </aside>
+</div>

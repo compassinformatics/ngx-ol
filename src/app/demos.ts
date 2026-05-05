@@ -64,6 +64,25 @@ const DEMO_DEFINITIONS: readonly DemoDefinition[] = [
     keywords: ['interaction', 'drag', 'zoom', 'rotate', 'pan'],
   },
   {
+    path: '/dbl-click-drag-zoom',
+    label: 'DblClickDragZoom',
+    description: 'Double-click, hold, and drag up or down to zoom around a chosen point.',
+    keywords: ['interaction', 'double-click', 'drag', 'zoom', 'gesture'],
+  },
+  {
+    path: '/pinch-rotate',
+    label: 'Pinch Rotate',
+    description:
+      'Use two-finger touch rotation and tune the gesture threshold and animation duration.',
+    keywords: ['interaction', 'touch', 'rotate', 'gesture', 'pinch'],
+  },
+  {
+    path: '/link-interaction',
+    label: 'Link Interaction',
+    description: 'Synchronizes the map center, zoom, and rotation with URL query parameters.',
+    keywords: ['interaction', 'url', 'link', 'state', 'history'],
+  },
+  {
     path: '/map-position',
     label: 'Map Position',
     description: 'Move the map and watch the live center and zoom values update.',
@@ -102,6 +121,12 @@ const DEMO_DEFINITIONS: readonly DemoDefinition[] = [
     keywords: ['geometry', 'template', 'point', 'polygon', 'line'],
   },
   {
+    path: '/geometry-collection',
+    label: 'Geometry Collection',
+    description: 'Renders a single feature that contains multiple geometry types together.',
+    keywords: ['geometrycollection', 'feature', 'vector', 'line', 'polygon', 'point'],
+  },
+  {
     path: '/display-geojson-source',
     label: 'GeoJSON Source',
     description: 'Loads a GeoJSON source directly and lets OpenLayers render the features.',
@@ -114,11 +139,23 @@ const DEMO_DEFINITIONS: readonly DemoDefinition[] = [
     keywords: ['cluster', 'points', 'distance', 'source'],
   },
   {
+    path: '/heatmap',
+    label: 'Heatmap',
+    description: 'Uses weighted point features to render a vector heatmap layer.',
+    keywords: ['heatmap', 'layer', 'vector', 'weight', 'points'],
+  },
+  {
     path: '/color-select-hover',
     label: 'Color Select Hover',
     description:
       'Hover polygons for a highlight, then click to select them with interaction styling.',
     keywords: ['hover', 'select', 'style', 'polygon'],
+  },
+  {
+    path: '/regular-shape',
+    label: 'Regular Shape',
+    description: 'Styles point features with aol-style-regularshape as polygons or stars.',
+    keywords: ['regularshape', 'style', 'star', 'polygon', 'marker'],
   },
 
   // Feature drawing and editing
@@ -127,6 +164,12 @@ const DEMO_DEFINITIONS: readonly DemoDefinition[] = [
     label: 'Draw Box',
     description: 'Toggle draw mode, drag on the map, and inspect the resulting box geometry.',
     keywords: ['draw', 'box', 'interaction', 'geometry'],
+  },
+  {
+    path: '/extent-interaction',
+    label: 'Extent Interaction',
+    description: 'Draws and edits a rectangular extent directly on the map.',
+    keywords: ['extent', 'interaction', 'draw', 'edit', 'box'],
   },
   {
     path: '/modify-polygon',
@@ -165,6 +208,36 @@ const DEMO_DEFINITIONS: readonly DemoDefinition[] = [
     label: 'ArcGIS Tiled',
     description: 'Uses a tiled ArcGIS REST MapServer source and shows its tile loading status.',
     keywords: ['arcgis', 'tile', 'xyz', 'loading'],
+  },
+  {
+    path: '/tile-arcgis-rest',
+    label: 'Tile ArcGIS REST',
+    description: 'Displays a tiled ArcGIS REST source through aol-source-tilearcgisrest.',
+    keywords: ['arcgis', 'tile', 'rest', 'source', 'mapserver'],
+  },
+  {
+    path: '/webgl-tile',
+    label: 'WebGL Tile',
+    description: 'Renders image tiles with WebGLTile and ImageTile wrappers.',
+    keywords: ['webgl', 'tile', 'imagetile', 'source', 'performance'],
+  },
+  {
+    path: '/iiif',
+    label: 'IIIF',
+    description: 'Displays a tiled IIIF image service with aol-source-iiif.',
+    keywords: ['iiif', 'image', 'tile', 'source'],
+  },
+  {
+    path: '/geotiff',
+    label: 'GeoTIFF',
+    description: 'Displays Cloud Optimized GeoTIFF bands through a WebGL tile layer.',
+    keywords: ['geotiff', 'cog', 'webgl', 'raster', 'tile'],
+  },
+  {
+    path: '/zoomify',
+    label: 'Zoomify',
+    description: 'Displays a deep-zoom image source with tiled Zoomify metadata.',
+    keywords: ['zoomify', 'image', 'tile', 'deep-zoom'],
   },
   {
     path: '/xyz-esri',
