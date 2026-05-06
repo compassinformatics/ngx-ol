@@ -1,4 +1,13 @@
-import { AfterContentInit, Component, Host, forwardRef, signal, input } from '@angular/core';
+import {
+  AfterContentInit,
+  Component,
+  Host,
+  OnChanges,
+  SimpleChanges,
+  forwardRef,
+  signal,
+  input,
+} from '@angular/core';
 import { ProjectionLike } from 'ol/proj';
 import OGCMapTile from 'ol/source/OGCMapTile';
 import { Options } from 'ol/source/OGCMapTile';
@@ -13,7 +22,7 @@ import { LayerTileComponent } from '../layers/layertile.component';
     { provide: SourceComponent, useExisting: forwardRef(() => SourceOGCMapTileComponent) },
   ],
 })
-export class SourceOGCMapTileComponent extends SourceComponent implements AfterContentInit {
+export class SourceOGCMapTileComponent extends SourceComponent implements AfterContentInit, OnChanges {
   url = input.required<string>();
   context = input<any>();
   mediaType = input<string>();
@@ -46,6 +55,19 @@ export class SourceOGCMapTileComponent extends SourceComponent implements AfterC
   }
 
   ngAfterContentInit() {
+    this.init();
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    super.ngOnChanges(changes);
+    const requiresReload = Object.keys(changes).some((key) => !changes[key].firstChange);
+
+    if (requiresReload && this.instance) {
+      this.init();
+    }
+  }
+
+  private init() {
     this.setInstance(new OGCMapTile(this.createOptions()));
     this.host.instance.setSource(this.instance);
   }

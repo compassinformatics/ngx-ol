@@ -58,7 +58,9 @@ export class ControlOverviewMapComponent implements OnInit, OnChanges, OnDestroy
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (this.instance != null && changes.hasOwnProperty('view')) {
+    const requiresReload = Object.keys(changes).some((key) => !changes[key].firstChange);
+
+    if (requiresReload && this.instance) {
       this.reloadInstance();
     }
   }

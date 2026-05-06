@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, signal, input } from '@angular/core';
+import { Component, OnChanges, OnDestroy, OnInit, SimpleChanges, signal, input } from '@angular/core';
 import { defaults } from 'ol/interaction/defaults';
 import Interaction from 'ol/interaction/Interaction';
 import { DefaultsOptions } from 'ol/interaction/defaults';
@@ -9,7 +9,7 @@ import { MapComponent } from '../map.component';
   selector: 'aol-interaction-default',
   template: '',
 })
-export class DefaultInteractionComponent implements OnInit, OnDestroy {
+export class DefaultInteractionComponent implements OnInit, OnChanges, OnDestroy {
   altShiftDragRotate = input<boolean>();
   onFocusOnly = input<boolean>();
   doubleClickZoom = input<boolean>();
@@ -39,12 +39,29 @@ export class DefaultInteractionComponent implements OnInit, OnDestroy {
   constructor(private map: MapComponent) {}
 
   ngOnInit() {
-    this.setInstance(defaults(this.createOptions()));
-    this.instance.forEach((i) => this.map.instance.addInteraction(i));
+    this.initializeInstance();
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    const requiresReload = Object.keys(changes).some((key) => !changes[key].firstChange);
+
+    if (requiresReload && this.instance) {
+      this.reloadInstance();
+    }
   }
 
   ngOnDestroy() {
     this.instance.forEach((i) => this.map.instance.removeInteraction(i));
+  }
+
+  private initializeInstance() {
+    this.setInstance(defaults(this.createOptions()));
+    this.instance.forEach((i) => this.map.instance.addInteraction(i));
+  }
+
+  private reloadInstance() {
+    this.instance.forEach((i) => this.map.instance.removeInteraction(i));
+    this.initializeInstance();
   }
 
   private createOptions(): DefaultsOptions {

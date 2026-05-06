@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, signal, input } from '@angular/core';
+import { Component, OnChanges, OnDestroy, OnInit, SimpleChanges, signal, input } from '@angular/core';
 import MapEvent from 'ol/MapEvent';
 import Rotate from 'ol/control/Rotate';
 import { Options } from 'ol/control/Rotate';
@@ -8,7 +8,7 @@ import { MapComponent } from '../map.component';
   selector: 'aol-control-rotate',
   template: ` <ng-content></ng-content> `,
 })
-export class ControlRotateComponent implements OnInit, OnDestroy {
+export class ControlRotateComponent implements OnInit, OnChanges, OnDestroy {
   className = input<string>();
   label = input<string | HTMLElement>();
   tipLabel = input<string>();
@@ -38,13 +38,30 @@ export class ControlRotateComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.setInstance(new Rotate(this.createOptions()));
-    this.map.instance.addControl(this.instance);
+    this.initializeInstance();
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    const requiresReload = Object.keys(changes).some((key) => !changes[key].firstChange);
+
+    if (requiresReload && this.instance) {
+      this.reloadInstance();
+    }
   }
 
   ngOnDestroy() {
     // console.log('removing aol-control-rotate');
     this.map.instance.removeControl(this.instance);
+  }
+
+  private initializeInstance() {
+    this.setInstance(new Rotate(this.createOptions()));
+    this.map.instance.addControl(this.instance);
+  }
+
+  private reloadInstance() {
+    this.map.instance.removeControl(this.instance);
+    this.initializeInstance();
   }
 
   private createOptions(): Options {

@@ -1,4 +1,14 @@
-import { Component, Host, OnInit, Optional, forwardRef, signal, input } from '@angular/core';
+import {
+  Component,
+  Host,
+  OnChanges,
+  OnInit,
+  Optional,
+  SimpleChanges,
+  forwardRef,
+  signal,
+  input,
+} from '@angular/core';
 import { LayerVectorComponent } from '../layers/layervector.component';
 import { SourceComponent } from './source.component';
 import FeatureFormat from 'ol/format/Feature';
@@ -14,7 +24,7 @@ import { Options as VectorOptions } from 'ol/source/Vector';
   template: ` <ng-content></ng-content> `,
   providers: [{ provide: SourceComponent, useExisting: forwardRef(() => SourceGeoJSONComponent) }],
 })
-export class SourceGeoJSONComponent extends SourceComponent implements OnInit {
+export class SourceGeoJSONComponent extends SourceComponent implements OnInit, OnChanges {
   defaultDataProjection = input<ProjectionLike>();
   featureProjection = input<ProjectionLike>();
   geometryName = input<string>();
@@ -43,6 +53,19 @@ export class SourceGeoJSONComponent extends SourceComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.init();
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    super.ngOnChanges(changes);
+    const requiresReload = Object.keys(changes).some((key) => !changes[key].firstChange);
+
+    if (requiresReload && this.instance) {
+      this.init();
+    }
+  }
+
+  private init() {
     this.format = new GeoJSON(this.createFormatOptions());
     this.setInstance(new Vector(this.createVectorOptions()));
     this.host.instance.setSource(this.instance);

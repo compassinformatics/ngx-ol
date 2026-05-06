@@ -67,6 +67,20 @@ export class OverlayComponent implements OnInit, OnDestroy, OnChanges {
     if (position && this.instance) {
       this.instance.setPosition(position.currentValue);
     }
+
+    const requiresReload = Object.keys(changes).some(
+      (key) => key !== 'position' && !changes[key].firstChange,
+    );
+
+    if (requiresReload && this.instance) {
+      this.reloadInstance();
+    }
+  }
+
+  private reloadInstance() {
+    this.map.instance.removeOverlay(this.instance);
+    this.setInstance(new Overlay(this.createOptions()));
+    this.map.instance.addOverlay(this.instance);
   }
 
   private createOptions(): Options {

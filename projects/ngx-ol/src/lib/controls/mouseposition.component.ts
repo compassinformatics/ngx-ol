@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnDestroy, OnInit, signal, input } from '@angular/core';
+import { Component, ElementRef, OnChanges, OnDestroy, OnInit, SimpleChanges, signal, input } from '@angular/core';
 import MousePosition, { Options } from 'ol/control/MousePosition';
 import { MapComponent } from '../map.component';
 import { CoordinateFormat } from 'ol/coordinate';
@@ -9,7 +9,7 @@ import MapEvent from 'ol/MapEvent';
   selector: 'aol-control-mouseposition',
   template: ``,
 })
-export class ControlMousePositionComponent implements OnInit, OnDestroy {
+export class ControlMousePositionComponent implements OnInit, OnChanges, OnDestroy {
   className = input<string>();
   coordinateFormat = input<CoordinateFormat>();
   projection = input<ProjectionLike>();
@@ -39,14 +39,30 @@ export class ControlMousePositionComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.target = this.element.nativeElement;
-    // console.log('ol.control.MousePosition init: ', this);
-    this.setInstance(new MousePosition(this.createOptions()));
-    this.map.instance.addControl(this.instance);
+    this.initializeInstance();
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    const requiresReload = Object.keys(changes).some((key) => !changes[key].firstChange);
+
+    if (requiresReload && this.instance) {
+      this.reloadInstance();
+    }
   }
 
   ngOnDestroy() {
     // console.log('removing aol-control-mouseposition');
     this.map.instance.removeControl(this.instance);
+  }
+
+  private initializeInstance() {
+    this.setInstance(new MousePosition(this.createOptions()));
+    this.map.instance.addControl(this.instance);
+  }
+
+  private reloadInstance() {
+    this.map.instance.removeControl(this.instance);
+    this.initializeInstance();
   }
 
   private createOptions(): Options {

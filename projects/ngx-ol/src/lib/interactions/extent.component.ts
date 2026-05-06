@@ -1,4 +1,14 @@
-import { Component, EventEmitter, OnDestroy, OnInit, Output, signal, input } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  Output,
+  SimpleChanges,
+  signal,
+  input,
+} from '@angular/core';
 import type { Condition } from 'ol/events/condition';
 import type { Extent as ExtentType } from 'ol/extent';
 import ExtentInteraction, { ExtentEvent } from 'ol/interaction/Extent';
@@ -10,7 +20,7 @@ import { MapComponent } from '../map.component';
   selector: 'aol-interaction-extent',
   template: '',
 })
-export class ExtentInteractionComponent implements OnInit, OnDestroy {
+export class ExtentInteractionComponent implements OnInit, OnChanges, OnDestroy {
   condition = input<Condition>();
 
   extent = input<ExtentType>();
@@ -42,13 +52,30 @@ export class ExtentInteractionComponent implements OnInit, OnDestroy {
   constructor(private map: MapComponent) {}
 
   ngOnInit() {
+    this.initializeInstance();
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    const requiresReload = Object.keys(changes).some((key) => !changes[key].firstChange);
+
+    if (requiresReload && this.instance) {
+      this.reloadInstance();
+    }
+  }
+
+  ngOnDestroy() {
+    this.map.instance.removeInteraction(this.instance);
+  }
+
+  private initializeInstance() {
     this.setInstance(new ExtentInteraction(this.createOptions()));
     this.instance.on('extentchanged', (event) => this.extentChanged.emit(event));
     this.map.instance.addInteraction(this.instance);
   }
 
-  ngOnDestroy() {
+  private reloadInstance() {
     this.map.instance.removeInteraction(this.instance);
+    this.initializeInstance();
   }
 
   private createOptions(): Options {

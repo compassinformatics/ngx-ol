@@ -79,9 +79,24 @@ export class SourceImageTileComponent extends SourceComponent implements OnInit,
   }
 
   ngOnChanges(changes: SimpleChanges) {
+    super.ngOnChanges(changes);
+    const requiresReload = Object.keys(changes).some(
+      (key) => key !== 'url' && !changes[key].firstChange,
+    );
+
+    if (requiresReload && this.instance) {
+      this.reloadInstance();
+      return;
+    }
+
     if (this.instance && changes.url?.currentValue) {
       this.instance.setUrl(changes.url.currentValue);
     }
+  }
+
+  private reloadInstance() {
+    this.setInstance(new ImageTileSource(this.createOptions()));
+    this.register(this.instance);
   }
 
   private createOptions(): Options {

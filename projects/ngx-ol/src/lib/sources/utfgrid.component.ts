@@ -1,4 +1,4 @@
-import { Component, Host, OnInit, forwardRef, signal, input } from '@angular/core';
+import { Component, Host, OnChanges, OnInit, SimpleChanges, forwardRef, signal, input } from '@angular/core';
 import { SourceComponent } from './source.component';
 import { LayerTileComponent } from '../layers/layertile.component';
 import UTFGrid from 'ol/source/UTFGrid';
@@ -11,7 +11,7 @@ import { NearestDirectionFunction } from 'ol/array';
   template: ` <ng-content></ng-content> `,
   providers: [{ provide: SourceComponent, useExisting: forwardRef(() => SourceUTFGridComponent) }],
 })
-export class SourceUTFGridComponent extends SourceComponent implements OnInit {
+export class SourceUTFGridComponent extends SourceComponent implements OnInit, OnChanges {
   preemptive = input<boolean>();
   jsonp = input<boolean>();
   tileJSON = input<Config>();
@@ -38,6 +38,19 @@ export class SourceUTFGridComponent extends SourceComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.init();
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    super.ngOnChanges(changes);
+    const requiresReload = Object.keys(changes).some((key) => !changes[key].firstChange);
+
+    if (requiresReload && this.instance) {
+      this.init();
+    }
+  }
+
+  private init() {
     this.setInstance(new UTFGrid(this.createOptions()));
     this.host.instance.setSource(this.instance);
   }

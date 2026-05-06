@@ -35,13 +35,13 @@ export class SourceVectorComponent extends SourceComponent implements OnInit, On
   format = input<FeatureFormat<any>>();
   strategy = input<LoadingStrategy>();
 
-  instance: Vector;
+  instance: Vector<FeatureLike>;
 
-  protected readonly _instanceSignal = signal<Vector | undefined>(undefined);
+  protected readonly _instanceSignal = signal<Vector<FeatureLike> | undefined>(undefined);
 
   readonly instanceSignal = this._instanceSignal.asReadonly();
 
-  protected setInstance(instance: Vector): Vector {
+  protected setInstance(instance: Vector<FeatureLike>): Vector<FeatureLike> {
     this.instance = instance;
 
     this._instanceSignal.set(instance);
@@ -58,17 +58,31 @@ export class SourceVectorComponent extends SourceComponent implements OnInit, On
   }
 
   ngOnInit() {
-    (this.instance as Vector<FeatureLike>) = new Vector(this.createOptions());
+    this.setInstance(new Vector<FeatureLike>(this.createOptions()));
     this.host.instance.setSource(this.instance);
   }
 
   ngOnChanges(changes: SimpleChanges): void {
+    super.ngOnChanges(changes);
     const { features } = changes;
+    const requiresReload = Object.keys(changes).some(
+      (key) => key !== 'features' && !changes[key].firstChange,
+    );
+
+    if (requiresReload && this.instance) {
+      this.reloadInstance();
+      return;
+    }
 
     if (features?.currentValue && this.instance) {
       this.instance.clear();
       this.instance.addFeatures(features.currentValue);
     }
+  }
+
+  private reloadInstance() {
+    this.setInstance(new Vector<FeatureLike>(this.createOptions()));
+    this.host.instance.setSource(this.instance);
   }
 
   private createOptions(): Options<FeatureLike> {

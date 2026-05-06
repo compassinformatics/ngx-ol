@@ -73,23 +73,12 @@ export class SourceImageStaticComponent extends SourceComponent implements OnIni
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    const properties: { [index: string]: any } = {};
-    if (!this.instance) {
-      return;
+    super.ngOnChanges(changes);
+    const requiresReload = Object.keys(changes).some((key) => !changes[key].firstChange);
+
+    if (requiresReload && this.instance) {
+      this.setLayerSource();
     }
-    for (const key in changes) {
-      if (changes.hasOwnProperty(key)) {
-        switch (key) {
-          case 'url':
-            this.setLayerSource();
-            break;
-          default:
-            break;
-        }
-        properties[key] = changes[key].currentValue;
-      }
-    }
-    this.instance.setProperties(properties, false);
   }
 
   private createOptions(): Options {

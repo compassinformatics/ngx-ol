@@ -1,4 +1,13 @@
-import { Component, Host, OnInit, forwardRef, signal, input } from '@angular/core';
+import {
+  Component,
+  Host,
+  OnChanges,
+  OnInit,
+  SimpleChanges,
+  forwardRef,
+  signal,
+  input,
+} from '@angular/core';
 import TileJSON from 'ol/source/TileJSON';
 import { Config, Options } from 'ol/source/TileJSON';
 import { LoadFunction } from 'ol/Tile';
@@ -12,7 +21,7 @@ import { SourceComponent } from './source.component';
   template: ` <ng-content></ng-content> `,
   providers: [{ provide: SourceComponent, useExisting: forwardRef(() => SourceTileJSONComponent) }],
 })
-export class SourceTileJSONComponent extends SourceComponent implements OnInit {
+export class SourceTileJSONComponent extends SourceComponent implements OnInit, OnChanges {
   cacheSize = input<number>();
   crossOrigin = input<string | null>();
   interpolate = input<boolean>();
@@ -45,6 +54,20 @@ export class SourceTileJSONComponent extends SourceComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.setInstance(new TileJSON(this.createOptions()));
+    this.host.instance.setSource(this.instance);
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    super.ngOnChanges(changes);
+    const requiresReload = Object.keys(changes).some((key) => !changes[key].firstChange);
+
+    if (requiresReload && this.instance) {
+      this.reloadInstance();
+    }
+  }
+
+  private reloadInstance() {
     this.setInstance(new TileJSON(this.createOptions()));
     this.host.instance.setSource(this.instance);
   }

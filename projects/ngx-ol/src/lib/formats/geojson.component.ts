@@ -1,4 +1,4 @@
-import { Component, signal, input } from '@angular/core';
+import { Component, OnChanges, SimpleChanges, signal, input } from '@angular/core';
 import GeoJSON from 'ol/format/GeoJSON.js';
 import { Options } from 'ol/format/GeoJSON';
 import { ProjectionLike } from 'ol/proj';
@@ -7,7 +7,7 @@ import { ProjectionLike } from 'ol/proj';
   selector: 'aol-format-geojson',
   template: '',
 })
-export class FormatGeoJSONComponent {
+export class FormatGeoJSONComponent implements OnChanges {
   featureClass = input<any>();
   geometryName = input<string>();
   dataProjection = input<ProjectionLike>();
@@ -32,6 +32,14 @@ export class FormatGeoJSONComponent {
 
   constructor() {
     this.setInstance(new GeoJSON(this.createOptions()));
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    const requiresReload = Object.keys(changes).some((key) => !changes[key].firstChange);
+
+    if (requiresReload) {
+      this.setInstance(new GeoJSON(this.createOptions()));
+    }
   }
 
   private createOptions(): Options {

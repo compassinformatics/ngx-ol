@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, signal, input } from '@angular/core';
+import { Component, OnChanges, OnDestroy, OnInit, SimpleChanges, signal, input } from '@angular/core';
 import ZoomToExtent from 'ol/control/ZoomToExtent';
 import { Options } from 'ol/control/ZoomToExtent';
 import { MapComponent } from '../map.component';
@@ -8,7 +8,7 @@ import { Extent } from 'ol/extent';
   selector: 'aol-control-zoomtoextent',
   template: ` <ng-content></ng-content> `,
 })
-export class ControlZoomToExtentComponent implements OnInit, OnDestroy {
+export class ControlZoomToExtentComponent implements OnInit, OnChanges, OnDestroy {
   className = input<string>();
   target = input<string | HTMLElement>();
   label = input<string | HTMLElement>();
@@ -34,13 +34,30 @@ export class ControlZoomToExtentComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.setInstance(new ZoomToExtent(this.createOptions()));
-    this.map.instance.addControl(this.instance);
+    this.initializeInstance();
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    const requiresReload = Object.keys(changes).some((key) => !changes[key].firstChange);
+
+    if (requiresReload && this.instance) {
+      this.reloadInstance();
+    }
   }
 
   ngOnDestroy() {
     // console.log('removing aol-control-zoomtoextent');
     this.map.instance.removeControl(this.instance);
+  }
+
+  private initializeInstance() {
+    this.setInstance(new ZoomToExtent(this.createOptions()));
+    this.map.instance.addControl(this.instance);
+  }
+
+  private reloadInstance() {
+    this.map.instance.removeControl(this.instance);
+    this.initializeInstance();
   }
 
   private createOptions(): Options {

@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, signal, input } from '@angular/core';
+import { Component, OnChanges, OnDestroy, OnInit, SimpleChanges, signal, input } from '@angular/core';
 import MapEvent from 'ol/MapEvent';
 import ZoomSlider from 'ol/control/ZoomSlider';
 import { Options } from 'ol/control/ZoomSlider';
@@ -8,7 +8,7 @@ import { MapComponent } from '../map.component';
   selector: 'aol-control-zoomslider',
   template: ` <ng-content></ng-content> `,
 })
-export class ControlZoomSliderComponent implements OnInit, OnDestroy {
+export class ControlZoomSliderComponent implements OnInit, OnChanges, OnDestroy {
   className = input<string>();
   duration = input<number>();
   render = input<(event: MapEvent) => void>();
@@ -33,13 +33,30 @@ export class ControlZoomSliderComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.setInstance(new ZoomSlider(this.createOptions()));
-    this.map.instance.addControl(this.instance);
+    this.initializeInstance();
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    const requiresReload = Object.keys(changes).some((key) => !changes[key].firstChange);
+
+    if (requiresReload && this.instance) {
+      this.reloadInstance();
+    }
   }
 
   ngOnDestroy() {
     // console.log('removing aol-control-zoomslider');
     this.map.instance.removeControl(this.instance);
+  }
+
+  private initializeInstance() {
+    this.setInstance(new ZoomSlider(this.createOptions()));
+    this.map.instance.addControl(this.instance);
+  }
+
+  private reloadInstance() {
+    this.map.instance.removeControl(this.instance);
+    this.initializeInstance();
   }
 
   private createOptions(): Options {

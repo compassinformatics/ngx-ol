@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, signal, input } from '@angular/core';
+import { Component, OnChanges, OnDestroy, OnInit, SimpleChanges, signal, input } from '@angular/core';
 import FullScreen from 'ol/control/FullScreen';
 import { Options } from 'ol/control/FullScreen';
 import { MapComponent } from '../map.component';
@@ -7,7 +7,7 @@ import { MapComponent } from '../map.component';
   selector: 'aol-control-fullscreen',
   template: ` <ng-content></ng-content> `,
 })
-export class ControlFullScreenComponent implements OnInit, OnDestroy {
+export class ControlFullScreenComponent implements OnInit, OnChanges, OnDestroy {
   className = input<string>();
   label = input<string | HTMLElement | Text>();
   labelActive = input<string | HTMLElement | Text>();
@@ -37,13 +37,30 @@ export class ControlFullScreenComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.setInstance(new FullScreen(this.createOptions()));
-    this.map.instance.addControl(this.instance);
+    this.initializeInstance();
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    const requiresReload = Object.keys(changes).some((key) => !changes[key].firstChange);
+
+    if (requiresReload && this.instance) {
+      this.reloadInstance();
+    }
   }
 
   ngOnDestroy() {
     // console.log('removing aol-control-fullscreen');
     this.map.instance.removeControl(this.instance);
+  }
+
+  private initializeInstance() {
+    this.setInstance(new FullScreen(this.createOptions()));
+    this.map.instance.addControl(this.instance);
+  }
+
+  private reloadInstance() {
+    this.map.instance.removeControl(this.instance);
+    this.initializeInstance();
   }
 
   private createOptions(): Options {

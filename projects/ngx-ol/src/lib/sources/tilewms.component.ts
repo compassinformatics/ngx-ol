@@ -67,6 +67,7 @@ export class SourceTileWMSComponent extends SourceComponent implements OnChanges
   }
 
   ngOnChanges(changes: SimpleChanges) {
+    super.ngOnChanges(changes);
     if (this.instance && changes.hasOwnProperty('params')) {
       this.instance.updateParams(this.params());
     }

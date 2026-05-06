@@ -4,6 +4,9 @@ import {
   forwardRef,
   ContentChild,
   AfterContentInit,
+  AfterContentChecked,
+  OnChanges,
+  SimpleChanges,
   signal,
   input,
 } from '@angular/core';
@@ -31,7 +34,10 @@ import FeatureFormat from 'ol/format/Feature';
     { provide: SourceComponent, useExisting: forwardRef(() => SourceVectorTileComponent) },
   ],
 })
-export class SourceVectorTileComponent extends SourceComponent implements AfterContentInit {
+export class SourceVectorTileComponent
+  extends SourceComponent
+  implements AfterContentInit, AfterContentChecked, OnChanges
+{
   cacheSize = input<number>();
   extent = input<Extent>();
   overlaps = input<boolean>();
@@ -70,23 +76,64 @@ export class SourceVectorTileComponent extends SourceComponent implements AfterC
     return instance;
   }
   tileGrid: TileGrid;
+  private lastFormatInstance?: FeatureFormat<any>;
+  private lastTileGridInstance?: TileGrid;
 
   constructor(@Host() layer: LayerVectorTileComponent) {
     super(layer);
   }
 
   ngAfterContentInit() {
-    let format: FeatureFormat<any> | undefined = this.format();
-    if (this.formatMVTComponent) {
-      format = this.formatMVTComponent.instance;
+    this.init();
+    this.syncChildInstances();
+  }
+
+  ngAfterContentChecked() {
+    const format = this.getFormatInstance();
+    const tileGrid = this.tileGridComponent?.instance;
+    const childChanged =
+      format !== this.lastFormatInstance || tileGrid !== this.lastTileGridInstance;
+
+    this.syncChildInstances(format, tileGrid);
+
+    if (childChanged && this.instance) {
+      this.init();
     }
-    if (this.formatGeoJSONComponent) {
-      format = this.formatGeoJSONComponent.instance;
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    super.ngOnChanges(changes);
+    const requiresReload = Object.keys(changes).some((key) => !changes[key].firstChange);
+
+    if (requiresReload && this.instance) {
+      this.init();
     }
-    this.tileGrid = this.tileGridComponent.instance;
+  }
+
+  private init() {
+    const format = this.getFormatInstance();
+    this.tileGrid = this.tileGridComponent?.instance;
 
     this.setInstance(new VectorTile(this.createOptions(format)));
     this.host.instance.setSource(this.instance);
+    this.syncChildInstances(format, this.tileGrid);
+  }
+
+  private getFormatInstance(): FeatureFormat<any> | undefined {
+    if (this.formatGeoJSONComponent) {
+      return this.formatGeoJSONComponent.instance;
+    }
+
+    if (this.formatMVTComponent) {
+      return this.formatMVTComponent.instance;
+    }
+
+    return this.format();
+  }
+
+  private syncChildInstances(format = this.getFormatInstance(), tileGrid = this.tileGridComponent?.instance) {
+    this.lastFormatInstance = format;
+    this.lastTileGridInstance = tileGrid;
   }
 
   private createOptions(format: FeatureFormat<any> | undefined): Options<any> {

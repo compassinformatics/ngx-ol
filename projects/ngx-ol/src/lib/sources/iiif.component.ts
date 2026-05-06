@@ -1,4 +1,14 @@
-import { Component, forwardRef, Host, OnInit, Optional, signal, input } from '@angular/core';
+import {
+  Component,
+  OnChanges,
+  OnInit,
+  Optional,
+  SimpleChanges,
+  forwardRef,
+  Host,
+  signal,
+  input,
+} from '@angular/core';
 import type { NearestDirectionFunction } from 'ol/array';
 import type { Extent } from 'ol/extent';
 import type { ProjectionLike } from 'ol/proj';
@@ -14,7 +24,7 @@ import { SourceComponent } from './source.component';
   template: '',
   providers: [{ provide: SourceComponent, useExisting: forwardRef(() => SourceIIIFComponent) }],
 })
-export class SourceIIIFComponent extends SourceComponent implements OnInit {
+export class SourceIIIFComponent extends SourceComponent implements OnInit, OnChanges {
   cacheSize = input<number>();
 
   crossOrigin = input<string | null>();
@@ -72,6 +82,19 @@ export class SourceIIIFComponent extends SourceComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.init();
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    super.ngOnChanges(changes);
+    const requiresReload = Object.keys(changes).some((key) => !changes[key].firstChange);
+
+    if (requiresReload && this.instance) {
+      this.init();
+    }
+  }
+
+  private init() {
     this.setInstance(new IIIF(this.createOptions()));
     this.register(this.instance);
   }
