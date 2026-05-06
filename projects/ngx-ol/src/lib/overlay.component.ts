@@ -1,11 +1,11 @@
 import {
   signal,
   Component,
-  ContentChild,
   OnChanges,
   OnDestroy,
   OnInit,
   SimpleChanges,
+  contentChild,
   input,
 } from '@angular/core';
 import { MapComponent } from './map.component';
@@ -18,7 +18,7 @@ import { Coordinate } from 'ol/coordinate';
   template: '<ng-content></ng-content>',
 })
 export class OverlayComponent implements OnInit, OnDestroy, OnChanges {
-  @ContentChild(ContentComponent, { static: true }) content: ContentComponent;
+  readonly content = contentChild(ContentComponent);
   readonly id = input<number | string | undefined>();
   readonly offset = input<number[]>();
   readonly positioning = input<Positioning>();
@@ -42,8 +42,10 @@ export class OverlayComponent implements OnInit, OnDestroy, OnChanges {
   constructor(private readonly map: MapComponent) {}
 
   ngOnInit() {
-    if (this.content) {
-      this.element = this.content.elementRef.nativeElement;
+    const content = this.content();
+
+    if (content) {
+      this.element = content.elementRef.nativeElement;
       this.setInstance(new Overlay(this.createOptions()));
       this.map.instance.addOverlay(this.instance);
     }

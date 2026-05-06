@@ -2,12 +2,12 @@ import {
   signal,
   AfterContentInit,
   Component,
-  ContentChild,
   forwardRef,
   Host,
   OnChanges,
   Optional,
   SimpleChanges,
+  contentChild,
   input,
 } from '@angular/core';
 import Feature from 'ol/Feature';
@@ -32,8 +32,7 @@ export class SourceClusterComponent extends SourceComponent implements AfterCont
   readonly geometryFunction = input<(feature: Feature) => Point>();
   readonly wrapX = input<boolean>();
   readonly createCluster = input<any>();
-  @ContentChild(SourceVectorComponent, { static: false })
-  sourceVectorComponent: SourceVectorComponent;
+  readonly sourceVectorComponent = contentChild(SourceVectorComponent);
   instance: Cluster<any>;
   protected readonly _instanceSignal = signal<Cluster<any> | undefined>(undefined);
   readonly instanceSignal = this._instanceSignal.asReadonly();
@@ -53,7 +52,13 @@ export class SourceClusterComponent extends SourceComponent implements AfterCont
   }
 
   ngAfterContentInit() {
-    this.source = this.sourceVectorComponent.instance;
+    const sourceVectorComponent = this.sourceVectorComponent();
+
+    if (!sourceVectorComponent) {
+      return;
+    }
+
+    this.source = sourceVectorComponent.instance;
 
     this.setInstance(new Cluster(this.createOptions()));
     this.host.instance.setSource(this.instance);

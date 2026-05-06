@@ -5,9 +5,9 @@ import {
   forwardRef,
   AfterContentInit,
   AfterContentChecked,
-  ContentChild,
   SimpleChanges,
   OnChanges,
+  contentChild,
   output,
   input,
 } from '@angular/core';
@@ -55,7 +55,7 @@ export class SourceTileWMTSComponent
   readonly tileLoadStart = output<TileSourceEvent>();
   readonly tileLoadEnd = output<TileSourceEvent>();
   readonly tileLoadError = output<TileSourceEvent>();
-  @ContentChild(TileGridWMTSComponent, { static: false }) tileGridWMTS: TileGridWMTSComponent;
+  readonly tileGridWMTS = contentChild(TileGridWMTSComponent);
   instance: SourceWMTS;
   protected readonly _instanceSignal = signal<SourceWMTS | undefined>(undefined);
   readonly instanceSignal = this._instanceSignal.asReadonly();
@@ -87,17 +87,17 @@ export class SourceTileWMTSComponent
     this.instance.on('tileloadend', (event: TileSourceEvent) => this.tileLoadEnd.emit(event));
     this.instance.on('tileloaderror', (event: TileSourceEvent) => this.tileLoadError.emit(event));
     this.host.instance.setSource(this.instance);
-    this.lastTileGridInstance = this.tileGridWMTS?.instance;
+    this.lastTileGridInstance = this.tileGridWMTS()?.instance;
   }
 
   ngAfterContentInit(): void {
-    if (this.tileGridWMTS || this.tileGrid()) {
+    if (this.tileGridWMTS() || this.tileGrid()) {
       this.setLayerSource();
     }
   }
 
   ngAfterContentChecked() {
-    const tileGrid = this.tileGridWMTS?.instance;
+    const tileGrid = this.tileGridWMTS()?.instance;
 
     if (tileGrid !== this.lastTileGridInstance && this.instance) {
       this.lastTileGridInstance = tileGrid;
@@ -115,7 +115,7 @@ export class SourceTileWMTSComponent
       cacheSize: this.cacheSize(),
       crossOrigin: this.crossOrigin(),
       interpolate: this.interpolate(),
-      tileGrid: this.tileGridWMTS?.instance ?? this.tileGrid(),
+      tileGrid: this.tileGridWMTS()?.instance ?? this.tileGrid()!,
       projection: this.projection(),
       reprojectionErrorThreshold: this.reprojectionErrorThreshold(),
       requestEncoding: this.requestEncoding(),

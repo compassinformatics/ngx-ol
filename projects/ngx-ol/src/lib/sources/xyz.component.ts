@@ -2,12 +2,12 @@ import {
   signal,
   AfterContentInit,
   Component,
-  ContentChild,
   forwardRef,
   Host,
   OnChanges,
   Optional,
   SimpleChanges,
+  contentChild,
   output,
   input,
 } from '@angular/core';
@@ -49,7 +49,7 @@ export class SourceXYZComponent extends SourceComponent implements AfterContentI
   readonly urls = input<string[]>();
   readonly wrapX = input<boolean>();
   readonly zDirection = input<number | NearestDirectionFunction>();
-  @ContentChild(TileGridComponent, { static: false }) tileGridXYZ: TileGridComponent;
+  readonly tileGridXYZ = contentChild(TileGridComponent);
   readonly tileLoadStart = output<TileSourceEvent>();
   readonly tileLoadEnd = output<TileSourceEvent>();
   readonly tileLoadError = output<TileSourceEvent>();
@@ -107,7 +107,7 @@ export class SourceXYZComponent extends SourceComponent implements AfterContentI
       maxResolution: this.maxResolution(),
       minZoom: this.minZoom(),
       maxZoom: this.maxZoom(),
-      tileGrid: this.tileGridXYZ?.instance ?? this.tileGrid(),
+      tileGrid: this.tileGridXYZ()?.instance ?? this.tileGrid(),
       tileLoadFunction: this.tileLoadFunction(),
       tilePixelRatio: this.tilePixelRatio(),
       tileSize: this.tileSize(),

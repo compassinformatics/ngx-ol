@@ -2,11 +2,12 @@ import {
   signal,
   AfterContentInit,
   Component,
-  ContentChild,
+  effect,
   forwardRef,
   Host,
   OnChanges,
   SimpleChanges,
+  contentChild,
   output,
   input,
 } from '@angular/core';
@@ -35,6 +36,7 @@ export class SourceRasterComponent extends SourceComponent implements AfterConte
   readonly resolutions = input<number[] | null>();
   readonly beforeOperations = output<RasterSourceEvent>();
   readonly afterOperations = output<RasterSourceEvent>();
+  readonly sourceComponent = contentChild(SourceComponent);
   instance: Raster;
   protected readonly _instanceSignal = signal<Raster | undefined>(undefined);
   readonly instanceSignal = this._instanceSignal.asReadonly();
@@ -46,16 +48,21 @@ export class SourceRasterComponent extends SourceComponent implements AfterConte
   }
   sources: Source[] = [];
 
-  @ContentChild(SourceComponent, { static: false }) set source(sourceComponent: SourceComponent) {
-    this.sources = [sourceComponent.instance];
-    if (this.instance) {
-      // Openlayer doesn't handle sources update. Just recreate Raster instance.
-      this.init();
-    }
-  }
-
   constructor(@Host() layer: LayerImageComponent) {
     super(layer);
+
+    effect(() => {
+      const source = this.sourceComponent()?.instanceSignal();
+
+      if (source) {
+        this.sources = [source];
+
+        if (this.instance) {
+          // OpenLayers doesn't handle sources update. Recreate Raster instance.
+          this.init();
+        }
+      }
+    });
   }
 
   ngAfterContentInit() {

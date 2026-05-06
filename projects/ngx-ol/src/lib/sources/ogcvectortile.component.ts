@@ -2,12 +2,12 @@ import {
   Component,
   Host,
   forwardRef,
-  ContentChild,
   AfterContentInit,
   AfterContentChecked,
   OnChanges,
   SimpleChanges,
   signal,
+  contentChild,
   input,
 } from '@angular/core';
 import OGCVectorTile from 'ol/source/OGCVectorTile';
@@ -45,11 +45,8 @@ export class SourceOGCVectorTileComponent
   readonly zDirection = input<number | NearestDirectionFunction>();
   readonly collections = input<string[]>();
   readonly format = input<FeatureFormat<any>>();
-  @ContentChild(FormatMVTComponent, { static: false }) formatMVTComponent:
-    | FormatMVTComponent
-    | FormatGeoJSONComponent;
-  @ContentChild(FormatGeoJSONComponent, { static: false })
-  formatGeoJSONComponent: FormatGeoJSONComponent;
+  readonly formatMVTComponent = contentChild(FormatMVTComponent);
+  readonly formatGeoJSONComponent = contentChild(FormatGeoJSONComponent);
   instance: OGCVectorTile;
   protected readonly _instanceSignal = signal<OGCVectorTile | undefined>(undefined);
   readonly instanceSignal = this._instanceSignal.asReadonly();
@@ -101,12 +98,12 @@ export class SourceOGCVectorTileComponent
   }
 
   private getFormatInstance(): FeatureFormat<any> | undefined {
-    if (this.formatGeoJSONComponent) {
-      return this.formatGeoJSONComponent.instance;
+    if (this.formatGeoJSONComponent()) {
+      return this.formatGeoJSONComponent()!.instance;
     }
 
-    if (this.formatMVTComponent) {
-      return this.formatMVTComponent.instance;
+    if (this.formatMVTComponent()) {
+      return this.formatMVTComponent()!.instance;
     }
 
     return this.format();

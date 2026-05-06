@@ -2,12 +2,12 @@ import {
   Component,
   Host,
   forwardRef,
-  ContentChild,
   AfterContentInit,
   AfterContentChecked,
   OnChanges,
   SimpleChanges,
   signal,
+  contentChild,
   input,
 } from '@angular/core';
 import VectorTile from 'ol/source/VectorTile';
@@ -56,10 +56,9 @@ export class SourceVectorTileComponent
   readonly wrapX = input<boolean>();
   readonly zDirection = input<number | NearestDirectionFunction>();
   readonly format = input<FeatureFormat<any>>();
-  @ContentChild(FormatMVTComponent, { static: false }) formatMVTComponent: FormatMVTComponent;
-  @ContentChild(FormatGeoJSONComponent, { static: false })
-  formatGeoJSONComponent: FormatGeoJSONComponent;
-  @ContentChild(TileGridComponent, { static: false }) tileGridComponent: TileGridComponent;
+  readonly formatMVTComponent = contentChild(FormatMVTComponent);
+  readonly formatGeoJSONComponent = contentChild(FormatGeoJSONComponent);
+  readonly tileGridComponent = contentChild(TileGridComponent);
   instance: VectorTile;
   protected readonly _instanceSignal = signal<VectorTile | undefined>(undefined);
   readonly instanceSignal = this._instanceSignal.asReadonly();
@@ -69,7 +68,7 @@ export class SourceVectorTileComponent
     this._instanceSignal.set(instance);
     return instance;
   }
-  tileGrid: TileGrid;
+  tileGrid?: TileGrid;
   private lastFormatInstance?: FeatureFormat<any>;
   private lastTileGridInstance?: TileGrid;
 
@@ -84,7 +83,7 @@ export class SourceVectorTileComponent
 
   ngAfterContentChecked() {
     const format = this.getFormatInstance();
-    const tileGrid = this.tileGridComponent?.instance;
+    const tileGrid = this.tileGridComponent()?.instance;
     const childChanged =
       format !== this.lastFormatInstance || tileGrid !== this.lastTileGridInstance;
 
@@ -106,7 +105,7 @@ export class SourceVectorTileComponent
 
   private init() {
     const format = this.getFormatInstance();
-    this.tileGrid = this.tileGridComponent?.instance;
+    this.tileGrid = this.tileGridComponent()?.instance;
 
     this.setInstance(new VectorTile(this.createOptions(format)));
     this.host.instance.setSource(this.instance);
@@ -114,18 +113,21 @@ export class SourceVectorTileComponent
   }
 
   private getFormatInstance(): FeatureFormat<any> | undefined {
-    if (this.formatGeoJSONComponent) {
-      return this.formatGeoJSONComponent.instance;
+    if (this.formatGeoJSONComponent()) {
+      return this.formatGeoJSONComponent()!.instance;
     }
 
-    if (this.formatMVTComponent) {
-      return this.formatMVTComponent.instance;
+    if (this.formatMVTComponent()) {
+      return this.formatMVTComponent()!.instance;
     }
 
     return this.format();
   }
 
-  private syncChildInstances(format = this.getFormatInstance(), tileGrid = this.tileGridComponent?.instance) {
+  private syncChildInstances(
+    format = this.getFormatInstance(),
+    tileGrid = this.tileGridComponent()?.instance,
+  ) {
     this.lastFormatInstance = format;
     this.lastTileGridInstance = tileGrid;
   }
