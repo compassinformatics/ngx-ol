@@ -3,10 +3,9 @@ import {
   OnChanges,
   OnDestroy,
   OnInit,
-  Output,
-  EventEmitter,
   SimpleChanges,
   signal,
+  output,
   input,
 } from '@angular/core';
 import Translate from 'ol/interaction/Translate';
@@ -31,13 +30,13 @@ export class TranslateInteractionComponent implements OnInit, OnChanges, OnDestr
   filter = input<FilterFunction>();
   hitTolerance = input<number>();
 
-  @Output() olChange = new EventEmitter<BaseEvent>();
-  @Output() olChangeActive = new EventEmitter<ObjectEvent>();
-  @Output() olError = new EventEmitter<BaseEvent>();
-  @Output() propertyChange = new EventEmitter<ObjectEvent>();
-  @Output() translateEnd = new EventEmitter<TranslateEvent>();
-  @Output() translateStart = new EventEmitter<TranslateEvent>();
-  @Output() translating = new EventEmitter<TranslateEvent>();
+  olChange = output<BaseEvent>();
+  olChangeActive = output<ObjectEvent>();
+  olError = output<BaseEvent>();
+  propertyChange = output<ObjectEvent>();
+  translateEnd = output<TranslateEvent>();
+  translateStart = output<TranslateEvent>();
+  translating = output<TranslateEvent>();
 
   instance: Translate;
 

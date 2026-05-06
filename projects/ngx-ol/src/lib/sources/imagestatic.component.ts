@@ -3,11 +3,10 @@ import {
   Component,
   Host,
   forwardRef,
-  Output,
-  EventEmitter,
   OnChanges,
   SimpleChanges,
   OnInit,
+  output,
   input,
 } from '@angular/core';
 import ImageStatic from 'ol/source/ImageStatic';
@@ -34,9 +33,9 @@ export class SourceImageStaticComponent extends SourceComponent implements OnIni
   imageLoadFunction = input<LoadFunction>();
   interpolate = input<boolean>();
 
-  @Output() imageLoadStart = new EventEmitter<ImageSourceEvent>();
-  @Output() imageLoadEnd = new EventEmitter<ImageSourceEvent>();
-  @Output() imageLoadError = new EventEmitter<ImageSourceEvent>();
+  imageLoadStart = output<ImageSourceEvent>();
+  imageLoadEnd = output<ImageSourceEvent>();
+  imageLoadError = output<ImageSourceEvent>();
 
   instance: ImageStatic;
 

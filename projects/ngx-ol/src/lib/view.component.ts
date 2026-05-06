@@ -5,8 +5,7 @@ import {
   OnChanges,
   OnDestroy,
   SimpleChanges,
-  EventEmitter,
-  Output,
+  output,
   input,
 } from '@angular/core';
 import View, { ViewOptions } from 'ol/View';
@@ -47,12 +46,12 @@ export class ViewComponent implements OnInit, OnChanges, OnDestroy {
 
   zoomAnimation = input(false);
 
-  @Output() olChange = new EventEmitter<BaseEvent>();
-  @Output() changeCenter = new EventEmitter<ObjectEvent>();
-  @Output() changeResolution = new EventEmitter<ObjectEvent>();
-  @Output() changeRotation = new EventEmitter<ObjectEvent>();
-  @Output() olError = new EventEmitter<BaseEvent>();
-  @Output() propertyChange = new EventEmitter<ObjectEvent>();
+  olChange = output<BaseEvent>();
+  changeCenter = output<ObjectEvent>();
+  changeResolution = output<ObjectEvent>();
+  changeRotation = output<ObjectEvent>();
+  olError = output<BaseEvent>();
+  propertyChange = output<ObjectEvent>();
 
   instance: View;
 

@@ -8,8 +8,7 @@ import {
   ContentChild,
   SimpleChanges,
   OnChanges,
-  Output,
-  EventEmitter,
+  output,
   input,
 } from '@angular/core';
 import { LayerTileComponent } from '../layers/layertile.component';
@@ -54,9 +53,9 @@ export class SourceTileWMTSComponent
   transition = input<number>();
   zDirection = input<number | NearestDirectionFunction>();
 
-  @Output() tileLoadStart = new EventEmitter<TileSourceEvent>();
-  @Output() tileLoadEnd = new EventEmitter<TileSourceEvent>();
-  @Output() tileLoadError = new EventEmitter<TileSourceEvent>();
+  tileLoadStart = output<TileSourceEvent>();
+  tileLoadEnd = output<TileSourceEvent>();
+  tileLoadError = output<TileSourceEvent>();
 
   @ContentChild(TileGridWMTSComponent, { static: false }) tileGridWMTS: TileGridWMTSComponent;
 

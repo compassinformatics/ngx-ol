@@ -3,10 +3,9 @@ import {
   OnChanges,
   OnDestroy,
   OnInit,
-  Output,
-  EventEmitter,
   SimpleChanges,
   signal,
+  output,
   input,
 } from '@angular/core';
 import { MapComponent } from '../map.component';
@@ -38,12 +37,12 @@ export class ModifyInteractionComponent implements OnInit, OnChanges, OnDestroy 
   hitDetection = input<boolean | BaseVectorLayer<any, any, any>>();
   snapToPointer = input<boolean>();
 
-  @Output() olChange = new EventEmitter<BaseEvent>();
-  @Output() olChangeActive = new EventEmitter<ObjectEvent>();
-  @Output() olError = new EventEmitter<BaseEvent>();
-  @Output() olModifyEnd = new EventEmitter<ModifyEvent>();
-  @Output() olModifyStart = new EventEmitter<ModifyEvent>();
-  @Output() propertyChange = new EventEmitter<ObjectEvent>();
+  olChange = output<BaseEvent>();
+  olChangeActive = output<ObjectEvent>();
+  olError = output<BaseEvent>();
+  olModifyEnd = output<ModifyEvent>();
+  olModifyStart = output<ModifyEvent>();
+  propertyChange = output<ObjectEvent>();
 
   instance: Modify;
 

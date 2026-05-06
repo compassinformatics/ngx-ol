@@ -1,12 +1,11 @@
 import {
   Component,
-  EventEmitter,
   OnChanges,
   OnDestroy,
   OnInit,
-  Output,
   SimpleChanges,
   signal,
+  output,
   input,
 } from '@angular/core';
 import { MapComponent } from '../map.component';
@@ -49,13 +48,13 @@ export class DrawInteractionComponent implements OnInit, OnChanges, OnDestroy {
   wrapX = input<boolean>();
   geometryLayout = input<GeometryLayout>();
 
-  @Output() olChange = new EventEmitter<BaseEvent>();
-  @Output() olChangeActive = new EventEmitter<ObjectEvent>();
-  @Output() olDrawAbort = new EventEmitter<DrawEvent>();
-  @Output() drawEnd = new EventEmitter<DrawEvent>();
-  @Output() drawStart = new EventEmitter<DrawEvent>();
-  @Output() olError = new EventEmitter<BaseEvent>();
-  @Output() propertyChange = new EventEmitter<ObjectEvent>();
+  olChange = output<BaseEvent>();
+  olChangeActive = output<ObjectEvent>();
+  olDrawAbort = output<DrawEvent>();
+  drawEnd = output<DrawEvent>();
+  drawStart = output<DrawEvent>();
+  olError = output<BaseEvent>();
+  propertyChange = output<ObjectEvent>();
 
   instance: Draw;
 

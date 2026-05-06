@@ -3,13 +3,12 @@ import {
   AfterContentInit,
   Component,
   ContentChild,
-  EventEmitter,
   forwardRef,
   Host,
   OnChanges,
   Optional,
-  Output,
   SimpleChanges,
+  output,
   input,
 } from '@angular/core';
 import { Size } from 'ol/size';
@@ -53,9 +52,9 @@ export class SourceXYZComponent extends SourceComponent implements AfterContentI
 
   @ContentChild(TileGridComponent, { static: false }) tileGridXYZ: TileGridComponent;
 
-  @Output() tileLoadStart = new EventEmitter<TileSourceEvent>();
-  @Output() tileLoadEnd = new EventEmitter<TileSourceEvent>();
-  @Output() tileLoadError = new EventEmitter<TileSourceEvent>();
+  tileLoadStart = output<TileSourceEvent>();
+  tileLoadEnd = output<TileSourceEvent>();
+  tileLoadError = output<TileSourceEvent>();
 
   instance: XYZ;
 

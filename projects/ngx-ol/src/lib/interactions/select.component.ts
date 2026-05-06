@@ -3,10 +3,9 @@ import {
   OnChanges,
   OnDestroy,
   OnInit,
-  Output,
-  EventEmitter,
   SimpleChanges,
   signal,
+  output,
   input,
 } from '@angular/core';
 import { MapComponent } from '../map.component';
@@ -36,11 +35,11 @@ export class SelectInteractionComponent implements OnInit, OnChanges, OnDestroy 
   filter = input<FilterFunction>();
   hitTolerance = input<number>();
 
-  @Output() olChange = new EventEmitter<BaseEvent>();
-  @Output() olChangeActive = new EventEmitter<ObjectEvent>();
-  @Output() olError = new EventEmitter<BaseEvent>();
-  @Output() propertyChange = new EventEmitter<ObjectEvent>();
-  @Output() olSelect = new EventEmitter<SelectEvent>();
+  olChange = output<BaseEvent>();
+  olChangeActive = output<ObjectEvent>();
+  olError = output<BaseEvent>();
+  propertyChange = output<ObjectEvent>();
+  olSelect = output<SelectEvent>();
 
   instance: Select;
 
