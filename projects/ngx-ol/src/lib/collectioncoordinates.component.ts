@@ -17,7 +17,6 @@ import { ObjectEvent } from 'ol/Object';
 export class CollectionCoordinatesComponent implements DoCheck, OnChanges, OnInit {
   coordinates = input.required<Coordinate[] | Coordinate[][] | Coordinate[][][] | Array<number>>();
   srid = input<string | undefined>();
-
   private host: SimpleGeometryComponent;
   private mapSrid = 'EPSG:3857';
   private currentSrid = 'EPSG:3857';

@@ -11,16 +11,12 @@ import LineString from 'ol/geom/LineString';
 export class GeometryLinestringComponent extends SimpleGeometryComponent implements OnInit {
   public componentType = 'geometry-linestring';
   instance: LineString;
-
   protected readonly _instanceSignal = signal<LineString | undefined>(undefined);
-
   readonly instanceSignal = this._instanceSignal.asReadonly();
 
   protected setInstance(instance: LineString): LineString {
     this.instance = instance;
-
     this._instanceSignal.set(instance);
-
     return instance;
   }
 

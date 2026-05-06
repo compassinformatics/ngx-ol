@@ -11,16 +11,12 @@ import MultiPoint from 'ol/geom/MultiPoint';
 export class GeometryMultiPointComponent extends SimpleGeometryComponent implements OnInit {
   public componentType = 'geometry-multipoint';
   instance: MultiPoint;
-
   protected readonly _instanceSignal = signal<MultiPoint | undefined>(undefined);
-
   readonly instanceSignal = this._instanceSignal.asReadonly();
 
   protected setInstance(instance: MultiPoint): MultiPoint {
     this.instance = instance;
-
     this._instanceSignal.set(instance);
-
     return instance;
   }
 

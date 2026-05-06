@@ -13,18 +13,13 @@ export class DragZoomInteractionComponent implements OnInit, OnChanges, OnDestro
   condition = input<Condition>();
   duration = input<number>();
   out = input<boolean>();
-
   instance: DragZoom;
-
   protected readonly _instanceSignal = signal<DragZoom | undefined>(undefined);
-
   readonly instanceSignal = this._instanceSignal.asReadonly();
 
   protected setInstance(instance: DragZoom): DragZoom {
     this.instance = instance;
-
     this._instanceSignal.set(instance);
-
     return instance;
   }
 

@@ -40,18 +40,13 @@ export class StyleTextComponent implements OnInit, OnChanges {
   backgroundStroke = input<Stroke | undefined>();
   padding = input<number[] | undefined>();
   declutterMode = input<DeclutterMode | undefined>();
-
   instance: Text;
-
   protected readonly _instanceSignal = signal<Text | undefined>(undefined);
-
   readonly instanceSignal = this._instanceSignal.asReadonly();
 
   protected setInstance(instance: Text): Text {
     this.instance = instance;
-
     this._instanceSignal.set(instance);
-
     return instance;
   }
   public componentType = 'style-text';

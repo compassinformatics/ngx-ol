@@ -34,22 +34,16 @@ export class SourceImageArcGISRestComponent extends SourceComponent implements O
   params = input<{ [k: string]: any }>();
   ratio = input<number>(1.5);
   resolutions = input<number[]>();
-
   imageLoadStart = output<ImageSourceEvent>();
   imageLoadEnd = output<ImageSourceEvent>();
   imageLoadError = output<ImageSourceEvent>();
-
   instance: ImageArcGISRest;
-
   protected readonly _instanceSignal = signal<ImageArcGISRest | undefined>(undefined);
-
   readonly instanceSignal = this._instanceSignal.asReadonly();
 
   protected setInstance(instance: ImageArcGISRest): ImageArcGISRest {
     this.instance = instance;
-
     this._instanceSignal.set(instance);
-
     return instance;
   }
 

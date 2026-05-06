@@ -11,18 +11,13 @@ import { Condition } from 'ol/events/condition';
 export class DragRotateInteractionComponent implements OnInit, OnChanges, OnDestroy {
   condition = input<Condition>();
   duration = input<number>();
-
   instance: DragRotate;
-
   protected readonly _instanceSignal = signal<DragRotate | undefined>(undefined);
-
   readonly instanceSignal = this._instanceSignal.asReadonly();
 
   protected setInstance(instance: DragRotate): DragRotate {
     this.instance = instance;
-
     this._instanceSignal.set(instance);
-
     return instance;
   }
 

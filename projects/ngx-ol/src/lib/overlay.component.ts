@@ -19,7 +19,6 @@ import { Coordinate } from 'ol/coordinate';
 })
 export class OverlayComponent implements OnInit, OnDestroy, OnChanges {
   @ContentChild(ContentComponent, { static: true }) content: ContentComponent;
-
   id = input<number | string | undefined>();
   offset = input<number[]>();
   positioning = input<Positioning>();
@@ -28,19 +27,14 @@ export class OverlayComponent implements OnInit, OnDestroy, OnChanges {
   autoPan = input<boolean | PanIntoViewOptions>();
   position = input<Coordinate | undefined>();
   className = input<string>();
-
   componentType = 'overlay';
   instance: Overlay;
-
   protected readonly _instanceSignal = signal<Overlay | undefined>(undefined);
-
   readonly instanceSignal = this._instanceSignal.asReadonly();
 
   protected setInstance(instance: Overlay): Overlay {
     this.instance = instance;
-
     this._instanceSignal.set(instance);
-
     return instance;
   }
   element: HTMLElement;

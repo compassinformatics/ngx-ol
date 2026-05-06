@@ -34,22 +34,16 @@ export class SourceImageWMSComponent extends SourceComponent implements OnChange
   ratio = input<number>();
   resolutions = input<Array<number>>();
   url = input<string>();
-
   imageLoadStart = output<ImageSourceEvent>();
   imageLoadEnd = output<ImageSourceEvent>();
   imageLoadError = output<ImageSourceEvent>();
-
   instance: ImageWMS;
-
   protected readonly _instanceSignal = signal<ImageWMS | undefined>(undefined);
-
   readonly instanceSignal = this._instanceSignal.asReadonly();
 
   protected setInstance(instance: ImageWMS): ImageWMS {
     this.instance = instance;
-
     this._instanceSignal.set(instance);
-
     return instance;
   }
 

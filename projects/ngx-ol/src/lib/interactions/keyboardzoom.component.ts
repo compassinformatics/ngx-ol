@@ -10,18 +10,13 @@ import { MapComponent } from '../map.component';
 export class KeyboardZoomInteractionComponent implements OnInit, OnChanges, OnDestroy {
   duration = input<number>();
   delta = input<number>();
-
   instance: KeyboardZoom;
-
   protected readonly _instanceSignal = signal<KeyboardZoom | undefined>(undefined);
-
   readonly instanceSignal = this._instanceSignal.asReadonly();
 
   protected setInstance(instance: KeyboardZoom): KeyboardZoom {
     this.instance = instance;
-
     this._instanceSignal.set(instance);
-
     return instance;
   }
 

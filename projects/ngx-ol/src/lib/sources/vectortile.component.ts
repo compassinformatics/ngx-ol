@@ -56,23 +56,17 @@ export class SourceVectorTileComponent
   wrapX = input<boolean>();
   zDirection = input<number | NearestDirectionFunction>();
   format = input<FeatureFormat<any>>();
-
   @ContentChild(FormatMVTComponent, { static: false }) formatMVTComponent: FormatMVTComponent;
   @ContentChild(FormatGeoJSONComponent, { static: false })
   formatGeoJSONComponent: FormatGeoJSONComponent;
   @ContentChild(TileGridComponent, { static: false }) tileGridComponent: TileGridComponent;
-
   instance: VectorTile;
-
   protected readonly _instanceSignal = signal<VectorTile | undefined>(undefined);
-
   readonly instanceSignal = this._instanceSignal.asReadonly();
 
   protected setInstance(instance: VectorTile): VectorTile {
     this.instance = instance;
-
     this._instanceSignal.set(instance);
-
     return instance;
   }
   tileGrid: TileGrid;

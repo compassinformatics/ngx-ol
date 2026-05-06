@@ -22,23 +22,15 @@ import { LayerGroupComponent } from './layergroup.component';
 })
 export class LayerHeatmapComponent extends LayerComponent implements OnInit, OnDestroy, OnChanges {
   gradient = input<string[]>();
-
   radius = input<number>();
-
   blur = input<number>();
-
   weight = input<string | ((feature: FeatureLike) => number)>();
-
   source = input<VectorSource<FeatureLike>>();
-
   properties = input<Record<string, any>>();
-
   instance: Heatmap<FeatureLike, VectorSource<FeatureLike>>;
-
   protected readonly _instanceSignal = signal<
     Heatmap<FeatureLike, VectorSource<FeatureLike>> | undefined
   >(undefined);
-
   readonly instanceSignal = this._instanceSignal.asReadonly();
 
   protected setInstance(
@@ -47,7 +39,6 @@ export class LayerHeatmapComponent extends LayerComponent implements OnInit, OnD
     this.instance = instance;
 
     this._instanceSignal.set(instance);
-
     return instance;
   }
 

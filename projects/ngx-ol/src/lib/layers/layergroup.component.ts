@@ -10,16 +10,12 @@ import { MapComponent } from '../map.component';
 })
 export class LayerGroupComponent extends LayerComponent implements OnInit, OnDestroy {
   instance: Group;
-
   protected readonly _instanceSignal = signal<Group | undefined>(undefined);
-
   readonly instanceSignal = this._instanceSignal.asReadonly();
 
   protected setInstance(instance: Group): Group {
     this.instance = instance;
-
     this._instanceSignal.set(instance);
-
     return instance;
   }
 

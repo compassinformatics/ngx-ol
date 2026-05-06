@@ -14,18 +14,13 @@ export class ControlZoomToExtentComponent implements OnInit, OnChanges, OnDestro
   label = input<string | HTMLElement>();
   tipLabel = input<string>();
   extent = input<Extent>();
-
   instance: ZoomToExtent;
-
   protected readonly _instanceSignal = signal<ZoomToExtent | undefined>(undefined);
-
   readonly instanceSignal = this._instanceSignal.asReadonly();
 
   protected setInstance(instance: ZoomToExtent): ZoomToExtent {
     this.instance = instance;
-
     this._instanceSignal.set(instance);
-
     return instance;
   }
 

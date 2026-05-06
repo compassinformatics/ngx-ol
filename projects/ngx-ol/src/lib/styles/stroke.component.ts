@@ -27,18 +27,13 @@ export class StyleStrokeComponent implements OnInit, OnChanges {
   lineJoin = input<CanvasLineJoin | undefined>();
   miterLimit = input<number>();
   width = input<number>();
-
   instance: Stroke;
-
   protected readonly _instanceSignal = signal<Stroke | undefined>(undefined);
-
   readonly instanceSignal = this._instanceSignal.asReadonly();
 
   protected setInstance(instance: Stroke): Stroke {
     this.instance = instance;
-
     this._instanceSignal.set(instance);
-
     return instance;
   }
   /* the typings do not have the setters */

@@ -36,25 +36,19 @@ export class ModifyInteractionComponent implements OnInit, OnChanges, OnDestroy 
   source = input<Vector>();
   hitDetection = input<boolean | BaseVectorLayer<any, any, any>>();
   snapToPointer = input<boolean>();
-
   olChange = output<BaseEvent>();
   changeActive = output<ObjectEvent>();
   olError = output<BaseEvent>();
   modifyEnd = output<ModifyEvent>();
   modifyStart = output<ModifyEvent>();
   propertyChange = output<ObjectEvent>();
-
   instance: Modify;
-
   protected readonly _instanceSignal = signal<Modify | undefined>(undefined);
-
   readonly instanceSignal = this._instanceSignal.asReadonly();
 
   protected setInstance(instance: Modify): Modify {
     this.instance = instance;
-
     this._instanceSignal.set(instance);
-
     return instance;
   }
 

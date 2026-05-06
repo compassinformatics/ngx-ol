@@ -21,18 +21,13 @@ export class DefaultInteractionComponent implements OnInit, OnChanges, OnDestroy
   pinchZoom = input<boolean>();
   zoomDelta = input<number>();
   zoomDuration = input<number>();
-
   instance: Collection<Interaction>;
-
   protected readonly _instanceSignal = signal<Collection<Interaction> | undefined>(undefined);
-
   readonly instanceSignal = this._instanceSignal.asReadonly();
 
   protected setInstance(instance: Collection<Interaction>): Collection<Interaction> {
     this.instance = instance;
-
     this._instanceSignal.set(instance);
-
     return instance;
   }
 

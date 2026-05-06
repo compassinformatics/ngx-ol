@@ -13,18 +13,13 @@ export class DragBoxInteractionComponent implements OnInit, OnChanges, OnDestroy
   className = input<string>();
   condition = input<Condition>();
   boxEndCondition = input<EndCondition>();
-
   instance: DragBox;
-
   protected readonly _instanceSignal = signal<DragBox | undefined>(undefined);
-
   readonly instanceSignal = this._instanceSignal.asReadonly();
 
   protected setInstance(instance: DragBox): DragBox {
     this.instance = instance;
-
     this._instanceSignal.set(instance);
-
     return instance;
   }
 

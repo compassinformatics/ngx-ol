@@ -18,18 +18,13 @@ export class SourceUTFGridComponent extends SourceComponent implements OnInit, O
   url = input<string>();
   wrapX = input<boolean>();
   zDirection = input<number | NearestDirectionFunction>();
-
   instance: UTFGrid;
-
   protected readonly _instanceSignal = signal<UTFGrid | undefined>(undefined);
-
   readonly instanceSignal = this._instanceSignal.asReadonly();
 
   protected setInstance(instance: UTFGrid): UTFGrid {
     this.instance = instance;
-
     this._instanceSignal.set(instance);
-
     return instance;
   }
 

@@ -11,18 +11,13 @@ export class MouseWheelZoomInteractionComponent implements OnInit, OnChanges, On
   duration = input<number>();
   timeout = input<number>();
   useAnchor = input<boolean>();
-
   instance: MouseWheelZoom;
-
   protected readonly _instanceSignal = signal<MouseWheelZoom | undefined>(undefined);
-
   readonly instanceSignal = this._instanceSignal.asReadonly();
 
   protected setInstance(instance: MouseWheelZoom): MouseWheelZoom {
     this.instance = instance;
-
     this._instanceSignal.set(instance);
-
     return instance;
   }
 

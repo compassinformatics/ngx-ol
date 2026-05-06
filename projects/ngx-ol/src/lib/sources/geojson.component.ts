@@ -29,18 +29,13 @@ export class SourceGeoJSONComponent extends SourceComponent implements OnInit, O
   featureProjection = input<ProjectionLike>();
   geometryName = input<string>();
   url = input<string>();
-
   instance: Vector;
-
   protected readonly _instanceSignal = signal<Vector | undefined>(undefined);
-
   readonly instanceSignal = this._instanceSignal.asReadonly();
 
   protected setInstance(instance: Vector): Vector {
     this.instance = instance;
-
     this._instanceSignal.set(instance);
-
     return instance;
   }
   format: FeatureFormat;

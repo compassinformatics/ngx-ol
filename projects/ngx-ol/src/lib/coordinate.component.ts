@@ -16,7 +16,6 @@ export class CoordinateComponent implements DoCheck, OnChanges, OnInit {
   x = input.required<number>();
   y = input.required<number>();
   srid = input<string | undefined>();
-
   private host: any;
   private geometryHost?: SimpleGeometryComponent;
   private mapSrid = 'EPSG:3857';

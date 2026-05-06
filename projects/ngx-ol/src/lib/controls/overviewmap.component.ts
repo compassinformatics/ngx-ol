@@ -31,18 +31,13 @@ export class ControlOverviewMapComponent implements OnInit, OnChanges, OnDestroy
   target = input<string | HTMLElement>();
   tipLabel = input<string>();
   view = input<View>();
-
   instance: OverviewMap;
-
   protected readonly _instanceSignal = signal<OverviewMap | undefined>(undefined);
-
   readonly instanceSignal = this._instanceSignal.asReadonly();
 
   protected setInstance(instance: OverviewMap): OverviewMap {
     this.instance = instance;
-
     this._instanceSignal.set(instance);
-
     return instance;
   }
 

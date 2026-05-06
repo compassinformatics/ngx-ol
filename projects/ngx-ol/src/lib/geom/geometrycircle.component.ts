@@ -14,19 +14,14 @@ export class GeometryCircleComponent extends SimpleGeometryComponent implements 
   center = input<Coordinate>([0, 0]);
   layout = input<GeometryLayout>();
   radius = input<number>();
-
   public componentType = 'geometry-circle';
   instance: Circle;
-
   protected readonly _instanceSignal = signal<Circle | undefined>(undefined);
-
   readonly instanceSignal = this._instanceSignal.asReadonly();
 
   protected setInstance(instance: Circle): Circle {
     this.instance = instance;
-
     this._instanceSignal.set(instance);
-
     return instance;
   }
 

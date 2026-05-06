@@ -20,18 +20,13 @@ export class GraticuleComponent implements AfterContentInit, OnChanges, OnDestro
   showLabels = input<boolean>();
   lonLabelPosition = input<number>();
   latLabelPosition = input<number>();
-
   instance: any;
-
   protected readonly _instanceSignal = signal<any | undefined>(undefined);
-
   readonly instanceSignal = this._instanceSignal.asReadonly();
 
   protected setInstance(instance: any): any {
     this.instance = instance;
-
     this._instanceSignal.set(instance);
-
     return instance;
   }
   public componentType = 'graticule';

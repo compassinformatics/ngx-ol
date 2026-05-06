@@ -13,18 +13,13 @@ export class DragAndDropInteractionComponent implements OnInit, OnChanges, OnDes
   formatConstructors = input<FeatureFormat[]>();
   projection = input<ProjectionLike>();
   target = input<HTMLElement>();
-
   instance: DragAndDrop;
-
   protected readonly _instanceSignal = signal<DragAndDrop | undefined>(undefined);
-
   readonly instanceSignal = this._instanceSignal.asReadonly();
 
   protected setInstance(instance: DragAndDrop): DragAndDrop {
     this.instance = instance;
-
     this._instanceSignal.set(instance);
-
     return instance;
   }
 

@@ -10,19 +10,14 @@ import { ContentComponent } from '../content.component';
 })
 export class ControlComponent implements OnInit, OnDestroy {
   @ContentChild(ContentComponent, { static: true }) content: ContentComponent;
-
   public componentType = 'control';
   instance: Control;
-
   protected readonly _instanceSignal = signal<Control | undefined>(undefined);
-
   readonly instanceSignal = this._instanceSignal.asReadonly();
 
   protected setInstance(instance: Control): Control {
     this.instance = instance;
-
     this._instanceSignal.set(instance);
-
     return instance;
   }
   element: HTMLElement;

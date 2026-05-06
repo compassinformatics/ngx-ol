@@ -42,18 +42,13 @@ export class SourceTileWMSComponent extends SourceComponent implements OnChanges
   wrapX = input<boolean>();
   transition = input<number>();
   zDirection = input<number | NearestDirectionFunction>();
-
   instance: TileWMS;
-
   protected readonly _instanceSignal = signal<TileWMS | undefined>(undefined);
-
   readonly instanceSignal = this._instanceSignal.asReadonly();
 
   protected setInstance(instance: TileWMS): TileWMS {
     this.instance = instance;
-
     this._instanceSignal.set(instance);
-
     return instance;
   }
 

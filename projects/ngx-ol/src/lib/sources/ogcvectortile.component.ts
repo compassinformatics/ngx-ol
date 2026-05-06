@@ -45,24 +45,18 @@ export class SourceOGCVectorTileComponent
   zDirection = input<number | NearestDirectionFunction>();
   collections = input<string[]>();
   format = input<FeatureFormat<any>>();
-
   @ContentChild(FormatMVTComponent, { static: false }) formatMVTComponent:
     | FormatMVTComponent
     | FormatGeoJSONComponent;
   @ContentChild(FormatGeoJSONComponent, { static: false })
   formatGeoJSONComponent: FormatGeoJSONComponent;
-
   instance: OGCVectorTile;
-
   protected readonly _instanceSignal = signal<OGCVectorTile | undefined>(undefined);
-
   readonly instanceSignal = this._instanceSignal.asReadonly();
 
   protected setInstance(instance: OGCVectorTile): OGCVectorTile {
     this.instance = instance;
-
     this._instanceSignal.set(instance);
-
     return instance;
   }
   tileGrid: TileGrid;

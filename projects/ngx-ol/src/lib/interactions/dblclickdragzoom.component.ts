@@ -9,22 +9,15 @@ import { MapComponent } from '../map.component';
 })
 export class DblClickDragZoomInteractionComponent implements OnInit, OnChanges, OnDestroy {
   duration = input<number>();
-
   delta = input<number>();
-
   stopDown = input<(handled: boolean) => boolean>();
-
   instance: DblClickDragZoom;
-
   protected readonly _instanceSignal = signal<DblClickDragZoom | undefined>(undefined);
-
   readonly instanceSignal = this._instanceSignal.asReadonly();
 
   protected setInstance(instance: DblClickDragZoom): DblClickDragZoom {
     this.instance = instance;
-
     this._instanceSignal.set(instance);
-
     return instance;
   }
 

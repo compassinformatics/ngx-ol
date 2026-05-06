@@ -34,18 +34,13 @@ export class SourceVectorComponent extends SourceComponent implements OnInit, On
   url = input<string | FeatureUrlFunction>();
   format = input<FeatureFormat<any>>();
   strategy = input<LoadingStrategy>();
-
   instance: Vector<FeatureLike>;
-
   protected readonly _instanceSignal = signal<Vector<FeatureLike> | undefined>(undefined);
-
   readonly instanceSignal = this._instanceSignal.asReadonly();
 
   protected setInstance(instance: Vector<FeatureLike>): Vector<FeatureLike> {
     this.instance = instance;
-
     this._instanceSignal.set(instance);
-
     return instance;
   }
 

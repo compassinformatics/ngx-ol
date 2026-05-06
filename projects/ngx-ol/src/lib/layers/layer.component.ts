@@ -28,21 +28,15 @@ export abstract class LayerComponent implements OnInit, OnChanges, OnDestroy {
   maxZoom = input<number>();
   render = input<RenderFunction>();
   properties = input<Record<string, any>>();
-
   prerender = input<(evt: Event) => void>();
   postrender = input<(evt: Event) => void>();
-
   instance: any;
-
   protected readonly _instanceSignal = signal<any | undefined>(undefined);
-
   readonly instanceSignal = this._instanceSignal.asReadonly();
 
   protected setInstance(instance: any): any {
     this.instance = instance;
-
     this._instanceSignal.set(instance);
-
     return instance;
   }
   public componentType = 'layer';

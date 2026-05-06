@@ -20,18 +20,13 @@ export class DefaultControlComponent implements OnInit, OnChanges, OnDestroy {
   rotateOptions = input<RotateOptions>();
   zoom = input<boolean>();
   zoomOptions = input<ZoomOptions>();
-
   instance: Collection<Control>;
-
   protected readonly _instanceSignal = signal<Collection<Control> | undefined>(undefined);
-
   readonly instanceSignal = this._instanceSignal.asReadonly();
 
   protected setInstance(instance: Collection<Control>): Collection<Control> {
     this.instance = instance;
-
     this._instanceSignal.set(instance);
-
     return instance;
   }
 

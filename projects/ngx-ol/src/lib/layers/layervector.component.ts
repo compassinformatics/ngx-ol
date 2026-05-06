@@ -24,21 +24,13 @@ import VectorSource from 'ol/source/Vector';
 })
 export class LayerVectorComponent extends LayerComponent implements OnInit, OnDestroy, OnChanges {
   renderOrder = input<OrderFunction>();
-
   renderBuffer = input<number>();
-
   style = input<StyleLike | FlatStyleLike | null | undefined>();
-
   updateWhileAnimating = input<boolean>();
-
   updateWhileInteracting = input<boolean>();
-
   declutter = input<boolean | string | number>();
-
   background = input<BackgroundColor>();
-
   properties = input<Record<string, any>>();
-
   source = input<VectorSource>();
 
   constructor(map: MapComponent, @Optional() group?: LayerGroupComponent) {

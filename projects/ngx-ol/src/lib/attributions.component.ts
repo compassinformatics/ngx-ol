@@ -8,18 +8,13 @@ import { AttributionComponent } from './attribution.component';
 })
 export class AttributionsComponent implements AfterViewInit {
   @ContentChildren(AttributionComponent) attributions: QueryList<AttributionComponent>;
-
   instance: Array<string>;
-
   protected readonly _instanceSignal = signal<Array<string> | undefined>(undefined);
-
   readonly instanceSignal = this._instanceSignal.asReadonly();
 
   protected setInstance(instance: Array<string>): Array<string> {
     this.instance = instance;
-
     this._instanceSignal.set(instance);
-
     return instance;
   }
 

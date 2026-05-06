@@ -7,20 +7,14 @@ import { LayerComponent } from '../layers/layer.component';
 // eslint-disable-next-line @angular-eslint/directive-class-suffix
 export abstract class SourceComponent implements OnChanges, OnDestroy {
   attributions = input<AttributionLike>();
-
   attributionsCollapsible = input<boolean>();
-
   instance: Source;
-
   protected readonly _instanceSignal = signal<Source | undefined>(undefined);
-
   readonly instanceSignal = this._instanceSignal.asReadonly();
 
   protected setInstance(instance: Source): Source {
     this.instance = instance;
-
     this._instanceSignal.set(instance);
-
     return instance;
   }
   public componentType = 'source';

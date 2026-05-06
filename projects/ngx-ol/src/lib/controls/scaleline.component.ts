@@ -19,18 +19,13 @@ export class ControlScaleLineComponent implements OnInit, OnChanges, OnDestroy {
   steps = input<number>();
   text = input<boolean>();
   dpi = input<number>();
-
   instance: ScaleLine;
-
   protected readonly _instanceSignal = signal<ScaleLine | undefined>(undefined);
-
   readonly instanceSignal = this._instanceSignal.asReadonly();
 
   protected setInstance(instance: ScaleLine): ScaleLine {
     this.instance = instance;
-
     this._instanceSignal.set(instance);
-
     return instance;
   }
 

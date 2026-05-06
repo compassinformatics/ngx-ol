@@ -20,18 +20,13 @@ export class TileGridComponent implements OnInit, OnChanges {
   resolutions = input<number[]>();
   sizes = input<Size[]>();
   tileSizes = input<(number | Size)[]>();
-
   instance: TileGrid;
-
   protected readonly _instanceSignal = signal<TileGrid | undefined>(undefined);
-
   readonly instanceSignal = this._instanceSignal.asReadonly();
 
   protected setInstance(instance: TileGrid): TileGrid {
     this.instance = instance;
-
     this._instanceSignal.set(instance);
-
     return instance;
   }
 
