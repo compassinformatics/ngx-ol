@@ -10,18 +10,13 @@ import { MapComponent } from '../map.component';
 export class DoubleClickZoomInteractionComponent implements OnInit, OnChanges, OnDestroy {
   duration = input<number>();
   delta = input<number>();
-
   instance: DoubleClickZoom;
-
   protected readonly _instanceSignal = signal<DoubleClickZoom | undefined>(undefined);
-
   readonly instanceSignal = this._instanceSignal.asReadonly();
 
   protected setInstance(instance: DoubleClickZoom): DoubleClickZoom {
     this.instance = instance;
-
     this._instanceSignal.set(instance);
-
     return instance;
   }
 

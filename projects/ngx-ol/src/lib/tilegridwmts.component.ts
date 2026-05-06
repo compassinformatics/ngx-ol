@@ -16,18 +16,13 @@ export class TileGridWMTSComponent extends TileGridComponent implements OnInit {
   sizes = input<Size[]>();
   tileSize = input<number | Size>();
   tileSizes = input<(number | Size)[]>();
-
   instance: WMTS;
-
   protected readonly _instanceSignal = signal<WMTS | undefined>(undefined);
-
   readonly instanceSignal = this._instanceSignal.asReadonly();
 
   protected setInstance(instance: WMTS): WMTS {
     this.instance = instance;
-
     this._instanceSignal.set(instance);
-
     return instance;
   }
 

@@ -35,18 +35,13 @@ export class SourceOGCMapTileComponent extends SourceComponent implements AfterC
   wrapX = input<boolean>();
   transition = input<number>();
   collections = input<string[]>();
-
   instance: OGCMapTile;
-
   protected readonly _instanceSignal = signal<OGCMapTile | undefined>(undefined);
-
   readonly instanceSignal = this._instanceSignal.asReadonly();
 
   protected setInstance(instance: OGCMapTile): OGCMapTile {
     this.instance = instance;
-
     this._instanceSignal.set(instance);
-
     return instance;
   }
 

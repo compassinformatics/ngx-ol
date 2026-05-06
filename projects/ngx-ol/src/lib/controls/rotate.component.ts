@@ -18,18 +18,13 @@ export class ControlRotateComponent implements OnInit, OnChanges, OnDestroy {
   render = input<(event: MapEvent) => void>();
   resetNorth = input<() => void>();
   target = input<string | HTMLElement>();
-
   instance: Rotate;
-
   protected readonly _instanceSignal = signal<Rotate | undefined>(undefined);
-
   readonly instanceSignal = this._instanceSignal.asReadonly();
 
   protected setInstance(instance: Rotate): Rotate {
     this.instance = instance;
-
     this._instanceSignal.set(instance);
-
     return instance;
   }
 

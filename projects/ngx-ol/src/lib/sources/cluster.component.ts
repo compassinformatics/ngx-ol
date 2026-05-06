@@ -32,21 +32,15 @@ export class SourceClusterComponent extends SourceComponent implements AfterCont
   geometryFunction = input<(feature: Feature) => Point>();
   wrapX = input<boolean>();
   createCluster = input<any>();
-
   @ContentChild(SourceVectorComponent, { static: false })
   sourceVectorComponent: SourceVectorComponent;
-
   instance: Cluster<any>;
-
   protected readonly _instanceSignal = signal<Cluster<any> | undefined>(undefined);
-
   readonly instanceSignal = this._instanceSignal.asReadonly();
 
   protected setInstance(instance: Cluster<any>): Cluster<any> {
     this.instance = instance;
-
     this._instanceSignal.set(instance);
-
     return instance;
   }
   source: Vector<any>;

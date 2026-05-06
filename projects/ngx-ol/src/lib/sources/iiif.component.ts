@@ -26,54 +26,31 @@ import { SourceComponent } from './source.component';
 })
 export class SourceIIIFComponent extends SourceComponent implements OnInit, OnChanges {
   cacheSize = input<number>();
-
   crossOrigin = input<string | null>();
-
   extent = input<Extent>();
-
   format = input<string>();
-
   interpolate = input<boolean>();
-
   projection = input<ProjectionLike>();
-
   quality = input<string>();
-
   reprojectionErrorThreshold = input<number>();
-
   resolutions = input<number[]>();
-
   size = input.required<Size>();
-
   sizes = input<Size[]>();
-
   state = input<State>();
-
   supports = input<string[]>();
-
   tilePixelRatio = input<number>();
-
   tileSize = input<number | Size>();
-
   transition = input<number>();
-
   url = input<string>();
-
   version = input<string>();
-
   zDirection = input<number | NearestDirectionFunction>();
-
   instance: IIIF;
-
   protected readonly _instanceSignal = signal<IIIF | undefined>(undefined);
-
   readonly instanceSignal = this._instanceSignal.asReadonly();
 
   protected setInstance(instance: IIIF): IIIF {
     this.instance = instance;
-
     this._instanceSignal.set(instance);
-
     return instance;
   }
 

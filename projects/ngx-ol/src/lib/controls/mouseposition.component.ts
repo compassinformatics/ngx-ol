@@ -16,18 +16,13 @@ export class ControlMousePositionComponent implements OnInit, OnChanges, OnDestr
   render = input<(event: MapEvent) => void>();
   placeholder = input<string>();
   wrapX = input<boolean>();
-
   instance: MousePosition;
-
   protected readonly _instanceSignal = signal<MousePosition | undefined>(undefined);
-
   readonly instanceSignal = this._instanceSignal.asReadonly();
 
   protected setInstance(instance: MousePosition): MousePosition {
     this.instance = instance;
-
     this._instanceSignal.set(instance);
-
     return instance;
   }
   target: HTMLElement;

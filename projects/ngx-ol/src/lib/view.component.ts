@@ -43,27 +43,20 @@ export class ViewComponent implements OnInit, OnChanges, OnDestroy {
   showFullExtent = input<boolean>();
   multiWorld = input<boolean>();
   padding = input<number[]>();
-
   zoomAnimation = input(false);
-
   olChange = output<BaseEvent>();
   changeCenter = output<ObjectEvent>();
   changeResolution = output<ObjectEvent>();
   changeRotation = output<ObjectEvent>();
   olError = output<BaseEvent>();
   propertyChange = output<ObjectEvent>();
-
   instance: View;
-
   protected readonly _instanceSignal = signal<View | undefined>(undefined);
-
   readonly instanceSignal = this._instanceSignal.asReadonly();
 
   protected setInstance(instance: View): View {
     this.instance = instance;
-
     this._instanceSignal.set(instance);
-
     return instance;
   }
   public componentType = 'view';

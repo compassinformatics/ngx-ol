@@ -18,18 +18,13 @@ export class ControlZoomComponent implements OnInit, OnChanges, OnDestroy {
   zoomOutTipLabel = input<string>();
   delta = input<number>();
   target = input<string | HTMLElement>();
-
   instance: Zoom;
-
   protected readonly _instanceSignal = signal<Zoom | undefined>(undefined);
-
   readonly instanceSignal = this._instanceSignal.asReadonly();
 
   protected setInstance(instance: Zoom): Zoom {
     this.instance = instance;
-
     this._instanceSignal.set(instance);
-
     return instance;
   }
 

@@ -13,18 +13,13 @@ export class ControlZoomSliderComponent implements OnInit, OnChanges, OnDestroy 
   duration = input<number>();
   render = input<(event: MapEvent) => void>();
   target = input<string | HTMLElement>();
-
   instance: ZoomSlider;
-
   protected readonly _instanceSignal = signal<ZoomSlider | undefined>(undefined);
-
   readonly instanceSignal = this._instanceSignal.asReadonly();
 
   protected setInstance(instance: ZoomSlider): ZoomSlider {
     this.instance = instance;
-
     this._instanceSignal.set(instance);
-
     return instance;
   }
 

@@ -23,18 +23,13 @@ export class StyleComponent implements OnInit, OnChanges {
   stroke = input<Stroke>();
   text = input<Text>();
   zIndex = input<number>();
-
   instance: Style;
-
   protected readonly _instanceSignal = signal<Style | undefined>(undefined);
-
   readonly instanceSignal = this._instanceSignal.asReadonly();
 
   protected setInstance(instance: Style): Style {
     this.instance = instance;
-
     this._instanceSignal.set(instance);
-
     return instance;
   }
   public componentType = 'style';

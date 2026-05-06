@@ -21,30 +21,19 @@ import { MapComponent } from '../map.component';
 })
 export class ExtentInteractionComponent implements OnInit, OnChanges, OnDestroy {
   condition = input<Condition>();
-
   extent = input<ExtentType>();
-
   boxStyle = input<StyleLike>();
-
   pixelTolerance = input<number>();
-
   pointerStyle = input<StyleLike>();
-
   wrapX = input<boolean>();
-
   extentChanged = output<ExtentEvent>();
-
   instance: ExtentInteraction;
-
   protected readonly _instanceSignal = signal<ExtentInteraction | undefined>(undefined);
-
   readonly instanceSignal = this._instanceSignal.asReadonly();
 
   protected setInstance(instance: ExtentInteraction): ExtentInteraction {
     this.instance = instance;
-
     this._instanceSignal.set(instance);
-
     return instance;
   }
 

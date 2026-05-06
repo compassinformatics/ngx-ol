@@ -13,19 +13,14 @@ import { GeometryLayout } from 'ol/geom/Geometry';
 export class GeometryPointComponent extends SimpleGeometryComponent implements OnInit, OnChanges {
   coordinates = input<Coordinate>([0, 0]);
   layout = input<GeometryLayout>();
-
   public componentType = 'geometry-point';
   instance: Point;
-
   protected readonly _instanceSignal = signal<Point | undefined>(undefined);
-
   readonly instanceSignal = this._instanceSignal.asReadonly();
 
   protected setInstance(instance: Point): Point {
     this.instance = instance;
-
     this._instanceSignal.set(instance);
-
     return instance;
   }
 

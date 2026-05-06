@@ -10,24 +10,16 @@ import { MapComponent } from '../map.component';
 })
 export class LinkInteractionComponent implements OnInit, OnChanges, OnDestroy {
   animate = input<boolean | AnimationOptions>();
-
   params = input<Params[]>();
-
   replace = input<boolean>();
-
   prefix = input<string>();
-
   instance: Link;
-
   protected readonly _instanceSignal = signal<Link | undefined>(undefined);
-
   readonly instanceSignal = this._instanceSignal.asReadonly();
 
   protected setInstance(instance: Link): Link {
     this.instance = instance;
-
     this._instanceSignal.set(instance);
-
     return instance;
   }
 

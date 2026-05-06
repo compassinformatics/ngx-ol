@@ -13,20 +13,14 @@ export class FormatMVTComponent implements OnChanges {
   layerName = input<string>();
   layers = input<string[]>();
   idProperty = input<string>();
-
   public componentType = 'format';
-
   instance: MVT;
-
   protected readonly _instanceSignal = signal<MVT | undefined>(undefined);
-
   readonly instanceSignal = this._instanceSignal.asReadonly();
 
   protected setInstance(instance: MVT): MVT {
     this.instance = instance;
-
     this._instanceSignal.set(instance);
-
     return instance;
   }
 

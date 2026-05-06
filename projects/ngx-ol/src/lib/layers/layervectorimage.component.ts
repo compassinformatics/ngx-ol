@@ -26,17 +26,11 @@ export class LayerVectorImageComponent
   implements OnInit, OnDestroy, OnChanges
 {
   renderBuffer = input<number>();
-
   style = input<StyleLike | FlatStyleLike | null | undefined>();
-
   declutter = input<boolean | string | number>();
-
   background = input<BackgroundColor>();
-
   imageRatio = input<number>();
-
   properties = input<Record<string, any>>();
-
   source = input<VectorSource>();
 
   constructor(map: MapComponent, @Optional() group?: LayerGroupComponent) {

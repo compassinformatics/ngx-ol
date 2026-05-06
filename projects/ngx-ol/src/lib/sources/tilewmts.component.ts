@@ -52,24 +52,17 @@ export class SourceTileWMTSComponent
   wrapX = input<boolean>();
   transition = input<number>();
   zDirection = input<number | NearestDirectionFunction>();
-
   tileLoadStart = output<TileSourceEvent>();
   tileLoadEnd = output<TileSourceEvent>();
   tileLoadError = output<TileSourceEvent>();
-
   @ContentChild(TileGridWMTSComponent, { static: false }) tileGridWMTS: TileGridWMTSComponent;
-
   instance: SourceWMTS;
-
   protected readonly _instanceSignal = signal<SourceWMTS | undefined>(undefined);
-
   readonly instanceSignal = this._instanceSignal.asReadonly();
 
   protected setInstance(instance: SourceWMTS): SourceWMTS {
     this.instance = instance;
-
     this._instanceSignal.set(instance);
-
     return instance;
   }
 

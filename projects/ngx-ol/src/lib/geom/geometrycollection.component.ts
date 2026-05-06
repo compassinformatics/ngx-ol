@@ -9,20 +9,14 @@ import { FeatureComponent } from '../feature.component';
 })
 export class GeometryCollectionComponent implements OnInit, OnChanges {
   geometries = input<Geometry[]>([]);
-
   public componentType = 'geometry-collection';
-
   instance: GeometryCollection;
-
   protected readonly _instanceSignal = signal<GeometryCollection | undefined>(undefined);
-
   readonly instanceSignal = this._instanceSignal.asReadonly();
 
   protected setInstance(instance: GeometryCollection): GeometryCollection {
     this.instance = instance;
-
     this._instanceSignal.set(instance);
-
     return instance;
   }
 

@@ -21,18 +21,13 @@ import { ColorLike, PatternDescriptor } from 'ol/colorlike';
 })
 export class StyleFillComponent implements OnInit, OnChanges {
   color = input<Color | ColorLike | PatternDescriptor | null>();
-
   instance: Fill;
-
   protected readonly _instanceSignal = signal<Fill | undefined>(undefined);
-
   readonly instanceSignal = this._instanceSignal.asReadonly();
 
   protected setInstance(instance: Fill): Fill {
     this.instance = instance;
-
     this._instanceSignal.set(instance);
-
     return instance;
   }
   private readonly host: StyleComponent | StyleCircleComponent | StyleTextComponent;

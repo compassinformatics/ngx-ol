@@ -34,18 +34,13 @@ export class SourceTileJSONComponent extends SourceComponent implements OnInit, 
   wrapX = input<boolean>();
   transition = input<number>();
   zDirection = input<number | NearestDirectionFunction>();
-
   instance: TileJSON;
-
   protected readonly _instanceSignal = signal<TileJSON | undefined>(undefined);
-
   readonly instanceSignal = this._instanceSignal.asReadonly();
 
   protected setInstance(instance: TileJSON): TileJSON {
     this.instance = instance;
-
     this._instanceSignal.set(instance);
-
     return instance;
   }
 

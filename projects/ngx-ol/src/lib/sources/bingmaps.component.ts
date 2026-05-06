@@ -27,18 +27,13 @@ export class SourceBingmapsComponent extends SourceComponent implements OnInit, 
   placeholderTiles = input<boolean>();
   transition = input<number>();
   zDirection = input<number | NearestDirectionFunction>();
-
   instance: BingMaps;
-
   protected readonly _instanceSignal = signal<BingMaps | undefined>(undefined);
-
   readonly instanceSignal = this._instanceSignal.asReadonly();
 
   protected setInstance(instance: BingMaps): BingMaps {
     this.instance = instance;
-
     this._instanceSignal.set(instance);
-
     return instance;
   }
 

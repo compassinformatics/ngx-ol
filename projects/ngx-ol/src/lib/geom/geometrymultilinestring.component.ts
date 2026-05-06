@@ -10,18 +10,13 @@ import MultiLineString from 'ol/geom/MultiLineString';
 })
 export class GeometryMultiLinestringComponent extends SimpleGeometryComponent implements OnInit {
   public componentType = 'geometry-multilinestring';
-
   instance: MultiLineString;
-
   protected readonly _instanceSignal = signal<MultiLineString | undefined>(undefined);
-
   readonly instanceSignal = this._instanceSignal.asReadonly();
 
   protected setInstance(instance: MultiLineString): MultiLineString {
     this.instance = instance;
-
     this._instanceSignal.set(instance);
-
     return instance;
   }
 

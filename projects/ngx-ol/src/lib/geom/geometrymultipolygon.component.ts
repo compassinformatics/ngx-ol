@@ -11,16 +11,12 @@ import MultiPolygon from 'ol/geom/MultiPolygon';
 export class GeometryMultiPolygonComponent extends SimpleGeometryComponent implements OnInit {
   public componentType = 'geometry-multipolygon';
   instance: MultiPolygon;
-
   protected readonly _instanceSignal = signal<MultiPolygon | undefined>(undefined);
-
   readonly instanceSignal = this._instanceSignal.asReadonly();
 
   protected setInstance(instance: MultiPolygon): MultiPolygon {
     this.instance = instance;
-
     this._instanceSignal.set(instance);
-
     return instance;
   }
 

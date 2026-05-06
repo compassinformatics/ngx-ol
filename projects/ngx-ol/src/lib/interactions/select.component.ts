@@ -34,24 +34,18 @@ export class SelectInteractionComponent implements OnInit, OnChanges, OnDestroy 
   features = input<Collection<Feature>>();
   filter = input<FilterFunction>();
   hitTolerance = input<number>();
-
   olChange = output<BaseEvent>();
   olChangeActive = output<ObjectEvent>();
   olError = output<BaseEvent>();
   propertyChange = output<ObjectEvent>();
   olSelect = output<SelectEvent>();
-
   instance: Select;
-
   protected readonly _instanceSignal = signal<Select | undefined>(undefined);
-
   readonly instanceSignal = this._instanceSignal.asReadonly();
 
   protected setInstance(instance: Select): Select {
     this.instance = instance;
-
     this._instanceSignal.set(instance);
-
     return instance;
   }
 

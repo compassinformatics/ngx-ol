@@ -13,20 +13,14 @@ export class FormatGeoJSONComponent implements OnChanges {
   dataProjection = input<ProjectionLike>();
   featureProjection = input<ProjectionLike>();
   extractGeometryName = input<boolean>();
-
   public componentType = 'format';
-
   instance: GeoJSON;
-
   protected readonly _instanceSignal = signal<GeoJSON | undefined>(undefined);
-
   readonly instanceSignal = this._instanceSignal.asReadonly();
 
   protected setInstance(instance: GeoJSON): GeoJSON {
     this.instance = instance;
-
     this._instanceSignal.set(instance);
-
     return instance;
   }
 

@@ -38,7 +38,6 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
   maxTilesLoading = input<number>();
   moveTolerance = input<number>();
   runOutsideAngular = input(true);
-
   olChange = output<BaseEvent>();
   olChangeLayerGroup = output<ObjectEvent>();
   olChangeSize = output<ObjectEvent>();
@@ -60,18 +59,13 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
   postRender = output<MapEvent>();
   propertyChange = output<ObjectEvent>();
   singleClick = output<MapBrowserEvent<MouseEvent> | any>();
-
   instance: Map;
-
   protected readonly _instanceSignal = signal<Map | undefined>(undefined);
-
   readonly instanceSignal = this._instanceSignal.asReadonly();
 
   protected setInstance(instance: Map): Map {
     this.instance = instance;
-
     this._instanceSignal.set(instance);
-
     return instance;
   }
   public componentType = 'map';

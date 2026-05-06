@@ -32,22 +32,16 @@ export class SourceImageStaticComponent extends SourceComponent implements OnIni
   crossOrigin = input<null | string>();
   imageLoadFunction = input<LoadFunction>();
   interpolate = input<boolean>();
-
   imageLoadStart = output<ImageSourceEvent>();
   imageLoadEnd = output<ImageSourceEvent>();
   imageLoadError = output<ImageSourceEvent>();
-
   instance: ImageStatic;
-
   protected readonly _instanceSignal = signal<ImageStatic | undefined>(undefined);
-
   readonly instanceSignal = this._instanceSignal.asReadonly();
 
   protected setInstance(instance: ImageStatic): ImageStatic {
     this.instance = instance;
-
     this._instanceSignal.set(instance);
-
     return instance;
   }
 

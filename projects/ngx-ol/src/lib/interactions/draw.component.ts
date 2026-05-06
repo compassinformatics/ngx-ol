@@ -47,7 +47,6 @@ export class DrawInteractionComponent implements OnInit, OnChanges, OnDestroy {
   traceSource = input<Vector>();
   wrapX = input<boolean>();
   geometryLayout = input<GeometryLayout>();
-
   olChange = output<BaseEvent>();
   olChangeActive = output<ObjectEvent>();
   olDrawAbort = output<DrawEvent>();
@@ -55,18 +54,13 @@ export class DrawInteractionComponent implements OnInit, OnChanges, OnDestroy {
   drawStart = output<DrawEvent>();
   olError = output<BaseEvent>();
   propertyChange = output<ObjectEvent>();
-
   instance: Draw;
-
   protected readonly _instanceSignal = signal<Draw | undefined>(undefined);
-
   readonly instanceSignal = this._instanceSignal.asReadonly();
 
   protected setInstance(instance: Draw): Draw {
     this.instance = instance;
-
     this._instanceSignal.set(instance);
-
     return instance;
   }
 

@@ -30,21 +30,16 @@ export class StyleCircleComponent implements AfterContentInit, OnChanges, OnDest
   rotation = input<number>();
   rotateWithView = input<boolean>();
   declutterMode = input<DeclutterMode>();
-
   public componentType = 'style-circle';
   instance: Circle;
   private childFill?: Fill;
   private childStroke?: Stroke;
-
   protected readonly _instanceSignal = signal<Circle | undefined>(undefined);
-
   readonly instanceSignal = this._instanceSignal.asReadonly();
 
   protected setInstance(instance: Circle): Circle {
     this.instance = instance;
-
     this._instanceSignal.set(instance);
-
     return instance;
   }
 

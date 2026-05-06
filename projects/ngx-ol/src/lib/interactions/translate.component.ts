@@ -29,7 +29,6 @@ export class TranslateInteractionComponent implements OnInit, OnChanges, OnDestr
   layers = input<Layer[] | ((layer: Layer) => boolean)>();
   filter = input<FilterFunction>();
   hitTolerance = input<number>();
-
   olChange = output<BaseEvent>();
   olChangeActive = output<ObjectEvent>();
   olError = output<BaseEvent>();
@@ -37,18 +36,13 @@ export class TranslateInteractionComponent implements OnInit, OnChanges, OnDestr
   translateEnd = output<TranslateEvent>();
   translateStart = output<TranslateEvent>();
   translating = output<TranslateEvent>();
-
   instance: Translate;
-
   protected readonly _instanceSignal = signal<Translate | undefined>(undefined);
-
   readonly instanceSignal = this._instanceSignal.asReadonly();
 
   protected setInstance(instance: Translate): Translate {
     this.instance = instance;
-
     this._instanceSignal.set(instance);
-
     return instance;
   }
 

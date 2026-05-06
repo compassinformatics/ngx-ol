@@ -18,19 +18,14 @@ export class ControlAttributionComponent implements OnInit, OnChanges, OnDestroy
   collapseLabel = input<string | HTMLElement>();
   collapseClassName = input<string>();
   render = input<(event: MapEvent) => void>();
-
   public componentType = 'control';
   instance: Attribution;
-
   protected readonly _instanceSignal = signal<Attribution | undefined>(undefined);
-
   readonly instanceSignal = this._instanceSignal.asReadonly();
 
   protected setInstance(instance: Attribution): Attribution {
     this.instance = instance;
-
     this._instanceSignal.set(instance);
-
     return instance;
   }
   target: HTMLElement;

@@ -31,18 +31,13 @@ export class StyleIconComponent implements OnInit, OnChanges {
   rotation = input<number>();
   size = input<[number, number]>();
   src = input<string>();
-
   instance: Icon;
-
   protected readonly _instanceSignal = signal<Icon | undefined>(undefined);
-
   readonly instanceSignal = this._instanceSignal.asReadonly();
 
   protected setInstance(instance: Icon): Icon {
     this.instance = instance;
-
     this._instanceSignal.set(instance);
-
     return instance;
   }
 

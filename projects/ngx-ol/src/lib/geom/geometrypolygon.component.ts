@@ -11,16 +11,12 @@ import Polygon from 'ol/geom/Polygon';
 export class GeometryPolygonComponent extends SimpleGeometryComponent implements OnInit {
   public componentType = 'geometry-polygon';
   instance: Polygon;
-
   protected readonly _instanceSignal = signal<Polygon | undefined>(undefined);
-
   readonly instanceSignal = this._instanceSignal.asReadonly();
 
   protected setInstance(instance: Polygon): Polygon {
     this.instance = instance;
-
     this._instanceSignal.set(instance);
-
     return instance;
   }
 

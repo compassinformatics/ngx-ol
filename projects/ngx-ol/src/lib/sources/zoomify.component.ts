@@ -25,42 +25,25 @@ import { SourceComponent } from './source.component';
 })
 export class SourceZoomifyComponent extends SourceComponent implements OnInit, OnChanges {
   cacheSize = input<number>();
-
   crossOrigin = input<string | null>();
-
   interpolate = input<boolean>();
-
   projection = input<ProjectionLike>();
-
   tilePixelRatio = input<number>();
-
   reprojectionErrorThreshold = input<number>();
-
   url = input.required<string>();
-
   tierSizeCalculation = input<TierSizeCalculation>();
-
   size = input.required<Size>();
-
   extent = input<Extent>();
-
   transition = input<number>();
-
   tileSize = input<number>();
-
   zDirection = input<number | NearestDirectionFunction>();
-
   instance: Zoomify;
-
   protected readonly _instanceSignal = signal<Zoomify | undefined>(undefined);
-
   readonly instanceSignal = this._instanceSignal.asReadonly();
 
   protected setInstance(instance: Zoomify): Zoomify {
     this.instance = instance;
-
     this._instanceSignal.set(instance);
-
     return instance;
   }
 

@@ -26,32 +26,21 @@ export class LayerWebGLTileComponent
   implements OnInit, OnDestroy, OnChanges
 {
   style = input<Style>();
-
   preload = input<number>();
-
   source = input<DataTileSource<DataTile>>();
-
   sources = input<
     DataTileSource<DataTile>[] | ((extent: Extent, resolution: number) => SourceType[])
   >();
-
   map = input<MapComponent['instance']>();
-
   useInterimTilesOnError = input<boolean>();
-
   cacheSize = input<number>();
-
   instance: WebGLTileLayer;
-
   protected readonly _instanceSignal = signal<WebGLTileLayer | undefined>(undefined);
-
   readonly instanceSignal = this._instanceSignal.asReadonly();
 
   protected setInstance(instance: WebGLTileLayer): WebGLTileLayer {
     this.instance = instance;
-
     this._instanceSignal.set(instance);
-
     return instance;
   }
 

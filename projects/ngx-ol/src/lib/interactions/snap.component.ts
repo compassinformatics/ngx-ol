@@ -28,24 +28,18 @@ export class SnapInteractionComponent implements OnInit, OnChanges, OnDestroy {
   vertex = input<boolean>();
   pixelTolerance = input<number>();
   source = input<Vector>();
-
   olChange = output<BaseEvent>();
   olChangeActive = output<ObjectEvent>();
   olError = output<BaseEvent>();
   propertyChange = output<ObjectEvent>();
   olSnap = output<SnapEvent>();
-
   instance: Snap;
-
   protected readonly _instanceSignal = signal<Snap | undefined>(undefined);
-
   readonly instanceSignal = this._instanceSignal.asReadonly();
 
   protected setInstance(instance: Snap): Snap {
     this.instance = instance;
-
     this._instanceSignal.set(instance);
-
     return instance;
   }
 

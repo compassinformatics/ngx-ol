@@ -12,18 +12,13 @@ import { Condition } from 'ol/events/condition';
 export class DragPanInteractionComponent implements OnInit, OnChanges, OnDestroy {
   condition = input<Condition>();
   kinetic = input<Kinetic>();
-
   instance: DragPan;
-
   protected readonly _instanceSignal = signal<DragPan | undefined>(undefined);
-
   readonly instanceSignal = this._instanceSignal.asReadonly();
 
   protected setInstance(instance: DragPan): DragPan {
     this.instance = instance;
-
     this._instanceSignal.set(instance);
-
     return instance;
   }
 

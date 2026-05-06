@@ -17,18 +17,13 @@ export class ControlFullScreenComponent implements OnInit, OnChanges, OnDestroy 
   keys = input<boolean>();
   target = input<string | HTMLElement>();
   source = input<string | HTMLElement>();
-
   instance: FullScreen;
-
   protected readonly _instanceSignal = signal<FullScreen | undefined>(undefined);
-
   readonly instanceSignal = this._instanceSignal.asReadonly();
 
   protected setInstance(instance: FullScreen): FullScreen {
     this.instance = instance;
-
     this._instanceSignal.set(instance);
-
     return instance;
   }
 

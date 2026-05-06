@@ -18,13 +18,9 @@ import { SourceVectorComponent } from './sources/vector.component';
 })
 export class FeatureComponent implements OnInit, OnDestroy, OnChanges {
   id = input<string | number | undefined>();
-
   properties = input<Record<any, any>>();
-
   feature = input<Feature>();
-
   clickable = input<boolean>();
-
   olClick = output<{
     event: MapBrowserEvent<MouseEvent> | any;
     feature: Feature;
@@ -37,19 +33,14 @@ export class FeatureComponent implements OnInit, OnDestroy, OnChanges {
     event: MapBrowserEvent<MouseEvent> | any;
     feature: Feature;
   }>();
-
   public componentType = 'feature';
   instance: Feature;
-
   protected readonly _instanceSignal = signal<Feature | undefined>(undefined);
-
   readonly instanceSignal = this._instanceSignal.asReadonly();
 
   protected setInstance(instance: Feature): Feature {
     this.instance = instance;
-
     this._instanceSignal.set(instance);
-
     return instance;
   }
 

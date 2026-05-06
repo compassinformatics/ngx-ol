@@ -33,22 +33,16 @@ export class SourceOsmComponent extends SourceXYZComponent implements AfterConte
   url = input<string>();
   wrapX = input<boolean>();
   zDirection = input<number | NearestDirectionFunction>();
-
   tileLoadStart = output<TileSourceEvent>();
   tileLoadEnd = output<TileSourceEvent>();
   tileLoadError = output<TileSourceEvent>();
-
   instance: OSM;
-
   protected readonly _instanceSignal = signal<OSM | undefined>(undefined);
-
   readonly instanceSignal = this._instanceSignal.asReadonly();
 
   protected setInstance(instance: OSM): OSM {
     this.instance = instance;
-
     this._instanceSignal.set(instance);
-
     return instance;
   }
 

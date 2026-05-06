@@ -22,39 +22,24 @@ import { StyleComponent } from './style.component';
 })
 export class StyleRegularShapeComponent implements AfterContentInit, OnChanges, OnDestroy {
   fill = input<Fill>();
-
   points = input.required<number>();
-
   radius = input.required<number>();
-
   radius2 = input<number>();
-
   angle = input<number>();
-
   displacement = input<number[]>();
-
   stroke = input<Stroke>();
-
   rotation = input<number>();
-
   rotateWithView = input<boolean>();
-
   scale = input<number | Size>();
-
   declutterMode = input<DeclutterMode>();
-
   public componentType = 'style-regularshape';
   instance: RegularShape;
-
   protected readonly _instanceSignal = signal<RegularShape | undefined>(undefined);
-
   readonly instanceSignal = this._instanceSignal.asReadonly();
 
   protected setInstance(instance: RegularShape): RegularShape {
     this.instance = instance;
-
     this._instanceSignal.set(instance);
-
     return instance;
   }
 

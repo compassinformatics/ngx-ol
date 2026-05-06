@@ -49,24 +49,17 @@ export class SourceXYZComponent extends SourceComponent implements AfterContentI
   urls = input<string[]>();
   wrapX = input<boolean>();
   zDirection = input<number | NearestDirectionFunction>();
-
   @ContentChild(TileGridComponent, { static: false }) tileGridXYZ: TileGridComponent;
-
   tileLoadStart = output<TileSourceEvent>();
   tileLoadEnd = output<TileSourceEvent>();
   tileLoadError = output<TileSourceEvent>();
-
   instance: XYZ;
-
   protected readonly _instanceSignal = signal<XYZ | undefined>(undefined);
-
   readonly instanceSignal = this._instanceSignal.asReadonly();
 
   protected setInstance(instance: XYZ): XYZ {
     this.instance = instance;
-
     this._instanceSignal.set(instance);
-
     return instance;
   }
 

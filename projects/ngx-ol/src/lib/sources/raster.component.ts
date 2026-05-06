@@ -33,21 +33,15 @@ export class SourceRasterComponent extends SourceComponent implements AfterConte
   lib = input<any>();
   operationType = input<'pixel' | 'image'>();
   resolutions = input<number[] | null>();
-
   beforeOperations = output<RasterSourceEvent>();
   afterOperations = output<RasterSourceEvent>();
-
   instance: Raster;
-
   protected readonly _instanceSignal = signal<Raster | undefined>(undefined);
-
   readonly instanceSignal = this._instanceSignal.asReadonly();
 
   protected setInstance(instance: Raster): Raster {
     this.instance = instance;
-
     this._instanceSignal.set(instance);
-
     return instance;
   }
   sources: Source[] = [];

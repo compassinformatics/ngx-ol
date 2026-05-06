@@ -9,18 +9,13 @@ import { MapComponent } from '../map.component';
 })
 export class PinchZoomInteractionComponent implements OnInit, OnChanges, OnDestroy {
   duration = input<number>();
-
   instance: PinchZoom;
-
   protected readonly _instanceSignal = signal<PinchZoom | undefined>(undefined);
-
   readonly instanceSignal = this._instanceSignal.asReadonly();
 
   protected setInstance(instance: PinchZoom): PinchZoom {
     this.instance = instance;
-
     this._instanceSignal.set(instance);
-
     return instance;
   }
 
