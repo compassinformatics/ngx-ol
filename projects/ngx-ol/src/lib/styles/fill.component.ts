@@ -20,7 +20,7 @@ import { ColorLike, PatternDescriptor } from 'ol/colorlike';
   template: ` <div class="aol-style-fill"></div> `,
 })
 export class StyleFillComponent implements OnInit, OnChanges {
-  color = input<Color | ColorLike | PatternDescriptor | null>();
+  readonly color = input<Color | ColorLike | PatternDescriptor | null>();
   instance: Fill;
   protected readonly _instanceSignal = signal<Fill | undefined>(undefined);
   readonly instanceSignal = this._instanceSignal.asReadonly();

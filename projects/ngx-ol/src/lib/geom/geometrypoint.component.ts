@@ -11,9 +11,9 @@ import { GeometryLayout } from 'ol/geom/Geometry';
   template: ` <ng-content></ng-content> `,
 })
 export class GeometryPointComponent extends SimpleGeometryComponent implements OnInit, OnChanges {
-  coordinates = input<Coordinate>([0, 0]);
-  layout = input<GeometryLayout>();
-  public componentType = 'geometry-point';
+  readonly coordinates = input<Coordinate>([0, 0]);
+  readonly layout = input<GeometryLayout>();
+  readonly componentType: string = 'geometry-point';
   instance: Point;
   protected readonly _instanceSignal = signal<Point | undefined>(undefined);
   readonly instanceSignal = this._instanceSignal.asReadonly();

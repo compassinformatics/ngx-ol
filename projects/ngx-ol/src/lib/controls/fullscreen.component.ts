@@ -8,15 +8,15 @@ import { MapComponent } from '../map.component';
   template: ` <ng-content></ng-content> `,
 })
 export class ControlFullScreenComponent implements OnInit, OnChanges, OnDestroy {
-  className = input<string>();
-  label = input<string | HTMLElement | Text>();
-  labelActive = input<string | HTMLElement | Text>();
-  activeClassName = input<string>();
-  inactiveClassName = input<string>();
-  tipLabel = input<string>();
-  keys = input<boolean>();
-  target = input<string | HTMLElement>();
-  source = input<string | HTMLElement>();
+  readonly className = input<string>();
+  readonly label = input<string | HTMLElement | Text>();
+  readonly labelActive = input<string | HTMLElement | Text>();
+  readonly activeClassName = input<string>();
+  readonly inactiveClassName = input<string>();
+  readonly tipLabel = input<string>();
+  readonly keys = input<boolean>();
+  readonly target = input<string | HTMLElement>();
+  readonly source = input<string | HTMLElement>();
   instance: FullScreen;
   protected readonly _instanceSignal = signal<FullScreen | undefined>(undefined);
   readonly instanceSignal = this._instanceSignal.asReadonly();
@@ -27,7 +27,7 @@ export class ControlFullScreenComponent implements OnInit, OnChanges, OnDestroy 
     return instance;
   }
 
-  constructor(private map: MapComponent) {
+  constructor(private readonly map: MapComponent) {
     // console.log('instancing aol-control-fullscreen');
   }
 

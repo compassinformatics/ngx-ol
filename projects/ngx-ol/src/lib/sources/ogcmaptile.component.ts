@@ -23,18 +23,18 @@ import { LayerTileComponent } from '../layers/layertile.component';
   ],
 })
 export class SourceOGCMapTileComponent extends SourceComponent implements AfterContentInit, OnChanges {
-  url = input.required<string>();
-  context = input<any>();
-  mediaType = input<string>();
-  projection = input<ProjectionLike>();
-  cacheSize = input<number>();
-  crossOrigin = input<null | string>();
-  interpolate = input<boolean>();
-  reprojectionErrorThreshold = input<number>();
-  tileLoadFunction = input<LoadFunction>();
-  wrapX = input<boolean>();
-  transition = input<number>();
-  collections = input<string[]>();
+  readonly url = input.required<string>();
+  readonly context = input<any>();
+  readonly mediaType = input<string>();
+  readonly projection = input<ProjectionLike>();
+  readonly cacheSize = input<number>();
+  readonly crossOrigin = input<null | string>();
+  readonly interpolate = input<boolean>();
+  readonly reprojectionErrorThreshold = input<number>();
+  readonly tileLoadFunction = input<LoadFunction>();
+  readonly wrapX = input<boolean>();
+  readonly transition = input<number>();
+  readonly collections = input<string[]>();
   instance: OGCMapTile;
   protected readonly _instanceSignal = signal<OGCMapTile | undefined>(undefined);
   readonly instanceSignal = this._instanceSignal.asReadonly();

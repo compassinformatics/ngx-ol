@@ -23,19 +23,19 @@ import { SourceXYZComponent } from './xyz.component';
   providers: [{ provide: SourceComponent, useExisting: forwardRef(() => SourceOsmComponent) }],
 })
 export class SourceOsmComponent extends SourceXYZComponent implements AfterContentInit {
-  cacheSize = input<number>();
-  crossOrigin = input<string | null>();
-  interpolate = input<boolean>();
-  maxZoom = input<number>();
-  reprojectionErrorThreshold = input<number>();
-  tileLoadFunction = input<LoadFunction>();
-  transition = input<number>();
-  url = input<string>();
-  wrapX = input<boolean>();
-  zDirection = input<number | NearestDirectionFunction>();
-  tileLoadStart = output<TileSourceEvent>();
-  tileLoadEnd = output<TileSourceEvent>();
-  tileLoadError = output<TileSourceEvent>();
+  readonly cacheSize = input<number>();
+  readonly crossOrigin = input<string | null>();
+  readonly interpolate = input<boolean>();
+  readonly maxZoom = input<number>();
+  readonly reprojectionErrorThreshold = input<number>();
+  readonly tileLoadFunction = input<LoadFunction>();
+  readonly transition = input<number>();
+  readonly url = input<string>();
+  readonly wrapX = input<boolean>();
+  readonly zDirection = input<number | NearestDirectionFunction>();
+  readonly tileLoadStart = output<TileSourceEvent>();
+  readonly tileLoadEnd = output<TileSourceEvent>();
+  readonly tileLoadError = output<TileSourceEvent>();
   instance: OSM;
   protected readonly _instanceSignal = signal<OSM | undefined>(undefined);
   readonly instanceSignal = this._instanceSignal.asReadonly();
@@ -49,7 +49,7 @@ export class SourceOsmComponent extends SourceXYZComponent implements AfterConte
   constructor(
     @Optional()
     @Host()
-    protected layer?: LayerTileComponent,
+    protected readonly layer?: LayerTileComponent,
   ) {
     super(layer);
   }

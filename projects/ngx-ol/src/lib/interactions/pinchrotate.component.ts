@@ -8,8 +8,8 @@ import { MapComponent } from '../map.component';
   template: '',
 })
 export class PinchRotateInteractionComponent implements OnInit, OnChanges, OnDestroy {
-  duration = input<number>();
-  threshold = input<number>();
+  readonly duration = input<number>();
+  readonly threshold = input<number>();
   instance: PinchRotate;
   protected readonly _instanceSignal = signal<PinchRotate | undefined>(undefined);
   readonly instanceSignal = this._instanceSignal.asReadonly();
@@ -20,7 +20,7 @@ export class PinchRotateInteractionComponent implements OnInit, OnChanges, OnDes
     return instance;
   }
 
-  constructor(private map: MapComponent) {}
+  constructor(private readonly map: MapComponent) {}
 
   ngOnInit() {
     this.initializeInstance();

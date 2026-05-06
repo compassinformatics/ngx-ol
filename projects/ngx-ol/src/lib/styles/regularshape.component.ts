@@ -21,18 +21,18 @@ import { StyleComponent } from './style.component';
   template: ` <ng-content></ng-content> `,
 })
 export class StyleRegularShapeComponent implements AfterContentInit, OnChanges, OnDestroy {
-  fill = input<Fill>();
-  points = input.required<number>();
-  radius = input.required<number>();
-  radius2 = input<number>();
-  angle = input<number>();
-  displacement = input<number[]>();
-  stroke = input<Stroke>();
-  rotation = input<number>();
-  rotateWithView = input<boolean>();
-  scale = input<number | Size>();
-  declutterMode = input<DeclutterMode>();
-  public componentType = 'style-regularshape';
+  readonly fill = input<Fill>();
+  readonly points = input.required<number>();
+  readonly radius = input.required<number>();
+  readonly radius2 = input<number>();
+  readonly angle = input<number>();
+  readonly displacement = input<number[]>();
+  readonly stroke = input<Stroke>();
+  readonly rotation = input<number>();
+  readonly rotateWithView = input<boolean>();
+  readonly scale = input<number | Size>();
+  readonly declutterMode = input<DeclutterMode>();
+  readonly componentType: string = 'style-regularshape';
   instance: RegularShape;
   protected readonly _instanceSignal = signal<RegularShape | undefined>(undefined);
   readonly instanceSignal = this._instanceSignal.asReadonly();
@@ -43,7 +43,7 @@ export class StyleRegularShapeComponent implements AfterContentInit, OnChanges, 
     return instance;
   }
 
-  constructor(@Host() private host: StyleComponent) {}
+  constructor(@Host() private readonly host: StyleComponent) {}
 
   update() {
     if (this.instance) {

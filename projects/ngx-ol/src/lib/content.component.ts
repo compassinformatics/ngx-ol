@@ -5,5 +5,5 @@ import { Component, ElementRef } from '@angular/core';
   template: '<ng-content></ng-content>',
 })
 export class ContentComponent {
-  constructor(public elementRef: ElementRef) {}
+  constructor(public readonly elementRef: ElementRef) {}
 }

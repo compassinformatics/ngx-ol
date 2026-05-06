@@ -25,20 +25,20 @@ import { SourceComponent } from './source.component';
   ],
 })
 export class SourceTileArcGISRestComponent extends SourceComponent implements OnInit, OnChanges {
-  cacheSize = input<number>();
-  crossOrigin = input<string | null>();
-  interpolate = input<boolean>();
-  params = input<{ [key: string]: any }>();
-  hidpi = input<boolean>();
-  tileGrid = input<TileGrid>();
-  projection = input<ProjectionLike>();
-  reprojectionErrorThreshold = input<number>();
-  tileLoadFunction = input<LoadFunction>();
-  url = input<string>();
-  wrapX = input<boolean>();
-  transition = input<number>();
-  urls = input<string[]>();
-  zDirection = input<number | NearestDirectionFunction>();
+  readonly cacheSize = input<number>();
+  readonly crossOrigin = input<string | null>();
+  readonly interpolate = input<boolean>();
+  readonly params = input<{ [key: string]: any }>();
+  readonly hidpi = input<boolean>();
+  readonly tileGrid = input<TileGrid>();
+  readonly projection = input<ProjectionLike>();
+  readonly reprojectionErrorThreshold = input<number>();
+  readonly tileLoadFunction = input<LoadFunction>();
+  readonly url = input<string>();
+  readonly wrapX = input<boolean>();
+  readonly transition = input<number>();
+  readonly urls = input<string[]>();
+  readonly zDirection = input<number | NearestDirectionFunction>();
   instance: TileArcGISRest;
   protected readonly _instanceSignal = signal<TileArcGISRest | undefined>(undefined);
   readonly instanceSignal = this._instanceSignal.asReadonly();

@@ -9,7 +9,7 @@ import Polygon from 'ol/geom/Polygon';
   template: ` <ng-content></ng-content> `,
 })
 export class GeometryPolygonComponent extends SimpleGeometryComponent implements OnInit {
-  public componentType = 'geometry-polygon';
+  readonly componentType: string = 'geometry-polygon';
   instance: Polygon;
   protected readonly _instanceSignal = signal<Polygon | undefined>(undefined);
   readonly instanceSignal = this._instanceSignal.asReadonly();

@@ -9,8 +9,8 @@ import { Condition } from 'ol/events/condition';
   template: '',
 })
 export class DragRotateAndZoomInteractionComponent implements OnInit, OnChanges, OnDestroy {
-  condition = input<Condition>();
-  duration = input<number>();
+  readonly condition = input<Condition>();
+  readonly duration = input<number>();
   instance: DragRotateAndZoom;
   protected readonly _instanceSignal = signal<DragRotateAndZoom | undefined>(undefined);
   readonly instanceSignal = this._instanceSignal.asReadonly();
@@ -21,7 +21,7 @@ export class DragRotateAndZoomInteractionComponent implements OnInit, OnChanges,
     return instance;
   }
 
-  constructor(private map: MapComponent) {}
+  constructor(private readonly map: MapComponent) {}
 
   ngOnInit() {
     this.initializeInstance();

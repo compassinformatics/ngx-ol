@@ -15,14 +15,14 @@ import { LayerVectorImageComponent } from '../layers/layervectorimage.component'
   template: ` <ng-content></ng-content> `,
 })
 export class StyleComponent implements OnInit, OnChanges {
-  geometry = input<string | Geometry | GeometryFunction>();
-  fill = input<Fill>();
-  image = input<Image>();
-  renderer = input<RenderFunction>();
-  hitDetectionRenderer = input<RenderFunction>();
-  stroke = input<Stroke>();
-  text = input<Text>();
-  zIndex = input<number>();
+  readonly geometry = input<string | Geometry | GeometryFunction>();
+  readonly fill = input<Fill>();
+  readonly image = input<Image>();
+  readonly renderer = input<RenderFunction>();
+  readonly hitDetectionRenderer = input<RenderFunction>();
+  readonly stroke = input<Stroke>();
+  readonly text = input<Text>();
+  readonly zIndex = input<number>();
   instance: Style;
   protected readonly _instanceSignal = signal<Style | undefined>(undefined);
   readonly instanceSignal = this._instanceSignal.asReadonly();
@@ -32,7 +32,7 @@ export class StyleComponent implements OnInit, OnChanges {
     this._instanceSignal.set(instance);
     return instance;
   }
-  public componentType = 'style';
+  readonly componentType: string = 'style';
   private readonly host: FeatureComponent | LayerVectorComponent;
 
   constructor(

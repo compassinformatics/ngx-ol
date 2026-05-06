@@ -22,18 +22,18 @@ import { SourceComponent } from './source.component';
   providers: [{ provide: SourceComponent, useExisting: forwardRef(() => SourceTileJSONComponent) }],
 })
 export class SourceTileJSONComponent extends SourceComponent implements OnInit, OnChanges {
-  cacheSize = input<number>();
-  crossOrigin = input<string | null>();
-  interpolate = input<boolean>();
-  jsonp = input<boolean>();
-  reprojectionErrorThreshold = input<number>();
-  tileJSON = input<Config>();
-  tileLoadFunction = input<LoadFunction>();
-  tileSize = input<number | Size>();
-  url = input<string>();
-  wrapX = input<boolean>();
-  transition = input<number>();
-  zDirection = input<number | NearestDirectionFunction>();
+  readonly cacheSize = input<number>();
+  readonly crossOrigin = input<string | null>();
+  readonly interpolate = input<boolean>();
+  readonly jsonp = input<boolean>();
+  readonly reprojectionErrorThreshold = input<number>();
+  readonly tileJSON = input<Config>();
+  readonly tileLoadFunction = input<LoadFunction>();
+  readonly tileSize = input<number | Size>();
+  readonly url = input<string>();
+  readonly wrapX = input<boolean>();
+  readonly transition = input<number>();
+  readonly zDirection = input<number | NearestDirectionFunction>();
   instance: TileJSON;
   protected readonly _instanceSignal = signal<TileJSON | undefined>(undefined);
   readonly instanceSignal = this._instanceSignal.asReadonly();

@@ -15,14 +15,14 @@ import { ObjectEvent } from 'ol/Object';
   template: ` <div class="aol-collection-coordinates"></div> `,
 })
 export class CollectionCoordinatesComponent implements DoCheck, OnChanges, OnInit {
-  coordinates = input.required<Coordinate[] | Coordinate[][] | Coordinate[][][] | Array<number>>();
-  srid = input<string | undefined>();
+  readonly coordinates = input.required<Coordinate[] | Coordinate[][] | Coordinate[][][] | Array<number>>();
+  readonly srid = input<string | undefined>();
   private host: SimpleGeometryComponent;
   private mapSrid = 'EPSG:3857';
   private currentSrid = 'EPSG:3857';
 
   constructor(
-    private map: MapComponent,
+    private readonly map: MapComponent,
     @Optional() geometryLinestring: GeometryLinestringComponent,
     @Optional() geometryPolygon: GeometryPolygonComponent,
     @Optional() geometryMultipoint: GeometryMultiPointComponent,

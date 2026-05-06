@@ -10,17 +10,17 @@ import { MapComponent } from '../map.component';
   template: '',
 })
 export class DefaultInteractionComponent implements OnInit, OnChanges, OnDestroy {
-  altShiftDragRotate = input<boolean>();
-  onFocusOnly = input<boolean>();
-  doubleClickZoom = input<boolean>();
-  keyboard = input<boolean>();
-  mouseWheelZoom = input<boolean>();
-  shiftDragZoom = input<boolean>();
-  dragPan = input<boolean>();
-  pinchRotate = input<boolean>();
-  pinchZoom = input<boolean>();
-  zoomDelta = input<number>();
-  zoomDuration = input<number>();
+  readonly altShiftDragRotate = input<boolean>();
+  readonly onFocusOnly = input<boolean>();
+  readonly doubleClickZoom = input<boolean>();
+  readonly keyboard = input<boolean>();
+  readonly mouseWheelZoom = input<boolean>();
+  readonly shiftDragZoom = input<boolean>();
+  readonly dragPan = input<boolean>();
+  readonly pinchRotate = input<boolean>();
+  readonly pinchZoom = input<boolean>();
+  readonly zoomDelta = input<number>();
+  readonly zoomDuration = input<number>();
   instance: Collection<Interaction>;
   protected readonly _instanceSignal = signal<Collection<Interaction> | undefined>(undefined);
   readonly instanceSignal = this._instanceSignal.asReadonly();
@@ -31,7 +31,7 @@ export class DefaultInteractionComponent implements OnInit, OnChanges, OnDestroy
     return instance;
   }
 
-  constructor(private map: MapComponent) {}
+  constructor(private readonly map: MapComponent) {}
 
   ngOnInit() {
     this.initializeInstance();

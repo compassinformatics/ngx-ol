@@ -9,15 +9,15 @@ import { MapComponent } from '../map.component';
   template: ` <ng-content></ng-content> `,
 })
 export class ControlRotateComponent implements OnInit, OnChanges, OnDestroy {
-  className = input<string>();
-  label = input<string | HTMLElement>();
-  tipLabel = input<string>();
-  compassClassName = input<string>();
-  duration = input<number>();
-  autoHide = input<boolean>();
-  render = input<(event: MapEvent) => void>();
-  resetNorth = input<() => void>();
-  target = input<string | HTMLElement>();
+  readonly className = input<string>();
+  readonly label = input<string | HTMLElement>();
+  readonly tipLabel = input<string>();
+  readonly compassClassName = input<string>();
+  readonly duration = input<number>();
+  readonly autoHide = input<boolean>();
+  readonly render = input<(event: MapEvent) => void>();
+  readonly resetNorth = input<() => void>();
+  readonly target = input<string | HTMLElement>();
   instance: Rotate;
   protected readonly _instanceSignal = signal<Rotate | undefined>(undefined);
   readonly instanceSignal = this._instanceSignal.asReadonly();
@@ -28,7 +28,7 @@ export class ControlRotateComponent implements OnInit, OnChanges, OnDestroy {
     return instance;
   }
 
-  constructor(private map: MapComponent) {
+  constructor(private readonly map: MapComponent) {
     // console.log('instancing aol-control-rotate');
   }
 

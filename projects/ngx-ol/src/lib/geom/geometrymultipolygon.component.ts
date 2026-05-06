@@ -9,7 +9,7 @@ import MultiPolygon from 'ol/geom/MultiPolygon';
   template: ` <ng-content></ng-content> `,
 })
 export class GeometryMultiPolygonComponent extends SimpleGeometryComponent implements OnInit {
-  public componentType = 'geometry-multipolygon';
+  readonly componentType: string = 'geometry-multipolygon';
   instance: MultiPolygon;
   protected readonly _instanceSignal = signal<MultiPolygon | undefined>(undefined);
   readonly instanceSignal = this._instanceSignal.asReadonly();

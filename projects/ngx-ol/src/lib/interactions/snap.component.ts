@@ -23,16 +23,16 @@ import Vector from 'ol/source/Vector';
   template: '',
 })
 export class SnapInteractionComponent implements OnInit, OnChanges, OnDestroy {
-  features = input<Collection<Feature>>();
-  edge = input<boolean>();
-  vertex = input<boolean>();
-  pixelTolerance = input<number>();
-  source = input<Vector>();
-  olChange = output<BaseEvent>();
-  olChangeActive = output<ObjectEvent>();
-  olError = output<BaseEvent>();
-  propertyChange = output<ObjectEvent>();
-  olSnap = output<SnapEvent>();
+  readonly features = input<Collection<Feature>>();
+  readonly edge = input<boolean>();
+  readonly vertex = input<boolean>();
+  readonly pixelTolerance = input<number>();
+  readonly source = input<Vector>();
+  readonly olChange = output<BaseEvent>();
+  readonly olChangeActive = output<ObjectEvent>();
+  readonly olError = output<BaseEvent>();
+  readonly propertyChange = output<ObjectEvent>();
+  readonly olSnap = output<SnapEvent>();
   instance: Snap;
   protected readonly _instanceSignal = signal<Snap | undefined>(undefined);
   readonly instanceSignal = this._instanceSignal.asReadonly();
@@ -43,7 +43,7 @@ export class SnapInteractionComponent implements OnInit, OnChanges, OnDestroy {
     return instance;
   }
 
-  constructor(private map: MapComponent) {}
+  constructor(private readonly map: MapComponent) {}
 
   ngOnInit() {
     this.initializeInstance();

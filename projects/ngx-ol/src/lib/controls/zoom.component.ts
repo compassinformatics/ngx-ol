@@ -8,16 +8,16 @@ import { MapComponent } from '../map.component';
   template: ` <ng-content></ng-content> `,
 })
 export class ControlZoomComponent implements OnInit, OnChanges, OnDestroy {
-  duration = input<number>();
-  className = input<string>();
-  zoomInClassName = input<string>();
-  zoomOutClassName = input<string>();
-  zoomInLabel = input<string | HTMLElement>();
-  zoomOutLabel = input<string | HTMLElement>();
-  zoomInTipLabel = input<string>();
-  zoomOutTipLabel = input<string>();
-  delta = input<number>();
-  target = input<string | HTMLElement>();
+  readonly duration = input<number>();
+  readonly className = input<string>();
+  readonly zoomInClassName = input<string>();
+  readonly zoomOutClassName = input<string>();
+  readonly zoomInLabel = input<string | HTMLElement>();
+  readonly zoomOutLabel = input<string | HTMLElement>();
+  readonly zoomInTipLabel = input<string>();
+  readonly zoomOutTipLabel = input<string>();
+  readonly delta = input<number>();
+  readonly target = input<string | HTMLElement>();
   instance: Zoom;
   protected readonly _instanceSignal = signal<Zoom | undefined>(undefined);
   readonly instanceSignal = this._instanceSignal.asReadonly();
@@ -28,7 +28,7 @@ export class ControlZoomComponent implements OnInit, OnChanges, OnDestroy {
     return instance;
   }
 
-  constructor(private map: MapComponent) {
+  constructor(private readonly map: MapComponent) {
     // console.log('instancing aol-control-zoom');
   }
 

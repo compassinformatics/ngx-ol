@@ -10,9 +10,9 @@ import { ProjectionLike } from 'ol/proj';
   template: '',
 })
 export class DragAndDropInteractionComponent implements OnInit, OnChanges, OnDestroy {
-  formatConstructors = input<FeatureFormat[]>();
-  projection = input<ProjectionLike>();
-  target = input<HTMLElement>();
+  readonly formatConstructors = input<FeatureFormat[]>();
+  readonly projection = input<ProjectionLike>();
+  readonly target = input<HTMLElement>();
   instance: DragAndDrop;
   protected readonly _instanceSignal = signal<DragAndDrop | undefined>(undefined);
   readonly instanceSignal = this._instanceSignal.asReadonly();
@@ -23,7 +23,7 @@ export class DragAndDropInteractionComponent implements OnInit, OnChanges, OnDes
     return instance;
   }
 
-  constructor(private map: MapComponent) {}
+  constructor(private readonly map: MapComponent) {}
 
   ngOnInit() {
     this.initializeInstance();

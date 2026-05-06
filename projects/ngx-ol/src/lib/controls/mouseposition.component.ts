@@ -10,12 +10,12 @@ import MapEvent from 'ol/MapEvent';
   template: ``,
 })
 export class ControlMousePositionComponent implements OnInit, OnChanges, OnDestroy {
-  className = input<string>();
-  coordinateFormat = input<CoordinateFormat>();
-  projection = input<ProjectionLike>();
-  render = input<(event: MapEvent) => void>();
-  placeholder = input<string>();
-  wrapX = input<boolean>();
+  readonly className = input<string>();
+  readonly coordinateFormat = input<CoordinateFormat>();
+  readonly projection = input<ProjectionLike>();
+  readonly render = input<(event: MapEvent) => void>();
+  readonly placeholder = input<string>();
+  readonly wrapX = input<boolean>();
   instance: MousePosition;
   protected readonly _instanceSignal = signal<MousePosition | undefined>(undefined);
   readonly instanceSignal = this._instanceSignal.asReadonly();
@@ -28,8 +28,8 @@ export class ControlMousePositionComponent implements OnInit, OnChanges, OnDestr
   target: HTMLElement;
 
   constructor(
-    private map: MapComponent,
-    private element: ElementRef,
+    private readonly map: MapComponent,
+    private readonly element: ElementRef,
   ) {}
 
   ngOnInit() {

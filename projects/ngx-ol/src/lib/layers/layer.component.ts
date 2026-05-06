@@ -16,20 +16,20 @@ import { RenderFunction } from 'ol/layer/Layer';
 @Directive()
 // eslint-disable-next-line @angular-eslint/directive-class-suffix
 export abstract class LayerComponent implements OnInit, OnChanges, OnDestroy {
-  id = input<string | number>();
-  className = input<string>();
-  opacity = input<number>();
-  visible = input<boolean>();
-  extent = input<Extent>();
-  zIndex = input<number>();
-  minResolution = input<number>();
-  maxResolution = input<number>();
-  minZoom = input<number>();
-  maxZoom = input<number>();
-  render = input<RenderFunction>();
-  properties = input<Record<string, any>>();
-  prerender = input<(evt: Event) => void>();
-  postrender = input<(evt: Event) => void>();
+  readonly id = input<string | number>();
+  readonly className = input<string>();
+  readonly opacity = input<number>();
+  readonly visible = input<boolean>();
+  readonly extent = input<Extent>();
+  readonly zIndex = input<number>();
+  readonly minResolution = input<number>();
+  readonly maxResolution = input<number>();
+  readonly minZoom = input<number>();
+  readonly maxZoom = input<number>();
+  readonly render = input<RenderFunction>();
+  readonly properties = input<Record<string, any>>();
+  readonly prerender = input<(evt: Event) => void>();
+  readonly postrender = input<(evt: Event) => void>();
   instance: any;
   protected readonly _instanceSignal = signal<any | undefined>(undefined);
   readonly instanceSignal = this._instanceSignal.asReadonly();
@@ -39,9 +39,9 @@ export abstract class LayerComponent implements OnInit, OnChanges, OnDestroy {
     this._instanceSignal.set(instance);
     return instance;
   }
-  public componentType = 'layer';
+  readonly componentType: string = 'layer';
 
-  protected constructor(protected host: MapComponent | LayerGroupComponent) {}
+  protected constructor(protected readonly host: MapComponent | LayerGroupComponent) {}
 
   protected createLayerOptions() {
     return {

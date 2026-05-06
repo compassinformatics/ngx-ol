@@ -9,7 +9,7 @@ import MultiLineString from 'ol/geom/MultiLineString';
   template: ` <ng-content></ng-content> `,
 })
 export class GeometryMultiLinestringComponent extends SimpleGeometryComponent implements OnInit {
-  public componentType = 'geometry-multilinestring';
+  readonly componentType: string = 'geometry-multilinestring';
   instance: MultiLineString;
   protected readonly _instanceSignal = signal<MultiLineString | undefined>(undefined);
   readonly instanceSignal = this._instanceSignal.asReadonly();

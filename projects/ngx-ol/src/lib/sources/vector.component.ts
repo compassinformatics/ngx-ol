@@ -26,14 +26,14 @@ import { LayerHeatmapComponent } from '../layers/layerheatmap.component';
   providers: [{ provide: SourceComponent, useExisting: forwardRef(() => SourceVectorComponent) }],
 })
 export class SourceVectorComponent extends SourceComponent implements OnInit, OnChanges {
-  overlaps = input<boolean>();
-  features = input<FeatureLike[] | Collection<FeatureLike> | undefined>();
-  useSpatialIndex = input<boolean>();
-  wrapX = input<boolean>();
-  loader = input<FeatureLoader<FeatureLike>>();
-  url = input<string | FeatureUrlFunction>();
-  format = input<FeatureFormat<any>>();
-  strategy = input<LoadingStrategy>();
+  readonly overlaps = input<boolean>();
+  readonly features = input<FeatureLike[] | Collection<FeatureLike> | undefined>();
+  readonly useSpatialIndex = input<boolean>();
+  readonly wrapX = input<boolean>();
+  readonly loader = input<FeatureLoader<FeatureLike>>();
+  readonly url = input<string | FeatureUrlFunction>();
+  readonly format = input<FeatureFormat<any>>();
+  readonly strategy = input<LoadingStrategy>();
   instance: Vector<FeatureLike>;
   protected readonly _instanceSignal = signal<Vector<FeatureLike> | undefined>(undefined);
   readonly instanceSignal = this._instanceSignal.asReadonly();

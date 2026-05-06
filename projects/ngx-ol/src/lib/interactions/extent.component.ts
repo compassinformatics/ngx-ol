@@ -20,13 +20,13 @@ import { MapComponent } from '../map.component';
   template: '',
 })
 export class ExtentInteractionComponent implements OnInit, OnChanges, OnDestroy {
-  condition = input<Condition>();
-  extent = input<ExtentType>();
-  boxStyle = input<StyleLike>();
-  pixelTolerance = input<number>();
-  pointerStyle = input<StyleLike>();
-  wrapX = input<boolean>();
-  extentChanged = output<ExtentEvent>();
+  readonly condition = input<Condition>();
+  readonly extent = input<ExtentType>();
+  readonly boxStyle = input<StyleLike>();
+  readonly pixelTolerance = input<number>();
+  readonly pointerStyle = input<StyleLike>();
+  readonly wrapX = input<boolean>();
+  readonly extentChanged = output<ExtentEvent>();
   instance: ExtentInteraction;
   protected readonly _instanceSignal = signal<ExtentInteraction | undefined>(undefined);
   readonly instanceSignal = this._instanceSignal.asReadonly();
@@ -37,7 +37,7 @@ export class ExtentInteractionComponent implements OnInit, OnChanges, OnDestroy 
     return instance;
   }
 
-  constructor(private map: MapComponent) {}
+  constructor(private readonly map: MapComponent) {}
 
   ngOnInit() {
     this.initializeInstance();

@@ -26,22 +26,22 @@ import BaseVectorLayer from 'ol/layer/BaseVector';
   template: '',
 })
 export class ModifyInteractionComponent implements OnInit, OnChanges, OnDestroy {
-  condition = input<Condition>();
-  deleteCondition = input<Condition>();
-  insertVertexCondition = input<Condition>();
-  pixelTolerance = input<number>();
-  style = input<StyleLike | FlatStyleLike | undefined>();
-  features = input<Collection<Feature>>();
-  wrapX = input<boolean>();
-  source = input<Vector>();
-  hitDetection = input<boolean | BaseVectorLayer<any, any, any>>();
-  snapToPointer = input<boolean>();
-  olChange = output<BaseEvent>();
-  olChangeActive = output<ObjectEvent>();
-  olError = output<BaseEvent>();
-  olModifyEnd = output<ModifyEvent>();
-  olModifyStart = output<ModifyEvent>();
-  propertyChange = output<ObjectEvent>();
+  readonly condition = input<Condition>();
+  readonly deleteCondition = input<Condition>();
+  readonly insertVertexCondition = input<Condition>();
+  readonly pixelTolerance = input<number>();
+  readonly style = input<StyleLike | FlatStyleLike | undefined>();
+  readonly features = input<Collection<Feature>>();
+  readonly wrapX = input<boolean>();
+  readonly source = input<Vector>();
+  readonly hitDetection = input<boolean | BaseVectorLayer<any, any, any>>();
+  readonly snapToPointer = input<boolean>();
+  readonly olChange = output<BaseEvent>();
+  readonly olChangeActive = output<ObjectEvent>();
+  readonly olError = output<BaseEvent>();
+  readonly olModifyEnd = output<ModifyEvent>();
+  readonly olModifyStart = output<ModifyEvent>();
+  readonly propertyChange = output<ObjectEvent>();
   instance: Modify;
   protected readonly _instanceSignal = signal<Modify | undefined>(undefined);
   readonly instanceSignal = this._instanceSignal.asReadonly();
@@ -52,7 +52,7 @@ export class ModifyInteractionComponent implements OnInit, OnChanges, OnDestroy 
     return instance;
   }
 
-  constructor(private map: MapComponent) {}
+  constructor(private readonly map: MapComponent) {}
 
   ngOnInit() {
     this.initializeInstance();

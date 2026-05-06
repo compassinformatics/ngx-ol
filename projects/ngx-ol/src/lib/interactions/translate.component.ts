@@ -24,18 +24,18 @@ import { FilterFunction } from 'ol/interaction/Select';
   template: '',
 })
 export class TranslateInteractionComponent implements OnInit, OnChanges, OnDestroy {
-  condition = input<Condition>();
-  features = input<Collection<Feature>>();
-  layers = input<Layer[] | ((layer: Layer) => boolean)>();
-  filter = input<FilterFunction>();
-  hitTolerance = input<number>();
-  olChange = output<BaseEvent>();
-  olChangeActive = output<ObjectEvent>();
-  olError = output<BaseEvent>();
-  propertyChange = output<ObjectEvent>();
-  translateEnd = output<TranslateEvent>();
-  translateStart = output<TranslateEvent>();
-  translating = output<TranslateEvent>();
+  readonly condition = input<Condition>();
+  readonly features = input<Collection<Feature>>();
+  readonly layers = input<Layer[] | ((layer: Layer) => boolean)>();
+  readonly filter = input<FilterFunction>();
+  readonly hitTolerance = input<number>();
+  readonly olChange = output<BaseEvent>();
+  readonly olChangeActive = output<ObjectEvent>();
+  readonly olError = output<BaseEvent>();
+  readonly propertyChange = output<ObjectEvent>();
+  readonly translateEnd = output<TranslateEvent>();
+  readonly translateStart = output<TranslateEvent>();
+  readonly translating = output<TranslateEvent>();
   instance: Translate;
   protected readonly _instanceSignal = signal<Translate | undefined>(undefined);
   readonly instanceSignal = this._instanceSignal.asReadonly();
@@ -46,7 +46,7 @@ export class TranslateInteractionComponent implements OnInit, OnChanges, OnDestr
     return instance;
   }
 
-  constructor(private map: MapComponent) {}
+  constructor(private readonly map: MapComponent) {}
 
   ngOnInit() {
     this.initializeInstance();

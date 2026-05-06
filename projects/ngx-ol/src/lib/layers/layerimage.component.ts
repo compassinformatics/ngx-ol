@@ -11,7 +11,7 @@ import ImageSource from 'ol/source/Image';
   template: ` <ng-content></ng-content> `,
 })
 export class LayerImageComponent extends LayerComponent implements OnInit, OnChanges {
-  source = input<ImageSource>();
+  readonly source = input<ImageSource>();
 
   constructor(map: MapComponent, @Optional() group?: LayerGroupComponent) {
     super(group || map);

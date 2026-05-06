@@ -14,12 +14,12 @@ import { MapComponent } from '../map.component';
   template: '',
 })
 export class DefaultControlComponent implements OnInit, OnChanges, OnDestroy {
-  attribution = input<boolean>();
-  attributionOptions = input<AttributionOptions>();
-  rotate = input<boolean>();
-  rotateOptions = input<RotateOptions>();
-  zoom = input<boolean>();
-  zoomOptions = input<ZoomOptions>();
+  readonly attribution = input<boolean>();
+  readonly attributionOptions = input<AttributionOptions>();
+  readonly rotate = input<boolean>();
+  readonly rotateOptions = input<RotateOptions>();
+  readonly zoom = input<boolean>();
+  readonly zoomOptions = input<ZoomOptions>();
   instance: Collection<Control>;
   protected readonly _instanceSignal = signal<Collection<Control> | undefined>(undefined);
   readonly instanceSignal = this._instanceSignal.asReadonly();
@@ -30,7 +30,7 @@ export class DefaultControlComponent implements OnInit, OnChanges, OnDestroy {
     return instance;
   }
 
-  constructor(private map: MapComponent) {}
+  constructor(private readonly map: MapComponent) {}
 
   ngOnInit() {
     this.initializeInstance();

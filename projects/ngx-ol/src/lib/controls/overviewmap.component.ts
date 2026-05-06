@@ -20,17 +20,17 @@ import { MapComponent } from '../map.component';
   template: ` <ng-content></ng-content> `,
 })
 export class ControlOverviewMapComponent implements OnInit, OnChanges, OnDestroy {
-  className = input<string>();
-  collapsed = input<boolean>();
-  collapseLabel = input<string | HTMLElement>();
-  collapsible = input<boolean>();
-  label = input<string | HTMLElement>();
-  layers = input<BaseLayer[] | Collection<BaseLayer>>();
-  render = input<(event: MapEvent) => void>();
-  rotateWithView = input<boolean>();
-  target = input<string | HTMLElement>();
-  tipLabel = input<string>();
-  view = input<View>();
+  readonly className = input<string>();
+  readonly collapsed = input<boolean>();
+  readonly collapseLabel = input<string | HTMLElement>();
+  readonly collapsible = input<boolean>();
+  readonly label = input<string | HTMLElement>();
+  readonly layers = input<BaseLayer[] | Collection<BaseLayer>>();
+  readonly render = input<(event: MapEvent) => void>();
+  readonly rotateWithView = input<boolean>();
+  readonly target = input<string | HTMLElement>();
+  readonly tipLabel = input<string>();
+  readonly view = input<View>();
   instance: OverviewMap;
   protected readonly _instanceSignal = signal<OverviewMap | undefined>(undefined);
   readonly instanceSignal = this._instanceSignal.asReadonly();
@@ -41,7 +41,7 @@ export class ControlOverviewMapComponent implements OnInit, OnChanges, OnDestroy
     return instance;
   }
 
-  constructor(private map: MapComponent) {}
+  constructor(private readonly map: MapComponent) {}
 
   ngOnInit() {
     this.setInstance(new OverviewMap(this.createOptions()));

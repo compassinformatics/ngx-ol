@@ -22,34 +22,34 @@ import { ProjectionLike } from 'ol/proj';
   template: ` <ng-content></ng-content> `,
 })
 export class ViewComponent implements OnInit, OnChanges, OnDestroy {
-  constrainRotation = input<boolean | number>();
-  enableRotation = input<boolean>();
-  extent = input<Extent>();
-  maxResolution = input<number>();
-  minResolution = input<number>();
-  maxZoom = input<number>();
-  minZoom = input<number>();
-  resolution = input<number>();
-  resolutions = input<number[] | undefined>();
-  rotation = input<number>();
-  zoom = input<number>();
-  zoomFactor = input<number>();
-  center = input<Coordinate>();
-  projection = input<ProjectionLike>();
-  constrainOnlyCenter = input<boolean>();
-  smoothExtentConstraint = input<boolean>();
-  constrainResolution = input<boolean>();
-  smoothResolutionConstraint = input<boolean>();
-  showFullExtent = input<boolean>();
-  multiWorld = input<boolean>();
-  padding = input<number[]>();
-  zoomAnimation = input(false);
-  olChange = output<BaseEvent>();
-  changeCenter = output<ObjectEvent>();
-  changeResolution = output<ObjectEvent>();
-  changeRotation = output<ObjectEvent>();
-  olError = output<BaseEvent>();
-  propertyChange = output<ObjectEvent>();
+  readonly constrainRotation = input<boolean | number>();
+  readonly enableRotation = input<boolean>();
+  readonly extent = input<Extent>();
+  readonly maxResolution = input<number>();
+  readonly minResolution = input<number>();
+  readonly maxZoom = input<number>();
+  readonly minZoom = input<number>();
+  readonly resolution = input<number>();
+  readonly resolutions = input<number[] | undefined>();
+  readonly rotation = input<number>();
+  readonly zoom = input<number>();
+  readonly zoomFactor = input<number>();
+  readonly center = input<Coordinate>();
+  readonly projection = input<ProjectionLike>();
+  readonly constrainOnlyCenter = input<boolean>();
+  readonly smoothExtentConstraint = input<boolean>();
+  readonly constrainResolution = input<boolean>();
+  readonly smoothResolutionConstraint = input<boolean>();
+  readonly showFullExtent = input<boolean>();
+  readonly multiWorld = input<boolean>();
+  readonly padding = input<number[]>();
+  readonly zoomAnimation = input(false);
+  readonly olChange = output<BaseEvent>();
+  readonly changeCenter = output<ObjectEvent>();
+  readonly changeResolution = output<ObjectEvent>();
+  readonly changeRotation = output<ObjectEvent>();
+  readonly olError = output<BaseEvent>();
+  readonly propertyChange = output<ObjectEvent>();
   instance: View;
   protected readonly _instanceSignal = signal<View | undefined>(undefined);
   readonly instanceSignal = this._instanceSignal.asReadonly();
@@ -59,9 +59,9 @@ export class ViewComponent implements OnInit, OnChanges, OnDestroy {
     this._instanceSignal.set(instance);
     return instance;
   }
-  public componentType = 'view';
+  readonly componentType: string = 'view';
 
-  constructor(private host: MapComponent) {}
+  constructor(private readonly host: MapComponent) {}
 
   ngOnInit() {
     this.initializeInstance();

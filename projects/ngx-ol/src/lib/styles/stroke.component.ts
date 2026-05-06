@@ -20,13 +20,13 @@ import { ColorLike } from 'ol/colorlike';
   template: ` <div class="aol-style-stroke"></div> `,
 })
 export class StyleStrokeComponent implements OnInit, OnChanges {
-  color = input<Color | ColorLike>();
-  lineCap = input<CanvasLineCap | undefined>();
-  lineDash = input<number[]>();
-  lineDashOffset = input<number | undefined>();
-  lineJoin = input<CanvasLineJoin | undefined>();
-  miterLimit = input<number>();
-  width = input<number>();
+  readonly color = input<Color | ColorLike>();
+  readonly lineCap = input<CanvasLineCap | undefined>();
+  readonly lineDash = input<number[]>();
+  readonly lineDashOffset = input<number | undefined>();
+  readonly lineJoin = input<CanvasLineJoin | undefined>();
+  readonly miterLimit = input<number>();
+  readonly width = input<number>();
   instance: Stroke;
   protected readonly _instanceSignal = signal<Stroke | undefined>(undefined);
   readonly instanceSignal = this._instanceSignal.asReadonly();

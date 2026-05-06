@@ -6,7 +6,7 @@ import SimpleGeometry from 'ol/geom/SimpleGeometry';
 @Directive()
 // eslint-disable-next-line @angular-eslint/directive-class-suffix
 export abstract class SimpleGeometryComponent implements OnInit {
-  srid = input('EPSG:3857');
+  readonly srid = input('EPSG:3857');
   instance: SimpleGeometry;
   protected readonly _instanceSignal = signal<SimpleGeometry | undefined>(undefined);
   readonly instanceSignal = this._instanceSignal.asReadonly();
@@ -16,11 +16,11 @@ export abstract class SimpleGeometryComponent implements OnInit {
     this._instanceSignal.set(instance);
     return instance;
   }
-  public componentType = 'simple-geometry';
+  readonly componentType: string = 'simple-geometry';
 
   protected constructor(
-    protected map: MapComponent,
-    protected host: FeatureComponent,
+    protected readonly map: MapComponent,
+    protected readonly host: FeatureComponent,
   ) {}
 
   ngOnInit() {

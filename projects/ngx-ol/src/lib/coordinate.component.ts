@@ -13,16 +13,16 @@ import { ObjectEvent } from 'ol/Object';
   template: ` <div class="aol-coordinate"></div> `,
 })
 export class CoordinateComponent implements DoCheck, OnChanges, OnInit {
-  x = input.required<number>();
-  y = input.required<number>();
-  srid = input<string | undefined>();
+  readonly x = input.required<number>();
+  readonly y = input.required<number>();
+  readonly srid = input<string | undefined>();
   private host: any;
   private geometryHost?: SimpleGeometryComponent;
   private mapSrid = 'EPSG:3857';
   private currentSrid = 'EPSG:3857';
 
   constructor(
-    private map: MapComponent,
+    private readonly map: MapComponent,
     @Optional() viewHost: ViewComponent,
     @Optional() geometryPointHost: GeometryPointComponent,
     @Optional() geometryCircleHost: GeometryCircleComponent,

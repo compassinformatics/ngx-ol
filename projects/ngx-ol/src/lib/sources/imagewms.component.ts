@@ -24,19 +24,19 @@ import { ServerType } from 'ol/source/wms';
   providers: [{ provide: SourceComponent, useExisting: forwardRef(() => SourceImageWMSComponent) }],
 })
 export class SourceImageWMSComponent extends SourceComponent implements OnChanges, OnInit {
-  crossOrigin = input<null | string>();
-  hidpi = input<boolean>();
-  serverType = input<ServerType>();
-  imageLoadFunction = input<LoadFunction>();
-  interpolate = input<boolean>();
-  params = input<{ [key: string]: any }>();
-  projection = input<ProjectionLike | string>();
-  ratio = input<number>();
-  resolutions = input<Array<number>>();
-  url = input<string>();
-  imageLoadStart = output<ImageSourceEvent>();
-  imageLoadEnd = output<ImageSourceEvent>();
-  imageLoadError = output<ImageSourceEvent>();
+  readonly crossOrigin = input<null | string>();
+  readonly hidpi = input<boolean>();
+  readonly serverType = input<ServerType>();
+  readonly imageLoadFunction = input<LoadFunction>();
+  readonly interpolate = input<boolean>();
+  readonly params = input<{ [key: string]: any }>();
+  readonly projection = input<ProjectionLike | string>();
+  readonly ratio = input<number>();
+  readonly resolutions = input<Array<number>>();
+  readonly url = input<string>();
+  readonly imageLoadStart = output<ImageSourceEvent>();
+  readonly imageLoadEnd = output<ImageSourceEvent>();
+  readonly imageLoadError = output<ImageSourceEvent>();
   instance: ImageWMS;
   protected readonly _instanceSignal = signal<ImageWMS | undefined>(undefined);
   readonly instanceSignal = this._instanceSignal.asReadonly();

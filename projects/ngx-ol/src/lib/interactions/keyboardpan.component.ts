@@ -8,8 +8,8 @@ import { MapComponent } from '../map.component';
   template: '',
 })
 export class KeyboardPanInteractionComponent implements OnInit, OnChanges, OnDestroy {
-  duration = input<number>();
-  pixelDelta = input<number>();
+  readonly duration = input<number>();
+  readonly pixelDelta = input<number>();
   instance: KeyboardPan;
   protected readonly _instanceSignal = signal<KeyboardPan | undefined>(undefined);
   readonly instanceSignal = this._instanceSignal.asReadonly();
@@ -20,7 +20,7 @@ export class KeyboardPanInteractionComponent implements OnInit, OnChanges, OnDes
     return instance;
   }
 
-  constructor(private map: MapComponent) {}
+  constructor(private readonly map: MapComponent) {}
 
   ngOnInit() {
     this.initializeInstance();

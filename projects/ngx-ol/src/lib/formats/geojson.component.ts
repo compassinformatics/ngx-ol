@@ -8,12 +8,12 @@ import { ProjectionLike } from 'ol/proj';
   template: '',
 })
 export class FormatGeoJSONComponent implements OnChanges {
-  featureClass = input<any>();
-  geometryName = input<string>();
-  dataProjection = input<ProjectionLike>();
-  featureProjection = input<ProjectionLike>();
-  extractGeometryName = input<boolean>();
-  public componentType = 'format';
+  readonly featureClass = input<any>();
+  readonly geometryName = input<string>();
+  readonly dataProjection = input<ProjectionLike>();
+  readonly featureProjection = input<ProjectionLike>();
+  readonly extractGeometryName = input<boolean>();
+  readonly componentType: string = 'format';
   instance: GeoJSON;
   protected readonly _instanceSignal = signal<GeoJSON | undefined>(undefined);
   readonly instanceSignal = this._instanceSignal.asReadonly();

@@ -38,24 +38,24 @@ export class SourceVectorTileComponent
   extends SourceComponent
   implements AfterContentInit, AfterContentChecked, OnChanges
 {
-  cacheSize = input<number>();
-  extent = input<Extent>();
-  overlaps = input<boolean>();
-  projection = input<ProjectionLike>();
-  state = input<State>();
-  tileClass = input<typeof OlVectorTile>();
-  maxZoom = input<number>();
-  minZoom = input<number>();
-  tileSize = input<number | Size>();
-  maxResolution = input<number>();
-  tileUrlFunction = input<UrlFunction>();
-  tileLoadFunction = input<LoadFunction>();
-  url = input<string>();
-  urls = input<string[]>();
-  transition = input<number>();
-  wrapX = input<boolean>();
-  zDirection = input<number | NearestDirectionFunction>();
-  format = input<FeatureFormat<any>>();
+  readonly cacheSize = input<number>();
+  readonly extent = input<Extent>();
+  readonly overlaps = input<boolean>();
+  readonly projection = input<ProjectionLike>();
+  readonly state = input<State>();
+  readonly tileClass = input<typeof OlVectorTile>();
+  readonly maxZoom = input<number>();
+  readonly minZoom = input<number>();
+  readonly tileSize = input<number | Size>();
+  readonly maxResolution = input<number>();
+  readonly tileUrlFunction = input<UrlFunction>();
+  readonly tileLoadFunction = input<LoadFunction>();
+  readonly url = input<string>();
+  readonly urls = input<string[]>();
+  readonly transition = input<number>();
+  readonly wrapX = input<boolean>();
+  readonly zDirection = input<number | NearestDirectionFunction>();
+  readonly format = input<FeatureFormat<any>>();
   @ContentChild(FormatMVTComponent, { static: false }) formatMVTComponent: FormatMVTComponent;
   @ContentChild(FormatGeoJSONComponent, { static: false })
   formatGeoJSONComponent: FormatGeoJSONComponent;

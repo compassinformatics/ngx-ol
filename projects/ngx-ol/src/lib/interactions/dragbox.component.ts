@@ -10,9 +10,9 @@ import { EndCondition } from 'ol/interaction/DragBox';
   template: '',
 })
 export class DragBoxInteractionComponent implements OnInit, OnChanges, OnDestroy {
-  className = input<string>();
-  condition = input<Condition>();
-  boxEndCondition = input<EndCondition>();
+  readonly className = input<string>();
+  readonly condition = input<Condition>();
+  readonly boxEndCondition = input<EndCondition>();
   instance: DragBox;
   protected readonly _instanceSignal = signal<DragBox | undefined>(undefined);
   readonly instanceSignal = this._instanceSignal.asReadonly();
@@ -23,7 +23,7 @@ export class DragBoxInteractionComponent implements OnInit, OnChanges, OnDestroy
     return instance;
   }
 
-  constructor(private map: MapComponent) {}
+  constructor(private readonly map: MapComponent) {}
 
   ngOnInit() {
     this.initializeInstance();

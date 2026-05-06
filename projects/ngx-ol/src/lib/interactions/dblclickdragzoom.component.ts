@@ -8,9 +8,9 @@ import { MapComponent } from '../map.component';
   template: '',
 })
 export class DblClickDragZoomInteractionComponent implements OnInit, OnChanges, OnDestroy {
-  duration = input<number>();
-  delta = input<number>();
-  stopDown = input<(handled: boolean) => boolean>();
+  readonly duration = input<number>();
+  readonly delta = input<number>();
+  readonly stopDown = input<(handled: boolean) => boolean>();
   instance: DblClickDragZoom;
   protected readonly _instanceSignal = signal<DblClickDragZoom | undefined>(undefined);
   readonly instanceSignal = this._instanceSignal.asReadonly();
@@ -21,7 +21,7 @@ export class DblClickDragZoomInteractionComponent implements OnInit, OnChanges, 
     return instance;
   }
 
-  constructor(private map: MapComponent) {}
+  constructor(private readonly map: MapComponent) {}
 
   ngOnInit() {
     this.initializeInstance();

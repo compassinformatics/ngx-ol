@@ -9,16 +9,16 @@ import { MapComponent } from '../map.component';
   template: ``,
 })
 export class ControlAttributionComponent implements OnInit, OnChanges, OnDestroy {
-  className = input<string>();
-  collapsible = input<boolean>();
-  collapsed = input<boolean>();
-  tipLabel = input<string>();
-  label = input<string | HTMLElement>();
-  expandClassName = input<string>();
-  collapseLabel = input<string | HTMLElement>();
-  collapseClassName = input<string>();
-  render = input<(event: MapEvent) => void>();
-  public componentType = 'control';
+  readonly className = input<string>();
+  readonly collapsible = input<boolean>();
+  readonly collapsed = input<boolean>();
+  readonly tipLabel = input<string>();
+  readonly label = input<string | HTMLElement>();
+  readonly expandClassName = input<string>();
+  readonly collapseLabel = input<string | HTMLElement>();
+  readonly collapseClassName = input<string>();
+  readonly render = input<(event: MapEvent) => void>();
+  readonly componentType: string = 'control';
   instance: Attribution;
   protected readonly _instanceSignal = signal<Attribution | undefined>(undefined);
   readonly instanceSignal = this._instanceSignal.asReadonly();
@@ -31,8 +31,8 @@ export class ControlAttributionComponent implements OnInit, OnChanges, OnDestroy
   target: HTMLElement;
 
   constructor(
-    private map: MapComponent,
-    private element: ElementRef,
+    private readonly map: MapComponent,
+    private readonly element: ElementRef,
   ) {}
 
   ngOnInit() {

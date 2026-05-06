@@ -19,15 +19,15 @@ import { Coordinate } from 'ol/coordinate';
 })
 export class OverlayComponent implements OnInit, OnDestroy, OnChanges {
   @ContentChild(ContentComponent, { static: true }) content: ContentComponent;
-  id = input<number | string | undefined>();
-  offset = input<number[]>();
-  positioning = input<Positioning>();
-  stopEvent = input<boolean>();
-  insertFirst = input<boolean>();
-  autoPan = input<boolean | PanIntoViewOptions>();
-  position = input<Coordinate | undefined>();
-  className = input<string>();
-  componentType = 'overlay';
+  readonly id = input<number | string | undefined>();
+  readonly offset = input<number[]>();
+  readonly positioning = input<Positioning>();
+  readonly stopEvent = input<boolean>();
+  readonly insertFirst = input<boolean>();
+  readonly autoPan = input<boolean | PanIntoViewOptions>();
+  readonly position = input<Coordinate | undefined>();
+  readonly className = input<string>();
+  readonly componentType: string = 'overlay';
   instance: Overlay;
   protected readonly _instanceSignal = signal<Overlay | undefined>(undefined);
   readonly instanceSignal = this._instanceSignal.asReadonly();
@@ -39,7 +39,7 @@ export class OverlayComponent implements OnInit, OnDestroy, OnChanges {
   }
   element: HTMLElement;
 
-  constructor(private map: MapComponent) {}
+  constructor(private readonly map: MapComponent) {}
 
   ngOnInit() {
     if (this.content) {

@@ -10,8 +10,8 @@ import { Condition } from 'ol/events/condition';
   template: '',
 })
 export class DragPanInteractionComponent implements OnInit, OnChanges, OnDestroy {
-  condition = input<Condition>();
-  kinetic = input<Kinetic>();
+  readonly condition = input<Condition>();
+  readonly kinetic = input<Kinetic>();
   instance: DragPan;
   protected readonly _instanceSignal = signal<DragPan | undefined>(undefined);
   readonly instanceSignal = this._instanceSignal.asReadonly();
@@ -22,7 +22,7 @@ export class DragPanInteractionComponent implements OnInit, OnChanges, OnDestroy
     return instance;
   }
 
-  constructor(private map: MapComponent) {}
+  constructor(private readonly map: MapComponent) {}
 
   ngOnInit() {
     this.initializeInstance();

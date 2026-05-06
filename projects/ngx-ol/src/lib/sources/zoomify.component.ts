@@ -24,19 +24,19 @@ import { SourceComponent } from './source.component';
   providers: [{ provide: SourceComponent, useExisting: forwardRef(() => SourceZoomifyComponent) }],
 })
 export class SourceZoomifyComponent extends SourceComponent implements OnInit, OnChanges {
-  cacheSize = input<number>();
-  crossOrigin = input<string | null>();
-  interpolate = input<boolean>();
-  projection = input<ProjectionLike>();
-  tilePixelRatio = input<number>();
-  reprojectionErrorThreshold = input<number>();
-  url = input.required<string>();
-  tierSizeCalculation = input<TierSizeCalculation>();
-  size = input.required<Size>();
-  extent = input<Extent>();
-  transition = input<number>();
-  tileSize = input<number>();
-  zDirection = input<number | NearestDirectionFunction>();
+  readonly cacheSize = input<number>();
+  readonly crossOrigin = input<string | null>();
+  readonly interpolate = input<boolean>();
+  readonly projection = input<ProjectionLike>();
+  readonly tilePixelRatio = input<number>();
+  readonly reprojectionErrorThreshold = input<number>();
+  readonly url = input.required<string>();
+  readonly tierSizeCalculation = input<TierSizeCalculation>();
+  readonly size = input.required<Size>();
+  readonly extent = input<Extent>();
+  readonly transition = input<number>();
+  readonly tileSize = input<number>();
+  readonly zDirection = input<number | NearestDirectionFunction>();
   instance: Zoomify;
   protected readonly _instanceSignal = signal<Zoomify | undefined>(undefined);
   readonly instanceSignal = this._instanceSignal.asReadonly();

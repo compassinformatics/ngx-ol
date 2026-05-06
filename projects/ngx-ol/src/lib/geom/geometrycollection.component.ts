@@ -8,8 +8,8 @@ import { FeatureComponent } from '../feature.component';
   template: ` <ng-content></ng-content> `,
 })
 export class GeometryCollectionComponent implements OnInit, OnChanges {
-  geometries = input<Geometry[]>([]);
-  public componentType = 'geometry-collection';
+  readonly geometries = input<Geometry[]>([]);
+  readonly componentType: string = 'geometry-collection';
   instance: GeometryCollection;
   protected readonly _instanceSignal = signal<GeometryCollection | undefined>(undefined);
   readonly instanceSignal = this._instanceSignal.asReadonly();
@@ -20,7 +20,7 @@ export class GeometryCollectionComponent implements OnInit, OnChanges {
     return instance;
   }
 
-  constructor(private host: FeatureComponent) {}
+  constructor(private readonly host: FeatureComponent) {}
 
   ngOnInit() {
     this.setInstance(new GeometryCollection(this.geometries()));

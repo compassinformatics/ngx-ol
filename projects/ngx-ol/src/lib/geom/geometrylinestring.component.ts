@@ -9,7 +9,7 @@ import LineString from 'ol/geom/LineString';
   template: ` <ng-content></ng-content> `,
 })
 export class GeometryLinestringComponent extends SimpleGeometryComponent implements OnInit {
-  public componentType = 'geometry-linestring';
+  readonly componentType: string = 'geometry-linestring';
   instance: LineString;
   protected readonly _instanceSignal = signal<LineString | undefined>(undefined);
   readonly instanceSignal = this._instanceSignal.asReadonly();

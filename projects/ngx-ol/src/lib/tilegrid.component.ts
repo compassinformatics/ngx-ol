@@ -10,16 +10,16 @@ import { Size } from 'ol/size';
   template: '',
 })
 export class TileGridComponent implements OnInit, OnChanges {
-  extent = input<Extent>();
-  maxZoom = input<number>();
-  minZoom = input<number>();
-  maxResolution = input<number>();
-  tileSize = input<number | Size>();
-  origin = input<Coordinate>();
-  origins = input<Coordinate[]>();
-  resolutions = input<number[]>();
-  sizes = input<Size[]>();
-  tileSizes = input<(number | Size)[]>();
+  readonly extent = input<Extent>();
+  readonly maxZoom = input<number>();
+  readonly minZoom = input<number>();
+  readonly maxResolution = input<number>();
+  readonly tileSize = input<number | Size>();
+  readonly origin = input<Coordinate>();
+  readonly origins = input<Coordinate[]>();
+  readonly resolutions = input<number[]>();
+  readonly sizes = input<Size[]>();
+  readonly tileSizes = input<(number | Size)[]>();
   instance: TileGrid;
   protected readonly _instanceSignal = signal<TileGrid | undefined>(undefined);
   readonly instanceSignal = this._instanceSignal.asReadonly();

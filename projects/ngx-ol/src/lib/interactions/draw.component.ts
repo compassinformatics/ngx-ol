@@ -27,33 +27,33 @@ import { FlatStyleLike } from 'ol/style/flat';
   template: '',
 })
 export class DrawInteractionComponent implements OnInit, OnChanges, OnDestroy {
-  clickTolerance = input<number>();
-  features = input<Collection<Feature>>();
-  source = input<Vector>();
-  dragVertexDelay = input<number>();
-  snapTolerance = input<number>();
-  stopClick = input<boolean>();
-  type = input.required<Type>();
-  maxPoints = input<number>();
-  minPoints = input<number>();
-  finishCondition = input<Condition>();
-  style = input<StyleLike | FlatStyleLike | undefined>();
-  geometryFunction = input<GeometryFunction>();
-  geometryName = input<string>();
-  condition = input<Condition>();
-  freehandCondition = input<Condition>();
-  freehand = input<boolean>();
-  trace = input<boolean | Condition>();
-  traceSource = input<Vector>();
-  wrapX = input<boolean>();
-  geometryLayout = input<GeometryLayout>();
-  olChange = output<BaseEvent>();
-  olChangeActive = output<ObjectEvent>();
-  olDrawAbort = output<DrawEvent>();
-  drawEnd = output<DrawEvent>();
-  drawStart = output<DrawEvent>();
-  olError = output<BaseEvent>();
-  propertyChange = output<ObjectEvent>();
+  readonly clickTolerance = input<number>();
+  readonly features = input<Collection<Feature>>();
+  readonly source = input<Vector>();
+  readonly dragVertexDelay = input<number>();
+  readonly snapTolerance = input<number>();
+  readonly stopClick = input<boolean>();
+  readonly type = input.required<Type>();
+  readonly maxPoints = input<number>();
+  readonly minPoints = input<number>();
+  readonly finishCondition = input<Condition>();
+  readonly style = input<StyleLike | FlatStyleLike | undefined>();
+  readonly geometryFunction = input<GeometryFunction>();
+  readonly geometryName = input<string>();
+  readonly condition = input<Condition>();
+  readonly freehandCondition = input<Condition>();
+  readonly freehand = input<boolean>();
+  readonly trace = input<boolean | Condition>();
+  readonly traceSource = input<Vector>();
+  readonly wrapX = input<boolean>();
+  readonly geometryLayout = input<GeometryLayout>();
+  readonly olChange = output<BaseEvent>();
+  readonly olChangeActive = output<ObjectEvent>();
+  readonly olDrawAbort = output<DrawEvent>();
+  readonly drawEnd = output<DrawEvent>();
+  readonly drawStart = output<DrawEvent>();
+  readonly olError = output<BaseEvent>();
+  readonly propertyChange = output<ObjectEvent>();
   instance: Draw;
   protected readonly _instanceSignal = signal<Draw | undefined>(undefined);
   readonly instanceSignal = this._instanceSignal.asReadonly();
@@ -64,7 +64,7 @@ export class DrawInteractionComponent implements OnInit, OnChanges, OnDestroy {
     return instance;
   }
 
-  constructor(private map: MapComponent) {}
+  constructor(private readonly map: MapComponent) {}
 
   ngOnInit() {
     this.initializeInstance();

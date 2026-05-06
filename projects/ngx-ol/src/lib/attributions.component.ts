@@ -18,7 +18,7 @@ export class AttributionsComponent implements AfterViewInit {
     return instance;
   }
 
-  constructor(@Host() private source: SourceComponent) {}
+  constructor(@Host() private readonly source: SourceComponent) {}
 
   /* we can do this at the very end */
   ngAfterViewInit() {

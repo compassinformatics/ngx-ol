@@ -20,26 +20,26 @@ import { Size } from 'ol/size';
   template: ` <div class="aol-style-text"></div> `,
 })
 export class StyleTextComponent implements OnInit, OnChanges {
-  font = input<string | undefined>();
-  maxAngle = input<number | undefined>();
-  offsetX = input<number | undefined>();
-  offsetY = input<number | undefined>();
-  overflow = input<boolean | undefined>();
-  placement = input<TextPlacement | undefined>();
-  repeat = input<number | undefined>();
-  scale = input<number | Size | undefined>();
-  rotateWithView = input<boolean | undefined>();
-  rotation = input<number | undefined>();
-  text = input<string | string[] | undefined>();
-  textAlign = input<CanvasTextAlign | undefined>();
-  justify = input<TextJustify | undefined>();
-  textBaseline = input<CanvasTextBaseline | undefined>();
-  fill = input<Fill | undefined>();
-  stroke = input<Stroke | undefined>();
-  backgroundFill = input<Fill | undefined>();
-  backgroundStroke = input<Stroke | undefined>();
-  padding = input<number[] | undefined>();
-  declutterMode = input<DeclutterMode | undefined>();
+  readonly font = input<string | undefined>();
+  readonly maxAngle = input<number | undefined>();
+  readonly offsetX = input<number | undefined>();
+  readonly offsetY = input<number | undefined>();
+  readonly overflow = input<boolean | undefined>();
+  readonly placement = input<TextPlacement | undefined>();
+  readonly repeat = input<number | undefined>();
+  readonly scale = input<number | Size | undefined>();
+  readonly rotateWithView = input<boolean | undefined>();
+  readonly rotation = input<number | undefined>();
+  readonly text = input<string | string[] | undefined>();
+  readonly textAlign = input<CanvasTextAlign | undefined>();
+  readonly justify = input<TextJustify | undefined>();
+  readonly textBaseline = input<CanvasTextBaseline | undefined>();
+  readonly fill = input<Fill | undefined>();
+  readonly stroke = input<Stroke | undefined>();
+  readonly backgroundFill = input<Fill | undefined>();
+  readonly backgroundStroke = input<Stroke | undefined>();
+  readonly padding = input<number[] | undefined>();
+  readonly declutterMode = input<DeclutterMode | undefined>();
   instance: Text;
   protected readonly _instanceSignal = signal<Text | undefined>(undefined);
   readonly instanceSignal = this._instanceSignal.asReadonly();
@@ -49,9 +49,9 @@ export class StyleTextComponent implements OnInit, OnChanges {
     this._instanceSignal.set(instance);
     return instance;
   }
-  public componentType = 'style-text';
+  readonly componentType: string = 'style-text';
 
-  constructor(@Optional() private host: StyleComponent) {
+  constructor(@Optional() private readonly host: StyleComponent) {
     if (!host) {
       throw new Error('aol-style-text must be a descendant of aol-style');
     }

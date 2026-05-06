@@ -8,12 +8,12 @@ import { Options } from 'ol/format/MVT';
   template: '',
 })
 export class FormatMVTComponent implements OnChanges {
-  featureClass = input<FeatureClass>();
-  geometryName = input<string>();
-  layerName = input<string>();
-  layers = input<string[]>();
-  idProperty = input<string>();
-  public componentType = 'format';
+  readonly featureClass = input<FeatureClass>();
+  readonly geometryName = input<string>();
+  readonly layerName = input<string>();
+  readonly layers = input<string[]>();
+  readonly idProperty = input<string>();
+  readonly componentType: string = 'format';
   instance: MVT;
   protected readonly _instanceSignal = signal<MVT | undefined>(undefined);
   readonly instanceSignal = this._instanceSignal.asReadonly();

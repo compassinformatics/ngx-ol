@@ -14,15 +14,15 @@ import VectorTileSource from 'ol/source/VectorTile';
   template: ` <ng-content></ng-content> `,
 })
 export class LayerVectorTileComponent extends LayerComponent implements OnInit, OnChanges {
-  renderBuffer = input<number>();
-  renderMode = input<VectorTileRenderType>();
-  renderOrder = input<OrderFunction>();
-  style = input<StyleLike | StyleFunction | null | undefined>();
-  background = input<BackgroundColor>();
-  updateWhileAnimating = input<boolean>();
-  updateWhileInteracting = input<boolean>();
-  visible = input<boolean>();
-  source = input<VectorTileSource>();
+  readonly renderBuffer = input<number>();
+  readonly renderMode = input<VectorTileRenderType>();
+  readonly renderOrder = input<OrderFunction>();
+  readonly style = input<StyleLike | StyleFunction | null | undefined>();
+  readonly background = input<BackgroundColor>();
+  readonly updateWhileAnimating = input<boolean>();
+  readonly updateWhileInteracting = input<boolean>();
+  readonly visible = input<boolean>();
+  readonly source = input<VectorTileSource>();
 
   constructor(map: MapComponent, @Optional() group?: LayerGroupComponent) {
     super(group || map);

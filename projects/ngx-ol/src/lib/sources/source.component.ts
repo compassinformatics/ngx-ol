@@ -6,8 +6,8 @@ import { LayerComponent } from '../layers/layer.component';
 @Directive()
 // eslint-disable-next-line @angular-eslint/directive-class-suffix
 export abstract class SourceComponent implements OnChanges, OnDestroy {
-  attributions = input<AttributionLike>();
-  attributionsCollapsible = input<boolean>();
+  readonly attributions = input<AttributionLike>();
+  readonly attributionsCollapsible = input<boolean>();
   instance: Source;
   protected readonly _instanceSignal = signal<Source | undefined>(undefined);
   readonly instanceSignal = this._instanceSignal.asReadonly();
@@ -17,9 +17,9 @@ export abstract class SourceComponent implements OnChanges, OnDestroy {
     this._instanceSignal.set(instance);
     return instance;
   }
-  public componentType = 'source';
+  readonly componentType: string = 'source';
 
-  protected constructor(protected host: LayerComponent) {}
+  protected constructor(protected readonly host: LayerComponent) {}
 
   ngOnChanges(changes: SimpleChanges) {
     if (!this.instance) {

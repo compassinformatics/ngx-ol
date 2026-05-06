@@ -10,7 +10,7 @@ import { ContentComponent } from '../content.component';
 })
 export class ControlComponent implements OnInit, OnDestroy {
   @ContentChild(ContentComponent, { static: true }) content: ContentComponent;
-  public componentType = 'control';
+  readonly componentType: string = 'control';
   instance: Control;
   protected readonly _instanceSignal = signal<Control | undefined>(undefined);
   readonly instanceSignal = this._instanceSignal.asReadonly();
@@ -22,7 +22,7 @@ export class ControlComponent implements OnInit, OnDestroy {
   }
   element: HTMLElement;
 
-  constructor(private map: MapComponent) {}
+  constructor(private readonly map: MapComponent) {}
 
   ngOnInit() {
     if (this.content) {

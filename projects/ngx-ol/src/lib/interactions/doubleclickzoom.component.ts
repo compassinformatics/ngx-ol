@@ -8,8 +8,8 @@ import { MapComponent } from '../map.component';
   template: '',
 })
 export class DoubleClickZoomInteractionComponent implements OnInit, OnChanges, OnDestroy {
-  duration = input<number>();
-  delta = input<number>();
+  readonly duration = input<number>();
+  readonly delta = input<number>();
   instance: DoubleClickZoom;
   protected readonly _instanceSignal = signal<DoubleClickZoom | undefined>(undefined);
   readonly instanceSignal = this._instanceSignal.asReadonly();
@@ -20,7 +20,7 @@ export class DoubleClickZoomInteractionComponent implements OnInit, OnChanges, O
     return instance;
   }
 
-  constructor(private map: MapComponent) {}
+  constructor(private readonly map: MapComponent) {}
 
   ngOnInit() {
     this.initializeInstance();

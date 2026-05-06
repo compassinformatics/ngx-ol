@@ -8,7 +8,7 @@ import { MapComponent } from '../map.component';
   template: '',
 })
 export class PinchZoomInteractionComponent implements OnInit, OnChanges, OnDestroy {
-  duration = input<number>();
+  readonly duration = input<number>();
   instance: PinchZoom;
   protected readonly _instanceSignal = signal<PinchZoom | undefined>(undefined);
   readonly instanceSignal = this._instanceSignal.asReadonly();
@@ -19,7 +19,7 @@ export class PinchZoomInteractionComponent implements OnInit, OnChanges, OnDestr
     return instance;
   }
 
-  constructor(private map: MapComponent) {}
+  constructor(private readonly map: MapComponent) {}
 
   ngOnInit() {
     this.initializeInstance();

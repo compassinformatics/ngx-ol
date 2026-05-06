@@ -9,10 +9,10 @@ import { MapComponent } from '../map.component';
   template: '',
 })
 export class LinkInteractionComponent implements OnInit, OnChanges, OnDestroy {
-  animate = input<boolean | AnimationOptions>();
-  params = input<Params[]>();
-  replace = input<boolean>();
-  prefix = input<string>();
+  readonly animate = input<boolean | AnimationOptions>();
+  readonly params = input<Params[]>();
+  readonly replace = input<boolean>();
+  readonly prefix = input<string>();
   instance: Link;
   protected readonly _instanceSignal = signal<Link | undefined>(undefined);
   readonly instanceSignal = this._instanceSignal.asReadonly();
@@ -23,7 +23,7 @@ export class LinkInteractionComponent implements OnInit, OnChanges, OnDestroy {
     return instance;
   }
 
-  constructor(private map: MapComponent) {}
+  constructor(private readonly map: MapComponent) {}
 
   ngOnInit() {
     this.initializeInstance();

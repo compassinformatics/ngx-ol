@@ -8,9 +8,9 @@ import { MapComponent } from '../map.component';
   template: '',
 })
 export class MouseWheelZoomInteractionComponent implements OnInit, OnChanges, OnDestroy {
-  duration = input<number>();
-  timeout = input<number>();
-  useAnchor = input<boolean>();
+  readonly duration = input<number>();
+  readonly timeout = input<number>();
+  readonly useAnchor = input<boolean>();
   instance: MouseWheelZoom;
   protected readonly _instanceSignal = signal<MouseWheelZoom | undefined>(undefined);
   readonly instanceSignal = this._instanceSignal.asReadonly();
@@ -21,7 +21,7 @@ export class MouseWheelZoomInteractionComponent implements OnInit, OnChanges, On
     return instance;
   }
 
-  constructor(private map: MapComponent) {}
+  constructor(private readonly map: MapComponent) {}
 
   ngOnInit() {
     this.initializeInstance();

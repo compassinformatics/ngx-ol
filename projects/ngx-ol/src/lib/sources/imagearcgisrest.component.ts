@@ -25,18 +25,18 @@ import { ImageSourceEvent } from 'ol/source/Image';
   ],
 })
 export class SourceImageArcGISRestComponent extends SourceComponent implements OnInit, OnChanges {
-  projection = input<ProjectionLike | string>();
-  url = input<string>();
-  crossOrigin = input<string | null>();
-  hidpi = input<boolean>();
-  imageLoadFunction = input<LoadFunction>();
-  interpolate = input<boolean>();
-  params = input<{ [k: string]: any }>();
-  ratio = input<number>(1.5);
-  resolutions = input<number[]>();
-  imageLoadStart = output<ImageSourceEvent>();
-  imageLoadEnd = output<ImageSourceEvent>();
-  imageLoadError = output<ImageSourceEvent>();
+  readonly projection = input<ProjectionLike | string>();
+  readonly url = input<string>();
+  readonly crossOrigin = input<string | null>();
+  readonly hidpi = input<boolean>();
+  readonly imageLoadFunction = input<LoadFunction>();
+  readonly interpolate = input<boolean>();
+  readonly params = input<{ [k: string]: any }>();
+  readonly ratio = input<number>(1.5);
+  readonly resolutions = input<number[]>();
+  readonly imageLoadStart = output<ImageSourceEvent>();
+  readonly imageLoadEnd = output<ImageSourceEvent>();
+  readonly imageLoadError = output<ImageSourceEvent>();
   instance: ImageArcGISRest;
   protected readonly _instanceSignal = signal<ImageArcGISRest | undefined>(undefined);
   readonly instanceSignal = this._instanceSignal.asReadonly();

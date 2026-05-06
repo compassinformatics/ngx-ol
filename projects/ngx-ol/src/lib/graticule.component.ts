@@ -16,10 +16,10 @@ import { MapComponent } from './map.component';
   template: '<ng-content></ng-content>',
 })
 export class GraticuleComponent implements AfterContentInit, OnChanges, OnDestroy {
-  strokeStyle = input<Stroke>();
-  showLabels = input<boolean>();
-  lonLabelPosition = input<number>();
-  latLabelPosition = input<number>();
+  readonly strokeStyle = input<Stroke>();
+  readonly showLabels = input<boolean>();
+  readonly lonLabelPosition = input<number>();
+  readonly latLabelPosition = input<number>();
   instance: any;
   protected readonly _instanceSignal = signal<any | undefined>(undefined);
   readonly instanceSignal = this._instanceSignal.asReadonly();
@@ -29,9 +29,9 @@ export class GraticuleComponent implements AfterContentInit, OnChanges, OnDestro
     this._instanceSignal.set(instance);
     return instance;
   }
-  public componentType = 'graticule';
+  readonly componentType: string = 'graticule';
 
-  constructor(private map: MapComponent) {}
+  constructor(private readonly map: MapComponent) {}
 
   ngOnChanges(changes: SimpleChanges) {
     const properties: { [index: string]: any } = {};

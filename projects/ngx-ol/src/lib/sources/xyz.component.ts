@@ -30,29 +30,29 @@ import { SourceComponent } from './source.component';
   providers: [{ provide: SourceComponent, useExisting: forwardRef(() => SourceXYZComponent) }],
 })
 export class SourceXYZComponent extends SourceComponent implements AfterContentInit, OnChanges {
-  cacheSize = input<number>();
-  crossOrigin = input<null | string>();
-  gutter = input<number>();
-  interpolate = input<boolean>();
-  projection = input<ProjectionLike>();
-  reprojectionErrorThreshold = input<number>();
-  maxResolution = input<number>();
-  minZoom = input<number>();
-  maxZoom = input<number>();
-  tileGrid = input<TileGrid>();
-  tileLoadFunction = input<LoadFunction>();
-  tilePixelRatio = input<number>();
-  tileSize = input<number | Size>();
-  tileUrlFunction = input<UrlFunction>();
-  transition = input<number>();
-  url = input<string>();
-  urls = input<string[]>();
-  wrapX = input<boolean>();
-  zDirection = input<number | NearestDirectionFunction>();
+  readonly cacheSize = input<number>();
+  readonly crossOrigin = input<null | string>();
+  readonly gutter = input<number>();
+  readonly interpolate = input<boolean>();
+  readonly projection = input<ProjectionLike>();
+  readonly reprojectionErrorThreshold = input<number>();
+  readonly maxResolution = input<number>();
+  readonly minZoom = input<number>();
+  readonly maxZoom = input<number>();
+  readonly tileGrid = input<TileGrid>();
+  readonly tileLoadFunction = input<LoadFunction>();
+  readonly tilePixelRatio = input<number>();
+  readonly tileSize = input<number | Size>();
+  readonly tileUrlFunction = input<UrlFunction>();
+  readonly transition = input<number>();
+  readonly url = input<string>();
+  readonly urls = input<string[]>();
+  readonly wrapX = input<boolean>();
+  readonly zDirection = input<number | NearestDirectionFunction>();
   @ContentChild(TileGridComponent, { static: false }) tileGridXYZ: TileGridComponent;
-  tileLoadStart = output<TileSourceEvent>();
-  tileLoadEnd = output<TileSourceEvent>();
-  tileLoadError = output<TileSourceEvent>();
+  readonly tileLoadStart = output<TileSourceEvent>();
+  readonly tileLoadEnd = output<TileSourceEvent>();
+  readonly tileLoadError = output<TileSourceEvent>();
   instance: XYZ;
   protected readonly _instanceSignal = signal<XYZ | undefined>(undefined);
   readonly instanceSignal = this._instanceSignal.asReadonly();
@@ -66,7 +66,7 @@ export class SourceXYZComponent extends SourceComponent implements AfterContentI
   constructor(
     @Optional()
     @Host()
-    protected layer?: LayerTileComponent,
+    protected readonly layer?: LayerTileComponent,
   ) {
     super(layer!);
   }

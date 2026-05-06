@@ -12,21 +12,21 @@ import { NearestDirectionFunction } from 'ol/array';
   providers: [{ provide: SourceComponent, useExisting: forwardRef(() => SourceBingmapsComponent) }],
 })
 export class SourceBingmapsComponent extends SourceComponent implements OnInit, OnChanges {
-  cacheSize = input<number>();
-  hidpi = input<boolean>();
-  culture = input<string>();
-  key = input.required<string>();
-  imagerySet = input<'Road' | 'Aerial' | 'AerialWithLabels' | 'collinsBart' | 'ordnanceSurvey'>(
+  readonly cacheSize = input<number>();
+  readonly hidpi = input<boolean>();
+  readonly culture = input<string>();
+  readonly key = input.required<string>();
+  readonly imagerySet = input<'Road' | 'Aerial' | 'AerialWithLabels' | 'collinsBart' | 'ordnanceSurvey'>(
     'Aerial',
   );
-  maxZoom = input<number>();
-  reprojectionErrorThreshold = input<number>();
-  tileLoadFunction = input<LoadFunction>();
-  wrapX = input<boolean>();
-  interpolate = input<boolean>();
-  placeholderTiles = input<boolean>();
-  transition = input<number>();
-  zDirection = input<number | NearestDirectionFunction>();
+  readonly maxZoom = input<number>();
+  readonly reprojectionErrorThreshold = input<number>();
+  readonly tileLoadFunction = input<LoadFunction>();
+  readonly wrapX = input<boolean>();
+  readonly interpolate = input<boolean>();
+  readonly placeholderTiles = input<boolean>();
+  readonly transition = input<number>();
+  readonly zDirection = input<number | NearestDirectionFunction>();
   instance: BingMaps;
   protected readonly _instanceSignal = signal<BingMaps | undefined>(undefined);
   readonly instanceSignal = this._instanceSignal.asReadonly();
