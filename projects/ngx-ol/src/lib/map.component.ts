@@ -3,12 +3,11 @@ import {
   Component,
   OnInit,
   ElementRef,
-  Output,
-  EventEmitter,
   AfterViewInit,
   SimpleChanges,
   OnChanges,
   NgZone,
+  output,
   input,
 } from '@angular/core';
 import Map from 'ol/Map';
@@ -37,25 +36,25 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
   moveTolerance = input<number>();
   runOutsideAngular = input(true);
 
-  @Output() olChange = new EventEmitter<BaseEvent>();
-  @Output() changeLayerGroup = new EventEmitter<ObjectEvent>();
-  @Output() changeSize = new EventEmitter<ObjectEvent>();
-  @Output() changeTarget = new EventEmitter<ObjectEvent>();
-  @Output() changeView = new EventEmitter<ObjectEvent>();
-  @Output() olClick = new EventEmitter<MapBrowserEvent<MouseEvent> | any>();
-  @Output() dblClick = new EventEmitter<MapBrowserEvent<MouseEvent> | any>();
-  @Output() olError = new EventEmitter<BaseEvent>();
-  @Output() loadEnd = new EventEmitter<MapEvent>();
-  @Output() loadStart = new EventEmitter<MapEvent>();
-  @Output() moveEnd = new EventEmitter<MapEvent>();
-  @Output() moveStart = new EventEmitter<MapEvent>();
-  @Output() pointerDrag = new EventEmitter<MapBrowserEvent<MouseEvent> | any>();
-  @Output() pointerMove = new EventEmitter<MapBrowserEvent<MouseEvent> | any>();
-  @Output() postCompose = new EventEmitter<RenderEvent>();
-  @Output() postRender = new EventEmitter<MapEvent>();
-  @Output() preCompose = new EventEmitter<RenderEvent>();
-  @Output() propertyChange = new EventEmitter<ObjectEvent>();
-  @Output() singleClick = new EventEmitter<MapBrowserEvent<MouseEvent> | any>();
+  olChange = output<BaseEvent>();
+  changeLayerGroup = output<ObjectEvent>();
+  changeSize = output<ObjectEvent>();
+  changeTarget = output<ObjectEvent>();
+  changeView = output<ObjectEvent>();
+  olClick = output<MapBrowserEvent<MouseEvent> | any>();
+  dblClick = output<MapBrowserEvent<MouseEvent> | any>();
+  olError = output<BaseEvent>();
+  loadEnd = output<MapEvent>();
+  loadStart = output<MapEvent>();
+  moveEnd = output<MapEvent>();
+  moveStart = output<MapEvent>();
+  pointerDrag = output<MapBrowserEvent<MouseEvent> | any>();
+  pointerMove = output<MapBrowserEvent<MouseEvent> | any>();
+  postCompose = output<RenderEvent>();
+  postRender = output<MapEvent>();
+  preCompose = output<RenderEvent>();
+  propertyChange = output<ObjectEvent>();
+  singleClick = output<MapBrowserEvent<MouseEvent> | any>();
 
   instance: Map;
 

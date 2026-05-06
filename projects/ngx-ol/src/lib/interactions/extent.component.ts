@@ -1,12 +1,11 @@
 import {
   Component,
-  EventEmitter,
   OnChanges,
   OnDestroy,
   OnInit,
-  Output,
   SimpleChanges,
   signal,
+  output,
   input,
 } from '@angular/core';
 import type { Condition } from 'ol/events/condition';
@@ -33,7 +32,7 @@ export class ExtentInteractionComponent implements OnInit, OnChanges, OnDestroy 
 
   wrapX = input<boolean>();
 
-  @Output() extentChanged = new EventEmitter<ExtentEvent>();
+  extentChanged = output<ExtentEvent>();
 
   instance: ExtentInteraction;
 

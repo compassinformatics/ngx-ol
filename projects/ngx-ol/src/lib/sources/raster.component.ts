@@ -3,12 +3,11 @@ import {
   AfterContentInit,
   Component,
   ContentChild,
-  EventEmitter,
   forwardRef,
   Host,
   OnChanges,
-  Output,
   SimpleChanges,
+  output,
   input,
 } from '@angular/core';
 import Raster from 'ol/source/Raster';
@@ -35,8 +34,8 @@ export class SourceRasterComponent extends SourceComponent implements AfterConte
   operationType = input<'pixel' | 'image'>();
   resolutions = input<number[] | null>();
 
-  @Output() beforeOperations = new EventEmitter<RasterSourceEvent>();
-  @Output() afterOperations = new EventEmitter<RasterSourceEvent>();
+  beforeOperations = output<RasterSourceEvent>();
+  afterOperations = output<RasterSourceEvent>();
 
   instance: Raster;
 

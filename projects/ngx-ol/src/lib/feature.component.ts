@@ -5,8 +5,7 @@ import {
   OnDestroy,
   OnChanges,
   SimpleChanges,
-  Output,
-  EventEmitter,
+  output,
   input,
 } from '@angular/core';
 import Feature from 'ol/Feature';
@@ -26,15 +25,15 @@ export class FeatureComponent implements OnInit, OnDestroy, OnChanges {
 
   clickable = input<boolean>();
 
-  @Output() olClick = new EventEmitter<{
+  olClick = output<{
     event: MapBrowserEvent<MouseEvent> | any;
     feature: Feature;
   }>();
-  @Output() singleClick = new EventEmitter<{
+  singleClick = output<{
     event: MapBrowserEvent<MouseEvent> | any;
     feature: Feature;
   }>();
-  @Output() dblClick = new EventEmitter<{
+  dblClick = output<{
     event: MapBrowserEvent<MouseEvent> | any;
     feature: Feature;
   }>();

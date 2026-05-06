@@ -1,12 +1,11 @@
 import {
   Component,
-  EventEmitter,
   OnChanges,
   OnDestroy,
   OnInit,
-  Output,
   SimpleChanges,
   signal,
+  output,
   input,
 } from '@angular/core';
 import BaseEvent from 'ol/events/Event';
@@ -30,11 +29,11 @@ export class SnapInteractionComponent implements OnInit, OnChanges, OnDestroy {
   pixelTolerance = input<number>();
   source = input<Vector>();
 
-  @Output() olChange = new EventEmitter<BaseEvent>();
-  @Output() changeActive = new EventEmitter<ObjectEvent>();
-  @Output() olError = new EventEmitter<BaseEvent>();
-  @Output() propertyChange = new EventEmitter<ObjectEvent>();
-  @Output() snap = new EventEmitter<SnapEvent>();
+  olChange = output<BaseEvent>();
+  changeActive = output<ObjectEvent>();
+  olError = output<BaseEvent>();
+  propertyChange = output<ObjectEvent>();
+  snap = output<SnapEvent>();
 
   instance: Snap;
 

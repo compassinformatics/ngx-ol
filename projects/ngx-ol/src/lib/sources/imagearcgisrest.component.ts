@@ -1,13 +1,12 @@
 import {
   signal,
   Component,
-  EventEmitter,
   forwardRef,
   Host,
   OnChanges,
   OnInit,
-  Output,
   SimpleChanges,
+  output,
   input,
 } from '@angular/core';
 import ImageArcGISRest from 'ol/source/ImageArcGISRest';
@@ -36,9 +35,9 @@ export class SourceImageArcGISRestComponent extends SourceComponent implements O
   ratio = input<number>(1.5);
   resolutions = input<number[]>();
 
-  @Output() imageLoadStart = new EventEmitter<ImageSourceEvent>();
-  @Output() imageLoadEnd = new EventEmitter<ImageSourceEvent>();
-  @Output() imageLoadError = new EventEmitter<ImageSourceEvent>();
+  imageLoadStart = output<ImageSourceEvent>();
+  imageLoadEnd = output<ImageSourceEvent>();
+  imageLoadError = output<ImageSourceEvent>();
 
   instance: ImageArcGISRest;
 

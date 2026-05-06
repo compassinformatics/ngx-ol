@@ -6,8 +6,7 @@ import {
   OnInit,
   forwardRef,
   SimpleChanges,
-  Output,
-  EventEmitter,
+  output,
   input,
 } from '@angular/core';
 import ImageWMS from 'ol/source/ImageWMS';
@@ -36,9 +35,9 @@ export class SourceImageWMSComponent extends SourceComponent implements OnChange
   resolutions = input<Array<number>>();
   url = input<string>();
 
-  @Output() imageLoadStart = new EventEmitter<ImageSourceEvent>();
-  @Output() imageLoadEnd = new EventEmitter<ImageSourceEvent>();
-  @Output() imageLoadError = new EventEmitter<ImageSourceEvent>();
+  imageLoadStart = output<ImageSourceEvent>();
+  imageLoadEnd = output<ImageSourceEvent>();
+  imageLoadError = output<ImageSourceEvent>();
 
   instance: ImageWMS;
 
