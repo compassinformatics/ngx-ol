@@ -6,7 +6,7 @@ import SimpleGeometry from 'ol/geom/SimpleGeometry';
 @Directive()
 // eslint-disable-next-line @angular-eslint/directive-class-suffix
 export abstract class SimpleGeometryComponent implements OnInit {
-  srid = input<string>();
+  srid = input('EPSG:3857');
 
   instance: SimpleGeometry;
 

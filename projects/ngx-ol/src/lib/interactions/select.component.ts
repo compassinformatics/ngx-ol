@@ -1,4 +1,14 @@
-import { Component, OnDestroy, OnInit, Output, EventEmitter, signal, input } from '@angular/core';
+import {
+  Component,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  Output,
+  EventEmitter,
+  SimpleChanges,
+  signal,
+  input,
+} from '@angular/core';
 import { MapComponent } from '../map.component';
 import Select from 'ol/interaction/Select';
 import Layer from 'ol/layer/Layer';
@@ -14,7 +24,7 @@ import BaseEvent from 'ol/events/Event';
   selector: 'aol-interaction-select',
   template: '',
 })
-export class SelectInteractionComponent implements OnInit, OnDestroy {
+export class SelectInteractionComponent implements OnInit, OnChanges, OnDestroy {
   addCondition = input<Condition>();
   condition = input<Condition>();
   layers = input<Layer[] | ((layer: Layer) => boolean)>();
@@ -49,18 +59,38 @@ export class SelectInteractionComponent implements OnInit, OnDestroy {
   constructor(private map: MapComponent) {}
 
   ngOnInit() {
-    this.setInstance(new Select(this.createOptions()));
+    this.initializeInstance();
+  }
 
+  ngOnChanges(changes: SimpleChanges) {
+    const requiresReload = Object.keys(changes).some((key) => !changes[key].firstChange);
+
+    if (requiresReload && this.instance) {
+      this.reloadInstance();
+    }
+  }
+
+  ngOnDestroy() {
+    this.map.instance.removeInteraction(this.instance);
+  }
+
+  private initializeInstance() {
+    this.setInstance(new Select(this.createOptions()));
+    this.bindInstanceEvents();
+    this.map.instance.addInteraction(this.instance);
+  }
+
+  private reloadInstance() {
+    this.map.instance.removeInteraction(this.instance);
+    this.initializeInstance();
+  }
+
+  private bindInstanceEvents() {
     this.instance.on('change', (event: BaseEvent) => this.olChange.emit(event));
     this.instance.on('change:active', (event: ObjectEvent) => this.olChangeActive.emit(event));
     this.instance.on('error', (event: BaseEvent) => this.olError.emit(event));
     this.instance.on('propertychange', (event: ObjectEvent) => this.propertyChange.emit(event));
     this.instance.on('select', (event: SelectEvent) => this.olSelect.emit(event));
-    this.map.instance.addInteraction(this.instance);
-  }
-
-  ngOnDestroy() {
-    this.map.instance.removeInteraction(this.instance);
   }
 
   private createOptions(): Options {

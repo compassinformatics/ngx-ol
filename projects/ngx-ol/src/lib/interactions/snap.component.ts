@@ -1,4 +1,14 @@
-import { Component, EventEmitter, OnDestroy, OnInit, Output, signal, input } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  Output,
+  SimpleChanges,
+  signal,
+  input,
+} from '@angular/core';
 import BaseEvent from 'ol/events/Event';
 import { SnapEvent } from 'ol/events/SnapEvent';
 import Snap from 'ol/interaction/Snap';
@@ -13,7 +23,7 @@ import Vector from 'ol/source/Vector';
   selector: 'aol-interaction-snap',
   template: '',
 })
-export class SnapInteractionComponent implements OnInit, OnDestroy {
+export class SnapInteractionComponent implements OnInit, OnChanges, OnDestroy {
   features = input<Collection<Feature>>();
   edge = input<boolean>();
   vertex = input<boolean>();
@@ -43,18 +53,38 @@ export class SnapInteractionComponent implements OnInit, OnDestroy {
   constructor(private map: MapComponent) {}
 
   ngOnInit() {
-    this.setInstance(new Snap(this.createOptions()));
+    this.initializeInstance();
+  }
 
+  ngOnChanges(changes: SimpleChanges) {
+    const requiresReload = Object.keys(changes).some((key) => !changes[key].firstChange);
+
+    if (requiresReload && this.instance) {
+      this.reloadInstance();
+    }
+  }
+
+  ngOnDestroy() {
+    this.map.instance.removeInteraction(this.instance);
+  }
+
+  private initializeInstance() {
+    this.setInstance(new Snap(this.createOptions()));
+    this.bindInstanceEvents();
+    this.map.instance.addInteraction(this.instance);
+  }
+
+  private reloadInstance() {
+    this.map.instance.removeInteraction(this.instance);
+    this.initializeInstance();
+  }
+
+  private bindInstanceEvents() {
     this.instance.on('change', (event: BaseEvent) => this.olChange.emit(event));
     this.instance.on('change:active', (event: ObjectEvent) => this.olChangeActive.emit(event));
     this.instance.on('error', (event: BaseEvent) => this.olError.emit(event));
     this.instance.on('propertychange', (event: ObjectEvent) => this.propertyChange.emit(event));
     this.instance.on('snap', (event: SnapEvent) => this.olSnap.emit(event));
-    this.map.instance.addInteraction(this.instance);
-  }
-
-  ngOnDestroy() {
-    this.map.instance.removeInteraction(this.instance);
   }
 
   private createOptions(): Options {

@@ -71,6 +71,7 @@ export class SourceImageArcGISRestComponent extends SourceComponent implements O
   }
 
   ngOnChanges(changes: SimpleChanges) {
+    super.ngOnChanges(changes);
     if (this.instance && changes.hasOwnProperty('params')) {
       this.instance.updateParams(this.params());
     }

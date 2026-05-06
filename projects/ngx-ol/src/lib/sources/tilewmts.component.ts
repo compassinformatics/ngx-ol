@@ -4,6 +4,7 @@ import {
   Host,
   forwardRef,
   AfterContentInit,
+  AfterContentChecked,
   ContentChild,
   SimpleChanges,
   OnChanges,
@@ -29,7 +30,7 @@ import { NearestDirectionFunction } from 'ol/array';
 })
 export class SourceTileWMTSComponent
   extends SourceComponent
-  implements AfterContentInit, OnChanges
+  implements AfterContentInit, AfterContentChecked, OnChanges
 {
   cacheSize = input<number>();
   crossOrigin = input<null | string>();
@@ -77,24 +78,15 @@ export class SourceTileWMTSComponent
     super(layer);
   }
 
+  private lastTileGridInstance?: WMTS;
+
   ngOnChanges(changes: SimpleChanges) {
-    const properties: { [index: string]: any } = {};
-    if (!this.instance) {
-      return;
+    super.ngOnChanges(changes);
+    const requiresReload = Object.keys(changes).some((key) => !changes[key].firstChange);
+
+    if (requiresReload && this.instance) {
+      this.setLayerSource();
     }
-    for (const key in changes) {
-      if (changes.hasOwnProperty(key)) {
-        switch (key) {
-          case 'url':
-            this.setLayerSource();
-            break;
-          default:
-            break;
-        }
-        properties[key] = changes[key].currentValue;
-      }
-    }
-    this.instance.setProperties(properties, false);
   }
 
   setLayerSource(): void {
@@ -103,12 +95,25 @@ export class SourceTileWMTSComponent
     this.instance.on('tileloadend', (event: TileSourceEvent) => this.tileLoadEnd.emit(event));
     this.instance.on('tileloaderror', (event: TileSourceEvent) => this.tileLoadError.emit(event));
     this.host.instance.setSource(this.instance);
+    this.lastTileGridInstance = this.tileGridWMTS?.instance;
   }
 
   ngAfterContentInit(): void {
     if (this.tileGridWMTS || this.tileGrid()) {
       this.setLayerSource();
     }
+  }
+
+  ngAfterContentChecked() {
+    const tileGrid = this.tileGridWMTS?.instance;
+
+    if (tileGrid !== this.lastTileGridInstance && this.instance) {
+      this.lastTileGridInstance = tileGrid;
+      this.setLayerSource();
+      return;
+    }
+
+    this.lastTileGridInstance = tileGrid;
   }
 
   private createOptions(): Options {

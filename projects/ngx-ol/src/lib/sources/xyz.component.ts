@@ -84,24 +84,15 @@ export class SourceXYZComponent extends SourceComponent implements AfterContentI
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    const properties: { [index: string]: any } = {};
+    super.ngOnChanges(changes);
+    const requiresReload = Object.keys(changes).some((key) => !changes[key].firstChange);
 
-    if (!this.instance) {
-      return;
-    }
-    for (const key in changes) {
-      if (changes.hasOwnProperty(key)) {
-        properties[key] = changes[key].currentValue;
-      }
-    }
-
-    this.instance.setProperties(properties, false);
-    if (changes.hasOwnProperty('url')) {
+    if (requiresReload && this.instance) {
       this.init();
     }
   }
 
-  init() {
+  protected init() {
     this.setInstance(new XYZ(this.createOptions()));
 
     this.instance.on('tileloadstart', (event: TileSourceEvent) => this.tileLoadStart.emit(event));

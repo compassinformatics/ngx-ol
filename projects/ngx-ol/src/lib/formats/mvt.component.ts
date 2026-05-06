@@ -1,4 +1,4 @@
-import { Component, signal, input } from '@angular/core';
+import { Component, OnChanges, SimpleChanges, signal, input } from '@angular/core';
 import MVT from 'ol/format/MVT';
 import { FeatureClass } from 'ol/Feature';
 import { Options } from 'ol/format/MVT';
@@ -7,7 +7,7 @@ import { Options } from 'ol/format/MVT';
   selector: 'aol-format-mvt',
   template: '',
 })
-export class FormatMVTComponent {
+export class FormatMVTComponent implements OnChanges {
   featureClass = input<FeatureClass>();
   geometryName = input<string>();
   layerName = input<string>();
@@ -32,6 +32,14 @@ export class FormatMVTComponent {
 
   constructor() {
     this.setInstance(new MVT(this.createOptions()));
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    const requiresReload = Object.keys(changes).some((key) => !changes[key].firstChange);
+
+    if (requiresReload) {
+      this.setInstance(new MVT(this.createOptions()));
+    }
   }
 
   private createOptions(): Options<any> {

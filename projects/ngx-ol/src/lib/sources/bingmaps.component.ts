@@ -1,4 +1,4 @@
-import { Component, Host, OnInit, forwardRef, signal, input } from '@angular/core';
+import { Component, Host, OnChanges, OnInit, SimpleChanges, forwardRef, signal, input } from '@angular/core';
 import BingMaps from 'ol/source/BingMaps';
 import { Options } from 'ol/source/BingMaps';
 import { SourceComponent } from './source.component';
@@ -11,7 +11,7 @@ import { NearestDirectionFunction } from 'ol/array';
   template: ` <div class="aol-source-bingmaps"></div> `,
   providers: [{ provide: SourceComponent, useExisting: forwardRef(() => SourceBingmapsComponent) }],
 })
-export class SourceBingmapsComponent extends SourceComponent implements OnInit {
+export class SourceBingmapsComponent extends SourceComponent implements OnInit, OnChanges {
   cacheSize = input<number>();
   hidpi = input<boolean>();
   culture = input<string>();
@@ -47,6 +47,19 @@ export class SourceBingmapsComponent extends SourceComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.init();
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    super.ngOnChanges(changes);
+    const requiresReload = Object.keys(changes).some((key) => !changes[key].firstChange);
+
+    if (requiresReload && this.instance) {
+      this.init();
+    }
+  }
+
+  private init() {
     this.setInstance(new BingMaps(this.createOptions()));
     this.host.instance.setSource(this.instance);
   }

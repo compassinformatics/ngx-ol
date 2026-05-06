@@ -1,4 +1,14 @@
-import { Component, OnDestroy, OnInit, EventEmitter, Output, signal, input } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  Output,
+  SimpleChanges,
+  signal,
+  input,
+} from '@angular/core';
 import { MapComponent } from '../map.component';
 import Draw from 'ol/interaction/Draw';
 import Collection from 'ol/Collection';
@@ -17,7 +27,7 @@ import { FlatStyleLike } from 'ol/style/flat';
   selector: 'aol-interaction-draw',
   template: '',
 })
-export class DrawInteractionComponent implements OnInit, OnDestroy {
+export class DrawInteractionComponent implements OnInit, OnChanges, OnDestroy {
   clickTolerance = input<number>();
   features = input<Collection<Feature>>();
   source = input<Vector>();
@@ -64,7 +74,33 @@ export class DrawInteractionComponent implements OnInit, OnDestroy {
   constructor(private map: MapComponent) {}
 
   ngOnInit() {
+    this.initializeInstance();
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    const requiresReload = Object.keys(changes).some((key) => !changes[key].firstChange);
+
+    if (requiresReload && this.instance) {
+      this.reloadInstance();
+    }
+  }
+
+  ngOnDestroy() {
+    this.map.instance.removeInteraction(this.instance);
+  }
+
+  private initializeInstance() {
     this.setInstance(new Draw(this.createOptions()));
+    this.bindInstanceEvents();
+    this.map.instance.addInteraction(this.instance);
+  }
+
+  private reloadInstance() {
+    this.map.instance.removeInteraction(this.instance);
+    this.initializeInstance();
+  }
+
+  private bindInstanceEvents() {
     this.instance.on('change', (event: BaseEvent) => this.olChange.emit(event));
     this.instance.on('change:active', (event: ObjectEvent) => this.olChangeActive.emit(event));
     this.instance.on('drawabort', (event: DrawEvent) => this.olDrawAbort.emit(event));
@@ -72,11 +108,6 @@ export class DrawInteractionComponent implements OnInit, OnDestroy {
     this.instance.on('drawstart', (event: DrawEvent) => this.drawStart.emit(event));
     this.instance.on('error', (event: BaseEvent) => this.olError.emit(event));
     this.instance.on('propertychange', (event: ObjectEvent) => this.propertyChange.emit(event));
-    this.map.instance.addInteraction(this.instance);
-  }
-
-  ngOnDestroy() {
-    this.map.instance.removeInteraction(this.instance);
   }
 
   private createOptions(): Options {

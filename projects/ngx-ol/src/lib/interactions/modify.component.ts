@@ -1,4 +1,14 @@
-import { Component, OnDestroy, OnInit, Output, EventEmitter, signal, input } from '@angular/core';
+import {
+  Component,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  Output,
+  EventEmitter,
+  SimpleChanges,
+  signal,
+  input,
+} from '@angular/core';
 import { MapComponent } from '../map.component';
 import Modify from 'ol/interaction/Modify';
 import Collection from 'ol/Collection';
@@ -16,7 +26,7 @@ import BaseVectorLayer from 'ol/layer/BaseVector';
   selector: 'aol-interaction-modify',
   template: '',
 })
-export class ModifyInteractionComponent implements OnInit, OnDestroy {
+export class ModifyInteractionComponent implements OnInit, OnChanges, OnDestroy {
   condition = input<Condition>();
   deleteCondition = input<Condition>();
   insertVertexCondition = input<Condition>();
@@ -52,18 +62,39 @@ export class ModifyInteractionComponent implements OnInit, OnDestroy {
   constructor(private map: MapComponent) {}
 
   ngOnInit() {
+    this.initializeInstance();
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    const requiresReload = Object.keys(changes).some((key) => !changes[key].firstChange);
+
+    if (requiresReload && this.instance) {
+      this.reloadInstance();
+    }
+  }
+
+  ngOnDestroy() {
+    this.map.instance.removeInteraction(this.instance);
+  }
+
+  private initializeInstance() {
     this.setInstance(new Modify(this.createOptions()));
+    this.bindInstanceEvents();
+    this.map.instance.addInteraction(this.instance);
+  }
+
+  private reloadInstance() {
+    this.map.instance.removeInteraction(this.instance);
+    this.initializeInstance();
+  }
+
+  private bindInstanceEvents() {
     this.instance.on('change', (event: BaseEvent) => this.olChange.emit(event));
     this.instance.on('change:active', (event: ObjectEvent) => this.olChangeActive.emit(event));
     this.instance.on('error', (event: BaseEvent) => this.olError.emit(event));
     this.instance.on('modifyend', (event: ModifyEvent) => this.olModifyEnd.emit(event));
     this.instance.on('modifystart', (event: ModifyEvent) => this.olModifyStart.emit(event));
     this.instance.on('propertychange', (event: ObjectEvent) => this.propertyChange.emit(event));
-    this.map.instance.addInteraction(this.instance);
-  }
-
-  ngOnDestroy() {
-    this.map.instance.removeInteraction(this.instance);
   }
 
   private createOptions(): Options {

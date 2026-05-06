@@ -62,6 +62,10 @@ export class SourceOsmComponent extends SourceXYZComponent implements AfterConte
   }
 
   ngAfterContentInit() {
+    this.init();
+  }
+
+  protected override init() {
     this.setInstance(new OSM(this.createOptions()));
     this.instance.on('tileloadstart', (event: TileSourceEvent) => this.tileLoadStart.emit(event));
     this.instance.on('tileloadend', (event: TileSourceEvent) => this.tileLoadEnd.emit(event));

@@ -77,6 +77,7 @@ export class SourceTileArcGISRestComponent extends SourceComponent implements On
   }
 
   ngOnChanges(changes: SimpleChanges) {
+    super.ngOnChanges(changes);
     if (this.instance && changes.hasOwnProperty('params') && this.params()) {
       this.instance.updateParams(this.params());
     }

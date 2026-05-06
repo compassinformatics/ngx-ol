@@ -66,6 +66,7 @@ export class SourceClusterComponent extends SourceComponent implements AfterCont
   }
 
   ngOnChanges(changes: SimpleChanges) {
+    super.ngOnChanges(changes);
     const distance = this.distance();
     if (this.instance && changes.hasOwnProperty('distance') && distance !== undefined) {
       this.instance.setDistance(distance);

@@ -4,6 +4,9 @@ import {
   forwardRef,
   ContentChild,
   AfterContentInit,
+  AfterContentChecked,
+  OnChanges,
+  SimpleChanges,
   signal,
   input,
 } from '@angular/core';
@@ -26,7 +29,10 @@ import FeatureFormat from 'ol/format/Feature';
     { provide: SourceComponent, useExisting: forwardRef(() => SourceOGCVectorTileComponent) },
   ],
 })
-export class SourceOGCVectorTileComponent extends SourceComponent implements AfterContentInit {
+export class SourceOGCVectorTileComponent
+  extends SourceComponent
+  implements AfterContentInit, AfterContentChecked, OnChanges
+{
   url = input.required<string>();
   context = input<any>();
   mediaType = input<string>();
@@ -60,22 +66,56 @@ export class SourceOGCVectorTileComponent extends SourceComponent implements Aft
     return instance;
   }
   tileGrid: TileGrid;
+  private lastFormatInstance?: FeatureFormat<any>;
 
   constructor(@Host() layer: LayerVectorTileComponent) {
     super(layer);
   }
 
   ngAfterContentInit() {
-    let format: FeatureFormat<any> | undefined = this.format();
-    if (this.formatMVTComponent) {
-      format = this.formatMVTComponent.instance;
+    this.init();
+    this.lastFormatInstance = this.getFormatInstance();
+  }
+
+  ngAfterContentChecked() {
+    const format = this.getFormatInstance();
+
+    if (format !== this.lastFormatInstance && this.instance) {
+      this.lastFormatInstance = format;
+      this.init();
+      return;
     }
-    if (this.formatGeoJSONComponent) {
-      format = this.formatGeoJSONComponent.instance;
+
+    this.lastFormatInstance = format;
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    super.ngOnChanges(changes);
+    const requiresReload = Object.keys(changes).some((key) => !changes[key].firstChange);
+
+    if (requiresReload && this.instance) {
+      this.init();
     }
+  }
+
+  private init() {
+    const format = this.getFormatInstance();
 
     this.setInstance(new OGCVectorTile(this.createOptions(format)));
     this.host.instance.setSource(this.instance);
+    this.lastFormatInstance = format;
+  }
+
+  private getFormatInstance(): FeatureFormat<any> | undefined {
+    if (this.formatGeoJSONComponent) {
+      return this.formatGeoJSONComponent.instance;
+    }
+
+    if (this.formatMVTComponent) {
+      return this.formatMVTComponent.instance;
+    }
+
+    return this.format();
   }
 
   private createOptions(format: FeatureFormat<any> | undefined): Options<any> {

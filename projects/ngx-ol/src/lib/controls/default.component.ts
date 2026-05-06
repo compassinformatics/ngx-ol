@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, signal, input } from '@angular/core';
+import { Component, OnChanges, OnDestroy, OnInit, SimpleChanges, signal, input } from '@angular/core';
 import Control from 'ol/control/Control';
 import { defaults } from 'ol/control/defaults';
 import { DefaultsOptions } from 'ol/control/defaults';
@@ -13,7 +13,7 @@ import { MapComponent } from '../map.component';
   selector: 'aol-control-defaults',
   template: '',
 })
-export class DefaultControlComponent implements OnInit, OnDestroy {
+export class DefaultControlComponent implements OnInit, OnChanges, OnDestroy {
   attribution = input<boolean>();
   attributionOptions = input<AttributionOptions>();
   rotate = input<boolean>();
@@ -38,14 +38,30 @@ export class DefaultControlComponent implements OnInit, OnDestroy {
   constructor(private map: MapComponent) {}
 
   ngOnInit() {
-    // console.log('ol.control.defaults init: ', this);
-    this.setInstance(defaults(this.createOptions()));
-    this.instance.forEach((c) => this.map.instance.addControl(c));
+    this.initializeInstance();
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    const requiresReload = Object.keys(changes).some((key) => !changes[key].firstChange);
+
+    if (requiresReload && this.instance) {
+      this.reloadInstance();
+    }
   }
 
   ngOnDestroy() {
     // console.log('removing aol-control-defaults');
     this.instance.forEach((c) => this.map.instance.removeControl(c));
+  }
+
+  private initializeInstance() {
+    this.setInstance(defaults(this.createOptions()));
+    this.instance.forEach((c) => this.map.instance.addControl(c));
+  }
+
+  private reloadInstance() {
+    this.instance.forEach((c) => this.map.instance.removeControl(c));
+    this.initializeInstance();
   }
 
   private createOptions(): DefaultsOptions {

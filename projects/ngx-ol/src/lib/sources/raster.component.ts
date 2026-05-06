@@ -6,7 +6,9 @@ import {
   EventEmitter,
   forwardRef,
   Host,
+  OnChanges,
   Output,
+  SimpleChanges,
   input,
 } from '@angular/core';
 import Raster from 'ol/source/Raster';
@@ -26,7 +28,7 @@ import { SourceComponent } from './source.component';
     },
   ],
 })
-export class SourceRasterComponent extends SourceComponent implements AfterContentInit {
+export class SourceRasterComponent extends SourceComponent implements AfterContentInit, OnChanges {
   operation = input<Operation>();
   threads = input<number>();
   lib = input<any>();
@@ -65,6 +67,15 @@ export class SourceRasterComponent extends SourceComponent implements AfterConte
 
   ngAfterContentInit() {
     this.init();
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    super.ngOnChanges(changes);
+    const requiresReload = Object.keys(changes).some((key) => !changes[key].firstChange);
+
+    if (requiresReload && this.instance) {
+      this.init();
+    }
   }
 
   init() {

@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnDestroy, OnInit, signal, input } from '@angular/core';
+import { Component, ElementRef, OnChanges, OnDestroy, OnInit, SimpleChanges, signal, input } from '@angular/core';
 import Attribution from 'ol/control/Attribution';
 import { Options } from 'ol/control/Attribution';
 import MapEvent from 'ol/MapEvent';
@@ -8,7 +8,7 @@ import { MapComponent } from '../map.component';
   selector: 'aol-control-attribution',
   template: ``,
 })
-export class ControlAttributionComponent implements OnInit, OnDestroy {
+export class ControlAttributionComponent implements OnInit, OnChanges, OnDestroy {
   className = input<string>();
   collapsible = input<boolean>();
   collapsed = input<boolean>();
@@ -42,14 +42,30 @@ export class ControlAttributionComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.target = this.element.nativeElement;
-    // console.log('ol.control.Attribution init: ', this);
-    this.setInstance(new Attribution(this.createOptions()));
-    this.map.instance.addControl(this.instance);
+    this.initializeInstance();
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    const requiresReload = Object.keys(changes).some((key) => !changes[key].firstChange);
+
+    if (requiresReload && this.instance) {
+      this.reloadInstance();
+    }
   }
 
   ngOnDestroy() {
     // console.log('removing aol-control-attribution');
     this.map.instance.removeControl(this.instance);
+  }
+
+  private initializeInstance() {
+    this.setInstance(new Attribution(this.createOptions()));
+    this.map.instance.addControl(this.instance);
+  }
+
+  private reloadInstance() {
+    this.map.instance.removeControl(this.instance);
+    this.initializeInstance();
   }
 
   private createOptions(): Options {

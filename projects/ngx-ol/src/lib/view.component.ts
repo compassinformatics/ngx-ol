@@ -72,18 +72,7 @@ export class ViewComponent implements OnInit, OnChanges, OnDestroy {
   constructor(private host: MapComponent) {}
 
   ngOnInit() {
-    // console.log('creating ol.View instance with: ', this);
-    this.setInstance(new View(this.createOptions()));
-    this.host.instance.setView(this.instance);
-
-    this.instance.on('change', (event: BaseEvent) => this.olChange.emit(event));
-    this.instance.on('change:center', (event: ObjectEvent) => this.changeCenter.emit(event));
-    this.instance.on('change:resolution', (event: ObjectEvent) =>
-      this.changeResolution.emit(event),
-    );
-    this.instance.on('change:rotation', (event: ObjectEvent) => this.changeRotation.emit(event));
-    this.instance.on('error', (event: BaseEvent) => this.olError.emit(event));
-    this.instance.on('propertychange', (event: ObjectEvent) => this.propertyChange.emit(event));
+    this.initializeInstance();
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -105,8 +94,7 @@ export class ViewComponent implements OnInit, OnChanges, OnDestroy {
             }
             break;
           case 'projection':
-            this.setInstance(new View(this.createOptions()));
-            this.host.instance.setView(this.instance);
+            this.initializeInstance();
             break;
           case 'center':
             /** Work-around: setting the center via setProperties does not work. */
@@ -126,6 +114,23 @@ export class ViewComponent implements OnInit, OnChanges, OnDestroy {
 
   ngOnDestroy() {
     // console.log('removing aol-view');
+  }
+
+  private initializeInstance() {
+    this.setInstance(new View(this.createOptions()));
+    this.host.instance.setView(this.instance);
+    this.bindInstanceEvents();
+  }
+
+  private bindInstanceEvents() {
+    this.instance.on('change', (event: BaseEvent) => this.olChange.emit(event));
+    this.instance.on('change:center', (event: ObjectEvent) => this.changeCenter.emit(event));
+    this.instance.on('change:resolution', (event: ObjectEvent) =>
+      this.changeResolution.emit(event),
+    );
+    this.instance.on('change:rotation', (event: ObjectEvent) => this.changeRotation.emit(event));
+    this.instance.on('error', (event: BaseEvent) => this.olError.emit(event));
+    this.instance.on('propertychange', (event: ObjectEvent) => this.propertyChange.emit(event));
   }
 
   private createOptions(): ViewOptions {
