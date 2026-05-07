@@ -4,6 +4,7 @@ import { BasicMap } from './basic-map/basic-map';
 import { AdvancedMap } from './advanced-map/advanced-map';
 import { ArcgisTiled } from './arcgis-tiled/arcgis-tiled';
 import { Cluster } from './cluster/cluster';
+import { ClickableFeatureDemo } from './clickable-feature/clickable-feature';
 import { ColorSelectHover } from './color-select-hover/color-select-hover';
 import { CursorPosition } from './cursor-position/cursor-position';
 import { DblClickDragZoomDemo } from './dbl-click-drag-zoom/dbl-click-drag-zoom';
@@ -68,6 +69,7 @@ export const routes: Routes = [
   { path: 'overlay', component: Overlay },
   { path: 'color-select-hover', component: ColorSelectHover },
   { path: 'marker', component: Marker },
+  { path: 'clickable-feature', component: ClickableFeatureDemo },
   { path: 'cluster', component: Cluster },
   { path: 'raster', component: Raster },
   { path: 'arcgis-image', component: ArcgisImage },
