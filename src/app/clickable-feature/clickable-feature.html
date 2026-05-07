@@ -1,0 +1,45 @@
+<div class="layout demo-layout">
+  <aol-map class="map demo-map">
+    <aol-view [zoom]="zoom()" [center]="center()"></aol-view>
+
+    <aol-layer-tile>
+      <aol-source-osm></aol-source-osm>
+    </aol-layer-tile>
+
+    <aol-layer-vector>
+      <aol-source-vector>
+        <aol-feature
+          [id]="'clickable-feature'"
+          [clickable]="true"
+          (olClick)="handleClick()"
+          (singleClick)="handleSingleClick()"
+          (dblClick)="handleDoubleClick()"
+        >
+          <aol-geometry-point>
+            <aol-coordinate [x]="5" [y]="45" [srid]="'EPSG:4326'"></aol-coordinate>
+          </aol-geometry-point>
+          <aol-style>
+            <aol-style-circle [radius]="11">
+              <aol-style-stroke [color]="'#0f172a'" [width]="2"></aol-style-stroke>
+              <aol-style-fill [color]="'#22c55e'"></aol-style-fill>
+            </aol-style-circle>
+          </aol-style>
+        </aol-feature>
+      </aol-source-vector>
+    </aol-layer-vector>
+
+    <aol-interaction-default></aol-interaction-default>
+    <aol-control-scaleline></aol-control-scaleline>
+    <aol-control-zoom></aol-control-zoom>
+    <aol-control-attribution></aol-control-attribution>
+  </aol-map>
+
+  <aside class="panel demo-panel">
+    <h2>Clickable feature</h2>
+    <p>{{ lastMessage() }}</p>
+    <p>`olClick`: {{ clickCount() }}</p>
+    <p>`singleClick`: {{ singleClickCount() }}</p>
+    <p>`dblClick`: {{ doubleClickCount() }}</p>
+    <button type="button" (click)="reset()">Reset counts</button>
+  </aside>
+</div>

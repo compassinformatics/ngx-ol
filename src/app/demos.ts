@@ -109,6 +109,12 @@ const DEMO_DEFINITIONS: readonly DemoDefinition[] = [
     keywords: ['marker', 'icon', 'style', 'feature'],
   },
   {
+    path: '/clickable-feature',
+    label: 'Clickable Feature',
+    description: 'Shows how aol-feature emits olClick, singleClick, and dblClick when clickable is enabled.',
+    keywords: ['feature', 'click', 'singleclick', 'dblclick', 'events'],
+  },
+  {
     path: '/display-geometry',
     label: 'Display Geometry',
     description: 'Loads GeoJSON features and renders them using OpenLayers feature bindings.',
