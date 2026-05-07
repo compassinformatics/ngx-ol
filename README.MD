@@ -39,7 +39,7 @@ export class App {}
 
 ## Documentation
 
-Detailed component-by-component reference, including current Angular inputs and outputs, lives in [documentation/README.md](documentation/README.md).
+Detailed component-by-component reference, including Angular inputs and outputs can be found here: [documentation/README.md](documentation/README.md).
 
 ## Development
 
