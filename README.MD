@@ -4,6 +4,12 @@ Angular wrappers for [OpenLayers](https://openlayers.org/).
 
 `ngx-ol` mirrors the OpenLayers object model with Angular components, so maps, views, layers, sources, features, styles, controls, overlays, and interactions can be declared in templates.
 
+## Examples
+
+Browse the live examples: https://compassinformatics.github.io/ngx-ol
+
+Includes links to the source code for each example
+
 ## Installation
 
 ```bash
@@ -37,7 +43,7 @@ export class App {}
 </aol-map>
 ```
 
-## Documentation
+## Component reference
 
 Detailed component-by-component reference, including Angular inputs and outputs can be found here: [documentation/README.md](documentation/README.md).
 
