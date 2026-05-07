@@ -13,5 +13,5 @@ export class OgcMapTile {
   readonly center = signal<Coordinate>([0, 0]);
   readonly zoom = signal(2);
   readonly mediaType = signal('image/png');
-  readonly url = signal('/ogc-map-tiles/carto-light-webmercatorquad.json');
+  readonly url = signal('ogc-map-tiles/carto-light-webmercatorquad.json');
 }

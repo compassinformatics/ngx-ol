@@ -23,7 +23,7 @@ export class DisplayGeometry {
   private readonly http = inject(HttpClient);
   private readonly geoJson = new GeoJSON();
   readonly features = toSignal(
-    this.http.get<GeoJSONFeatureCollection>('/features.json').pipe(
+    this.http.get<GeoJSONFeatureCollection>('features.json').pipe(
       map((payload) =>
         this.geoJson.readFeatures(payload, {
           dataProjection: 'EPSG:4326',

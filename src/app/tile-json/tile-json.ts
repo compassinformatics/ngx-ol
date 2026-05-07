@@ -13,5 +13,5 @@ import { transform } from 'ol/proj';
 export class TileJson {
   readonly center = signal<Coordinate>(transform([-2.269282, 46.987247], 'EPSG:4326', 'EPSG:3857'));
   readonly zoom = signal(3);
-  readonly url = signal('/tile-json/carto-light.json');
+  readonly url = signal('tile-json/carto-light.json');
 }
