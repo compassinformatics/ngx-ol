@@ -33,9 +33,9 @@ jobs:
       - name: Build demo
         run: npx ng build demo-ngx-ol --configuration production --base-href "/${{ github.event.repository.name }}/"
 
-      - uses: actions/configure-pages@v5
+      - uses: actions/configure-pages@v6
 
-      - uses: actions/upload-pages-artifact@v3
+      - uses: actions/upload-pages-artifact@v5
         with:
           path: dist/demo-ngx-ol/browser
 
@@ -47,4 +47,4 @@ jobs:
     needs: build
     steps:
       - id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5
