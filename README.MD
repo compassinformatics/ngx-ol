@@ -68,6 +68,14 @@ npm version patch --no-git-tag-version
 
 Use `minor` or `major` instead of `patch` as needed.
 
+To publish automatically:
+
+1. Commit the version change.
+2. Create and push a new tag with the version number, for example `v21.1.0`.
+3. Create a GitHub release from that tag.
+
+Publishing to npm is then handled by the GitHub Actions workflow.
+
 To publish manually:
 
 ```bash
