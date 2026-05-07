@@ -27,8 +27,11 @@ jobs:
 
       - run: npm ci
 
-      - name: Build Angular
-        run: npx ng build --configuration production --base-href "/${{ github.event.repository.name }}/"
+      - name: Build library
+        run: npm run build:lib
+
+      - name: Build demo
+        run: npx ng build demo-ngx-ol --configuration production --base-href "/${{ github.event.repository.name }}/"
 
       - uses: actions/configure-pages@v5
 
