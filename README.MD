@@ -1,22 +1,32 @@
 # @compassinformatics/ngx-ol
 
-## Demo
+Angular wrappers for [OpenLayers](https://openlayers.org/).
 
-See `/src/app`
+`ngx-ol` mirrors the OpenLayers object model with Angular components, so maps, views, layers, sources, features, styles, controls, overlays, and interactions can be declared in templates.
 
 ## Installation
 
-To install this library, run:
+```bash
+npm install @compassinformatics/ngx-ol
+```
+
+or
 
 ```bash
-npm install @compassinformatics/ngx-ol --save
-or
 yarn add @compassinformatics/ngx-ol
 ```
 
-## Example
+## Usage
+```ts
+import { Component } from '@angular/core';
+import { AngularOpenlayersModule } from '@compassinformatics/ngx-ol';
 
-Here is a "minimal" map example that fetches tiles from OpenStreetMap and center the map in Meylan (France):
+@Component({
+  imports: [AngularOpenlayersModule],
+  templateUrl: './app.html',
+})
+export class App {}
+```
 
 ```html
 <aol-map [width]="'500px'" [height]="'300px'">
@@ -29,46 +39,33 @@ Here is a "minimal" map example that fetches tiles from OpenStreetMap and center
 
 ## Documentation
 
-See `/src/app` for examples
+Detailed component-by-component reference, including current Angular inputs and outputs, lives in [documentation/README.md](documentation/README.md).
 
 ## Development
 
-`npm start` to build the library and serve the demo app
+Useful commands:
 
-Live example will be viewable at localhost:4200
-
-## Publish to NPM
-
-Update package.json version. Choose major, minor or patch
-Run both commands to update both package.json files
-
+```bash
+npm start
+npm run build:lib
+npm test
 ```
-npm version major --prefix projects/ngx-ol --no-git-tag-version
-npm version major --no-git-tag-version
 
-npm version minor --prefix projects/ngx-ol --no-git-tag-version
-npm version minor --no-git-tag-version
+## Publishing
 
+To prepare a release, update both package versions:
+
+```bash
 npm version patch --prefix projects/ngx-ol --no-git-tag-version
 npm version patch --no-git-tag-version
 ```
 
-Push changes to GitHub
-Create a release with title new version number, e.g. v18.x.x
-Package will be automatically published to NPM
+Use `minor` or `major` instead of `patch` as needed.
 
-To manually publish to npm:
+To publish manually:
 
-```
+```bash
 npm run build:lib
 cd dist/ngx-ol
 npm publish --access public
 ```
-
-## Contributing
-
-1. Fork it!
-2. Create your feature branch: `git checkout -b my-new-feature`
-3. Commit your changes: `git commit -am 'Add some feature'`
-4. Push to the branch: `git push origin my-new-feature`
-5. Submit a pull request and enjoy! :D
