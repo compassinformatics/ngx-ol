@@ -39,7 +39,7 @@ export class SelectInteractionComponent implements OnInit, OnDestroy {
   @Output()
   olChange = new EventEmitter<BaseEvent>();
   @Output()
-  olChangeActive = new EventEmitter<ObjectEvent>();
+  changeActive = new EventEmitter<ObjectEvent>();
   @Output()
   olError = new EventEmitter<BaseEvent>();
   @Output()
@@ -55,7 +55,7 @@ export class SelectInteractionComponent implements OnInit, OnDestroy {
     this.instance = new Select(this.createOptions());
 
     this.instance.on('change', (event: BaseEvent) => this.olChange.emit(event));
-    this.instance.on('change:active', (event: ObjectEvent) => this.olChangeActive.emit(event));
+    this.instance.on('change:active', (event: ObjectEvent) => this.changeActive.emit(event));
     this.instance.on('error', (event: BaseEvent) => this.olError.emit(event));
     this.instance.on('propertychange', (event: ObjectEvent) => this.propertyChange.emit(event));
     this.instance.on('select', (event: SelectEvent) => this.olSelect.emit(event));

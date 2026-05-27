@@ -70,10 +70,10 @@ Inputs:
 Outputs:
 
 - `olChange`
-- `olChangeLayerGroup`
-- `olChangeSize`
-- `olChangeTarget`
-- `olChangeView`
+- `changeLayerGroup`
+- `changeSize`
+- `changeTarget`
+- `changeView`
 - `olClick`
 - `dblClick`
 - `olError`
@@ -83,10 +83,8 @@ Outputs:
 - `moveStart`
 - `pointerDrag`
 - `pointerMove`
-- `olPostCompose`
-- `olPostRender`
-- `olPreCompose`
-- `olPropertyChange`
+- `postCompose`
+- `preCompose`
 - `postRender`
 - `propertyChange`
 - `singleClick`
@@ -1476,8 +1474,8 @@ Inputs:
 Outputs:
 
 - `olChange`
-- `olChangeActive`
-- `olDrawAbort`
+- `changeActive`
+- `drawAbort`
 - `drawEnd`
 - `drawStart`
 - `olError`
@@ -1549,10 +1547,10 @@ Inputs:
 Outputs:
 
 - `olChange`
-- `olChangeActive`
+- `changeActive`
 - `olError`
-- `olModifyEnd`
-- `olModifyStart`
+- `modifyEnd`
+- `modifyStart`
 - `propertyChange`
 
 ### aol-interaction-mousewheelzoom
@@ -1602,7 +1600,7 @@ Inputs:
 Outputs:
 
 - `olChange`
-- `olChangeActive`
+- `changeActive`
 - `olError`
 - `propertyChange`
 - `olSelect`
@@ -1622,10 +1620,10 @@ Inputs:
 Outputs:
 
 - `olChange`
-- `olChangeActive`
+- `changeActive`
 - `olError`
 - `propertyChange`
-- `olSnap`
+- `snap`
 
 ### aol-interaction-translate
 
@@ -1642,7 +1640,7 @@ Inputs:
 Outputs:
 
 - `olChange`
-- `olChangeActive`
+- `changeActive`
 - `olError`
 - `propertyChange`
 - `translateEnd`

@@ -29,7 +29,7 @@ export class TranslateInteractionComponent implements OnInit, OnDestroy {
   @Output()
   olChange = new EventEmitter<BaseEvent>();
   @Output()
-  olChangeActive = new EventEmitter<ObjectEvent>();
+  changeActive = new EventEmitter<ObjectEvent>();
   @Output()
   olError = new EventEmitter<BaseEvent>();
   @Output()
@@ -49,7 +49,7 @@ export class TranslateInteractionComponent implements OnInit, OnDestroy {
     this.instance = new Translate(this.createOptions());
 
     this.instance.on('change', (event: BaseEvent) => this.olChange.emit(event));
-    this.instance.on('change:active', (event: ObjectEvent) => this.olChangeActive.emit(event));
+    this.instance.on('change:active', (event: ObjectEvent) => this.changeActive.emit(event));
     this.instance.on('error', (event: BaseEvent) => this.olError.emit(event));
     this.instance.on('propertychange', (event: ObjectEvent) => this.propertyChange.emit(event));
     this.instance.on('translateend', (event: TranslateEvent) => this.translateEnd.emit(event));

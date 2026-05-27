@@ -8,8 +8,6 @@ import {
   AfterViewInit,
   SimpleChanges,
   OnChanges,
-  ContentChildren,
-  QueryList,
   NgZone,
 } from '@angular/core';
 import Map from 'ol/Map';
@@ -21,7 +19,6 @@ import RenderEvent from 'ol/render/Event';
 import Control from 'ol/control/Control';
 import Interaction from 'ol/interaction/Interaction';
 import BaseEvent from 'ol/events/Event';
-import { FeatureComponent } from './feature.component';
 
 @Component({
   selector: 'aol-map',
@@ -49,13 +46,13 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
   @Output()
   olChange = new EventEmitter<BaseEvent>();
   @Output()
-  olChangeLayerGroup = new EventEmitter<ObjectEvent>();
+  changeLayerGroup = new EventEmitter<ObjectEvent>();
   @Output()
-  olChangeSize = new EventEmitter<ObjectEvent>();
+  changeSize = new EventEmitter<ObjectEvent>();
   @Output()
-  olChangeTarget = new EventEmitter<ObjectEvent>();
+  changeTarget = new EventEmitter<ObjectEvent>();
   @Output()
-  olChangeView = new EventEmitter<ObjectEvent>();
+  changeView = new EventEmitter<ObjectEvent>();
   @Output()
   olClick = new EventEmitter<MapBrowserEvent<MouseEvent> | any>();
   @Output()
@@ -75,15 +72,11 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
   @Output()
   pointerMove = new EventEmitter<MapBrowserEvent<MouseEvent> | any>();
   @Output()
-  olPostCompose = new EventEmitter<RenderEvent>();
-  @Output()
-  olPostRender = new EventEmitter<RenderEvent>();
-  @Output()
-  olPreCompose = new EventEmitter<RenderEvent>();
-  @Output()
-  olPropertyChange = new EventEmitter<ObjectEvent>();
+  postCompose = new EventEmitter<RenderEvent>();
   @Output()
   postRender = new EventEmitter<MapEvent>();
+  @Output()
+  preCompose = new EventEmitter<RenderEvent>();
   @Output()
   propertyChange = new EventEmitter<ObjectEvent>();
   @Output()
@@ -107,11 +100,11 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
       this.instance.setTarget(this.host.nativeElement.firstElementChild);
       this.instance.on('change', (event: BaseEvent) => this.olChange.emit(event));
       this.instance.on('change:layergroup', (event: ObjectEvent) =>
-        this.olChangeLayerGroup.emit(event),
+        this.changeLayerGroup.emit(event),
       );
-      this.instance.on('change:size', (event: ObjectEvent) => this.olChangeSize.emit(event));
-      this.instance.on('change:target', (event: ObjectEvent) => this.olChangeTarget.emit(event));
-      this.instance.on('change:view', (event: ObjectEvent) => this.olChangeView.emit(event));
+      this.instance.on('change:size', (event: ObjectEvent) => this.changeSize.emit(event));
+      this.instance.on('change:target', (event: ObjectEvent) => this.changeTarget.emit(event));
+      this.instance.on('change:view', (event: ObjectEvent) => this.changeView.emit(event));
       this.instance.on('error', (event: BaseEvent) => this.olError.emit(event));
       this.instance.on('loadend', (event: MapEvent) => this.loadEnd.emit(event));
       this.instance.on('loadstart', (event: MapEvent) => this.loadStart.emit(event));
@@ -123,11 +116,10 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
       this.instance.on('pointermove', (event: MapBrowserEvent<MouseEvent> | any) =>
         this.pointerMove.emit(event),
       );
-      this.instance.on('postcompose', (event: RenderEvent) => this.olPostCompose.emit(event));
-      this.instance.on('postrender', (event: RenderEvent) => this.olPostRender.emit(event));
+      this.instance.on('postcompose', (event: RenderEvent) => this.postCompose.emit(event));
       this.instance.on('postrender', (event: MapEvent) => this.postRender.emit(event));
-      this.instance.on('precompose', (event: RenderEvent) => this.olPreCompose.emit(event));
-      this.instance.on('propertychange', (event: ObjectEvent) => this.olPropertyChange.emit(event));
+      this.instance.on('precompose', (event: RenderEvent) => this.preCompose.emit(event));
+      this.instance.on('propertychange', (event: ObjectEvent) => this.propertyChange.emit(event));
 
       const handleFeatureClick = (
         event: MapBrowserEvent<MouseEvent> | any,

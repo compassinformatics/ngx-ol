@@ -94,8 +94,8 @@ export class StyleTextComponent implements OnInit, OnChanges {
     if (changes.textAlign) {
       this.instance.setTextAlign(changes.textAlign.currentValue);
     }
-    if (changes.textBaseLine) {
-      this.instance.setTextBaseline(changes.textBaseLine.currentValue);
+    if (changes.textBaseline) {
+      this.instance.setTextBaseline(changes.textBaseline.currentValue);
     }
     this.host.update();
     // console.log('changes detected in aol-style-text, setting new properties: ', changes);

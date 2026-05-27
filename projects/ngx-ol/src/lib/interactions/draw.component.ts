@@ -5,7 +5,7 @@ import Collection from 'ol/Collection';
 import Feature from 'ol/Feature';
 import Vector from 'ol/source/Vector';
 import { DrawEvent, GeometryFunction, Options } from 'ol/interaction/Draw';
-import { StyleFunction, StyleLike } from 'ol/style/Style';
+import { StyleLike } from 'ol/style/Style';
 import { Condition } from 'ol/events/condition';
 import { Type } from 'ol/geom/Geometry';
 import { GeometryLayout } from 'ol/geom/Geometry';
@@ -62,9 +62,9 @@ export class DrawInteractionComponent implements OnInit, OnDestroy {
   @Output()
   olChange = new EventEmitter<BaseEvent>();
   @Output()
-  olChangeActive = new EventEmitter<ObjectEvent>();
+  changeActive = new EventEmitter<ObjectEvent>();
   @Output()
-  olDrawAbort = new EventEmitter<DrawEvent>();
+  drawAbort = new EventEmitter<DrawEvent>();
   @Output()
   drawEnd = new EventEmitter<DrawEvent>();
   @Output()
@@ -81,8 +81,8 @@ export class DrawInteractionComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.instance = new Draw(this.createOptions());
     this.instance.on('change', (event: BaseEvent) => this.olChange.emit(event));
-    this.instance.on('change:active', (event: ObjectEvent) => this.olChangeActive.emit(event));
-    this.instance.on('drawabort', (event: DrawEvent) => this.olDrawAbort.emit(event));
+    this.instance.on('change:active', (event: ObjectEvent) => this.changeActive.emit(event));
+    this.instance.on('drawabort', (event: DrawEvent) => this.drawAbort.emit(event));
     this.instance.on('drawend', (event: DrawEvent) => this.drawEnd.emit(event));
     this.instance.on('drawstart', (event: DrawEvent) => this.drawStart.emit(event));
     this.instance.on('error', (event: BaseEvent) => this.olError.emit(event));
