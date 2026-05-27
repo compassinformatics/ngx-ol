@@ -1,6 +1,7 @@
 import {
   signal,
   AfterContentInit,
+  AfterContentChecked,
   Component,
   ContentChild,
   forwardRef,
@@ -26,7 +27,10 @@ import { LayerVectorImageComponent } from '../layers/layervectorimage.component'
   template: ` <ng-content></ng-content> `,
   providers: [{ provide: SourceComponent, useExisting: forwardRef(() => SourceClusterComponent) }],
 })
-export class SourceClusterComponent extends SourceComponent implements AfterContentInit, OnChanges {
+export class SourceClusterComponent
+  extends SourceComponent
+  implements AfterContentInit, AfterContentChecked, OnChanges
+{
   distance = input<number>();
   minDistance = input<number>();
   geometryFunction = input<(feature: Feature) => Point>();
@@ -37,13 +41,14 @@ export class SourceClusterComponent extends SourceComponent implements AfterCont
   instance: Cluster<any>;
   protected readonly _instanceSignal = signal<Cluster<any> | undefined>(undefined);
   readonly instanceSignal = this._instanceSignal.asReadonly();
+  private lastSourceInstance?: Vector<any>;
 
   protected setInstance(instance: Cluster<any>): Cluster<any> {
     this.instance = instance;
     this._instanceSignal.set(instance);
     return instance;
   }
-  source: Vector<any>;
+  source?: Vector<any>;
 
   constructor(
     @Optional() @Host() vectorLayer: LayerVectorComponent,
@@ -57,14 +62,47 @@ export class SourceClusterComponent extends SourceComponent implements AfterCont
 
     this.setInstance(new Cluster(this.createOptions()));
     this.host.instance.setSource(this.instance);
+    this.lastSourceInstance = this.source;
+  }
+
+  ngAfterContentChecked() {
+    const source = this.sourceVectorComponent?.instance;
+
+    if (source !== this.lastSourceInstance && this.instance) {
+      this.source = source;
+      this.reloadInstance();
+      return;
+    }
+
+    this.lastSourceInstance = source;
   }
 
   ngOnChanges(changes: SimpleChanges) {
     super.ngOnChanges(changes);
     const distance = this.distance();
+    const minDistance = this.minDistance();
+    const requiresReload = Object.keys(changes).some(
+      (key) => key !== 'distance' && key !== 'minDistance' && !changes[key].firstChange,
+    );
+
+    if (requiresReload && this.instance) {
+      this.reloadInstance();
+      return;
+    }
+
     if (this.instance && changes.hasOwnProperty('distance') && distance !== undefined) {
       this.instance.setDistance(distance);
     }
+
+    if (this.instance && changes.hasOwnProperty('minDistance') && minDistance !== undefined) {
+      this.instance.setMinDistance(minDistance);
+    }
+  }
+
+  private reloadInstance() {
+    this.setInstance(new Cluster(this.createOptions()));
+    this.host.instance.setSource(this.instance);
+    this.lastSourceInstance = this.source;
   }
 
   private createOptions(): Options<any> {

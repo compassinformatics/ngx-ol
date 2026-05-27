@@ -65,9 +65,30 @@ export class SourceImageArcGISRestComponent extends SourceComponent implements O
 
   ngOnChanges(changes: SimpleChanges) {
     super.ngOnChanges(changes);
+    const requiresReload = Object.keys(changes).some(
+      (key) => key !== 'params' && !changes[key].firstChange,
+    );
+
+    if (requiresReload && this.instance) {
+      this.reloadInstance();
+      return;
+    }
+
     if (this.instance && changes.hasOwnProperty('params')) {
       this.instance.updateParams(this.params());
     }
+  }
+
+  private reloadInstance() {
+    this.setInstance(new ImageArcGISRest(this.createOptions()));
+    this.host.instance.setSource(this.instance);
+    this.instance.on('imageloadstart', (event: ImageSourceEvent) =>
+      this.imageLoadStart.emit(event),
+    );
+    this.instance.on('imageloadend', (event: ImageSourceEvent) => this.imageLoadEnd.emit(event));
+    this.instance.on('imageloaderror', (event: ImageSourceEvent) =>
+      this.imageLoadError.emit(event),
+    );
   }
 
   private createOptions(): Options {

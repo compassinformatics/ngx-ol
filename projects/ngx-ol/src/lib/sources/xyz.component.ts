@@ -1,6 +1,7 @@
 import {
   signal,
   AfterContentInit,
+  AfterContentChecked,
   Component,
   ContentChild,
   forwardRef,
@@ -29,7 +30,10 @@ import { SourceComponent } from './source.component';
   template: ` <ng-content></ng-content> `,
   providers: [{ provide: SourceComponent, useExisting: forwardRef(() => SourceXYZComponent) }],
 })
-export class SourceXYZComponent extends SourceComponent implements AfterContentInit, OnChanges {
+export class SourceXYZComponent
+  extends SourceComponent
+  implements AfterContentInit, AfterContentChecked, OnChanges
+{
   cacheSize = input<number>();
   crossOrigin = input<null | string>();
   gutter = input<number>();
@@ -56,6 +60,7 @@ export class SourceXYZComponent extends SourceComponent implements AfterContentI
   instance: XYZ;
   protected readonly _instanceSignal = signal<XYZ | undefined>(undefined);
   readonly instanceSignal = this._instanceSignal.asReadonly();
+  private lastTileGridInstance?: TileGrid;
 
   protected setInstance(instance: XYZ): XYZ {
     this.instance = instance;
@@ -75,6 +80,17 @@ export class SourceXYZComponent extends SourceComponent implements AfterContentI
     this.init();
   }
 
+  ngAfterContentChecked() {
+    const tileGrid = this.tileGridXYZ?.instance;
+
+    if (tileGrid !== this.lastTileGridInstance && this.instance) {
+      this.init();
+      return;
+    }
+
+    this.lastTileGridInstance = tileGrid;
+  }
+
   ngOnChanges(changes: SimpleChanges) {
     super.ngOnChanges(changes);
     const requiresReload = Object.keys(changes).some((key) => !changes[key].firstChange);
@@ -92,6 +108,7 @@ export class SourceXYZComponent extends SourceComponent implements AfterContentI
     this.instance.on('tileloaderror', (event: TileSourceEvent) => this.tileLoadError.emit(event));
 
     this.register(this.instance);
+    this.lastTileGridInstance = this.tileGridXYZ?.instance;
   }
 
   protected createOptions(): Options {

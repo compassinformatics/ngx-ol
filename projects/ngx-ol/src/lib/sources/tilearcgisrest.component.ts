@@ -60,9 +60,23 @@ export class SourceTileArcGISRestComponent extends SourceComponent implements On
 
   ngOnChanges(changes: SimpleChanges) {
     super.ngOnChanges(changes);
+    const requiresReload = Object.keys(changes).some(
+      (key) => key !== 'params' && !changes[key].firstChange,
+    );
+
+    if (requiresReload && this.instance) {
+      this.reloadInstance();
+      return;
+    }
+
     if (this.instance && changes.hasOwnProperty('params') && this.params()) {
       this.instance.updateParams(this.params());
     }
+  }
+
+  private reloadInstance() {
+    this.setInstance(new TileArcGISRest(this.createOptions()));
+    this.host.instance.setSource(this.instance);
   }
 
   private createOptions(): Options {

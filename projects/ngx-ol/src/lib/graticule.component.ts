@@ -11,6 +11,13 @@ import Graticule from 'ol/layer/Graticule';
 import Stroke from 'ol/style/Stroke';
 import { MapComponent } from './map.component';
 
+interface GraticuleOptions {
+  strokeStyle?: Stroke;
+  showLabels?: boolean;
+  lonLabelPosition?: number;
+  latLabelPosition?: number;
+}
+
 @Component({
   selector: 'aol-graticule',
   template: '<ng-content></ng-content>',
@@ -34,34 +41,31 @@ export class GraticuleComponent implements AfterContentInit, OnChanges, OnDestro
   constructor(private map: MapComponent) {}
 
   ngOnChanges(changes: SimpleChanges) {
-    const properties: { [index: string]: any } = {};
+    const requiresReload = Object.keys(changes).some((key) => !changes[key].firstChange);
 
-    if (!this.instance) {
-      return;
+    if (requiresReload && this.instance) {
+      this.reloadInstance();
     }
-
-    for (const key in changes) {
-      if (changes.hasOwnProperty(key)) {
-        properties[key] = changes[key].currentValue;
-      }
-    }
-
-    if (properties) {
-      this.setInstance(new Graticule(properties));
-    }
-    this.instance.setMap(this.map.instance);
   }
 
   ngAfterContentInit(): void {
-    this.setInstance(
-      new Graticule({
-        strokeStyle: this.strokeStyle(),
-        showLabels: this.showLabels(),
-        lonLabelPosition: this.lonLabelPosition(),
-        latLabelPosition: this.latLabelPosition(),
-      }),
-    );
+    this.setInstance(new Graticule(this.createOptions()));
     this.instance.setMap(this.map.instance);
+  }
+
+  private reloadInstance(): void {
+    this.instance.setMap(null);
+    this.setInstance(new Graticule(this.createOptions()));
+    this.instance.setMap(this.map.instance);
+  }
+
+  private createOptions(): GraticuleOptions {
+    return {
+      strokeStyle: this.strokeStyle(),
+      showLabels: this.showLabels(),
+      lonLabelPosition: this.lonLabelPosition(),
+      latLabelPosition: this.latLabelPosition(),
+    };
   }
 
   ngOnDestroy(): void {

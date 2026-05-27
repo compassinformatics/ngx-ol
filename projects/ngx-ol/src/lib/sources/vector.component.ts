@@ -69,9 +69,17 @@ export class SourceVectorComponent extends SourceComponent implements OnInit, On
       return;
     }
 
-    if (features?.currentValue && this.instance) {
+    if (features && this.instance) {
+      if (features.currentValue instanceof Collection) {
+        this.reloadInstance();
+        return;
+      }
+
       this.instance.clear();
-      this.instance.addFeatures(features.currentValue);
+
+      if (features.currentValue) {
+        this.instance.addFeatures(features.currentValue);
+      }
     }
   }
 

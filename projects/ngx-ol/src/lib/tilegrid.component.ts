@@ -35,7 +35,11 @@ export class TileGridComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    this.createInstance();
+    const requiresReload = Object.keys(changes).some((key) => !changes[key].firstChange);
+
+    if (requiresReload && this.instance) {
+      this.createInstance();
+    }
   }
 
   protected createInstance() {
