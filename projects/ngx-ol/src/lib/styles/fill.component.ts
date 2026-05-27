@@ -24,7 +24,7 @@ export class StyleFillComponent implements OnInit, OnChanges {
     @Optional() styleTextHost: StyleTextComponent,
   ) {
     if (!styleHost) {
-      throw new Error('aol-style-stroke must be a descendant of aol-style');
+      throw new Error('aol-style-fill must be a descendant of aol-style');
     }
     if (!!styleTextHost) {
       this.host = styleTextHost;

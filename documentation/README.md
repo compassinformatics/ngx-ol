@@ -2,8 +2,32 @@
 
 OpenLayers API reference: https://openlayers.org/en/latest/apidoc/
 
+## v22 output name changes
+
+Version 22 normalizes output names. The `ol` prefix is only used where the unprefixed output would conflict with a common native/browser event name or be too generic: `olChange`, `olClick`, `olError`, and `olSelect`.
+
+Migration table:
+
+| Before | After |
+| --- | --- |
+| `(olChangeLayerGroup)` | `(changeLayerGroup)` |
+| `(olChangeSize)` | `(changeSize)` |
+| `(olChangeTarget)` | `(changeTarget)` |
+| `(olChangeView)` | `(changeView)` |
+| `(olPostCompose)` | `(postCompose)` |
+| `(olPreCompose)` | `(preCompose)` |
+| `(olPropertyChange)` | `(propertyChange)` |
+| `(olChangeActive)` | `(changeActive)` |
+| `(olDrawAbort)` | `(drawAbort)` |
+| `(olModifyStart)` | `(modifyStart)` |
+| `(olModifyEnd)` | `(modifyEnd)` |
+| `(olSnap)` | `(snap)` |
+
+`olPostRender` has been removed. Use `(postRender)`.
+
 ## Table of contents
 
+- [v22 output name changes](#v22-output-name-changes)
 - [Modules](#modules)
 - [Map setup](#map-setup)
 - [Layer groups](#layer-groups)
@@ -70,10 +94,10 @@ Inputs:
 Outputs:
 
 - `olChange`
-- `olChangeLayerGroup`
-- `olChangeSize`
-- `olChangeTarget`
-- `olChangeView`
+- `changeLayerGroup`
+- `changeSize`
+- `changeTarget`
+- `changeView`
 - `olClick`
 - `dblClick`
 - `olError`
@@ -83,10 +107,8 @@ Outputs:
 - `moveStart`
 - `pointerDrag`
 - `pointerMove`
-- `olPostCompose`
-- `olPostRender`
-- `olPreCompose`
-- `olPropertyChange`
+- `postCompose`
+- `preCompose`
 - `postRender`
 - `propertyChange`
 - `singleClick`
@@ -1476,8 +1498,8 @@ Inputs:
 Outputs:
 
 - `olChange`
-- `olChangeActive`
-- `olDrawAbort`
+- `changeActive`
+- `drawAbort`
 - `drawEnd`
 - `drawStart`
 - `olError`
@@ -1549,10 +1571,10 @@ Inputs:
 Outputs:
 
 - `olChange`
-- `olChangeActive`
+- `changeActive`
 - `olError`
-- `olModifyEnd`
-- `olModifyStart`
+- `modifyEnd`
+- `modifyStart`
 - `propertyChange`
 
 ### aol-interaction-mousewheelzoom
@@ -1602,7 +1624,7 @@ Inputs:
 Outputs:
 
 - `olChange`
-- `olChangeActive`
+- `changeActive`
 - `olError`
 - `propertyChange`
 - `olSelect`
@@ -1622,10 +1644,10 @@ Inputs:
 Outputs:
 
 - `olChange`
-- `olChangeActive`
+- `changeActive`
 - `olError`
 - `propertyChange`
-- `olSnap`
+- `snap`
 
 ### aol-interaction-translate
 
@@ -1642,7 +1664,7 @@ Inputs:
 Outputs:
 
 - `olChange`
-- `olChangeActive`
+- `changeActive`
 - `olError`
 - `propertyChange`
 - `translateEnd`

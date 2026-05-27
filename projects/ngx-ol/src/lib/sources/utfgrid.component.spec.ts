@@ -1,0 +1,53 @@
+import { Component, ViewChild } from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { afterEach, beforeEach, describe, expect, it } from 'vitest';
+import { AngularOpenlayersModule } from '../../public-api';
+import { LayerTileComponent } from '../layers/layertile.component';
+import { SourceUTFGridComponent } from './utfgrid.component';
+
+@Component({
+  template: `
+    <aol-map width="320px" height="240px">
+      <aol-view [center]="center" [zoom]="zoom"></aol-view>
+      <aol-layer-tile>
+        <aol-source-utfgrid [url]="url"></aol-source-utfgrid>
+      </aol-layer-tile>
+    </aol-map>
+  `,
+  standalone: true,
+  imports: [AngularOpenlayersModule],
+})
+class SourceUtfGridHostComponent {
+  center = [0, 0];
+  zoom = 2;
+  url = 'https://example.com/utfgrid.json';
+
+  @ViewChild(SourceUTFGridComponent)
+  source!: SourceUTFGridComponent;
+
+  @ViewChild(LayerTileComponent)
+  layer!: LayerTileComponent;
+}
+
+describe('SourceUTFGridComponent', () => {
+  let fixture: ComponentFixture<SourceUtfGridHostComponent>;
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [SourceUtfGridHostComponent],
+    }).compileComponents();
+
+    fixture = TestBed.createComponent(SourceUtfGridHostComponent);
+    fixture.detectChanges();
+  });
+
+  afterEach(() => {
+    fixture.destroy();
+  });
+
+  it('binds a UTFGrid source into the tile layer through template inputs', () => {
+    expect(fixture.componentInstance.layer.instance.getSource()).toBe(
+      fixture.componentInstance.source.instance,
+    );
+  });
+});

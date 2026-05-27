@@ -10,7 +10,7 @@
     <aol-interaction-select #select></aol-interaction-select>
     <aol-interaction-modify
       [features]="select.instance.getFeatures()"
-      (olModifyEnd)="modifyEnd($event.features.getArray()[0])"
+      (modifyEnd)="modifyEnd($event.features.getArray()[0])"
     >
     </aol-interaction-modify>
 

@@ -13,7 +13,6 @@ import { MapComponent } from './map.component';
 import { ObjectEvent } from 'ol/Object';
 import { Extent } from 'ol/extent';
 import { Coordinate } from 'ol/coordinate';
-import { DrawEvent } from 'ol/interaction/Draw';
 import BaseEvent from 'ol/events/Event';
 import { ProjectionLike } from 'ol/proj';
 
@@ -126,6 +125,18 @@ export class ViewComponent implements OnInit, OnChanges, OnDestroy {
           case 'center':
             /** Work-around: setting the center via setProperties does not work. */
             this.instance.setCenter(changes[key].currentValue);
+            break;
+          case 'maxZoom':
+            this.instance.setMaxZoom(changes[key].currentValue);
+            break;
+          case 'minZoom':
+            this.instance.setMinZoom(changes[key].currentValue);
+            break;
+          case 'resolution':
+            this.instance.setResolution(changes[key].currentValue);
+            break;
+          case 'rotation':
+            this.instance.setRotation(changes[key].currentValue);
             break;
           default:
             break;

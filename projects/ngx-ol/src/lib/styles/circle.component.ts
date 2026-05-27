@@ -12,7 +12,6 @@ import Fill from 'ol/style/Fill';
 import Stroke from 'ol/style/Stroke';
 import { Options } from 'ol/style/Circle';
 import { StyleComponent } from './style.component';
-import ImageStyle from 'ol/style/Image';
 import { Size } from 'ol/size';
 import { DeclutterMode } from 'ol/style/Style';
 

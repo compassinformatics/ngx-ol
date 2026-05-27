@@ -41,13 +41,13 @@ export class ModifyInteractionComponent implements OnInit, OnDestroy {
   @Output()
   olChange = new EventEmitter<BaseEvent>();
   @Output()
-  olChangeActive = new EventEmitter<ObjectEvent>();
+  changeActive = new EventEmitter<ObjectEvent>();
   @Output()
   olError = new EventEmitter<BaseEvent>();
   @Output()
-  olModifyEnd = new EventEmitter<ModifyEvent>();
+  modifyEnd = new EventEmitter<ModifyEvent>();
   @Output()
-  olModifyStart = new EventEmitter<ModifyEvent>();
+  modifyStart = new EventEmitter<ModifyEvent>();
   @Output()
   propertyChange = new EventEmitter<ObjectEvent>();
 
@@ -58,10 +58,10 @@ export class ModifyInteractionComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.instance = new Modify(this.createOptions());
     this.instance.on('change', (event: BaseEvent) => this.olChange.emit(event));
-    this.instance.on('change:active', (event: ObjectEvent) => this.olChangeActive.emit(event));
+    this.instance.on('change:active', (event: ObjectEvent) => this.changeActive.emit(event));
     this.instance.on('error', (event: BaseEvent) => this.olError.emit(event));
-    this.instance.on('modifyend', (event: ModifyEvent) => this.olModifyEnd.emit(event));
-    this.instance.on('modifystart', (event: ModifyEvent) => this.olModifyStart.emit(event));
+    this.instance.on('modifyend', (event: ModifyEvent) => this.modifyEnd.emit(event));
+    this.instance.on('modifystart', (event: ModifyEvent) => this.modifyStart.emit(event));
     this.instance.on('propertychange', (event: ObjectEvent) => this.propertyChange.emit(event));
     this.map.instance.addInteraction(this.instance);
   }

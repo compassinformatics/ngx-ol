@@ -57,7 +57,9 @@
         "test": {
           "builder": "@angular/build:unit-test",
           "options": {
-            "tsConfig": "projects/ngx-ol/tsconfig.spec.json"
+            "tsConfig": "projects/ngx-ol/tsconfig.spec.json",
+            "coverage": true,
+            "setupFiles": ["projects/ngx-ol/src/test-setup.ts"]
           }
         }
       }

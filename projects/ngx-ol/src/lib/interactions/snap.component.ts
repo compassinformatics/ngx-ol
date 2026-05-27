@@ -28,13 +28,13 @@ export class SnapInteractionComponent implements OnInit, OnDestroy {
   @Output()
   olChange = new EventEmitter<BaseEvent>();
   @Output()
-  olChangeActive = new EventEmitter<ObjectEvent>();
+  changeActive = new EventEmitter<ObjectEvent>();
   @Output()
   olError = new EventEmitter<BaseEvent>();
   @Output()
   propertyChange = new EventEmitter<ObjectEvent>();
   @Output()
-  olSnap = new EventEmitter<SnapEvent>();
+  snap = new EventEmitter<SnapEvent>();
 
   instance: Snap;
 
@@ -44,10 +44,10 @@ export class SnapInteractionComponent implements OnInit, OnDestroy {
     this.instance = new Snap(this.createOptions());
 
     this.instance.on('change', (event: BaseEvent) => this.olChange.emit(event));
-    this.instance.on('change:active', (event: ObjectEvent) => this.olChangeActive.emit(event));
+    this.instance.on('change:active', (event: ObjectEvent) => this.changeActive.emit(event));
     this.instance.on('error', (event: BaseEvent) => this.olError.emit(event));
     this.instance.on('propertychange', (event: ObjectEvent) => this.propertyChange.emit(event));
-    this.instance.on('snap', (event: SnapEvent) => this.olSnap.emit(event));
+    this.instance.on('snap', (event: SnapEvent) => this.snap.emit(event));
     this.map.instance.addInteraction(this.instance);
   }
 

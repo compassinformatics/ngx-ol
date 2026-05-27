@@ -47,6 +47,29 @@ export class App {}
 
 Detailed component-by-component reference, including Angular inputs and outputs can be found here: [documentation/README.md](documentation/README.md).
 
+## Upcoming v22 breaking changes
+
+Version 22 normalizes output names. The `ol` prefix is now only used where the unprefixed output would conflict with a common native/browser event name or be too generic: `olChange`, `olClick`, `olError`, and `olSelect`.
+
+Update templates as follows:
+
+| Before | After |
+| --- | --- |
+| `(olChangeLayerGroup)` | `(changeLayerGroup)` |
+| `(olChangeSize)` | `(changeSize)` |
+| `(olChangeTarget)` | `(changeTarget)` |
+| `(olChangeView)` | `(changeView)` |
+| `(olPostCompose)` | `(postCompose)` |
+| `(olPreCompose)` | `(preCompose)` |
+| `(olPropertyChange)` | `(propertyChange)` |
+| `(olChangeActive)` | `(changeActive)` |
+| `(olDrawAbort)` | `(drawAbort)` |
+| `(olModifyStart)` | `(modifyStart)` |
+| `(olModifyEnd)` | `(modifyEnd)` |
+| `(olSnap)` | `(snap)` |
+
+`olPostRender` has been removed. Use the existing `(postRender)` output.
+
 ## Development
 
 Useful commands:
