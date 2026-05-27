@@ -35,3 +35,26 @@ export class App {}
   </aol-layer-tile>
 </aol-map>
 ```
+
+## v22 breaking changes
+
+Version 22 normalizes output names. The `ol` prefix is only used for outputs that would otherwise conflict with common native/browser event names or be too generic: `olChange`, `olClick`, `olError`, and `olSelect`.
+
+Rename affected template bindings:
+
+| Before | After |
+| --- | --- |
+| `(olChangeLayerGroup)` | `(changeLayerGroup)` |
+| `(olChangeSize)` | `(changeSize)` |
+| `(olChangeTarget)` | `(changeTarget)` |
+| `(olChangeView)` | `(changeView)` |
+| `(olPostCompose)` | `(postCompose)` |
+| `(olPreCompose)` | `(preCompose)` |
+| `(olPropertyChange)` | `(propertyChange)` |
+| `(olChangeActive)` | `(changeActive)` |
+| `(olDrawAbort)` | `(drawAbort)` |
+| `(olModifyStart)` | `(modifyStart)` |
+| `(olModifyEnd)` | `(modifyEnd)` |
+| `(olSnap)` | `(snap)` |
+
+`olPostRender` has been removed. Use `(postRender)`.

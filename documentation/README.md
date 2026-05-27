@@ -2,8 +2,32 @@
 
 OpenLayers API reference: https://openlayers.org/en/latest/apidoc/
 
+## v22 output name changes
+
+Version 22 normalizes output names. The `ol` prefix is only used where the unprefixed output would conflict with a common native/browser event name or be too generic: `olChange`, `olClick`, `olError`, and `olSelect`.
+
+Migration table:
+
+| Before | After |
+| --- | --- |
+| `(olChangeLayerGroup)` | `(changeLayerGroup)` |
+| `(olChangeSize)` | `(changeSize)` |
+| `(olChangeTarget)` | `(changeTarget)` |
+| `(olChangeView)` | `(changeView)` |
+| `(olPostCompose)` | `(postCompose)` |
+| `(olPreCompose)` | `(preCompose)` |
+| `(olPropertyChange)` | `(propertyChange)` |
+| `(olChangeActive)` | `(changeActive)` |
+| `(olDrawAbort)` | `(drawAbort)` |
+| `(olModifyStart)` | `(modifyStart)` |
+| `(olModifyEnd)` | `(modifyEnd)` |
+| `(olSnap)` | `(snap)` |
+
+`olPostRender` has been removed. Use `(postRender)`.
+
 ## Table of contents
 
+- [v22 output name changes](#v22-output-name-changes)
 - [Modules](#modules)
 - [Map setup](#map-setup)
 - [Layer groups](#layer-groups)
