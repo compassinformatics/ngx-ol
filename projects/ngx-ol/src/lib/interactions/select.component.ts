@@ -56,10 +56,23 @@ export class SelectInteractionComponent implements OnInit, OnChanges, OnDestroy 
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    const requiresReload = Object.keys(changes).some((key) => !changes[key].firstChange);
+    const liveUpdateKeys: string[] = [];
+
+    if (changes.hitTolerance?.currentValue !== undefined) {
+      liveUpdateKeys.push('hitTolerance');
+    }
+
+    const requiresReload = Object.keys(changes).some(
+      (key) => !liveUpdateKeys.includes(key) && !changes[key].firstChange,
+    );
 
     if (requiresReload && this.instance) {
       this.reloadInstance();
+      return;
+    }
+
+    if (this.instance && changes.hitTolerance?.currentValue !== undefined) {
+      this.instance.setHitTolerance(changes.hitTolerance.currentValue);
     }
   }
 

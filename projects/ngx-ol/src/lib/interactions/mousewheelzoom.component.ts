@@ -1,4 +1,12 @@
-import { Component, OnChanges, OnDestroy, OnInit, SimpleChanges, signal, input } from '@angular/core';
+import {
+  Component,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  SimpleChanges,
+  signal,
+  input,
+} from '@angular/core';
 import MouseWheelZoom from 'ol/interaction/MouseWheelZoom';
 import { Options } from 'ol/interaction/MouseWheelZoom';
 import { MapComponent } from '../map.component';
@@ -28,10 +36,23 @@ export class MouseWheelZoomInteractionComponent implements OnInit, OnChanges, On
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    const requiresReload = Object.keys(changes).some((key) => !changes[key].firstChange);
+    const liveUpdateKeys: string[] = [];
+
+    if (changes.useAnchor?.currentValue !== undefined) {
+      liveUpdateKeys.push('useAnchor');
+    }
+
+    const requiresReload = Object.keys(changes).some(
+      (key) => !liveUpdateKeys.includes(key) && !changes[key].firstChange,
+    );
 
     if (requiresReload && this.instance) {
       this.reloadInstance();
+      return;
+    }
+
+    if (this.instance && changes.useAnchor?.currentValue !== undefined) {
+      this.instance.setMouseAnchor(changes.useAnchor.currentValue);
     }
   }
 

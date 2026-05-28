@@ -80,15 +80,25 @@ export abstract class LayerComponent implements OnInit, OnChanges, OnDestroy {
     }
     for (const key in changes) {
       if (changes.hasOwnProperty(key)) {
-        properties[key] = changes[key].currentValue;
         if (key === 'prerender') {
-          this.instance.un('prerender', changes[key].previousValue);
-          this.instance.on('prerender', changes[key].currentValue);
+          if (changes[key].previousValue) {
+            this.instance.un('prerender', changes[key].previousValue);
+          }
+          if (changes[key].currentValue) {
+            this.instance.on('prerender', changes[key].currentValue);
+          }
+          continue;
         }
         if (key === 'postrender') {
-          this.instance.un('postrender', changes[key].previousValue);
-          this.instance.on('postrender', changes[key].currentValue);
+          if (changes[key].previousValue) {
+            this.instance.un('postrender', changes[key].previousValue);
+          }
+          if (changes[key].currentValue) {
+            this.instance.on('postrender', changes[key].currentValue);
+          }
+          continue;
         }
+        properties[key] = changes[key].currentValue;
       }
     }
     // console.log('changes detected in aol-layer, setting new properties: ', properties);

@@ -31,8 +31,9 @@ export abstract class SourceComponent implements OnChanges, OnDestroy {
     }
 
     if (changes.hasOwnProperty('attributionsCollapsible')) {
-      (this.instance as unknown as { attributionsCollapsible_?: boolean }).attributionsCollapsible_ =
-        this.attributionsCollapsible() ?? true;
+      (
+        this.instance as unknown as { attributionsCollapsible_?: boolean }
+      ).attributionsCollapsible_ = this.attributionsCollapsible() ?? true;
       this.instance.refresh();
     }
   }
@@ -47,5 +48,11 @@ export abstract class SourceComponent implements OnChanges, OnDestroy {
     if (this.host) {
       this.host.instance.setSource(s);
     }
+  }
+
+  protected hasReloadableChanges(changes: SimpleChanges, excludedKeys: string[] = []): boolean {
+    const ignoredKeys = new Set(['attributions', 'attributionsCollapsible', ...excludedKeys]);
+
+    return Object.keys(changes).some((key) => !ignoredKeys.has(key) && !changes[key].firstChange);
   }
 }

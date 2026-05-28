@@ -11,7 +11,7 @@ import { SourceImageArcGISRestComponent } from './imagearcgisrest.component';
       <aol-view [center]="center" [zoom]="zoom"></aol-view>
       <aol-layer-image>
         <aol-source-imagearcgisrest
-          [url]="url"
+          [url]="url()"
           [params]="params()"
           (imageLoadStart)="loadStarts = loadStarts + 1"
         ></aol-source-imagearcgisrest>
@@ -24,7 +24,7 @@ import { SourceImageArcGISRestComponent } from './imagearcgisrest.component';
 class SourceImageArcGISRestHostComponent {
   center = [0, 0];
   zoom = 2;
-  url = 'https://example.com/arcgis/rest/services/demo/MapServer';
+  url = signal('https://example.com/arcgis/rest/services/demo/MapServer');
   params = signal({ LAYERS: 'show:1' });
   loadStarts = 0;
 
@@ -62,11 +62,18 @@ describe('SourceImageArcGISRestComponent', () => {
     fixture.componentInstance.source.instance.dispatchEvent('imageloadstart');
     expect(fixture.componentInstance.loadStarts).toBe(1);
 
+    const previousSource = fixture.componentInstance.source.instance;
+
     fixture.componentInstance.params.set({ LAYERS: 'show:2' });
+    fixture.componentInstance.url.set('https://example.com/arcgis/rest/services/updated/MapServer');
     fixture.detectChanges(false);
 
+    expect(fixture.componentInstance.source.instance).toBe(previousSource);
     expect(fixture.componentInstance.source.instance.getParams()).toMatchObject({
       LAYERS: 'show:2',
     });
+    expect(fixture.componentInstance.source.instance.getUrl()).toBe(
+      'https://example.com/arcgis/rest/services/updated/MapServer',
+    );
   });
 });

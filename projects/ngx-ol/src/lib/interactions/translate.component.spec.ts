@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, signal, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import Collection from 'ol/Collection';
 import Feature from 'ol/Feature';
@@ -13,7 +13,7 @@ import { TranslateInteractionComponent } from './translate.component';
       <aol-view [center]="center" [zoom]="zoom"></aol-view>
       <aol-interaction-translate
         [features]="features"
-        [hitTolerance]="hitTolerance"
+        [hitTolerance]="hitTolerance()"
         (translateStart)="translateStart($event)"
         (translating)="translating($event)"
         (translateEnd)="translateEnd($event)"
@@ -30,7 +30,7 @@ import { TranslateInteractionComponent } from './translate.component';
 class TranslateInteractionHostComponent {
   center = [0, 0];
   zoom = 2;
-  hitTolerance = 3;
+  hitTolerance = signal(3);
   features = new Collection([new Feature()]);
   translateStart = vi.fn();
   translating = vi.fn();
@@ -83,5 +83,17 @@ describe('TranslateInteractionComponent', () => {
     expect(host.changeActive).toHaveBeenCalledOnce();
     expect(host.error).toHaveBeenCalledOnce();
     expect(host.propertyChange).toHaveBeenCalledOnce();
+  });
+
+  it('updates hit tolerance without recreating the interaction', () => {
+    const host = fixture.componentInstance;
+    const previousInteraction = host.interaction.instance;
+
+    host.hitTolerance.set(9);
+    fixture.detectChanges();
+
+    expect(host.interaction.instance).toBe(previousInteraction);
+    expect(host.map.instance.getInteractions().getArray()).toContain(previousInteraction);
+    expect(host.interaction.instance.getHitTolerance()).toBe(9);
   });
 });

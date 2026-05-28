@@ -56,18 +56,35 @@ export class OverlayComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    const { position } = changes;
+    const liveUpdateKeys = ['position'];
 
-    if (position && this.instance) {
-      this.instance.setPosition(position.currentValue);
+    if (changes.offset?.currentValue) {
+      liveUpdateKeys.push('offset');
+    }
+
+    if (changes.positioning?.currentValue) {
+      liveUpdateKeys.push('positioning');
     }
 
     const requiresReload = Object.keys(changes).some(
-      (key) => key !== 'position' && !changes[key].firstChange,
+      (key) => !liveUpdateKeys.includes(key) && !changes[key].firstChange,
     );
 
     if (requiresReload && this.instance) {
       this.reloadInstance();
+      return;
+    }
+
+    if (this.instance && changes.position) {
+      this.instance.setPosition(changes.position.currentValue);
+    }
+
+    if (this.instance && changes.offset?.currentValue) {
+      this.instance.setOffset(changes.offset.currentValue);
+    }
+
+    if (this.instance && changes.positioning?.currentValue) {
+      this.instance.setPositioning(changes.positioning.currentValue);
     }
   }
 

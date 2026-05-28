@@ -60,13 +60,29 @@ export class SourceVectorComponent extends SourceComponent implements OnInit, On
   ngOnChanges(changes: SimpleChanges): void {
     super.ngOnChanges(changes);
     const { features } = changes;
-    const requiresReload = Object.keys(changes).some(
-      (key) => key !== 'features' && !changes[key].firstChange,
-    );
+    const liveUpdateKeys = ['features'];
+
+    if (changes.loader?.currentValue) {
+      liveUpdateKeys.push('loader');
+    }
+
+    if (changes.url?.currentValue) {
+      liveUpdateKeys.push('url');
+    }
+
+    const requiresReload = this.hasReloadableChanges(changes, liveUpdateKeys);
 
     if (requiresReload && this.instance) {
       this.reloadInstance();
       return;
+    }
+
+    if (changes.loader?.currentValue && this.instance) {
+      this.instance.setLoader(changes.loader.currentValue);
+    }
+
+    if (changes.url?.currentValue && this.instance) {
+      this.instance.setUrl(changes.url.currentValue);
     }
 
     if (features && this.instance) {

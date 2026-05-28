@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, signal, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { AngularOpenlayersModule } from '../../public-api';
@@ -10,7 +10,7 @@ import { ExtentInteractionComponent } from './extent.component';
     <aol-map width="320px" height="240px">
       <aol-view [center]="center" [zoom]="zoom"></aol-view>
       <aol-interaction-extent
-        [extent]="extent"
+        [extent]="extent()"
         (extentChanged)="extentChanged($event)"
       ></aol-interaction-extent>
     </aol-map>
@@ -21,7 +21,7 @@ import { ExtentInteractionComponent } from './extent.component';
 class ExtentInteractionHostComponent {
   center = [0, 0];
   zoom = 2;
-  extent: [number, number, number, number] = [-5, -5, 5, 5];
+  extent = signal<[number, number, number, number]>([-5, -5, 5, 5]);
   extentChanged = vi.fn();
 
   @ViewChild(ExtentInteractionComponent)
@@ -55,5 +55,17 @@ describe('ExtentInteractionComponent', () => {
     host.interaction.instance.dispatchEvent('extentchanged');
 
     expect(host.extentChanged).toHaveBeenCalledOnce();
+  });
+
+  it('updates the extent without recreating the interaction', () => {
+    const host = fixture.componentInstance;
+    const previousInteraction = host.interaction.instance;
+
+    host.extent.set([-1, -2, 3, 4]);
+    fixture.detectChanges();
+
+    expect(host.interaction.instance).toBe(previousInteraction);
+    expect(host.map.instance.getInteractions().getArray()).toContain(previousInteraction);
+    expect(host.interaction.instance.getExtent()).toEqual([-1, -2, 3, 4]);
   });
 });

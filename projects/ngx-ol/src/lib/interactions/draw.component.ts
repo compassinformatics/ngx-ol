@@ -71,10 +71,23 @@ export class DrawInteractionComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    const requiresReload = Object.keys(changes).some((key) => !changes[key].firstChange);
+    const liveUpdateKeys: string[] = [];
+
+    if (changes.trace?.currentValue !== undefined) {
+      liveUpdateKeys.push('trace');
+    }
+
+    const requiresReload = Object.keys(changes).some(
+      (key) => !liveUpdateKeys.includes(key) && !changes[key].firstChange,
+    );
 
     if (requiresReload && this.instance) {
       this.reloadInstance();
+      return;
+    }
+
+    if (this.instance && changes.trace?.currentValue !== undefined) {
+      this.instance.setTrace(changes.trace.currentValue);
     }
   }
 

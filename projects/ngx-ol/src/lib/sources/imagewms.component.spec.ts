@@ -11,7 +11,7 @@ import { SourceImageWMSComponent } from './imagewms.component';
       <aol-view [center]="center" [zoom]="zoom"></aol-view>
       <aol-layer-image>
         <aol-source-imagewms
-          [url]="url"
+          [url]="url()"
           [params]="params()"
           (imageLoadStart)="loadStarts = loadStarts + 1"
         ></aol-source-imagewms>
@@ -24,7 +24,7 @@ import { SourceImageWMSComponent } from './imagewms.component';
 class SourceImageWMSHostComponent {
   center = [0, 0];
   zoom = 2;
-  url = 'https://example.com/wms';
+  url = signal('https://example.com/wms');
   params = signal({ LAYERS: 'basic' });
   loadStarts = 0;
 
@@ -62,11 +62,18 @@ describe('SourceImageWMSComponent', () => {
     fixture.componentInstance.source.instance.dispatchEvent('imageloadstart');
     expect(fixture.componentInstance.loadStarts).toBe(1);
 
+    const previousSource = fixture.componentInstance.source.instance;
+
     fixture.componentInstance.params.set({ LAYERS: 'updated' });
+    fixture.componentInstance.url.set('https://example.com/updated-wms');
     fixture.detectChanges(false);
 
+    expect(fixture.componentInstance.source.instance).toBe(previousSource);
     expect(fixture.componentInstance.source.instance.getParams()).toMatchObject({
       LAYERS: 'updated',
     });
+    expect(fixture.componentInstance.source.instance.getUrl()).toBe(
+      'https://example.com/updated-wms',
+    );
   });
 });

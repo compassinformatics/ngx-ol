@@ -1,4 +1,13 @@
-import { Component, ElementRef, OnChanges, OnDestroy, OnInit, SimpleChanges, signal, input } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  SimpleChanges,
+  signal,
+  input,
+} from '@angular/core';
 import MousePosition, { Options } from 'ol/control/MousePosition';
 import { MapComponent } from '../map.component';
 import { CoordinateFormat } from 'ol/coordinate';
@@ -38,10 +47,31 @@ export class ControlMousePositionComponent implements OnInit, OnChanges, OnDestr
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    const requiresReload = Object.keys(changes).some((key) => !changes[key].firstChange);
+    const liveUpdateKeys: string[] = [];
+
+    if (changes.coordinateFormat?.currentValue) {
+      liveUpdateKeys.push('coordinateFormat');
+    }
+
+    if (changes.projection?.currentValue) {
+      liveUpdateKeys.push('projection');
+    }
+
+    const requiresReload = Object.keys(changes).some(
+      (key) => !liveUpdateKeys.includes(key) && !changes[key].firstChange,
+    );
 
     if (requiresReload && this.instance) {
       this.reloadInstance();
+      return;
+    }
+
+    if (this.instance && changes.coordinateFormat?.currentValue) {
+      this.instance.setCoordinateFormat(changes.coordinateFormat.currentValue);
+    }
+
+    if (this.instance && changes.projection?.currentValue) {
+      this.instance.setProjection(changes.projection.currentValue);
     }
   }
 

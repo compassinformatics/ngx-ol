@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, signal, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import VectorSource from 'ol/source/Vector';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
@@ -13,6 +13,7 @@ import { DrawInteractionComponent } from './draw.component';
       <aol-interaction-draw
         [type]="type"
         [source]="source"
+        [trace]="trace()"
         (drawStart)="drawStart($event)"
         (drawEnd)="drawEnd($event)"
         (drawAbort)="drawAbort($event)"
@@ -31,6 +32,7 @@ class DrawInteractionHostComponent {
   zoom = 2;
   type = 'Point' as const;
   source = new VectorSource();
+  trace = signal(false);
   drawStart = vi.fn();
   drawEnd = vi.fn();
   drawAbort = vi.fn();
@@ -82,5 +84,18 @@ describe('DrawInteractionComponent', () => {
     expect(host.changeActive).toHaveBeenCalledOnce();
     expect(host.error).toHaveBeenCalledOnce();
     expect(host.propertyChange).toHaveBeenCalledOnce();
+  });
+
+  it('updates trace without recreating the interaction', () => {
+    const host = fixture.componentInstance;
+    const previousInteraction = host.interaction.instance;
+    const setTrace = vi.spyOn(previousInteraction, 'setTrace');
+
+    host.trace.set(true);
+    fixture.detectChanges();
+
+    expect(host.interaction.instance).toBe(previousInteraction);
+    expect(host.map.instance.getInteractions().getArray()).toContain(previousInteraction);
+    expect(setTrace).toHaveBeenCalledWith(true);
   });
 });

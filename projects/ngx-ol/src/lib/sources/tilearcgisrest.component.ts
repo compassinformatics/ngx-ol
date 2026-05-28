@@ -60,13 +60,37 @@ export class SourceTileArcGISRestComponent extends SourceComponent implements On
 
   ngOnChanges(changes: SimpleChanges) {
     super.ngOnChanges(changes);
-    const requiresReload = Object.keys(changes).some(
-      (key) => key !== 'params' && !changes[key].firstChange,
-    );
+    const liveUpdateKeys = ['params'];
+
+    if (changes.url?.currentValue) {
+      liveUpdateKeys.push('url');
+    }
+
+    if (changes.urls?.currentValue) {
+      liveUpdateKeys.push('urls');
+    }
+
+    if (changes.tileLoadFunction?.currentValue) {
+      liveUpdateKeys.push('tileLoadFunction');
+    }
+
+    const requiresReload = this.hasReloadableChanges(changes, liveUpdateKeys);
 
     if (requiresReload && this.instance) {
       this.reloadInstance();
       return;
+    }
+
+    if (this.instance && changes.url?.currentValue) {
+      this.instance.setUrl(changes.url.currentValue);
+    }
+
+    if (this.instance && changes.urls?.currentValue) {
+      this.instance.setUrls(changes.urls.currentValue);
+    }
+
+    if (this.instance && changes.tileLoadFunction?.currentValue) {
+      this.instance.setTileLoadFunction(changes.tileLoadFunction.currentValue);
     }
 
     if (this.instance && changes.hasOwnProperty('params') && this.params()) {

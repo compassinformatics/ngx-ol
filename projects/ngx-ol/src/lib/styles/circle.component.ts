@@ -84,9 +84,34 @@ export class StyleCircleComponent implements AfterContentInit, OnChanges, OnDest
     if (!this.instance) {
       return;
     }
+    if (changes.declutterMode) {
+      this.setInstance(new Circle(this.createOptions()));
+      this.host.instance.setImage(this.instance);
+      this.host.update();
+      return;
+    }
+    if (changes.fill && !this.childFill) {
+      this.instance.setFill(changes.fill.currentValue);
+    }
     if (changes.radius) {
       this.instance.setRadius(changes.radius.currentValue);
     }
+    if (changes.stroke && !this.childStroke) {
+      this.instance.setStroke(changes.stroke.currentValue);
+    }
+    if (changes.displacement) {
+      this.instance.setDisplacement(changes.displacement.currentValue);
+    }
+    if (changes.scale) {
+      this.instance.setScale(changes.scale.currentValue);
+    }
+    if (changes.rotation) {
+      this.instance.setRotation(changes.rotation.currentValue);
+    }
+    if (changes.rotateWithView) {
+      this.instance.setRotateWithView(changes.rotateWithView.currentValue);
+    }
+    this.host.update();
     // console.log('changes detected in aol-style-circle, setting new radius: ', changes['radius'].currentValue);
   }
 

@@ -53,18 +53,34 @@ export class StyleIconComponent implements OnInit, OnChanges {
     if (!this.instance) {
       return;
     }
+    const requiresReload = Object.keys(changes).some(
+      (key) =>
+        !['anchor', 'displacement', 'opacity', 'rotateWithView', 'rotation', 'scale'].includes(key),
+    );
+
+    if (requiresReload) {
+      this.setInstance(new Icon(this.createOptions()));
+      this.host.instance.setImage(this.instance);
+      this.host.update();
+      return;
+    }
+    if (changes.anchor) {
+      this.instance.setAnchor(changes.anchor.currentValue);
+    }
+    if (changes.displacement) {
+      this.instance.setDisplacement(changes.displacement.currentValue);
+    }
     if (changes.opacity) {
       this.instance.setOpacity(changes.opacity.currentValue);
+    }
+    if (changes.rotateWithView) {
+      this.instance.setRotateWithView(changes.rotateWithView.currentValue);
     }
     if (changes.rotation) {
       this.instance.setRotation(changes.rotation.currentValue);
     }
     if (changes.scale) {
       this.instance.setScale(changes.scale.currentValue);
-    }
-    if (changes.src) {
-      this.setInstance(new Icon(this.createOptions()));
-      this.host.instance.setImage(this.instance);
     }
     this.host.update();
     // console.log('changes detected in aol-style-icon: ', changes);

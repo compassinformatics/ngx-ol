@@ -65,13 +65,25 @@ export class SourceImageArcGISRestComponent extends SourceComponent implements O
 
   ngOnChanges(changes: SimpleChanges) {
     super.ngOnChanges(changes);
-    const requiresReload = Object.keys(changes).some(
-      (key) => key !== 'params' && !changes[key].firstChange,
-    );
+    const liveUpdateKeys = ['params', 'url'];
+
+    if (changes.imageLoadFunction?.currentValue) {
+      liveUpdateKeys.push('imageLoadFunction');
+    }
+
+    const requiresReload = this.hasReloadableChanges(changes, liveUpdateKeys);
 
     if (requiresReload && this.instance) {
       this.reloadInstance();
       return;
+    }
+
+    if (this.instance && changes.hasOwnProperty('url')) {
+      this.instance.setUrl(this.url());
+    }
+
+    if (this.instance && changes.imageLoadFunction?.currentValue) {
+      this.instance.setImageLoadFunction(changes.imageLoadFunction.currentValue);
     }
 
     if (this.instance && changes.hasOwnProperty('params')) {

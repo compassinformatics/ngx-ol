@@ -53,10 +53,47 @@ export class ControlOverviewMapComponent implements OnInit, OnChanges, OnDestroy
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    const requiresReload = Object.keys(changes).some((key) => !changes[key].firstChange);
+    const liveUpdateKeys: string[] = [];
+
+    if (changes.collapsible?.currentValue !== undefined) {
+      liveUpdateKeys.push('collapsible');
+    }
+
+    if (changes.collapsed?.currentValue !== undefined) {
+      liveUpdateKeys.push('collapsed');
+    }
+
+    if (changes.rotateWithView?.currentValue !== undefined) {
+      liveUpdateKeys.push('rotateWithView');
+    }
+
+    if (changes.target?.currentValue !== undefined) {
+      liveUpdateKeys.push('target');
+    }
+
+    const requiresReload = Object.keys(changes).some(
+      (key) => !liveUpdateKeys.includes(key) && !changes[key].firstChange,
+    );
 
     if (requiresReload && this.instance) {
       this.reloadInstance();
+      return;
+    }
+
+    if (this.instance && changes.collapsible?.currentValue !== undefined) {
+      this.instance.setCollapsible(changes.collapsible.currentValue);
+    }
+
+    if (this.instance && changes.collapsed?.currentValue !== undefined) {
+      this.instance.setCollapsed(changes.collapsed.currentValue);
+    }
+
+    if (this.instance && changes.rotateWithView?.currentValue !== undefined) {
+      this.instance.setRotateWithView(changes.rotateWithView.currentValue);
+    }
+
+    if (this.instance && changes.target?.currentValue !== undefined) {
+      this.instance.setTarget(changes.target.currentValue);
     }
   }
 

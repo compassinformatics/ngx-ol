@@ -1,4 +1,12 @@
-import { Component, OnChanges, OnDestroy, OnInit, SimpleChanges, signal, input } from '@angular/core';
+import {
+  Component,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  SimpleChanges,
+  signal,
+  input,
+} from '@angular/core';
 import ZoomToExtent from 'ol/control/ZoomToExtent';
 import { Options } from 'ol/control/ZoomToExtent';
 import { MapComponent } from '../map.component';
@@ -33,10 +41,23 @@ export class ControlZoomToExtentComponent implements OnInit, OnChanges, OnDestro
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    const requiresReload = Object.keys(changes).some((key) => !changes[key].firstChange);
+    const liveUpdateKeys: string[] = [];
+
+    if (changes.target?.currentValue !== undefined) {
+      liveUpdateKeys.push('target');
+    }
+
+    const requiresReload = Object.keys(changes).some(
+      (key) => !liveUpdateKeys.includes(key) && !changes[key].firstChange,
+    );
 
     if (requiresReload && this.instance) {
       this.reloadInstance();
+      return;
+    }
+
+    if (this.instance && changes.target?.currentValue !== undefined) {
+      this.instance.setTarget(changes.target.currentValue);
     }
   }
 

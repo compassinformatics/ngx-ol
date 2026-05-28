@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, signal, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import Collection from 'ol/Collection';
 import Feature from 'ol/Feature';
@@ -14,6 +14,7 @@ import { SelectInteractionComponent } from './select.component';
       <aol-interaction-select
         [features]="features"
         [multi]="multi"
+        [hitTolerance]="hitTolerance()"
         (olSelect)="select($event)"
         (olChange)="change($event)"
         (changeActive)="changeActive($event)"
@@ -30,6 +31,7 @@ class SelectInteractionHostComponent {
   zoom = 2;
   multi = true;
   features = new Collection([new Feature()]);
+  hitTolerance = signal(0);
   select = vi.fn();
   change = vi.fn();
   changeActive = vi.fn();
@@ -75,5 +77,17 @@ describe('SelectInteractionComponent', () => {
     expect(host.changeActive).toHaveBeenCalledOnce();
     expect(host.error).toHaveBeenCalledOnce();
     expect(host.propertyChange).toHaveBeenCalledOnce();
+  });
+
+  it('updates hit tolerance without recreating the interaction', () => {
+    const host = fixture.componentInstance;
+    const previousInteraction = host.interaction.instance;
+
+    host.hitTolerance.set(8);
+    fixture.detectChanges();
+
+    expect(host.interaction.instance).toBe(previousInteraction);
+    expect(host.map.instance.getInteractions().getArray()).toContain(previousInteraction);
+    expect(host.interaction.instance.getHitTolerance()).toBe(8);
   });
 });

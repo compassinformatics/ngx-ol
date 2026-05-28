@@ -1,6 +1,6 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, signal, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { afterEach, beforeEach, describe, expect, it } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { AngularOpenlayersModule } from '../../public-api';
 import { MapComponent } from '../map.component';
 import { MouseWheelZoomInteractionComponent } from './mousewheelzoom.component';
@@ -11,6 +11,7 @@ import { MouseWheelZoomInteractionComponent } from './mousewheelzoom.component';
       <aol-view [center]="center" [zoom]="zoom"></aol-view>
       <aol-interaction-mousewheelzoom
         [duration]="duration"
+        [useAnchor]="useAnchor()"
       ></aol-interaction-mousewheelzoom>
     </aol-map>
   `,
@@ -21,6 +22,7 @@ class MouseWheelZoomInteractionHostComponent {
   center = [0, 0];
   zoom = 2;
   duration = 100;
+  useAnchor = signal(true);
 
   @ViewChild(MouseWheelZoomInteractionComponent)
   interaction!: MouseWheelZoomInteractionComponent;
@@ -56,5 +58,18 @@ describe('MouseWheelZoomInteractionComponent', () => {
     fixture = undefined;
 
     expect(map.getInteractions().getArray()).not.toContain(interaction);
+  });
+
+  it('updates mouse anchor usage without recreating the interaction', () => {
+    const host = fixture!.componentInstance;
+    const previousInteraction = host.interaction.instance;
+    const setMouseAnchor = vi.spyOn(previousInteraction, 'setMouseAnchor');
+
+    host.useAnchor.set(false);
+    fixture!.detectChanges();
+
+    expect(host.interaction.instance).toBe(previousInteraction);
+    expect(host.map.instance.getInteractions().getArray()).toContain(previousInteraction);
+    expect(setMouseAnchor).toHaveBeenCalledWith(false);
   });
 });

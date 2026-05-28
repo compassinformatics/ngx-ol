@@ -1,6 +1,6 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, signal, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { afterEach, beforeEach, describe, expect, it } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { AngularOpenlayersModule } from '../../public-api';
 import { MapComponent } from '../map.component';
 import { ControlFullScreenComponent } from './fullscreen.component';
@@ -9,7 +9,7 @@ import { ControlFullScreenComponent } from './fullscreen.component';
   template: `
     <aol-map width="320px" height="240px">
       <aol-view [center]="center" [zoom]="zoom"></aol-view>
-      <aol-control-fullscreen></aol-control-fullscreen>
+      <aol-control-fullscreen [target]="target()"></aol-control-fullscreen>
     </aol-map>
   `,
   standalone: true,
@@ -18,6 +18,7 @@ import { ControlFullScreenComponent } from './fullscreen.component';
 class ControlFullScreenHostComponent {
   center = [0, 0];
   zoom = 2;
+  target = signal<string | HTMLElement | undefined>(undefined);
 
   @ViewChild(ControlFullScreenComponent)
   control!: ControlFullScreenComponent;
@@ -53,5 +54,17 @@ describe('ControlFullScreenComponent', () => {
     fixture = undefined;
 
     expect(map.getControls().getArray()).not.toContain(control);
+  });
+
+  it('updates the target without recreating the control', () => {
+    const host = fixture!.componentInstance;
+    const previousControl = host.control.instance;
+    const setTarget = vi.spyOn(previousControl, 'setTarget');
+
+    host.target.set('fullscreen-target');
+    fixture!.detectChanges();
+
+    expect(host.control.instance).toBe(previousControl);
+    expect(setTarget).toHaveBeenCalledWith('fullscreen-target');
   });
 });

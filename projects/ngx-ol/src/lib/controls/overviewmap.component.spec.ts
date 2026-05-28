@@ -1,6 +1,6 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, signal, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { afterEach, beforeEach, describe, expect, it } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { AngularOpenlayersModule } from '../../public-api';
 import { MapComponent } from '../map.component';
 import { ControlOverviewMapComponent } from './overviewmap.component';
@@ -9,7 +9,12 @@ import { ControlOverviewMapComponent } from './overviewmap.component';
   template: `
     <aol-map width="320px" height="240px">
       <aol-view [center]="center" [zoom]="zoom"></aol-view>
-      <aol-control-overviewmap [collapsed]="collapsed"></aol-control-overviewmap>
+      <aol-control-overviewmap
+        [collapsed]="collapsed()"
+        [collapsible]="collapsible()"
+        [rotateWithView]="rotateWithView()"
+        [target]="target()"
+      ></aol-control-overviewmap>
     </aol-map>
   `,
   standalone: true,
@@ -18,7 +23,10 @@ import { ControlOverviewMapComponent } from './overviewmap.component';
 class ControlOverviewMapHostComponent {
   center = [0, 0];
   zoom = 2;
-  collapsed = false;
+  collapsed = signal(false);
+  collapsible = signal(true);
+  rotateWithView = signal(false);
+  target = signal<string | HTMLElement | undefined>(undefined);
 
   @ViewChild(ControlOverviewMapComponent)
   control!: ControlOverviewMapComponent;
@@ -54,5 +62,24 @@ describe('ControlOverviewMapComponent', () => {
     fixture = undefined;
 
     expect(map.getControls().getArray()).not.toContain(control);
+  });
+
+  it('updates live overview map bindings without recreating the control', () => {
+    const host = fixture!.componentInstance;
+    const previousControl = host.control.instance;
+    const setCollapsed = vi.spyOn(previousControl, 'setCollapsed');
+    const setTarget = vi.spyOn(previousControl, 'setTarget');
+
+    host.collapsed.set(true);
+    host.collapsible.set(false);
+    host.rotateWithView.set(true);
+    host.target.set('overview-target');
+    fixture!.detectChanges();
+
+    expect(host.control.instance).toBe(previousControl);
+    expect(host.control.instance.getCollapsible()).toBe(false);
+    expect(host.control.instance.getRotateWithView()).toBe(true);
+    expect(setCollapsed).toHaveBeenCalledWith(true);
+    expect(setTarget).toHaveBeenCalledWith('overview-target');
   });
 });

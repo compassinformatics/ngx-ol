@@ -1,6 +1,6 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, signal, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { afterEach, beforeEach, describe, expect, it } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { AngularOpenlayersModule } from '../../public-api';
 import { MapComponent } from '../map.component';
 import { ControlZoomToExtentComponent } from './zoomtoextent.component';
@@ -9,7 +9,7 @@ import { ControlZoomToExtentComponent } from './zoomtoextent.component';
   template: `
     <aol-map width="320px" height="240px">
       <aol-view [center]="center" [zoom]="zoom"></aol-view>
-      <aol-control-zoomtoextent [extent]="extent"></aol-control-zoomtoextent>
+      <aol-control-zoomtoextent [extent]="extent" [target]="target()"></aol-control-zoomtoextent>
     </aol-map>
   `,
   standalone: true,
@@ -19,6 +19,7 @@ class ControlZoomToExtentHostComponent {
   center = [0, 0];
   zoom = 2;
   extent: [number, number, number, number] = [-10, -10, 10, 10];
+  target = signal<string | HTMLElement | undefined>(undefined);
 
   @ViewChild(ControlZoomToExtentComponent)
   control!: ControlZoomToExtentComponent;
@@ -54,5 +55,17 @@ describe('ControlZoomToExtentComponent', () => {
     fixture = undefined;
 
     expect(map.getControls().getArray()).not.toContain(control);
+  });
+
+  it('updates the target without recreating the control', () => {
+    const host = fixture!.componentInstance;
+    const previousControl = host.control.instance;
+    const setTarget = vi.spyOn(previousControl, 'setTarget');
+
+    host.target.set('zoom-to-extent-target');
+    fixture!.detectChanges();
+
+    expect(host.control.instance).toBe(previousControl);
+    expect(setTarget).toHaveBeenCalledWith('zoom-to-extent-target');
   });
 });

@@ -1,6 +1,7 @@
 import {
   signal,
   AfterContentInit,
+  AfterContentChecked,
   Component,
   ContentChild,
   forwardRef,
@@ -27,7 +28,10 @@ import { SourceComponent } from './source.component';
     },
   ],
 })
-export class SourceRasterComponent extends SourceComponent implements AfterContentInit, OnChanges {
+export class SourceRasterComponent
+  extends SourceComponent
+  implements AfterContentInit, AfterContentChecked, OnChanges
+{
   operation = input<Operation>();
   threads = input<number>();
   lib = input<any>();
@@ -45,9 +49,14 @@ export class SourceRasterComponent extends SourceComponent implements AfterConte
     return instance;
   }
   sources: Source[] = [];
+  private sourceComponent?: SourceComponent;
+  private lastSourceInstance?: Source;
 
-  @ContentChild(SourceComponent, { static: false }) set source(sourceComponent: SourceComponent) {
-    this.sources = [sourceComponent.instance];
+  @ContentChild(SourceComponent, { static: false }) set source(
+    sourceComponent: SourceComponent | undefined,
+  ) {
+    this.sourceComponent = sourceComponent;
+    this.syncSourceInstance();
     if (this.instance) {
       // Openlayer doesn't handle sources update. Just recreate Raster instance.
       this.init();
@@ -62,12 +71,35 @@ export class SourceRasterComponent extends SourceComponent implements AfterConte
     this.init();
   }
 
+  ngAfterContentChecked() {
+    const source = this.sourceComponent?.instance;
+
+    if (source !== this.lastSourceInstance && this.instance) {
+      this.syncSourceInstance(source);
+      this.init();
+      return;
+    }
+
+    this.lastSourceInstance = source;
+  }
+
   ngOnChanges(changes: SimpleChanges) {
     super.ngOnChanges(changes);
-    const requiresReload = Object.keys(changes).some((key) => !changes[key].firstChange);
+    const liveUpdateKeys: string[] = [];
+
+    if (changes.operation?.currentValue) {
+      liveUpdateKeys.push('operation', 'lib');
+    }
+
+    const requiresReload = this.hasReloadableChanges(changes, liveUpdateKeys);
 
     if (requiresReload && this.instance) {
       this.init();
+      return;
+    }
+
+    if (this.instance && changes.operation?.currentValue) {
+      this.instance.setOperation(changes.operation.currentValue, this.lib());
     }
   }
 
@@ -80,6 +112,12 @@ export class SourceRasterComponent extends SourceComponent implements AfterConte
       this.afterOperations.emit(event),
     );
     this.register(this.instance);
+    this.lastSourceInstance = this.sourceComponent?.instance;
+  }
+
+  private syncSourceInstance(source = this.sourceComponent?.instance) {
+    this.sources = source ? [source] : [];
+    this.lastSourceInstance = source;
   }
 
   private createOptions(): Options {

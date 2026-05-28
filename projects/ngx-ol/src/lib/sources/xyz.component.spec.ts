@@ -1,5 +1,6 @@
 import { Component, signal, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { LoadFunction, UrlFunction } from 'ol/Tile';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { AngularOpenlayersModule } from '../../public-api';
 import { LayerTileComponent } from '../layers/layertile.component';
@@ -12,6 +13,9 @@ import { SourceXYZComponent } from './xyz.component';
       <aol-layer-tile>
         <aol-source-xyz
           [url]="url()"
+          [urls]="urls()"
+          [tileLoadFunction]="tileLoadFunction()"
+          [tileUrlFunction]="tileUrlFunction()"
           (tileLoadStart)="tileLoadStart($event)"
           (tileLoadEnd)="tileLoadEnd($event)"
           (tileLoadError)="tileLoadError($event)"
@@ -26,6 +30,9 @@ class SourceXYZHostComponent {
   center = [0, 0];
   zoom = 2;
   url = signal('https://example.com/{z}/{x}/{y}.png');
+  urls = signal<string[] | undefined>(undefined);
+  tileLoadFunction = signal<LoadFunction | undefined>(undefined);
+  tileUrlFunction = signal<UrlFunction | undefined>(undefined);
   tileLoadStart = vi.fn();
   tileLoadEnd = vi.fn();
   tileLoadError = vi.fn();
@@ -57,9 +64,7 @@ describe('SourceXYZComponent', () => {
     const host = fixture!.componentInstance;
 
     expect(host.layer.instance.getSource()).toBe(host.source.instance);
-    expect(host.source.instance.getUrls()).toEqual([
-      'https://example.com/{z}/{x}/{y}.png',
-    ]);
+    expect(host.source.instance.getUrls()).toEqual(['https://example.com/{z}/{x}/{y}.png']);
   });
 
   it('forwards tile load events through template outputs', () => {
@@ -74,18 +79,31 @@ describe('SourceXYZComponent', () => {
     expect(host.tileLoadError).toHaveBeenCalledOnce();
   });
 
-  it('recreates and re-registers the source when the URL binding changes', () => {
+  it('updates live URL bindings without recreating the source', () => {
     const host = fixture!.componentInstance;
     const previousSource = host.source.instance;
+    const tileLoadFunction: LoadFunction = vi.fn();
+    const tileUrlFunction: UrlFunction = vi.fn();
+    const setTileLoadFunction = vi.spyOn(previousSource, 'setTileLoadFunction');
+    const setTileUrlFunction = vi.spyOn(previousSource, 'setTileUrlFunction');
 
     host.url.set('https://tiles.example.com/{z}/{x}/{y}.png');
+    host.urls.set([
+      'https://a.example.com/{z}/{x}/{y}.png',
+      'https://b.example.com/{z}/{x}/{y}.png',
+    ]);
+    host.tileLoadFunction.set(tileLoadFunction);
+    host.tileUrlFunction.set(tileUrlFunction);
     fixture!.detectChanges();
 
-    expect(host.source.instance).not.toBe(previousSource);
-    expect(host.layer.instance.getSource()).toBe(host.source.instance);
+    expect(host.source.instance).toBe(previousSource);
+    expect(host.layer.instance.getSource()).toBe(previousSource);
     expect(host.source.instance.getUrls()).toEqual([
-      'https://tiles.example.com/{z}/{x}/{y}.png',
+      'https://a.example.com/{z}/{x}/{y}.png',
+      'https://b.example.com/{z}/{x}/{y}.png',
     ]);
+    expect(setTileLoadFunction).toHaveBeenCalledWith(tileLoadFunction);
+    expect(setTileUrlFunction).toHaveBeenCalledWith(tileUrlFunction);
   });
 
   it('clears the layer source when the source component is destroyed', () => {

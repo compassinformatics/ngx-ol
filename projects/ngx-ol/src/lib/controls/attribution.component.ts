@@ -1,4 +1,13 @@
-import { Component, ElementRef, OnChanges, OnDestroy, OnInit, SimpleChanges, signal, input } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  SimpleChanges,
+  signal,
+  input,
+} from '@angular/core';
 import Attribution from 'ol/control/Attribution';
 import { Options } from 'ol/control/Attribution';
 import MapEvent from 'ol/MapEvent';
@@ -41,10 +50,31 @@ export class ControlAttributionComponent implements OnInit, OnChanges, OnDestroy
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    const requiresReload = Object.keys(changes).some((key) => !changes[key].firstChange);
+    const liveUpdateKeys: string[] = [];
+
+    if (changes.collapsible?.currentValue !== undefined) {
+      liveUpdateKeys.push('collapsible');
+    }
+
+    if (changes.collapsed?.currentValue !== undefined) {
+      liveUpdateKeys.push('collapsed');
+    }
+
+    const requiresReload = Object.keys(changes).some(
+      (key) => !liveUpdateKeys.includes(key) && !changes[key].firstChange,
+    );
 
     if (requiresReload && this.instance) {
       this.reloadInstance();
+      return;
+    }
+
+    if (this.instance && changes.collapsible?.currentValue !== undefined) {
+      this.instance.setCollapsible(changes.collapsible.currentValue);
+    }
+
+    if (this.instance && changes.collapsed?.currentValue !== undefined) {
+      this.instance.setCollapsed(changes.collapsed.currentValue);
     }
   }
 

@@ -93,10 +93,45 @@ export class SourceXYZComponent
 
   ngOnChanges(changes: SimpleChanges) {
     super.ngOnChanges(changes);
-    const requiresReload = Object.keys(changes).some((key) => !changes[key].firstChange);
+    const liveUpdateKeys: string[] = [];
+
+    if (changes.url?.currentValue) {
+      liveUpdateKeys.push('url');
+    }
+
+    if (changes.urls?.currentValue) {
+      liveUpdateKeys.push('urls');
+    }
+
+    if (changes.tileLoadFunction?.currentValue) {
+      liveUpdateKeys.push('tileLoadFunction');
+    }
+
+    if (changes.tileUrlFunction?.currentValue) {
+      liveUpdateKeys.push('tileUrlFunction');
+    }
+
+    const requiresReload = this.hasReloadableChanges(changes, liveUpdateKeys);
 
     if (requiresReload && this.instance) {
       this.init();
+      return;
+    }
+
+    if (this.instance && changes.url?.currentValue) {
+      this.instance.setUrl(changes.url.currentValue);
+    }
+
+    if (this.instance && changes.urls?.currentValue) {
+      this.instance.setUrls(changes.urls.currentValue);
+    }
+
+    if (this.instance && changes.tileLoadFunction?.currentValue) {
+      this.instance.setTileLoadFunction(changes.tileLoadFunction.currentValue);
+    }
+
+    if (this.instance && changes.tileUrlFunction?.currentValue) {
+      this.instance.setTileUrlFunction(changes.tileUrlFunction.currentValue);
     }
   }
 

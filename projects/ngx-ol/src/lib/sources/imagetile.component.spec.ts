@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, signal, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 import { AngularOpenlayersModule } from '../../public-api';
@@ -10,7 +10,7 @@ import { LayerWebGLTileComponent } from '../layers/layerwebgltile.component';
     <aol-map width="320px" height="240px">
       <aol-view [center]="center" [zoom]="zoom"></aol-view>
       <aol-layer-webgltile>
-        <aol-source-imagetile [url]="url"></aol-source-imagetile>
+        <aol-source-imagetile [url]="url()"></aol-source-imagetile>
       </aol-layer-webgltile>
     </aol-map>
   `,
@@ -20,7 +20,7 @@ import { LayerWebGLTileComponent } from '../layers/layerwebgltile.component';
 class SourceImageTileHostComponent {
   center = [0, 0];
   zoom = 2;
-  url = 'https://example.com/{z}/{x}/{y}.png';
+  url = signal('https://example.com/{z}/{x}/{y}.png');
 
   @ViewChild(SourceImageTileComponent)
   source!: SourceImageTileComponent;
@@ -49,5 +49,16 @@ describe('SourceImageTileComponent', () => {
     expect(fixture.componentInstance.layer.instance.getSource()).toBe(
       fixture.componentInstance.source.instance,
     );
+  });
+
+  it('updates the image tile URL without recreating the source', () => {
+    const host = fixture.componentInstance;
+    const previousSource = host.source.instance;
+
+    host.url.set('https://tiles.example.com/{z}/{x}/{y}.png');
+    fixture.detectChanges();
+
+    expect(host.source.instance).toBe(previousSource);
+    expect(host.layer.instance.getSource()).toBe(previousSource);
   });
 });

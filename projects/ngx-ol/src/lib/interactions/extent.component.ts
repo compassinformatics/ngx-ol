@@ -44,10 +44,23 @@ export class ExtentInteractionComponent implements OnInit, OnChanges, OnDestroy 
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    const requiresReload = Object.keys(changes).some((key) => !changes[key].firstChange);
+    const liveUpdateKeys: string[] = [];
+
+    if (changes.extent?.currentValue) {
+      liveUpdateKeys.push('extent');
+    }
+
+    const requiresReload = Object.keys(changes).some(
+      (key) => !liveUpdateKeys.includes(key) && !changes[key].firstChange,
+    );
 
     if (requiresReload && this.instance) {
       this.reloadInstance();
+      return;
+    }
+
+    if (this.instance && changes.extent?.currentValue) {
+      this.instance.setExtent(changes.extent.currentValue);
     }
   }
 

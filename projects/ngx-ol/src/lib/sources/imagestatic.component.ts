@@ -67,7 +67,7 @@ export class SourceImageStaticComponent extends SourceComponent implements OnIni
 
   ngOnChanges(changes: SimpleChanges) {
     super.ngOnChanges(changes);
-    const requiresReload = Object.keys(changes).some((key) => !changes[key].firstChange);
+    const requiresReload = this.hasReloadableChanges(changes);
 
     if (requiresReload && this.instance) {
       this.setLayerSource();

@@ -20,6 +20,7 @@ import { StyleTextComponent } from './text.component';
                 [offsetY]="offsetY()"
                 [scale]="scale()"
                 [rotation]="rotation()"
+                [rotateWithView]="rotateWithView()"
                 [textAlign]="textAlign()"
                 [textBaseline]="textBaseline()"
               ></aol-style-text>
@@ -41,6 +42,7 @@ class StyleTextHostComponent {
   offsetY = signal(0);
   scale = signal(1);
   rotation = signal(0);
+  rotateWithView = signal(false);
   textAlign = signal<CanvasTextAlign>('center');
   textBaseline = signal<CanvasTextBaseline>('middle');
 
@@ -85,23 +87,28 @@ describe('StyleTextComponent', () => {
   });
 
   it('updates the OpenLayers text style when template bindings change', () => {
+    const previousText = fixture.componentInstance.textStyle.instance;
+
     fixture.componentInstance.text.set('Updated label');
     fixture.componentInstance.font.set('14px serif');
     fixture.componentInstance.offsetX.set(10);
     fixture.componentInstance.offsetY.set(20);
     fixture.componentInstance.scale.set(2);
     fixture.componentInstance.rotation.set(1);
+    fixture.componentInstance.rotateWithView.set(true);
     fixture.componentInstance.textAlign.set('left');
     fixture.componentInstance.textBaseline.set('top');
 
     fixture.detectChanges(false);
 
+    expect(fixture.componentInstance.textStyle.instance).toBe(previousText);
     expect(fixture.componentInstance.textStyle.instance.getText()).toBe('Updated label');
     expect(fixture.componentInstance.textStyle.instance.getFont()).toBe('14px serif');
     expect(fixture.componentInstance.textStyle.instance.getOffsetX()).toBe(10);
     expect(fixture.componentInstance.textStyle.instance.getOffsetY()).toBe(20);
     expect(fixture.componentInstance.textStyle.instance.getScale()).toBe(2);
     expect(fixture.componentInstance.textStyle.instance.getRotation()).toBe(1);
+    expect(fixture.componentInstance.textStyle.instance.getRotateWithView()).toBe(true);
     expect(fixture.componentInstance.textStyle.instance.getTextAlign()).toBe('left');
     expect(fixture.componentInstance.textStyle.instance.getTextBaseline()).toBe('top');
     expect(fixture.componentInstance.style.instance.getText()).toBe(

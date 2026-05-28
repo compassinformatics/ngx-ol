@@ -1,4 +1,12 @@
-import { AfterViewInit, Component, ContentChildren, Host, QueryList, signal } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ContentChildren,
+  effect,
+  Host,
+  QueryList,
+  signal,
+} from '@angular/core';
 import { SourceComponent } from './sources/source.component';
 import { AttributionComponent } from './attribution.component';
 
@@ -18,14 +26,22 @@ export class AttributionsComponent implements AfterViewInit {
     return instance;
   }
 
-  constructor(@Host() private source: SourceComponent) {}
+  constructor(@Host() private source: SourceComponent) {
+    effect(() => {
+      const source = this.source.instanceSignal();
+      const attributions = this.instanceSignal();
+
+      if (source && attributions) {
+        source.setAttributions(attributions);
+      }
+    });
+  }
 
   /* we can do this at the very end */
   ngAfterViewInit() {
     if (this.attributions.length) {
       this.setInstance(this.attributions.map((cmp) => cmp.label));
       // console.log('setting attributions:', this.instance);
-      this.source.instance.setAttributions(this.instance);
     }
   }
 }

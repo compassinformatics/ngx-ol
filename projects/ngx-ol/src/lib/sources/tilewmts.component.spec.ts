@@ -16,6 +16,7 @@ import { SourceTileWMTSComponent } from './tilewmts.component';
           [style]="styleName"
           [matrixSet]="matrixSet"
           [url]="url()"
+          [dimensions]="dimensions()"
           (tileLoadStart)="tileLoadStart($event)"
           (tileLoadEnd)="tileLoadEnd($event)"
           (tileLoadError)="tileLoadError($event)"
@@ -39,6 +40,7 @@ class SourceTileWmtsHostComponent {
   styleName = 'default';
   matrixSet = 'webmercator';
   url = signal('https://example.com/wmts');
+  dimensions = signal<Record<string, string> | undefined>(undefined);
   origin: [number, number] = [0, 0];
   resolutions = [2, 1];
   matrixIds = ['0', '1'];
@@ -101,6 +103,19 @@ describe('SourceTileWMTSComponent', () => {
 
     expect(host.source.instance).not.toBe(previousSource);
     expect(host.layer.instance.getSource()).toBe(host.source.instance);
+  });
+
+  it('updates WMTS dimensions without recreating the source', () => {
+    const host = fixture!.componentInstance;
+    const previousSource = host.source.instance;
+    const updateDimensions = vi.spyOn(previousSource, 'updateDimensions');
+
+    host.dimensions.set({ Time: '2026-05-28' });
+    fixture!.detectChanges();
+
+    expect(host.source.instance).toBe(previousSource);
+    expect(host.layer.instance.getSource()).toBe(previousSource);
+    expect(updateDimensions).toHaveBeenCalledWith({ Time: '2026-05-28' });
   });
 
   it('clears the tile layer source when the source component is destroyed', () => {

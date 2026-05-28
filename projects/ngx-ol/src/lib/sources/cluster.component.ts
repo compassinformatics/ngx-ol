@@ -81,9 +81,7 @@ export class SourceClusterComponent
     super.ngOnChanges(changes);
     const distance = this.distance();
     const minDistance = this.minDistance();
-    const requiresReload = Object.keys(changes).some(
-      (key) => key !== 'distance' && key !== 'minDistance' && !changes[key].firstChange,
-    );
+    const requiresReload = this.hasReloadableChanges(changes, ['distance', 'minDistance']);
 
     if (requiresReload && this.instance) {
       this.reloadInstance();

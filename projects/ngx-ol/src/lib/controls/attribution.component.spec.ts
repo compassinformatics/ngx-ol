@@ -1,6 +1,6 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, signal, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { afterEach, beforeEach, describe, expect, it } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { AngularOpenlayersModule } from '../../public-api';
 import { MapComponent } from '../map.component';
 import { ControlAttributionComponent } from './attribution.component';
@@ -9,7 +9,10 @@ import { ControlAttributionComponent } from './attribution.component';
   template: `
     <aol-map width="320px" height="240px">
       <aol-view [center]="center" [zoom]="zoom"></aol-view>
-      <aol-control-attribution [collapsed]="collapsed"></aol-control-attribution>
+      <aol-control-attribution
+        [collapsed]="collapsed()"
+        [collapsible]="collapsible()"
+      ></aol-control-attribution>
     </aol-map>
   `,
   standalone: true,
@@ -18,7 +21,8 @@ import { ControlAttributionComponent } from './attribution.component';
 class ControlAttributionHostComponent {
   center = [0, 0];
   zoom = 2;
-  collapsed = false;
+  collapsed = signal(false);
+  collapsible = signal(true);
 
   @ViewChild(ControlAttributionComponent)
   control!: ControlAttributionComponent;
@@ -54,5 +58,19 @@ describe('ControlAttributionComponent', () => {
     fixture = undefined;
 
     expect(map.getControls().getArray()).not.toContain(control);
+  });
+
+  it('updates collapsible state without recreating the control', () => {
+    const host = fixture!.componentInstance;
+    const previousControl = host.control.instance;
+    const setCollapsed = vi.spyOn(previousControl, 'setCollapsed');
+
+    host.collapsed.set(true);
+    host.collapsible.set(false);
+    fixture!.detectChanges();
+
+    expect(host.control.instance).toBe(previousControl);
+    expect(host.control.instance.getCollapsible()).toBe(false);
+    expect(setCollapsed).toHaveBeenCalledWith(true);
   });
 });

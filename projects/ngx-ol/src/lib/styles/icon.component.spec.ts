@@ -18,6 +18,7 @@ import { StyleIconComponent } from './icon.component';
                 [opacity]="opacity()"
                 [rotation]="rotation()"
                 [scale]="scale()"
+                [rotateWithView]="rotateWithView()"
               ></aol-style-icon>
             </aol-style>
           </aol-feature>
@@ -35,6 +36,7 @@ class StyleIconHostComponent {
   opacity = signal(0.5);
   rotation = signal(0);
   scale = signal(1);
+  rotateWithView = signal(false);
 
   @ViewChild(StyleIconComponent)
   icon!: StyleIconComponent;
@@ -83,5 +85,21 @@ describe('StyleIconComponent', () => {
     expect(fixture.componentInstance.style.instance.getImage()).toBe(
       fixture.componentInstance.icon.instance,
     );
+  });
+
+  it('updates live icon style bindings without recreating the icon', () => {
+    const previousIcon = fixture.componentInstance.icon.instance;
+
+    fixture.componentInstance.opacity.set(0.8);
+    fixture.componentInstance.rotation.set(2);
+    fixture.componentInstance.scale.set(3);
+    fixture.componentInstance.rotateWithView.set(true);
+    fixture.detectChanges(false);
+
+    expect(fixture.componentInstance.icon.instance).toBe(previousIcon);
+    expect(fixture.componentInstance.icon.instance.getOpacity()).toBe(0.8);
+    expect(fixture.componentInstance.icon.instance.getRotation()).toBe(2);
+    expect(fixture.componentInstance.icon.instance.getScale()).toBe(3);
+    expect(fixture.componentInstance.icon.instance.getRotateWithView()).toBe(true);
   });
 });

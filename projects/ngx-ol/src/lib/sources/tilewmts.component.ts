@@ -74,10 +74,21 @@ export class SourceTileWMTSComponent
 
   ngOnChanges(changes: SimpleChanges) {
     super.ngOnChanges(changes);
-    const requiresReload = Object.keys(changes).some((key) => !changes[key].firstChange);
+    const liveUpdateKeys: string[] = [];
+
+    if (changes.dimensions?.currentValue !== undefined) {
+      liveUpdateKeys.push('dimensions');
+    }
+
+    const requiresReload = this.hasReloadableChanges(changes, liveUpdateKeys);
 
     if (requiresReload && this.instance) {
       this.setLayerSource();
+      return;
+    }
+
+    if (this.instance && changes.dimensions?.currentValue !== undefined) {
+      this.instance.updateDimensions(changes.dimensions.currentValue);
     }
   }
 
