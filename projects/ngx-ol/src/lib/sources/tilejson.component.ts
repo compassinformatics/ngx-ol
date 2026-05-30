@@ -49,8 +49,7 @@ export class SourceTileJSONComponent extends SourceComponent implements OnInit, 
   }
 
   ngOnInit() {
-    this.setInstance(new TileJSON(this.createOptions()));
-    this.host.instance.setSource(this.instance);
+    this.setLayerSource();
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -63,8 +62,24 @@ export class SourceTileJSONComponent extends SourceComponent implements OnInit, 
   }
 
   private reloadInstance() {
+    this.host.instance.setSource(null);
+    this.setLayerSource();
+  }
+
+  private setLayerSource() {
     this.setInstance(new TileJSON(this.createOptions()));
+    this.setSourceKey();
     this.host.instance.setSource(this.instance);
+    this.instance.changed();
+    this.host.instance.changed();
+  }
+
+  private setSourceKey() {
+    const key = this.url() ?? JSON.stringify(this.tileJSON());
+
+    if (key) {
+      (this.instance as unknown as { setKey(key: string): void }).setKey(key);
+    }
   }
 
   private createOptions(): Options {
