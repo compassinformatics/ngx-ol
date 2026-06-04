@@ -55,6 +55,9 @@ export class LayerVectorImageComponent
     if (style && this.instance) {
       this.instance.setStyle(style.currentValue);
     }
+    if (this.instance && changes.source) {
+      this.instance.setSource(changes.source.currentValue);
+    }
   }
 
   private createOptions(): Options<any, VectorSource<any>> & { imageRatio?: number } {

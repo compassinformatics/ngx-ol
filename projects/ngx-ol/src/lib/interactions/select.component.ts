@@ -1,4 +1,13 @@
-import { Component, OnDestroy, OnInit, input, output, signal } from '@angular/core';
+import {
+  Component,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  SimpleChanges,
+  input,
+  output,
+  signal,
+} from '@angular/core';
 import { MapComponent } from '../map.component';
 import Select from 'ol/interaction/Select';
 import Layer from 'ol/layer/Layer';
@@ -14,7 +23,7 @@ import BaseEvent from 'ol/events/Event';
   selector: 'aol-interaction-select',
   template: '',
 })
-export class SelectInteractionComponent implements OnInit, OnDestroy {
+export class SelectInteractionComponent implements OnInit, OnChanges, OnDestroy {
   addCondition = input<Condition>();
   condition = input<Condition>();
   layers = input<Layer[] | ((layer: Layer) => boolean)>();
@@ -60,6 +69,12 @@ export class SelectInteractionComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.map.instance.removeInteraction(this.instance);
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (this.instance && changes.hitTolerance?.currentValue !== undefined) {
+      this.instance.setHitTolerance(changes.hitTolerance.currentValue);
+    }
   }
 
   private createOptions(): Options {

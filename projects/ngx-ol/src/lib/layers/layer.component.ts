@@ -86,14 +86,53 @@ export abstract class LayerComponent implements OnInit, OnChanges, OnDestroy {
     }
     for (const key in changes) {
       if (changes.hasOwnProperty(key)) {
-        properties[key] = changes[key].currentValue;
+        const value = changes[key].currentValue;
         if (key === 'prerender') {
-          this.instance.un('prerender', changes[key].previousValue);
-          this.instance.on('prerender', changes[key].currentValue);
+          if (changes[key].previousValue) {
+            this.instance.un('prerender', changes[key].previousValue);
+          }
+          if (value) {
+            this.instance.on('prerender', value);
+          }
+          continue;
         }
         if (key === 'postrender') {
-          this.instance.un('postrender', changes[key].previousValue);
-          this.instance.on('postrender', changes[key].currentValue);
+          if (changes[key].previousValue) {
+            this.instance.un('postrender', changes[key].previousValue);
+          }
+          if (value) {
+            this.instance.on('postrender', value);
+          }
+          continue;
+        }
+        switch (key) {
+          case 'extent':
+            this.instance.setExtent(value);
+            continue;
+          case 'maxResolution':
+            this.instance.setMaxResolution(value);
+            continue;
+          case 'minResolution':
+            this.instance.setMinResolution(value);
+            continue;
+          case 'maxZoom':
+            this.instance.setMaxZoom(value);
+            continue;
+          case 'minZoom':
+            this.instance.setMinZoom(value);
+            continue;
+          case 'opacity':
+            this.instance.setOpacity(value);
+            continue;
+          case 'visible':
+            this.instance.setVisible(value);
+            continue;
+          case 'zIndex':
+            this.instance.setZIndex(value);
+            continue;
+          default:
+            properties[key] = value;
+            break;
         }
       }
     }

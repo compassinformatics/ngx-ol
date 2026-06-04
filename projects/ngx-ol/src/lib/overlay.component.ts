@@ -59,10 +59,16 @@ export class OverlayComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    const { position } = changes;
+    const { offset, position, positioning } = changes;
 
     if (position && this.instance) {
       this.instance.setPosition(position.currentValue);
+    }
+    if (offset && this.instance) {
+      this.instance.setOffset(offset.currentValue);
+    }
+    if (positioning && this.instance) {
+      this.instance.setPositioning(positioning.currentValue);
     }
   }
 

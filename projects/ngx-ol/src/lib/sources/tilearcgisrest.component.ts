@@ -76,8 +76,18 @@ export class SourceTileArcGISRestComponent extends SourceComponent implements On
   }
 
   ngOnChanges(changes: SimpleChanges) {
+    super.ngOnChanges(changes);
     if (this.instance && changes.hasOwnProperty('params') && this.params()) {
       this.instance.updateParams(this.params());
+    }
+    if (this.instance && changes.tileLoadFunction?.currentValue) {
+      this.instance.setTileLoadFunction(changes.tileLoadFunction.currentValue);
+    }
+    if (this.instance && changes.url?.currentValue) {
+      this.instance.setUrl(changes.url.currentValue);
+    }
+    if (this.instance && changes.urls?.currentValue) {
+      this.instance.setUrls(changes.urls.currentValue);
     }
   }
 

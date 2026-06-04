@@ -36,6 +36,18 @@ export class LayerTileComponent extends LayerComponent implements OnInit, OnDest
 
   ngOnChanges(changes: SimpleChanges) {
     super.ngOnChanges(changes);
+    if (!this.instance) {
+      return;
+    }
+    if (changes.preload?.currentValue !== undefined) {
+      this.instance.setPreload(changes.preload.currentValue);
+    }
+    if (changes.useInterimTilesOnError?.currentValue !== undefined) {
+      this.instance.setUseInterimTilesOnError(changes.useInterimTilesOnError.currentValue);
+    }
+    if (changes.source) {
+      this.instance.setSource(changes.source.currentValue);
+    }
   }
 
   private createOptions(): Options<TileSource> {

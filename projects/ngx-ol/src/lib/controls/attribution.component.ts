@@ -1,4 +1,13 @@
-import { Component, ElementRef, OnDestroy, OnInit, input, signal } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  SimpleChanges,
+  input,
+  signal,
+} from '@angular/core';
 import Attribution from 'ol/control/Attribution';
 import { Options } from 'ol/control/Attribution';
 import MapEvent from 'ol/MapEvent';
@@ -8,7 +17,7 @@ import { MapComponent } from '../map.component';
   selector: 'aol-control-attribution',
   template: ``,
 })
-export class ControlAttributionComponent implements OnInit, OnDestroy {
+export class ControlAttributionComponent implements OnInit, OnChanges, OnDestroy {
   className = input<string>();
   collapsible = input<boolean>();
   collapsed = input<boolean>();
@@ -46,6 +55,18 @@ export class ControlAttributionComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     // console.log('removing aol-control-attribution');
     this.map.instance.removeControl(this.instance);
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (!this.instance) {
+      return;
+    }
+    if (changes.collapsible?.currentValue !== undefined) {
+      this.instance.setCollapsible(changes.collapsible.currentValue);
+    }
+    if (changes.collapsed?.currentValue !== undefined) {
+      this.instance.setCollapsed(changes.collapsed.currentValue);
+    }
   }
 
   private createOptions(): Options {

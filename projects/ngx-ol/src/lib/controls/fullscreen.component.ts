@@ -1,4 +1,12 @@
-import { Component, OnDestroy, OnInit, input, signal } from '@angular/core';
+import {
+  Component,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  SimpleChanges,
+  input,
+  signal,
+} from '@angular/core';
 import FullScreen from 'ol/control/FullScreen';
 import { Options } from 'ol/control/FullScreen';
 import { MapComponent } from '../map.component';
@@ -7,7 +15,7 @@ import { MapComponent } from '../map.component';
   selector: 'aol-control-fullscreen',
   template: ` <ng-content></ng-content> `,
 })
-export class ControlFullScreenComponent implements OnInit, OnDestroy {
+export class ControlFullScreenComponent implements OnInit, OnChanges, OnDestroy {
   className = input<string>();
   label = input<string | HTMLElement | Text>();
   labelActive = input<string | HTMLElement | Text>();
@@ -43,6 +51,12 @@ export class ControlFullScreenComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     // console.log('removing aol-control-fullscreen');
     this.map.instance.removeControl(this.instance);
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (this.instance && changes.target?.currentValue !== undefined) {
+      this.instance.setTarget(changes.target.currentValue);
+    }
   }
 
   private createOptions(): Options {

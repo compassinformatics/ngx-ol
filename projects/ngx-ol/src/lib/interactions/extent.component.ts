@@ -1,4 +1,13 @@
-import { Component, OnDestroy, OnInit, input, output, signal } from '@angular/core';
+import {
+  Component,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  SimpleChanges,
+  input,
+  output,
+  signal,
+} from '@angular/core';
 import type { Condition } from 'ol/events/condition';
 import type { Extent as ExtentType } from 'ol/extent';
 import ExtentInteraction, { ExtentEvent } from 'ol/interaction/Extent';
@@ -10,7 +19,7 @@ import { MapComponent } from '../map.component';
   selector: 'aol-interaction-extent',
   template: '',
 })
-export class ExtentInteractionComponent implements OnInit, OnDestroy {
+export class ExtentInteractionComponent implements OnInit, OnChanges, OnDestroy {
   condition = input<Condition>();
 
   extent = input<ExtentType>();
@@ -48,6 +57,12 @@ export class ExtentInteractionComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.map.instance.removeInteraction(this.instance);
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (this.instance && changes.extent) {
+      this.instance.setExtent(changes.extent.currentValue);
+    }
   }
 
   private createOptions(): Options {

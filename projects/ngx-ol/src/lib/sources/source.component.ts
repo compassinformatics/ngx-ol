@@ -1,11 +1,11 @@
-import { OnDestroy, Directive, input, signal } from '@angular/core';
+import { OnChanges, OnDestroy, Directive, SimpleChanges, input, signal } from '@angular/core';
 import Source, { AttributionLike } from 'ol/source/Source';
 
 import { LayerComponent } from '../layers/layer.component';
 
 @Directive()
 // eslint-disable-next-line @angular-eslint/directive-class-suffix
-export abstract class SourceComponent implements OnDestroy {
+export abstract class SourceComponent implements OnChanges, OnDestroy {
   attributions = input<AttributionLike>();
 
   attributionsCollapsible = input<boolean>();
@@ -26,6 +26,16 @@ export abstract class SourceComponent implements OnDestroy {
   public componentType = 'source';
 
   protected constructor(protected host: LayerComponent) {}
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (!this.instance) {
+      return;
+    }
+
+    if (changes.attributions) {
+      this.instance.setAttributions(changes.attributions.currentValue);
+    }
+  }
 
   ngOnDestroy() {
     if (this.host && this.host.instance) {

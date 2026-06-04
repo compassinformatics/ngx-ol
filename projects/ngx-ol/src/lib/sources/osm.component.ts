@@ -3,7 +3,9 @@ import {
   Component,
   forwardRef,
   Host,
+  OnChanges,
   Optional,
+  SimpleChanges,
   input,
   output,
   signal,
@@ -22,7 +24,7 @@ import { SourceXYZComponent } from './xyz.component';
   template: ` <div class="aol-source-osm"></div> `,
   providers: [{ provide: SourceComponent, useExisting: forwardRef(() => SourceOsmComponent) }],
 })
-export class SourceOsmComponent extends SourceXYZComponent implements AfterContentInit {
+export class SourceOsmComponent extends SourceXYZComponent implements AfterContentInit, OnChanges {
   cacheSize = input<number>();
   crossOrigin = input<null | string>();
   interpolate = input<boolean>();
@@ -68,6 +70,34 @@ export class SourceOsmComponent extends SourceXYZComponent implements AfterConte
     this.instance.on('tileloadend', (event: TileSourceEvent) => this.tileLoadEnd.emit(event));
     this.instance.on('tileloaderror', (event: TileSourceEvent) => this.tileLoadError.emit(event));
     this.register(this.instance);
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (!this.instance) {
+      return;
+    }
+
+    const properties: { [index: string]: any } = {};
+
+    for (const key in changes) {
+      switch (key) {
+        case 'attributions':
+          this.instance.setAttributions(changes[key].currentValue);
+          continue;
+        case 'tileLoadFunction':
+          this.instance.setTileLoadFunction(changes[key].currentValue);
+          continue;
+        case 'url':
+          this.instance.setUrl(changes[key].currentValue);
+          continue;
+        default:
+          break;
+      }
+
+      properties[key] = changes[key].currentValue;
+    }
+
+    this.instance.setProperties(properties, false);
   }
 
   protected override createOptions(): Options {

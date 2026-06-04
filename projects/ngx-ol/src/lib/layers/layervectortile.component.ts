@@ -40,6 +40,12 @@ export class LayerVectorTileComponent extends LayerComponent implements OnInit, 
     if (style && this.instance) {
       this.instance.setStyle(style.currentValue);
     }
+    if (this.instance && changes.renderOrder) {
+      this.instance.setRenderOrder(changes.renderOrder.currentValue);
+    }
+    if (this.instance && changes.source) {
+      this.instance.setSource(changes.source.currentValue);
+    }
   }
 
   private createOptions(): Options<VectorTileSource> {

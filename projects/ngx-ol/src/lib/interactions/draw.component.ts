@@ -1,4 +1,13 @@
-import { Component, OnDestroy, OnInit, input, output, signal } from '@angular/core';
+import {
+  Component,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  SimpleChanges,
+  input,
+  output,
+  signal,
+} from '@angular/core';
 import { MapComponent } from '../map.component';
 import Draw from 'ol/interaction/Draw';
 import Collection from 'ol/Collection';
@@ -17,7 +26,7 @@ import { FlatStyleLike } from 'ol/style/flat';
   selector: 'aol-interaction-draw',
   template: '',
 })
-export class DrawInteractionComponent implements OnInit, OnDestroy {
+export class DrawInteractionComponent implements OnInit, OnChanges, OnDestroy {
   clickTolerance = input<number>();
   features = input<Collection<Feature>>();
   source = input<Vector>();
@@ -76,6 +85,12 @@ export class DrawInteractionComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.map.instance.removeInteraction(this.instance);
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (this.instance && changes.trace?.currentValue !== undefined) {
+      this.instance.setTrace(changes.trace.currentValue);
+    }
   }
 
   private createOptions(): Options {

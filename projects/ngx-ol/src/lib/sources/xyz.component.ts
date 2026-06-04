@@ -92,8 +92,28 @@ export class SourceXYZComponent extends SourceComponent implements AfterContentI
     if (!this.instance) {
       return;
     }
+    super.ngOnChanges(changes);
     for (const key in changes) {
       if (changes.hasOwnProperty(key)) {
+        switch (key) {
+          case 'tileLoadFunction':
+            if (changes[key].currentValue) {
+              this.instance.setTileLoadFunction(changes[key].currentValue);
+            }
+            continue;
+          case 'tileUrlFunction':
+            if (changes[key].currentValue) {
+              this.instance.setTileUrlFunction(changes[key].currentValue);
+            }
+            continue;
+          case 'urls':
+            if (changes[key].currentValue) {
+              this.instance.setUrls(changes[key].currentValue);
+            }
+            continue;
+          default:
+            break;
+        }
         properties[key] = changes[key].currentValue;
       }
     }

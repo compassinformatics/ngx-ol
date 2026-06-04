@@ -1,4 +1,13 @@
-import { Component, ElementRef, OnDestroy, OnInit, input, signal } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  SimpleChanges,
+  input,
+  signal,
+} from '@angular/core';
 import MousePosition, { Options } from 'ol/control/MousePosition';
 import { MapComponent } from '../map.component';
 import { CoordinateFormat } from 'ol/coordinate';
@@ -9,7 +18,7 @@ import MapEvent from 'ol/MapEvent';
   selector: 'aol-control-mouseposition',
   template: ``,
 })
-export class ControlMousePositionComponent implements OnInit, OnDestroy {
+export class ControlMousePositionComponent implements OnInit, OnChanges, OnDestroy {
   className = input<string>();
   coordinateFormat = input<CoordinateFormat>();
   projection = input<ProjectionLike>();
@@ -47,6 +56,18 @@ export class ControlMousePositionComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     // console.log('removing aol-control-mouseposition');
     this.map.instance.removeControl(this.instance);
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (!this.instance) {
+      return;
+    }
+    if (changes.coordinateFormat?.currentValue !== undefined) {
+      this.instance.setCoordinateFormat(changes.coordinateFormat.currentValue);
+    }
+    if (changes.projection?.currentValue !== undefined) {
+      this.instance.setProjection(changes.projection.currentValue);
+    }
   }
 
   private createOptions(): Options {

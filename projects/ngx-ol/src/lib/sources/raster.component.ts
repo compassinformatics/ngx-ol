@@ -2,6 +2,8 @@ import {
   AfterContentInit,
   Component,
   ContentChild,
+  OnChanges,
+  SimpleChanges,
   forwardRef,
   Host,
   input,
@@ -25,7 +27,7 @@ import { SourceComponent } from './source.component';
     },
   ],
 })
-export class SourceRasterComponent extends SourceComponent implements AfterContentInit {
+export class SourceRasterComponent extends SourceComponent implements AfterContentInit, OnChanges {
   operation = input<Operation>();
   threads = input<number>();
   lib = input<any>();
@@ -65,6 +67,13 @@ export class SourceRasterComponent extends SourceComponent implements AfterConte
 
   ngAfterContentInit() {
     this.init();
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    super.ngOnChanges(changes);
+    if (this.instance && changes.operation?.currentValue) {
+      this.instance.setOperation(changes.operation.currentValue, this.lib());
+    }
   }
 
   init() {

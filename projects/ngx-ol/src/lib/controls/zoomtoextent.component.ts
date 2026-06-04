@@ -1,4 +1,12 @@
-import { Component, OnDestroy, OnInit, input, signal } from '@angular/core';
+import {
+  Component,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  SimpleChanges,
+  input,
+  signal,
+} from '@angular/core';
 import ZoomToExtent from 'ol/control/ZoomToExtent';
 import { Options } from 'ol/control/ZoomToExtent';
 import { MapComponent } from '../map.component';
@@ -8,7 +16,7 @@ import { Extent } from 'ol/extent';
   selector: 'aol-control-zoomtoextent',
   template: ` <ng-content></ng-content> `,
 })
-export class ControlZoomToExtentComponent implements OnInit, OnDestroy {
+export class ControlZoomToExtentComponent implements OnInit, OnChanges, OnDestroy {
   className = input<string>();
   target = input<string | HTMLElement>();
   label = input<string | HTMLElement>();
@@ -40,6 +48,12 @@ export class ControlZoomToExtentComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     // console.log('removing aol-control-zoomtoextent');
     this.map.instance.removeControl(this.instance);
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (this.instance && changes.target?.currentValue !== undefined) {
+      this.instance.setTarget(changes.target.currentValue);
+    }
   }
 
   private createOptions(): Options {

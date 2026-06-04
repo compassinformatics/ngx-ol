@@ -75,6 +75,7 @@ export class SourceImageStaticComponent extends SourceComponent implements OnIni
     if (!this.instance) {
       return;
     }
+    super.ngOnChanges(changes);
     for (const key in changes) {
       if (changes.hasOwnProperty(key)) {
         switch (key) {

@@ -82,6 +82,7 @@ export class SourceTileWMTSComponent
     if (!this.instance) {
       return;
     }
+    super.ngOnChanges(changes);
     for (const key in changes) {
       if (changes.hasOwnProperty(key)) {
         switch (key) {

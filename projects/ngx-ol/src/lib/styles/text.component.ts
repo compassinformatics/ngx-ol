@@ -76,11 +76,26 @@ export class StyleTextComponent implements OnInit, OnChanges {
     if (changes.font) {
       this.instance.setFont(changes.font.currentValue);
     }
+    if (changes.maxAngle?.currentValue !== undefined) {
+      this.instance.setMaxAngle(changes.maxAngle.currentValue);
+    }
     if (changes.offsetX) {
       this.instance.setOffsetX(changes.offsetX.currentValue);
     }
     if (changes.offsetY) {
       this.instance.setOffsetY(changes.offsetY.currentValue);
+    }
+    if (changes.overflow?.currentValue !== undefined) {
+      this.instance.setOverflow(changes.overflow.currentValue);
+    }
+    if (changes.placement?.currentValue !== undefined) {
+      this.instance.setPlacement(changes.placement.currentValue);
+    }
+    if (changes.repeat) {
+      this.instance.setRepeat(changes.repeat.currentValue);
+    }
+    if (changes.rotateWithView?.currentValue !== undefined) {
+      this.instance.setRotateWithView(changes.rotateWithView.currentValue);
     }
     if (changes.scale) {
       this.instance.setScale(changes.scale.currentValue);
@@ -94,8 +109,26 @@ export class StyleTextComponent implements OnInit, OnChanges {
     if (changes.textAlign) {
       this.instance.setTextAlign(changes.textAlign.currentValue);
     }
+    if (changes.justify) {
+      this.instance.setJustify(changes.justify.currentValue);
+    }
     if (changes.textBaseline) {
       this.instance.setTextBaseline(changes.textBaseline.currentValue);
+    }
+    if (changes.fill) {
+      this.instance.setFill(changes.fill.currentValue);
+    }
+    if (changes.stroke) {
+      this.instance.setStroke(changes.stroke.currentValue);
+    }
+    if (changes.backgroundFill) {
+      this.instance.setBackgroundFill(changes.backgroundFill.currentValue);
+    }
+    if (changes.backgroundStroke) {
+      this.instance.setBackgroundStroke(changes.backgroundStroke.currentValue);
+    }
+    if (changes.padding) {
+      this.instance.setPadding(changes.padding.currentValue);
     }
     this.host.update();
     // console.log('changes detected in aol-style-text, setting new properties: ', changes);

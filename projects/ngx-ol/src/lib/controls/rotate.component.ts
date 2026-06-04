@@ -1,4 +1,12 @@
-import { Component, OnDestroy, OnInit, input, signal } from '@angular/core';
+import {
+  Component,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  SimpleChanges,
+  input,
+  signal,
+} from '@angular/core';
 import MapEvent from 'ol/MapEvent';
 import Rotate from 'ol/control/Rotate';
 import { Options } from 'ol/control/Rotate';
@@ -8,7 +16,7 @@ import { MapComponent } from '../map.component';
   selector: 'aol-control-rotate',
   template: ` <ng-content></ng-content> `,
 })
-export class ControlRotateComponent implements OnInit, OnDestroy {
+export class ControlRotateComponent implements OnInit, OnChanges, OnDestroy {
   className = input<string>();
   label = input<string | HTMLElement>();
   tipLabel = input<string>();
@@ -44,6 +52,12 @@ export class ControlRotateComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     // console.log('removing aol-control-rotate');
     this.map.instance.removeControl(this.instance);
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (this.instance && changes.target?.currentValue !== undefined) {
+      this.instance.setTarget(changes.target.currentValue);
+    }
   }
 
   private createOptions(): Options {

@@ -69,8 +69,18 @@ export class SourceImageWMSComponent extends SourceComponent implements OnChange
   }
 
   ngOnChanges(changes: SimpleChanges) {
+    super.ngOnChanges(changes);
     if (this.instance && changes.hasOwnProperty('params')) {
       this.instance.updateParams(this.params());
+    }
+    if (this.instance && changes.imageLoadFunction?.currentValue) {
+      this.instance.setImageLoadFunction(changes.imageLoadFunction.currentValue);
+    }
+    if (this.instance && changes.url) {
+      this.instance.setUrl(changes.url.currentValue);
+    }
+    if (this.instance && changes.resolutions) {
+      this.instance.setResolutions(changes.resolutions.currentValue);
     }
   }
 

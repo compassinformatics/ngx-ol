@@ -57,6 +57,18 @@ export class ControlOverviewMapComponent implements OnInit, OnChanges, OnDestroy
   }
 
   ngOnChanges(changes: SimpleChanges) {
+    if (!this.instance) {
+      return;
+    }
+    if (changes.collapsible?.currentValue !== undefined) {
+      this.instance.setCollapsible(changes.collapsible.currentValue);
+    }
+    if (changes.collapsed?.currentValue !== undefined) {
+      this.instance.setCollapsed(changes.collapsed.currentValue);
+    }
+    if (changes.rotateWithView?.currentValue !== undefined) {
+      this.instance.setRotateWithView(changes.rotateWithView.currentValue);
+    }
     if (this.instance != null && changes.hasOwnProperty('view')) {
       this.reloadInstance();
     }

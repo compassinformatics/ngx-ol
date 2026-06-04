@@ -57,8 +57,17 @@ export class StyleIconComponent implements OnInit, OnChanges {
     if (!this.instance) {
       return;
     }
+    if (changes.anchor) {
+      this.instance.setAnchor(changes.anchor.currentValue);
+    }
+    if (changes.displacement) {
+      this.instance.setDisplacement(changes.displacement.currentValue);
+    }
     if (changes.opacity) {
       this.instance.setOpacity(changes.opacity.currentValue);
+    }
+    if (changes.rotateWithView?.currentValue !== undefined) {
+      this.instance.setRotateWithView(changes.rotateWithView.currentValue);
     }
     if (changes.rotation) {
       this.instance.setRotation(changes.rotation.currentValue);

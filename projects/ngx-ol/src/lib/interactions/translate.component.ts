@@ -1,4 +1,13 @@
-import { Component, OnDestroy, OnInit, input, output, signal } from '@angular/core';
+import {
+  Component,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  SimpleChanges,
+  input,
+  output,
+  signal,
+} from '@angular/core';
 import Translate from 'ol/interaction/Translate';
 import Collection from 'ol/Collection';
 import Feature from 'ol/Feature';
@@ -14,7 +23,7 @@ import { FilterFunction } from 'ol/interaction/Select';
   selector: 'aol-interaction-translate',
   template: '',
 })
-export class TranslateInteractionComponent implements OnInit, OnDestroy {
+export class TranslateInteractionComponent implements OnInit, OnChanges, OnDestroy {
   condition = input<Condition>();
   features = input<Collection<Feature>>();
   layers = input<Layer[] | ((layer: Layer) => boolean)>();
@@ -60,6 +69,12 @@ export class TranslateInteractionComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.map.instance.removeInteraction(this.instance);
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (this.instance && changes.hitTolerance?.currentValue !== undefined) {
+      this.instance.setHitTolerance(changes.hitTolerance.currentValue);
+    }
   }
 
   private createOptions(): Options {

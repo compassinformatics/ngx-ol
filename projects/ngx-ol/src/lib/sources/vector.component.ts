@@ -62,8 +62,15 @@ export class SourceVectorComponent extends SourceComponent implements OnInit, On
   }
 
   ngOnChanges(changes: SimpleChanges): void {
+    super.ngOnChanges(changes);
     const { features } = changes;
 
+    if (this.instance && changes.loader?.currentValue) {
+      this.instance.setLoader(changes.loader.currentValue);
+    }
+    if (this.instance && changes.url?.currentValue) {
+      this.instance.setUrl(changes.url.currentValue);
+    }
     if (features?.currentValue && this.instance) {
       this.instance.clear();
       this.instance.addFeatures(features.currentValue);

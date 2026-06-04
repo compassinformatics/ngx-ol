@@ -1,4 +1,12 @@
-import { Component, OnDestroy, OnInit, input, signal } from '@angular/core';
+import {
+  Component,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  SimpleChanges,
+  input,
+  signal,
+} from '@angular/core';
 import ScaleLine from 'ol/control/ScaleLine';
 import { MapComponent } from '../map.component';
 import { Options, Units } from 'ol/control/ScaleLine';
@@ -8,7 +16,7 @@ import MapEvent from 'ol/MapEvent';
   selector: 'aol-control-scaleline',
   template: ` <ng-content></ng-content> `,
 })
-export class ControlScaleLineComponent implements OnInit, OnDestroy {
+export class ControlScaleLineComponent implements OnInit, OnChanges, OnDestroy {
   className = input<string>();
   minWidth = input<number>();
   maxWidth = input<number>();
@@ -42,6 +50,18 @@ export class ControlScaleLineComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.map.instance.removeControl(this.instance);
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (!this.instance) {
+      return;
+    }
+    if (changes.units?.currentValue !== undefined) {
+      this.instance.setUnits(changes.units.currentValue);
+    }
+    if (changes.dpi) {
+      this.instance.setDpi(changes.dpi.currentValue);
+    }
   }
 
   private createOptions(): Options {

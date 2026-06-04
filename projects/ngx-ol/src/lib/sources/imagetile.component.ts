@@ -78,6 +78,7 @@ export class SourceImageTileComponent extends SourceComponent implements OnInit,
   }
 
   ngOnChanges(changes: SimpleChanges) {
+    super.ngOnChanges(changes);
     if (this.instance && changes.url?.currentValue) {
       this.instance.setUrl(changes.url.currentValue);
     }

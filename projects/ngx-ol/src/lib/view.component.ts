@@ -116,6 +116,9 @@ export class ViewComponent implements OnInit, OnChanges, OnDestroy {
           case 'minZoom':
             this.instance.setMinZoom(changes[key].currentValue);
             break;
+          case 'constrainResolution':
+            this.instance.setConstrainResolution(changes[key].currentValue);
+            break;
           case 'resolution':
             this.instance.setResolution(changes[key].currentValue);
             break;

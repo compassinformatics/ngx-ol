@@ -69,6 +69,9 @@ export class LayerWebGLTileComponent
     if (this.instance && changes.style?.currentValue) {
       this.instance.setStyle(changes.style.currentValue);
     }
+    if (this.instance && changes.source) {
+      this.instance.setSource(changes.source.currentValue);
+    }
   }
 
   private createOptions(): Options {

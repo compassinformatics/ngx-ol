@@ -77,6 +77,9 @@ export class LayerHeatmapComponent extends LayerComponent implements OnInit, OnD
     if (changes.blur?.currentValue !== undefined) {
       this.instance.setBlur(changes.blur.currentValue);
     }
+    if (changes.source) {
+      this.instance.setSource(changes.source.currentValue);
+    }
   }
 
   private createOptions(): Options<FeatureLike, VectorSource<FeatureLike>> {
