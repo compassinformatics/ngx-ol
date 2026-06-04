@@ -3,10 +3,10 @@ import {
   OnInit,
   OnDestroy,
   OnChanges,
-  Input,
   SimpleChanges,
-  Output,
-  EventEmitter,
+  input,
+  output,
+  signal,
 } from '@angular/core';
 import Feature from 'ol/Feature';
 import MapBrowserEvent from 'ol/MapBrowserEvent';
@@ -17,39 +17,40 @@ import { SourceVectorComponent } from './sources/vector.component';
   template: ` <ng-content></ng-content> `,
 })
 export class FeatureComponent implements OnInit, OnDestroy, OnChanges {
-  @Input()
-  id: string | number | undefined;
+  id = input<string | number | undefined>();
 
-  @Input()
-  properties: Record<any, any>;
+  properties = input<Record<any, any>>();
 
-  @Input()
-  feature: Feature;
+  feature = input<Feature>();
 
-  @Input()
-  clickable: boolean;
+  clickable = input<boolean>();
 
-  @Output()
-  olClick = new EventEmitter<{ event: MapBrowserEvent<MouseEvent> | any; feature: Feature }>();
-  @Output()
-  singleClick = new EventEmitter<{ event: MapBrowserEvent<MouseEvent> | any; feature: Feature }>();
-  @Output()
-  dblClick = new EventEmitter<{ event: MapBrowserEvent<MouseEvent> | any; feature: Feature }>();
+  olClick = output<{ event: MapBrowserEvent<MouseEvent> | any; feature: Feature }>();
+  singleClick = output<{ event: MapBrowserEvent<MouseEvent> | any; feature: Feature }>();
+  dblClick = output<{ event: MapBrowserEvent<MouseEvent> | any; feature: Feature }>();
 
   public componentType = 'feature';
   public instance: Feature;
 
+  protected readonly _instanceSignal = signal<Feature | undefined>(undefined);
+  readonly instanceSignal = this._instanceSignal.asReadonly();
+
+  protected setInstance(instance: Feature): Feature {
+    this.instance = instance;
+    this._instanceSignal.set(instance);
+    return instance;
+  }
   constructor(private host: SourceVectorComponent) {}
 
   ngOnInit() {
-    this.instance = this.feature || new Feature();
-    if (this.properties) {
-      this.instance.setProperties(this.properties);
+    this.setInstance(this.feature() || new Feature());
+    if (this.properties()) {
+      this.instance.setProperties(this.properties()!);
     }
-    if (this.id !== undefined) {
-      this.instance.setId(this.id);
+    if (this.id() !== undefined) {
+      this.instance.setId(this.id());
     }
-    if (this.clickable) {
+    if (this.clickable()) {
       this.instance.set('__aol-feature', this);
     }
     this.host.instance.addFeature(this.instance);
@@ -63,14 +64,14 @@ export class FeatureComponent implements OnInit, OnDestroy, OnChanges {
   ngOnChanges(changes: SimpleChanges) {
     const { feature, clickable } = changes;
     if (this.instance) {
-      this.instance.setId(this.id);
+      this.instance.setId(this.id());
     }
 
     if (feature && !feature.firstChange) {
       this.instance.set('__aol-feature', null);
       this.host.instance.removeFeature(this.instance);
-      this.instance = feature.currentValue;
-      if (this.clickable) {
+      this.setInstance(feature.currentValue);
+      if (this.clickable()) {
         this.instance.set('__aol-feature', this);
       }
       this.host.instance.addFeature(this.instance);

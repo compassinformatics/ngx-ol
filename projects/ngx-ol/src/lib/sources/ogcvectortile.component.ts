@@ -1,4 +1,12 @@
-import { Component, Host, Input, forwardRef, ContentChild, AfterContentInit } from '@angular/core';
+import {
+  Component,
+  Host,
+  forwardRef,
+  ContentChild,
+  AfterContentInit,
+  input,
+  signal,
+} from '@angular/core';
 import OGCVectorTile from 'ol/source/OGCVectorTile';
 import { Options } from 'ol/source/OGCVectorTile';
 import TileGrid from 'ol/tilegrid/TileGrid';
@@ -19,18 +27,18 @@ import FeatureFormat from 'ol/format/Feature';
   ],
 })
 export class SourceOGCVectorTileComponent extends SourceComponent implements AfterContentInit {
-  @Input() url: string;
-  @Input() context?: any;
-  @Input() mediaType?: string;
-  @Input() cacheSize?: number;
-  @Input() overlaps?: boolean;
-  @Input() projection?: ProjectionLike;
-  @Input() tileClass?: typeof VectorTile;
-  @Input() transition?: number;
-  @Input() wrapX?: boolean;
-  @Input() zDirection?: number | NearestDirectionFunction;
-  @Input() collections?: string[];
-  @Input() format?: FeatureFormat<any>;
+  url = input.required<string>();
+  context = input<any>();
+  mediaType = input<string>();
+  cacheSize = input<number>();
+  overlaps = input<boolean>();
+  projection = input<ProjectionLike>();
+  tileClass = input<typeof VectorTile>();
+  transition = input<number>();
+  wrapX = input<boolean>();
+  zDirection = input<number | NearestDirectionFunction>();
+  collections = input<string[]>();
+  format = input<FeatureFormat<any>>();
 
   @ContentChild(FormatMVTComponent, { static: false })
   formatMVTComponent: FormatMVTComponent | FormatGeoJSONComponent;
@@ -38,6 +46,18 @@ export class SourceOGCVectorTileComponent extends SourceComponent implements Aft
   formatGeoJSONComponent: FormatGeoJSONComponent;
 
   public instance: OGCVectorTile;
+
+  protected readonly _instanceSignal = signal<OGCVectorTile | undefined>(undefined);
+
+  readonly instanceSignal = this._instanceSignal.asReadonly();
+
+  protected setInstance(instance: OGCVectorTile): OGCVectorTile {
+    this.instance = instance;
+
+    this._instanceSignal.set(instance);
+
+    return instance;
+  }
   tileGrid: TileGrid;
 
   constructor(@Host() layer: LayerVectorTileComponent) {
@@ -45,7 +65,7 @@ export class SourceOGCVectorTileComponent extends SourceComponent implements Aft
   }
 
   ngAfterContentInit() {
-    let format: FeatureFormat<any> | undefined = this.format;
+    let format: FeatureFormat<any> | undefined = this.format();
     if (this.formatMVTComponent) {
       format = this.formatMVTComponent.instance;
     }
@@ -53,26 +73,26 @@ export class SourceOGCVectorTileComponent extends SourceComponent implements Aft
       format = this.formatGeoJSONComponent.instance;
     }
 
-    this.instance = new OGCVectorTile(this.createOptions(format));
+    this.setInstance(new OGCVectorTile(this.createOptions(format)));
     this.host.instance.setSource(this.instance);
   }
 
   private createOptions(format: FeatureFormat<any> | undefined): Options<any> {
     return {
-      url: this.url,
-      context: this.context,
+      url: this.url(),
+      context: this.context(),
       format,
-      mediaType: this.mediaType,
-      attributions: this.attributions,
-      attributionsCollapsible: this.attributionsCollapsible,
-      cacheSize: this.cacheSize,
-      overlaps: this.overlaps,
-      projection: this.projection,
-      tileClass: this.tileClass,
-      transition: this.transition,
-      wrapX: this.wrapX,
-      zDirection: this.zDirection,
-      collections: this.collections,
+      mediaType: this.mediaType(),
+      attributions: this.attributions(),
+      attributionsCollapsible: this.attributionsCollapsible(),
+      cacheSize: this.cacheSize(),
+      overlaps: this.overlaps(),
+      projection: this.projection(),
+      tileClass: this.tileClass(),
+      transition: this.transition(),
+      wrapX: this.wrapX(),
+      zDirection: this.zDirection(),
+      collections: this.collections(),
     };
   }
 }

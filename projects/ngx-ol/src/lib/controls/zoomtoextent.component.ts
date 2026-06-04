@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, input, signal } from '@angular/core';
 import ZoomToExtent from 'ol/control/ZoomToExtent';
 import { Options } from 'ol/control/ZoomToExtent';
 import { MapComponent } from '../map.component';
@@ -9,25 +9,31 @@ import { Extent } from 'ol/extent';
   template: ` <ng-content></ng-content> `,
 })
 export class ControlZoomToExtentComponent implements OnInit, OnDestroy {
-  @Input()
-  className?: string;
-  @Input()
-  target?: string | HTMLElement;
-  @Input()
-  label?: string | HTMLElement;
-  @Input()
-  tipLabel?: string;
-  @Input()
-  extent?: Extent;
+  className = input<string>();
+  target = input<string | HTMLElement>();
+  label = input<string | HTMLElement>();
+  tipLabel = input<string>();
+  extent = input<Extent>();
 
   instance: ZoomToExtent;
 
+  protected readonly _instanceSignal = signal<ZoomToExtent | undefined>(undefined);
+
+  readonly instanceSignal = this._instanceSignal.asReadonly();
+
+  protected setInstance(instance: ZoomToExtent): ZoomToExtent {
+    this.instance = instance;
+
+    this._instanceSignal.set(instance);
+
+    return instance;
+  }
   constructor(private map: MapComponent) {
     // console.log('instancing aol-control-zoomtoextent');
   }
 
   ngOnInit() {
-    this.instance = new ZoomToExtent(this.createOptions());
+    this.setInstance(new ZoomToExtent(this.createOptions()));
     this.map.instance.addControl(this.instance);
   }
 
@@ -38,11 +44,11 @@ export class ControlZoomToExtentComponent implements OnInit, OnDestroy {
 
   private createOptions(): Options {
     return {
-      className: this.className,
-      target: this.target,
-      label: this.label,
-      tipLabel: this.tipLabel,
-      extent: this.extent,
+      className: this.className(),
+      target: this.target(),
+      label: this.label(),
+      tipLabel: this.tipLabel(),
+      extent: this.extent(),
     };
   }
 }

@@ -2,13 +2,13 @@ import {
   Component,
   OnInit,
   ElementRef,
-  Input,
-  Output,
-  EventEmitter,
   AfterViewInit,
   SimpleChanges,
   OnChanges,
   NgZone,
+  input,
+  output,
+  signal,
 } from '@angular/core';
 import Map from 'ol/Map';
 import type { MapOptions } from 'ol/Map';
@@ -23,66 +23,52 @@ import BaseEvent from 'ol/events/Event';
 @Component({
   selector: 'aol-map',
   template: `
-    <div [style.width]="width" [style.height]="height"></div>
+    <div [style.width]="width()" [style.height]="height()"></div>
     <ng-content></ng-content>
   `,
 })
 export class MapComponent implements OnInit, AfterViewInit, OnChanges {
-  @Input()
-  width = '100%';
-  @Input()
-  height = '100%';
-  @Input()
-  pixelRatio: number;
-  @Input()
-  keyboardEventTarget: HTMLElement | string;
-  @Input()
-  maxTilesLoading: number;
-  @Input()
-  moveTolerance: number;
-  @Input()
-  runOutsideAngular = true;
+  width = input('100%');
+  height = input('100%');
+  pixelRatio = input<number>();
+  keyboardEventTarget = input<HTMLElement | string>();
+  maxTilesLoading = input<number>();
+  moveTolerance = input<number>();
+  runOutsideAngular = input(true);
 
-  @Output()
-  olChange = new EventEmitter<BaseEvent>();
-  @Output()
-  changeLayerGroup = new EventEmitter<ObjectEvent>();
-  @Output()
-  changeSize = new EventEmitter<ObjectEvent>();
-  @Output()
-  changeTarget = new EventEmitter<ObjectEvent>();
-  @Output()
-  changeView = new EventEmitter<ObjectEvent>();
-  @Output()
-  olClick = new EventEmitter<MapBrowserEvent<MouseEvent> | any>();
-  @Output()
-  dblClick = new EventEmitter<MapBrowserEvent<MouseEvent> | any>();
-  @Output()
-  olError = new EventEmitter<BaseEvent>();
-  @Output()
-  loadEnd = new EventEmitter<MapEvent>();
-  @Output()
-  loadStart = new EventEmitter<MapEvent>();
-  @Output()
-  moveEnd = new EventEmitter<MapEvent>();
-  @Output()
-  moveStart = new EventEmitter<MapEvent>();
-  @Output()
-  pointerDrag = new EventEmitter<MapBrowserEvent<MouseEvent> | any>();
-  @Output()
-  pointerMove = new EventEmitter<MapBrowserEvent<MouseEvent> | any>();
-  @Output()
-  postCompose = new EventEmitter<RenderEvent>();
-  @Output()
-  postRender = new EventEmitter<MapEvent>();
-  @Output()
-  preCompose = new EventEmitter<RenderEvent>();
-  @Output()
-  propertyChange = new EventEmitter<ObjectEvent>();
-  @Output()
-  singleClick = new EventEmitter<MapBrowserEvent<MouseEvent> | any>();
+  olChange = output<BaseEvent>();
+  changeLayerGroup = output<ObjectEvent>();
+  changeSize = output<ObjectEvent>();
+  changeTarget = output<ObjectEvent>();
+  changeView = output<ObjectEvent>();
+  olClick = output<MapBrowserEvent<MouseEvent> | any>();
+  dblClick = output<MapBrowserEvent<MouseEvent> | any>();
+  olError = output<BaseEvent>();
+  loadEnd = output<MapEvent>();
+  loadStart = output<MapEvent>();
+  moveEnd = output<MapEvent>();
+  moveStart = output<MapEvent>();
+  pointerDrag = output<MapBrowserEvent<MouseEvent> | any>();
+  pointerMove = output<MapBrowserEvent<MouseEvent> | any>();
+  postCompose = output<RenderEvent>();
+  postRender = output<MapEvent>();
+  preCompose = output<RenderEvent>();
+  propertyChange = output<ObjectEvent>();
+  singleClick = output<MapBrowserEvent<MouseEvent> | any>();
 
   public instance: Map;
+
+  protected readonly _instanceSignal = signal<Map | undefined>(undefined);
+
+  readonly instanceSignal = this._instanceSignal.asReadonly();
+
+  protected setInstance(instance: Map): Map {
+    this.instance = instance;
+
+    this._instanceSignal.set(instance);
+
+    return instance;
+  }
   public componentType = 'map';
 
   // we pass empty arrays to not get default controls/interactions because we have our own directives
@@ -96,7 +82,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
 
   ngOnInit() {
     const initMap = () => {
-      this.instance = new Map(this.createOptions());
+      this.setInstance(new Map(this.createOptions()));
       this.instance.setTarget(this.host.nativeElement.firstElementChild);
       this.instance.on('change', (event: BaseEvent) => this.olChange.emit(event));
       this.instance.on('change:layergroup', (event: ObjectEvent) =>
@@ -146,7 +132,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
       });
     };
 
-    if (this.runOutsideAngular) {
+    if (this.runOutsideAngular()) {
       this.ngZone.runOutsideAngular(initMap);
     } else {
       initMap();
@@ -171,10 +157,10 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
     return {
       controls: this.controls,
       interactions: this.interactions,
-      keyboardEventTarget: this.keyboardEventTarget,
-      maxTilesLoading: this.maxTilesLoading,
-      moveTolerance: this.moveTolerance,
-      pixelRatio: this.pixelRatio,
+      keyboardEventTarget: this.keyboardEventTarget(),
+      maxTilesLoading: this.maxTilesLoading(),
+      moveTolerance: this.moveTolerance(),
+      pixelRatio: this.pixelRatio(),
     };
   }
 }

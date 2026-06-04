@@ -1,4 +1,12 @@
-import { OnDestroy, OnInit, OnChanges, Input, SimpleChanges, Directive } from '@angular/core';
+import {
+  OnDestroy,
+  OnInit,
+  OnChanges,
+  SimpleChanges,
+  Directive,
+  input,
+  signal,
+} from '@angular/core';
 import Event from 'ol/events/Event';
 import { MapComponent } from '../map.component';
 import { LayerGroupComponent } from './layergroup.component';
@@ -8,63 +16,61 @@ import { RenderFunction } from 'ol/layer/Layer';
 @Directive()
 // eslint-disable-next-line @angular-eslint/directive-class-suffix
 export abstract class LayerComponent implements OnInit, OnChanges, OnDestroy {
-  @Input()
-  id: string | number;
-  @Input()
-  className: string;
-  @Input()
-  opacity: number;
-  @Input()
-  visible: boolean;
-  @Input()
-  extent?: Extent;
-  @Input()
-  zIndex?: number;
-  @Input()
-  minResolution?: number;
-  @Input()
-  maxResolution?: number;
-  @Input()
-  minZoom?: number;
-  @Input()
-  maxZoom?: number;
-  @Input()
-  render?: RenderFunction;
-  @Input()
-  properties?: Record<string, any>;
+  id = input<string | number>();
+  className = input<string>();
+  opacity = input<number>();
+  visible = input<boolean>();
+  extent = input<Extent>();
+  zIndex = input<number>();
+  minResolution = input<number>();
+  maxResolution = input<number>();
+  minZoom = input<number>();
+  maxZoom = input<number>();
+  render = input<RenderFunction>();
+  properties = input<Record<string, any>>();
 
-  @Input()
-  prerender: (evt: Event) => void;
-  @Input()
-  postrender: (evt: Event) => void;
+  prerender = input<(evt: Event) => void>();
+  postrender = input<(evt: Event) => void>();
 
   public instance: any;
+
+  protected readonly _instanceSignal = signal<any | undefined>(undefined);
+
+  readonly instanceSignal = this._instanceSignal.asReadonly();
+
+  protected setInstance(instance: any): any {
+    this.instance = instance;
+
+    this._instanceSignal.set(instance);
+
+    return instance;
+  }
   public componentType = 'layer';
 
   protected constructor(protected host: MapComponent | LayerGroupComponent) {}
 
   protected createLayerOptions() {
     return {
-      className: this.className,
-      opacity: this.opacity,
-      visible: this.visible,
-      extent: this.extent,
-      zIndex: this.zIndex,
-      minResolution: this.minResolution,
-      maxResolution: this.maxResolution,
-      minZoom: this.minZoom,
-      maxZoom: this.maxZoom,
-      render: this.render,
-      properties: this.properties,
+      className: this.className(),
+      opacity: this.opacity(),
+      visible: this.visible(),
+      extent: this.extent(),
+      zIndex: this.zIndex(),
+      minResolution: this.minResolution(),
+      maxResolution: this.maxResolution(),
+      minZoom: this.minZoom(),
+      maxZoom: this.maxZoom(),
+      render: this.render(),
+      properties: this.properties(),
     };
   }
 
   ngOnInit() {
-    if (this.prerender !== null && this.prerender !== undefined) {
-      this.instance.on('prerender', this.prerender);
+    if (this.prerender() !== null && this.prerender() !== undefined) {
+      this.instance.on('prerender', this.prerender());
     }
-    if (this.postrender !== null && this.postrender !== undefined) {
-      this.instance.on('postrender', this.postrender);
+    if (this.postrender() !== null && this.postrender() !== undefined) {
+      this.instance.on('postrender', this.postrender());
     }
     this.host.instance.getLayers().push(this.instance);
   }

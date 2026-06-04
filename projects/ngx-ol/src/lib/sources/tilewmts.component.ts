@@ -1,14 +1,14 @@
 import {
   Component,
   Host,
-  Input,
   forwardRef,
   AfterContentInit,
   ContentChild,
   SimpleChanges,
   OnChanges,
-  Output,
-  EventEmitter,
+  input,
+  output,
+  signal,
 } from '@angular/core';
 import { LayerTileComponent } from '../layers/layertile.component';
 import { SourceComponent } from './source.component';
@@ -30,61 +30,49 @@ export class SourceTileWMTSComponent
   extends SourceComponent
   implements AfterContentInit, OnChanges
 {
-  @Input()
-  cacheSize?: number;
-  @Input()
-  crossOrigin?: null | string;
-  @Input()
-  interpolate?: boolean;
-  @Input()
-  tileGrid: WMTS;
-  @Input()
-  projection?: ProjectionLike;
-  @Input()
-  reprojectionErrorThreshold?: number;
-  @Input()
-  requestEncoding?: RequestEncoding | undefined;
-  @Input()
-  layer: string;
-  @Input()
-  style: string;
-  @Input()
-  tileClass?: any;
-  @Input()
-  tilePixelRatio?: number;
-  @Input()
-  version?: string;
-  @Input()
-  format?: string;
-  @Input()
-  matrixSet: string;
-  @Input()
-  dimensions?: any;
-  @Input()
-  url?: string;
-  @Input()
-  tileLoadFunction?: LoadFunction;
-  @Input()
-  urls?: string[];
-  @Input()
-  wrapX?: boolean;
-  @Input()
-  transition?: number;
-  @Input()
-  zDirection?: number | NearestDirectionFunction;
+  cacheSize = input<number>();
+  crossOrigin = input<null | string>();
+  interpolate = input<boolean>();
+  tileGrid = input<WMTS>();
+  projection = input<ProjectionLike>();
+  reprojectionErrorThreshold = input<number>();
+  requestEncoding = input<RequestEncoding | undefined>();
+  layer = input.required<string>();
+  style = input.required<string>();
+  tileClass = input<any>();
+  tilePixelRatio = input<number>();
+  version = input<string>();
+  format = input<string>();
+  matrixSet = input.required<string>();
+  dimensions = input<any>();
+  url = input<string>();
+  tileLoadFunction = input<LoadFunction>();
+  urls = input<string[]>();
+  wrapX = input<boolean>();
+  transition = input<number>();
+  zDirection = input<number | NearestDirectionFunction>();
 
-  @Output()
-  tileLoadStart = new EventEmitter<TileSourceEvent>();
-  @Output()
-  tileLoadEnd = new EventEmitter<TileSourceEvent>();
-  @Output()
-  tileLoadError = new EventEmitter<TileSourceEvent>();
+  tileLoadStart = output<TileSourceEvent>();
+  tileLoadEnd = output<TileSourceEvent>();
+  tileLoadError = output<TileSourceEvent>();
 
   @ContentChild(TileGridWMTSComponent, { static: false })
   tileGridWMTS: TileGridWMTSComponent;
 
   instance: SourceWMTS;
+  private contentTileGrid?: WMTS;
 
+  protected readonly _instanceSignal = signal<SourceWMTS | undefined>(undefined);
+
+  readonly instanceSignal = this._instanceSignal.asReadonly();
+
+  protected setInstance(instance: SourceWMTS): SourceWMTS {
+    this.instance = instance;
+
+    this._instanceSignal.set(instance);
+
+    return instance;
+  }
   constructor(@Host() layer: LayerTileComponent) {
     super(layer);
   }
@@ -98,7 +86,6 @@ export class SourceTileWMTSComponent
       if (changes.hasOwnProperty(key)) {
         switch (key) {
           case 'url':
-            this.url = changes[key].currentValue;
             this.setLayerSource();
             break;
           default:
@@ -111,7 +98,7 @@ export class SourceTileWMTSComponent
   }
 
   setLayerSource(): void {
-    this.instance = new SourceWMTS(this.createOptions());
+    this.setInstance(new SourceWMTS(this.createOptions()));
     this.instance.on('tileloadstart', (event: TileSourceEvent) => this.tileLoadStart.emit(event));
     this.instance.on('tileloadend', (event: TileSourceEvent) => this.tileLoadEnd.emit(event));
     this.instance.on('tileloaderror', (event: TileSourceEvent) => this.tileLoadError.emit(event));
@@ -120,38 +107,38 @@ export class SourceTileWMTSComponent
 
   ngAfterContentInit(): void {
     if (this.tileGridWMTS) {
-      this.tileGrid = this.tileGridWMTS.instance;
+      this.contentTileGrid = this.tileGridWMTS.instance;
     }
-    if (this.tileGrid) {
+    if (this.contentTileGrid ?? this.tileGrid()) {
       this.setLayerSource();
     }
   }
 
   private createOptions(): Options {
     return {
-      attributions: this.attributions,
-      attributionsCollapsible: this.attributionsCollapsible,
-      cacheSize: this.cacheSize,
-      crossOrigin: this.crossOrigin,
-      interpolate: this.interpolate,
-      tileGrid: this.tileGrid,
-      projection: this.projection,
-      reprojectionErrorThreshold: this.reprojectionErrorThreshold,
-      requestEncoding: this.requestEncoding,
-      layer: this.layer,
-      style: this.style,
-      tileClass: this.tileClass,
-      tilePixelRatio: this.tilePixelRatio,
-      format: this.format,
-      version: this.version,
-      matrixSet: this.matrixSet,
-      dimensions: this.dimensions,
-      url: this.url,
-      tileLoadFunction: this.tileLoadFunction,
-      urls: this.urls,
-      wrapX: this.wrapX,
-      transition: this.transition,
-      zDirection: this.zDirection,
+      attributions: this.attributions(),
+      attributionsCollapsible: this.attributionsCollapsible(),
+      cacheSize: this.cacheSize(),
+      crossOrigin: this.crossOrigin(),
+      interpolate: this.interpolate(),
+      tileGrid: (this.contentTileGrid ?? this.tileGrid())!,
+      projection: this.projection(),
+      reprojectionErrorThreshold: this.reprojectionErrorThreshold(),
+      requestEncoding: this.requestEncoding(),
+      layer: this.layer(),
+      style: this.style(),
+      tileClass: this.tileClass(),
+      tilePixelRatio: this.tilePixelRatio(),
+      format: this.format(),
+      version: this.version(),
+      matrixSet: this.matrixSet(),
+      dimensions: this.dimensions(),
+      url: this.url(),
+      tileLoadFunction: this.tileLoadFunction(),
+      urls: this.urls(),
+      wrapX: this.wrapX(),
+      transition: this.transition(),
+      zDirection: this.zDirection(),
     };
   }
 }

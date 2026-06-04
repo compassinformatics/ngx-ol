@@ -1,4 +1,12 @@
-import { Component, Input, Optional, OnInit, OnChanges, SimpleChanges } from '@angular/core';
+import {
+  Component,
+  Optional,
+  OnInit,
+  OnChanges,
+  SimpleChanges,
+  input,
+  signal,
+} from '@angular/core';
 import Fill from 'ol/style/Fill';
 import { Options } from 'ol/style/Fill';
 import { StyleComponent } from './style.component';
@@ -12,10 +20,21 @@ import { ColorLike, PatternDescriptor } from 'ol/colorlike';
   template: ` <div class="aol-style-fill"></div> `,
 })
 export class StyleFillComponent implements OnInit, OnChanges {
-  @Input()
-  color?: Color | ColorLike | PatternDescriptor | null;
+  color = input<Color | ColorLike | PatternDescriptor | null>();
 
   public instance: Fill;
+
+  protected readonly _instanceSignal = signal<Fill | undefined>(undefined);
+
+  readonly instanceSignal = this._instanceSignal.asReadonly();
+
+  protected setInstance(instance: Fill): Fill {
+    this.instance = instance;
+
+    this._instanceSignal.set(instance);
+
+    return instance;
+  }
   private readonly host: StyleComponent | StyleCircleComponent | StyleTextComponent;
 
   constructor(
@@ -38,7 +57,7 @@ export class StyleFillComponent implements OnInit, OnChanges {
 
   ngOnInit() {
     // console.log('creating ol.style.Fill instance with: ', this);
-    this.instance = new Fill(this.createOptions());
+    this.setInstance(new Fill(this.createOptions()));
     switch (this.host.componentType) {
       case 'style':
         this.host.instance.setFill(this.instance);
@@ -48,7 +67,7 @@ export class StyleFillComponent implements OnInit, OnChanges {
         this.host.instance.setFill(this.instance);
         break;
       case 'style-circle':
-        (this.host as StyleCircleComponent).fill = this.instance;
+        (this.host as StyleCircleComponent).setFill(this.instance);
         // console.log('setting ol.style.circle instance\'s fill:', this.host);
         break;
       default:
@@ -69,7 +88,7 @@ export class StyleFillComponent implements OnInit, OnChanges {
 
   private createOptions(): Options {
     return {
-      color: this.color,
+      color: this.color(),
     };
   }
 }

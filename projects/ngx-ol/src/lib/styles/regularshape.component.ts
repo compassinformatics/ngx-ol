@@ -2,10 +2,11 @@ import {
   AfterContentInit,
   Component,
   Host,
-  Input,
   OnChanges,
   OnDestroy,
   SimpleChanges,
+  input,
+  signal,
 } from '@angular/core';
 import type { Size } from 'ol/size';
 import Fill from 'ol/style/Fill';
@@ -20,54 +21,51 @@ import { StyleComponent } from './style.component';
   template: ` <ng-content></ng-content> `,
 })
 export class StyleRegularShapeComponent implements AfterContentInit, OnChanges, OnDestroy {
-  @Input()
-  fill?: Fill;
+  fill = input<Fill>();
 
-  @Input()
-  points: number;
+  points = input.required<number>();
 
-  @Input()
-  radius: number;
+  radius = input.required<number>();
 
-  @Input()
-  radius2?: number;
+  radius2 = input<number>();
 
-  @Input()
-  angle?: number;
+  angle = input<number>();
 
-  @Input()
-  displacement?: number[];
+  displacement = input<number[]>();
 
-  @Input()
-  stroke?: Stroke;
+  stroke = input<Stroke>();
 
-  @Input()
-  rotation?: number;
+  rotation = input<number>();
 
-  @Input()
-  rotateWithView?: boolean;
+  rotateWithView = input<boolean>();
 
-  @Input()
-  scale?: number | Size;
+  scale = input<number | Size>();
 
-  @Input()
-  declutterMode?: DeclutterMode;
+  declutterMode = input<DeclutterMode>();
 
   public componentType = 'style-regularshape';
   public instance: RegularShape;
 
+  protected readonly _instanceSignal = signal<RegularShape | undefined>(undefined);
+  readonly instanceSignal = this._instanceSignal.asReadonly();
+
+  protected setInstance(instance: RegularShape): RegularShape {
+    this.instance = instance;
+    this._instanceSignal.set(instance);
+    return instance;
+  }
   constructor(@Host() private host: StyleComponent) {}
 
   update() {
     if (this.instance) {
-      this.instance = new RegularShape(this.createOptions());
+      this.setInstance(new RegularShape(this.createOptions()));
       this.host.instance.setImage(this.instance);
     }
     this.host.update();
   }
 
   ngAfterContentInit() {
-    this.instance = new RegularShape(this.createOptions());
+    this.setInstance(new RegularShape(this.createOptions()));
     this.host.instance.setImage(this.instance);
     this.host.update();
   }
@@ -90,7 +88,7 @@ export class StyleRegularShapeComponent implements AfterContentInit, OnChanges, 
       return;
     }
 
-    this.instance = new RegularShape(this.createOptions());
+    this.setInstance(new RegularShape(this.createOptions()));
     this.host.instance.setImage(this.instance);
     this.host.update();
   }
@@ -99,17 +97,17 @@ export class StyleRegularShapeComponent implements AfterContentInit, OnChanges, 
 
   private createOptions(): Options {
     return {
-      fill: this.fill,
-      points: this.points,
-      radius: this.radius,
-      radius2: this.radius2,
-      angle: this.angle,
-      displacement: this.displacement,
-      stroke: this.stroke,
-      rotation: this.rotation,
-      rotateWithView: this.rotateWithView,
-      scale: this.scale,
-      declutterMode: this.declutterMode,
+      fill: this.fill(),
+      points: this.points(),
+      radius: this.radius(),
+      radius2: this.radius2(),
+      angle: this.angle(),
+      displacement: this.displacement(),
+      stroke: this.stroke(),
+      rotation: this.rotation(),
+      rotateWithView: this.rotateWithView(),
+      scale: this.scale(),
+      declutterMode: this.declutterMode(),
     };
   }
 }

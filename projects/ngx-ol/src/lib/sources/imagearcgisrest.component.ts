@@ -1,13 +1,13 @@
 import {
   Component,
-  EventEmitter,
   forwardRef,
   Host,
-  Input,
   OnChanges,
   OnInit,
-  Output,
   SimpleChanges,
+  input,
+  output,
+  signal,
 } from '@angular/core';
 import ImageArcGISRest from 'ol/source/ImageArcGISRest';
 import { Options } from 'ol/source/ImageArcGISRest';
@@ -25,32 +25,39 @@ import { ImageSourceEvent } from 'ol/source/Image';
   ],
 })
 export class SourceImageArcGISRestComponent extends SourceComponent implements OnInit, OnChanges {
-  @Input() projection?: ProjectionLike | string;
-  @Input() url?: string;
-  @Input() crossOrigin?: string | null;
-  @Input()
-  hidpi?: boolean;
-  @Input() imageLoadFunction?: LoadFunction;
-  @Input() interpolate?: boolean;
-  @Input() params?: { [k: string]: any };
-  @Input() ratio?: number = 1.5;
-  @Input() resolutions?: number[];
+  projection = input<ProjectionLike | string>();
+  url = input<string>();
+  crossOrigin = input<string | null>();
+  hidpi = input<boolean>();
+  imageLoadFunction = input<LoadFunction>();
+  interpolate = input<boolean>();
+  params = input<{ [k: string]: any }>();
+  ratio = input<number>(1.5);
+  resolutions = input<number[]>();
 
-  @Output()
-  imageLoadStart = new EventEmitter<ImageSourceEvent>();
-  @Output()
-  imageLoadEnd = new EventEmitter<ImageSourceEvent>();
-  @Output()
-  imageLoadError = new EventEmitter<ImageSourceEvent>();
+  imageLoadStart = output<ImageSourceEvent>();
+  imageLoadEnd = output<ImageSourceEvent>();
+  imageLoadError = output<ImageSourceEvent>();
 
   instance: ImageArcGISRest;
 
+  protected readonly _instanceSignal = signal<ImageArcGISRest | undefined>(undefined);
+
+  readonly instanceSignal = this._instanceSignal.asReadonly();
+
+  protected setInstance(instance: ImageArcGISRest): ImageArcGISRest {
+    this.instance = instance;
+
+    this._instanceSignal.set(instance);
+
+    return instance;
+  }
   constructor(@Host() layer: LayerImageComponent) {
     super(layer);
   }
 
   ngOnInit() {
-    this.instance = new ImageArcGISRest(this.createOptions());
+    this.setInstance(new ImageArcGISRest(this.createOptions()));
     this.host.instance.setSource(this.instance);
     this.instance.on('imageloadstart', (event: ImageSourceEvent) =>
       this.imageLoadStart.emit(event),
@@ -63,22 +70,22 @@ export class SourceImageArcGISRestComponent extends SourceComponent implements O
 
   ngOnChanges(changes: SimpleChanges) {
     if (this.instance && changes.hasOwnProperty('params')) {
-      this.instance.updateParams(this.params);
+      this.instance.updateParams(this.params());
     }
   }
 
   private createOptions(): Options {
     return {
-      attributions: this.attributions,
-      projection: this.projection,
-      url: this.url,
-      crossOrigin: this.crossOrigin,
-      hidpi: this.hidpi,
-      imageLoadFunction: this.imageLoadFunction,
-      interpolate: this.interpolate,
-      params: this.params,
-      ratio: this.ratio,
-      resolutions: this.resolutions,
+      attributions: this.attributions(),
+      projection: this.projection(),
+      url: this.url(),
+      crossOrigin: this.crossOrigin(),
+      hidpi: this.hidpi(),
+      imageLoadFunction: this.imageLoadFunction(),
+      interpolate: this.interpolate(),
+      params: this.params(),
+      ratio: this.ratio(),
+      resolutions: this.resolutions(),
     };
   }
 }

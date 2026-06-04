@@ -2,10 +2,10 @@ import {
   Component,
   OnDestroy,
   OnInit,
-  Input,
   Optional,
   OnChanges,
   SimpleChanges,
+  input,
 } from '@angular/core';
 import { MapComponent } from '../map.component';
 import VectorImage from 'ol/layer/VectorImage';
@@ -25,26 +25,19 @@ export class LayerVectorImageComponent
   extends LayerComponent
   implements OnInit, OnDestroy, OnChanges
 {
-  @Input()
-  renderBuffer: number;
+  renderBuffer = input<number>();
 
-  @Input()
-  style: StyleLike | FlatStyleLike | null | undefined;
+  style = input<StyleLike | FlatStyleLike | null | undefined>();
 
-  @Input()
-  declutter: boolean | string | number;
+  declutter = input<boolean | string | number>();
 
-  @Input()
-  background?: BackgroundColor;
+  background = input<BackgroundColor>();
 
-  @Input()
-  imageRatio: number;
+  imageRatio = input<number>();
 
-  @Input()
-  properties: Record<string, any>;
+  properties = input<Record<string, any>>();
 
-  @Input()
-  source?: VectorSource;
+  source = input<VectorSource>();
 
   constructor(map: MapComponent, @Optional() group?: LayerGroupComponent) {
     super(group || map);
@@ -52,7 +45,7 @@ export class LayerVectorImageComponent
 
   ngOnInit() {
     // console.log('creating ol.layer.Vector instance with:', this);
-    this.instance = new VectorImage(this.createOptions());
+    this.setInstance(new VectorImage(this.createOptions()));
     super.ngOnInit();
   }
 
@@ -67,13 +60,13 @@ export class LayerVectorImageComponent
   private createOptions(): Options<any, VectorSource<any>> & { imageRatio?: number } {
     return {
       ...this.createLayerOptions(),
-      renderBuffer: this.renderBuffer,
-      style: this.style,
-      declutter: this.declutter,
-      background: this.background,
-      imageRatio: this.imageRatio,
-      properties: this.properties,
-      source: this.source,
+      renderBuffer: this.renderBuffer(),
+      style: this.style(),
+      declutter: this.declutter(),
+      background: this.background(),
+      imageRatio: this.imageRatio(),
+      properties: this.properties(),
+      source: this.source(),
     };
   }
 }

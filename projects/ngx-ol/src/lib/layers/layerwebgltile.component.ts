@@ -1,4 +1,13 @@
-import { Component, Input, OnChanges, OnDestroy, OnInit, Optional, SimpleChanges } from '@angular/core';
+import {
+  Component,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  Optional,
+  SimpleChanges,
+  input,
+  signal,
+} from '@angular/core';
 import WebGLTileLayer from 'ol/layer/WebGLTile';
 import type { Options, SourceType, Style } from 'ol/layer/WebGLTile';
 import type DataTileSource from 'ol/source/DataTile';
@@ -12,36 +21,45 @@ import { LayerGroupComponent } from './layergroup.component';
   selector: 'aol-layer-webgltile',
   template: ` <ng-content></ng-content> `,
 })
-export class LayerWebGLTileComponent extends LayerComponent implements OnInit, OnDestroy, OnChanges {
-  @Input()
-  style?: Style;
+export class LayerWebGLTileComponent
+  extends LayerComponent
+  implements OnInit, OnDestroy, OnChanges
+{
+  style = input<Style>();
 
-  @Input()
-  preload?: number;
+  preload = input<number>();
 
-  @Input()
-  source?: DataTileSource<DataTile>;
+  source = input<DataTileSource<DataTile>>();
 
-  @Input()
-  sources?: DataTileSource<DataTile>[] | ((extent: Extent, resolution: number) => SourceType[]);
+  sources = input<
+    DataTileSource<DataTile>[] | ((extent: Extent, resolution: number) => SourceType[])
+  >();
 
-  @Input()
-  map?: MapComponent['instance'];
+  map = input<MapComponent['instance']>();
 
-  @Input()
-  useInterimTilesOnError?: boolean;
+  useInterimTilesOnError = input<boolean>();
 
-  @Input()
-  cacheSize?: number;
+  cacheSize = input<number>();
 
   instance: WebGLTileLayer;
 
+  protected readonly _instanceSignal = signal<WebGLTileLayer | undefined>(undefined);
+
+  readonly instanceSignal = this._instanceSignal.asReadonly();
+
+  protected setInstance(instance: WebGLTileLayer): WebGLTileLayer {
+    this.instance = instance;
+
+    this._instanceSignal.set(instance);
+
+    return instance;
+  }
   constructor(map: MapComponent, @Optional() group?: LayerGroupComponent) {
     super(group || map);
   }
 
   ngOnInit() {
-    this.instance = new WebGLTileLayer(this.createOptions());
+    this.setInstance(new WebGLTileLayer(this.createOptions()));
     super.ngOnInit();
   }
 
@@ -56,13 +74,13 @@ export class LayerWebGLTileComponent extends LayerComponent implements OnInit, O
   private createOptions(): Options {
     return {
       ...this.createLayerOptions(),
-      style: this.style,
-      preload: this.preload,
-      source: this.source,
-      sources: this.sources,
-      map: this.map,
-      useInterimTilesOnError: this.useInterimTilesOnError,
-      cacheSize: this.cacheSize,
+      style: this.style(),
+      preload: this.preload(),
+      source: this.source(),
+      sources: this.sources(),
+      map: this.map(),
+      useInterimTilesOnError: this.useInterimTilesOnError(),
+      cacheSize: this.cacheSize(),
     };
   }
 }

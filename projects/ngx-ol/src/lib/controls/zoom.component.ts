@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, input, signal } from '@angular/core';
 import Zoom from 'ol/control/Zoom';
 import { Options } from 'ol/control/Zoom';
 import { MapComponent } from '../map.component';
@@ -8,35 +8,36 @@ import { MapComponent } from '../map.component';
   template: ` <ng-content></ng-content> `,
 })
 export class ControlZoomComponent implements OnInit, OnDestroy {
-  @Input()
-  duration?: number;
-  @Input()
-  className?: string;
-  @Input()
-  zoomInClassName?: string;
-  @Input()
-  zoomOutClassName?: string;
-  @Input()
-  zoomInLabel?: string | HTMLElement;
-  @Input()
-  zoomOutLabel?: string | HTMLElement;
-  @Input()
-  zoomInTipLabel?: string;
-  @Input()
-  zoomOutTipLabel?: string;
-  @Input()
-  delta?: number;
-  @Input()
-  target?: string | HTMLElement;
+  duration = input<number>();
+  className = input<string>();
+  zoomInClassName = input<string>();
+  zoomOutClassName = input<string>();
+  zoomInLabel = input<string | HTMLElement>();
+  zoomOutLabel = input<string | HTMLElement>();
+  zoomInTipLabel = input<string>();
+  zoomOutTipLabel = input<string>();
+  delta = input<number>();
+  target = input<string | HTMLElement>();
 
   instance: Zoom;
 
+  protected readonly _instanceSignal = signal<Zoom | undefined>(undefined);
+
+  readonly instanceSignal = this._instanceSignal.asReadonly();
+
+  protected setInstance(instance: Zoom): Zoom {
+    this.instance = instance;
+
+    this._instanceSignal.set(instance);
+
+    return instance;
+  }
   constructor(private map: MapComponent) {
     // console.log('instancing aol-control-zoom');
   }
 
   ngOnInit() {
-    this.instance = new Zoom(this.createOptions());
+    this.setInstance(new Zoom(this.createOptions()));
     this.map.instance.addControl(this.instance);
   }
 
@@ -47,16 +48,16 @@ export class ControlZoomComponent implements OnInit, OnDestroy {
 
   private createOptions(): Options {
     return {
-      duration: this.duration,
-      className: this.className,
-      zoomInClassName: this.zoomInClassName,
-      zoomOutClassName: this.zoomOutClassName,
-      zoomInLabel: this.zoomInLabel,
-      zoomOutLabel: this.zoomOutLabel,
-      zoomInTipLabel: this.zoomInTipLabel,
-      zoomOutTipLabel: this.zoomOutTipLabel,
-      delta: this.delta,
-      target: this.target,
+      duration: this.duration(),
+      className: this.className(),
+      zoomInClassName: this.zoomInClassName(),
+      zoomOutClassName: this.zoomOutClassName(),
+      zoomInLabel: this.zoomInLabel(),
+      zoomOutLabel: this.zoomOutLabel(),
+      zoomInTipLabel: this.zoomInTipLabel(),
+      zoomOutTipLabel: this.zoomOutTipLabel(),
+      delta: this.delta(),
+      target: this.target(),
     };
   }
 }

@@ -2,11 +2,11 @@ import {
   AfterContentInit,
   Component,
   ContentChild,
-  EventEmitter,
   forwardRef,
   Host,
-  Input,
-  Output,
+  input,
+  output,
+  signal,
 } from '@angular/core';
 import Raster from 'ol/source/Raster';
 import Source from 'ol/source/Source';
@@ -26,23 +26,28 @@ import { SourceComponent } from './source.component';
   ],
 })
 export class SourceRasterComponent extends SourceComponent implements AfterContentInit {
-  @Input()
-  operation?: Operation;
-  @Input()
-  threads?: number;
-  @Input()
-  lib?: any;
-  @Input()
-  operationType?: 'pixel' | 'image';
-  @Input()
-  resolutions?: number[] | null;
+  operation = input<Operation>();
+  threads = input<number>();
+  lib = input<any>();
+  operationType = input<'pixel' | 'image'>();
+  resolutions = input<number[] | null>();
 
-  @Output()
-  beforeOperations = new EventEmitter<RasterSourceEvent>();
-  @Output()
-  afterOperations = new EventEmitter<RasterSourceEvent>();
+  beforeOperations = output<RasterSourceEvent>();
+  afterOperations = output<RasterSourceEvent>();
 
   instance: Raster;
+
+  protected readonly _instanceSignal = signal<Raster | undefined>(undefined);
+
+  readonly instanceSignal = this._instanceSignal.asReadonly();
+
+  protected setInstance(instance: Raster): Raster {
+    this.instance = instance;
+
+    this._instanceSignal.set(instance);
+
+    return instance;
+  }
   sources: Source[] = [];
 
   @ContentChild(SourceComponent, { static: false })
@@ -63,7 +68,7 @@ export class SourceRasterComponent extends SourceComponent implements AfterConte
   }
 
   init() {
-    this.instance = new Raster(this.createOptions());
+    this.setInstance(new Raster(this.createOptions()));
     this.instance.on('beforeoperations', (event: RasterSourceEvent) =>
       this.beforeOperations.emit(event),
     );
@@ -76,11 +81,11 @@ export class SourceRasterComponent extends SourceComponent implements AfterConte
   private createOptions(): Options {
     return {
       sources: this.sources,
-      operation: this.operation,
-      threads: this.threads,
-      lib: this.lib,
-      operationType: this.operationType,
-      resolutions: this.resolutions,
+      operation: this.operation(),
+      threads: this.threads(),
+      lib: this.lib(),
+      operationType: this.operationType(),
+      resolutions: this.resolutions(),
     };
   }
 }

@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, input, signal } from '@angular/core';
 import MousePosition, { Options } from 'ol/control/MousePosition';
 import { MapComponent } from '../map.component';
 import { CoordinateFormat } from 'ol/coordinate';
@@ -10,20 +10,26 @@ import MapEvent from 'ol/MapEvent';
   template: ``,
 })
 export class ControlMousePositionComponent implements OnInit, OnDestroy {
-  @Input()
-  className?: string;
-  @Input()
-  coordinateFormat?: CoordinateFormat;
-  @Input()
-  projection?: ProjectionLike;
-  @Input()
-  render?: (event: MapEvent) => void;
-  @Input()
-  placeholder?: string;
-  @Input()
-  wrapX?: boolean;
+  className = input<string>();
+  coordinateFormat = input<CoordinateFormat>();
+  projection = input<ProjectionLike>();
+  render = input<(event: MapEvent) => void>();
+  placeholder = input<string>();
+  wrapX = input<boolean>();
 
   instance: MousePosition;
+
+  protected readonly _instanceSignal = signal<MousePosition | undefined>(undefined);
+
+  readonly instanceSignal = this._instanceSignal.asReadonly();
+
+  protected setInstance(instance: MousePosition): MousePosition {
+    this.instance = instance;
+
+    this._instanceSignal.set(instance);
+
+    return instance;
+  }
   target: HTMLElement;
 
   constructor(
@@ -34,7 +40,7 @@ export class ControlMousePositionComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.target = this.element.nativeElement;
     // console.log('ol.control.MousePosition init: ', this);
-    this.instance = new MousePosition(this.createOptions());
+    this.setInstance(new MousePosition(this.createOptions()));
     this.map.instance.addControl(this.instance);
   }
 
@@ -45,13 +51,13 @@ export class ControlMousePositionComponent implements OnInit, OnDestroy {
 
   private createOptions(): Options {
     return {
-      className: this.className,
-      coordinateFormat: this.coordinateFormat,
-      projection: this.projection,
-      render: this.render,
+      className: this.className(),
+      coordinateFormat: this.coordinateFormat(),
+      projection: this.projection(),
+      render: this.render(),
       target: this.target,
-      placeholder: this.placeholder,
-      wrapX: this.wrapX,
+      placeholder: this.placeholder(),
+      wrapX: this.wrapX(),
     };
   }
 }

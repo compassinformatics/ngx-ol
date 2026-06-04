@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnDestroy, OnInit, input, output, signal } from '@angular/core';
 import Translate from 'ol/interaction/Translate';
 import Collection from 'ol/Collection';
 import Feature from 'ol/Feature';
@@ -15,38 +15,37 @@ import { FilterFunction } from 'ol/interaction/Select';
   template: '',
 })
 export class TranslateInteractionComponent implements OnInit, OnDestroy {
-  @Input()
-  condition?: Condition;
-  @Input()
-  features?: Collection<Feature>;
-  @Input()
-  layers?: Layer[] | ((layer: Layer) => boolean);
-  @Input()
-  filter?: FilterFunction;
-  @Input()
-  hitTolerance?: number;
+  condition = input<Condition>();
+  features = input<Collection<Feature>>();
+  layers = input<Layer[] | ((layer: Layer) => boolean)>();
+  filter = input<FilterFunction>();
+  hitTolerance = input<number>();
 
-  @Output()
-  olChange = new EventEmitter<BaseEvent>();
-  @Output()
-  changeActive = new EventEmitter<ObjectEvent>();
-  @Output()
-  olError = new EventEmitter<BaseEvent>();
-  @Output()
-  propertyChange = new EventEmitter<ObjectEvent>();
-  @Output()
-  translateEnd = new EventEmitter<TranslateEvent>();
-  @Output()
-  translateStart = new EventEmitter<TranslateEvent>();
-  @Output()
-  translating = new EventEmitter<TranslateEvent>();
+  olChange = output<BaseEvent>();
+  changeActive = output<ObjectEvent>();
+  olError = output<BaseEvent>();
+  propertyChange = output<ObjectEvent>();
+  translateEnd = output<TranslateEvent>();
+  translateStart = output<TranslateEvent>();
+  translating = output<TranslateEvent>();
 
   instance: Translate;
 
+  protected readonly _instanceSignal = signal<Translate | undefined>(undefined);
+
+  readonly instanceSignal = this._instanceSignal.asReadonly();
+
+  protected setInstance(instance: Translate): Translate {
+    this.instance = instance;
+
+    this._instanceSignal.set(instance);
+
+    return instance;
+  }
   constructor(private map: MapComponent) {}
 
   ngOnInit() {
-    this.instance = new Translate(this.createOptions());
+    this.setInstance(new Translate(this.createOptions()));
 
     this.instance.on('change', (event: BaseEvent) => this.olChange.emit(event));
     this.instance.on('change:active', (event: ObjectEvent) => this.changeActive.emit(event));
@@ -65,11 +64,11 @@ export class TranslateInteractionComponent implements OnInit, OnDestroy {
 
   private createOptions(): Options {
     return {
-      condition: this.condition,
-      features: this.features,
-      layers: this.layers,
-      filter: this.filter,
-      hitTolerance: this.hitTolerance,
+      condition: this.condition(),
+      features: this.features(),
+      layers: this.layers(),
+      filter: this.filter(),
+      hitTolerance: this.hitTolerance(),
     };
   }
 }

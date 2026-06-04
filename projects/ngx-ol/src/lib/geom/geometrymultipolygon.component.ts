@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { FeatureComponent } from '../feature.component';
 import { SimpleGeometryComponent } from './simplegeometry.component';
 import { MapComponent } from '../map.component';
@@ -12,20 +12,30 @@ export class GeometryMultiPolygonComponent extends SimpleGeometryComponent imple
   public componentType = 'geometry-multipolygon';
   public instance: MultiPolygon;
 
+  protected readonly _instanceSignal = signal<MultiPolygon | undefined>(undefined);
+  readonly instanceSignal = this._instanceSignal.asReadonly();
+
+  protected setInstance(instance: MultiPolygon): MultiPolygon {
+    this.instance = instance;
+    this._instanceSignal.set(instance);
+    return instance;
+  }
   constructor(map: MapComponent, host: FeatureComponent) {
     super(map, host);
   }
 
   ngOnInit() {
-    this.instance = new MultiPolygon([
-      [
+    this.setInstance(
+      new MultiPolygon([
         [
-          [0, 0],
-          [1, 1],
-          [0, 1],
+          [
+            [0, 0],
+            [1, 1],
+            [0, 1],
+          ],
         ],
-      ],
-    ]);
+      ]),
+    );
     super.ngOnInit();
   }
 }

@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, SkipSelf, Optional } from '@angular/core';
+import { Component, OnDestroy, OnInit, SkipSelf, Optional, signal } from '@angular/core';
 import Group from 'ol/layer/Group';
 import { Options } from 'ol/layer/Group';
 import { LayerComponent } from './layer.component';
@@ -11,6 +11,14 @@ import { MapComponent } from '../map.component';
 export class LayerGroupComponent extends LayerComponent implements OnInit, OnDestroy {
   public instance: Group;
 
+  protected readonly _instanceSignal = signal<Group | undefined>(undefined);
+  readonly instanceSignal = this._instanceSignal.asReadonly();
+
+  protected setInstance(instance: Group): Group {
+    this.instance = instance;
+    this._instanceSignal.set(instance);
+    return instance;
+  }
   constructor(
     map: MapComponent,
     @SkipSelf()
@@ -22,7 +30,7 @@ export class LayerGroupComponent extends LayerComponent implements OnInit, OnDes
 
   ngOnInit() {
     // console.log(`creating ol.layer.Group instance with:`, this);
-    this.instance = new Group(this.createOptions());
+    this.setInstance(new Group(this.createOptions()));
     super.ngOnInit();
   }
 

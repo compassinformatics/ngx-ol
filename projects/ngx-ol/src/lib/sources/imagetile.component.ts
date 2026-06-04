@@ -1,4 +1,14 @@
-import { Component, forwardRef, Host, Input, OnChanges, OnInit, Optional, SimpleChanges } from '@angular/core';
+import {
+  Component,
+  forwardRef,
+  Host,
+  OnChanges,
+  OnInit,
+  Optional,
+  SimpleChanges,
+  input,
+  signal,
+} from '@angular/core';
 import type { ProjectionLike } from 'ol/proj';
 import type { Size } from 'ol/size';
 import ImageTileSource from 'ol/source/ImageTile';
@@ -12,59 +22,58 @@ import { SourceComponent } from './source.component';
 @Component({
   selector: 'aol-source-imagetile',
   template: ` <ng-content></ng-content> `,
-  providers: [{ provide: SourceComponent, useExisting: forwardRef(() => SourceImageTileComponent) }],
+  providers: [
+    { provide: SourceComponent, useExisting: forwardRef(() => SourceImageTileComponent) },
+  ],
 })
 export class SourceImageTileComponent extends SourceComponent implements OnInit, OnChanges {
-  @Input()
-  url?: UrlLike;
+  url = input<UrlLike>();
 
-  @Input()
-  loader?: Loader;
+  loader = input<Loader>();
 
-  @Input()
-  maxZoom?: number;
+  maxZoom = input<number>();
 
-  @Input()
-  minZoom?: number;
+  minZoom = input<number>();
 
-  @Input()
-  tileSize?: number | Size;
+  tileSize = input<number | Size>();
 
-  @Input()
-  gutter?: number;
+  gutter = input<number>();
 
-  @Input()
-  maxResolution?: number;
+  maxResolution = input<number>();
 
-  @Input()
-  projection?: ProjectionLike;
+  projection = input<ProjectionLike>();
 
-  @Input()
-  tileGrid?: TileGrid;
+  tileGrid = input<TileGrid>();
 
-  @Input()
-  state?: State;
+  state = input<State>();
 
-  @Input()
-  wrapX?: boolean;
+  wrapX = input<boolean>();
 
-  @Input()
-  transition?: number;
+  transition = input<number>();
 
-  @Input()
-  interpolate?: boolean;
+  interpolate = input<boolean>();
 
-  @Input()
-  crossOrigin?: CrossOriginAttribute;
+  crossOrigin = input<CrossOriginAttribute>();
 
   instance: ImageTileSource;
 
+  protected readonly _instanceSignal = signal<ImageTileSource | undefined>(undefined);
+
+  readonly instanceSignal = this._instanceSignal.asReadonly();
+
+  protected setInstance(instance: ImageTileSource): ImageTileSource {
+    this.instance = instance;
+
+    this._instanceSignal.set(instance);
+
+    return instance;
+  }
   constructor(@Optional() @Host() layer?: LayerWebGLTileComponent) {
     super(layer!);
   }
 
   ngOnInit() {
-    this.instance = new ImageTileSource(this.createOptions());
+    this.setInstance(new ImageTileSource(this.createOptions()));
     this.register(this.instance);
   }
 
@@ -76,22 +85,22 @@ export class SourceImageTileComponent extends SourceComponent implements OnInit,
 
   private createOptions(): Options {
     return {
-      url: this.url,
-      loader: this.loader,
-      attributions: this.attributions,
-      attributionsCollapsible: this.attributionsCollapsible,
-      maxZoom: this.maxZoom,
-      minZoom: this.minZoom,
-      tileSize: this.tileSize,
-      gutter: this.gutter,
-      maxResolution: this.maxResolution,
-      projection: this.projection,
-      tileGrid: this.tileGrid,
-      state: this.state,
-      wrapX: this.wrapX,
-      transition: this.transition,
-      interpolate: this.interpolate,
-      crossOrigin: this.crossOrigin,
+      url: this.url(),
+      loader: this.loader(),
+      attributions: this.attributions(),
+      attributionsCollapsible: this.attributionsCollapsible(),
+      maxZoom: this.maxZoom(),
+      minZoom: this.minZoom(),
+      tileSize: this.tileSize(),
+      gutter: this.gutter(),
+      maxResolution: this.maxResolution(),
+      projection: this.projection(),
+      tileGrid: this.tileGrid(),
+      state: this.state(),
+      wrapX: this.wrapX(),
+      transition: this.transition(),
+      interpolate: this.interpolate(),
+      crossOrigin: this.crossOrigin(),
     };
   }
 }

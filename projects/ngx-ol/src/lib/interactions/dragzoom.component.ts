@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, Input } from '@angular/core';
+import { Component, OnDestroy, OnInit, input, signal } from '@angular/core';
 import DragZoom from 'ol/interaction/DragZoom';
 import { Options } from 'ol/interaction/DragZoom';
 import { MapComponent } from '../map.component';
@@ -9,21 +9,28 @@ import { Condition } from 'ol/events/condition';
   template: '',
 })
 export class DragZoomInteractionComponent implements OnInit, OnDestroy {
-  @Input()
-  className?: string;
-  @Input()
-  condition?: Condition;
-  @Input()
-  duration?: number;
-  @Input()
-  out?: boolean;
+  className = input<string>();
+  condition = input<Condition>();
+  duration = input<number>();
+  out = input<boolean>();
 
   instance: DragZoom;
 
+  protected readonly _instanceSignal = signal<DragZoom | undefined>(undefined);
+
+  readonly instanceSignal = this._instanceSignal.asReadonly();
+
+  protected setInstance(instance: DragZoom): DragZoom {
+    this.instance = instance;
+
+    this._instanceSignal.set(instance);
+
+    return instance;
+  }
   constructor(private map: MapComponent) {}
 
   ngOnInit() {
-    this.instance = new DragZoom(this.createOptions());
+    this.setInstance(new DragZoom(this.createOptions()));
     this.map.instance.addInteraction(this.instance);
   }
 
@@ -33,10 +40,10 @@ export class DragZoomInteractionComponent implements OnInit, OnDestroy {
 
   private createOptions(): Options {
     return {
-      className: this.className,
-      condition: this.condition,
-      duration: this.duration,
-      out: this.out,
+      className: this.className(),
+      condition: this.condition(),
+      duration: this.duration(),
+      out: this.out(),
     };
   }
 }

@@ -1,4 +1,12 @@
-import { Component, Input, Optional, OnInit, OnChanges, SimpleChanges } from '@angular/core';
+import {
+  Component,
+  Optional,
+  OnInit,
+  OnChanges,
+  SimpleChanges,
+  input,
+  signal,
+} from '@angular/core';
 import Stroke from 'ol/style/Stroke';
 import { Options } from 'ol/style/Stroke';
 import { StyleComponent } from './style.component';
@@ -12,22 +20,27 @@ import { ColorLike } from 'ol/colorlike';
   template: ` <div class="aol-style-stroke"></div> `,
 })
 export class StyleStrokeComponent implements OnInit, OnChanges {
-  @Input()
-  color?: Color | ColorLike;
-  @Input()
-  lineCap?: CanvasLineCap | undefined;
-  @Input()
-  lineDash?: number[];
-  @Input()
-  lineDashOffset?: number | undefined;
-  @Input()
-  lineJoin?: CanvasLineJoin | undefined;
-  @Input()
-  miterLimit?: number;
-  @Input()
-  width?: number;
+  color = input<Color | ColorLike>();
+  lineCap = input<CanvasLineCap | undefined>();
+  lineDash = input<number[]>();
+  lineDashOffset = input<number | undefined>();
+  lineJoin = input<CanvasLineJoin | undefined>();
+  miterLimit = input<number>();
+  width = input<number>();
 
   public instance: Stroke;
+
+  protected readonly _instanceSignal = signal<Stroke | undefined>(undefined);
+
+  readonly instanceSignal = this._instanceSignal.asReadonly();
+
+  protected setInstance(instance: Stroke): Stroke {
+    this.instance = instance;
+
+    this._instanceSignal.set(instance);
+
+    return instance;
+  }
   /* the typings do not have the setters */
   private readonly host: StyleComponent | StyleCircleComponent | StyleTextComponent;
 
@@ -51,7 +64,7 @@ export class StyleStrokeComponent implements OnInit, OnChanges {
 
   ngOnInit() {
     // console.log('creating ol.style.Stroke instance with: ', this);
-    this.instance = new Stroke(this.createOptions());
+    this.setInstance(new Stroke(this.createOptions()));
     switch (this.host.componentType) {
       case 'style':
         this.host.instance.setStroke(this.instance);
@@ -61,7 +74,7 @@ export class StyleStrokeComponent implements OnInit, OnChanges {
         this.host.instance.setStroke(this.instance);
         break;
       case 'style-circle':
-        (this.host as StyleCircleComponent).stroke = this.instance;
+        (this.host as StyleCircleComponent).setStroke(this.instance);
         // console.log('setting ol.style.circle instance\'s stroke:', this.host);
         break;
       default:
@@ -101,13 +114,13 @@ export class StyleStrokeComponent implements OnInit, OnChanges {
 
   private createOptions(): Options {
     return {
-      color: this.color,
-      lineCap: this.lineCap,
-      lineDash: this.lineDash,
-      lineDashOffset: this.lineDashOffset,
-      lineJoin: this.lineJoin,
-      miterLimit: this.miterLimit,
-      width: this.width,
+      color: this.color(),
+      lineCap: this.lineCap(),
+      lineDash: this.lineDash(),
+      lineDashOffset: this.lineDashOffset(),
+      lineJoin: this.lineJoin(),
+      miterLimit: this.miterLimit(),
+      width: this.width(),
     };
   }
 }

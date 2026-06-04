@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, Input } from '@angular/core';
+import { Component, OnDestroy, OnInit, input, signal } from '@angular/core';
 import DragPan from 'ol/interaction/DragPan';
 import { Options } from 'ol/interaction/DragPan';
 import Kinetic from 'ol/Kinetic';
@@ -10,17 +10,26 @@ import { Condition } from 'ol/events/condition';
   template: '',
 })
 export class DragPanInteractionComponent implements OnInit, OnDestroy {
-  @Input()
-  condition?: Condition;
-  @Input()
-  kinetic?: Kinetic;
+  condition = input<Condition>();
+  kinetic = input<Kinetic>();
 
   instance: DragPan;
 
+  protected readonly _instanceSignal = signal<DragPan | undefined>(undefined);
+
+  readonly instanceSignal = this._instanceSignal.asReadonly();
+
+  protected setInstance(instance: DragPan): DragPan {
+    this.instance = instance;
+
+    this._instanceSignal.set(instance);
+
+    return instance;
+  }
   constructor(private map: MapComponent) {}
 
   ngOnInit() {
-    this.instance = new DragPan(this.createOptions());
+    this.setInstance(new DragPan(this.createOptions()));
     this.map.instance.addInteraction(this.instance);
   }
 
@@ -30,8 +39,8 @@ export class DragPanInteractionComponent implements OnInit, OnDestroy {
 
   private createOptions(): Options {
     return {
-      condition: this.condition,
-      kinetic: this.kinetic,
+      condition: this.condition(),
+      kinetic: this.kinetic(),
     };
   }
 }

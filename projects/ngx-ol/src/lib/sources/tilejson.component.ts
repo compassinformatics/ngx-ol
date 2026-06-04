@@ -1,4 +1,4 @@
-import { Component, Host, Input, OnInit, forwardRef } from '@angular/core';
+import { Component, Host, OnInit, forwardRef, input, signal } from '@angular/core';
 import TileJSON from 'ol/source/TileJSON';
 import { Config, Options } from 'ol/source/TileJSON';
 import { LoadFunction } from 'ol/Tile';
@@ -13,57 +13,56 @@ import { SourceComponent } from './source.component';
   providers: [{ provide: SourceComponent, useExisting: forwardRef(() => SourceTileJSONComponent) }],
 })
 export class SourceTileJSONComponent extends SourceComponent implements OnInit {
-  @Input()
-  cacheSize?: number;
-  @Input()
-  crossOrigin?: string | null;
-  @Input()
-  interpolate?: boolean;
-  @Input()
-  jsonp?: boolean;
-  @Input()
-  reprojectionErrorThreshold?: number;
-  @Input()
-  tileJSON?: Config;
-  @Input()
-  tileLoadFunction?: LoadFunction;
-  @Input()
-  tileSize?: number | Size;
-  @Input()
-  url?: string;
-  @Input()
-  wrapX?: boolean;
-  @Input()
-  transition?: number;
-  @Input()
-  zDirection?: number | NearestDirectionFunction;
+  cacheSize = input<number>();
+  crossOrigin = input<string | null>();
+  interpolate = input<boolean>();
+  jsonp = input<boolean>();
+  reprojectionErrorThreshold = input<number>();
+  tileJSON = input<Config>();
+  tileLoadFunction = input<LoadFunction>();
+  tileSize = input<number | Size>();
+  url = input<string>();
+  wrapX = input<boolean>();
+  transition = input<number>();
+  zDirection = input<number | NearestDirectionFunction>();
 
   instance: TileJSON;
 
+  protected readonly _instanceSignal = signal<TileJSON | undefined>(undefined);
+
+  readonly instanceSignal = this._instanceSignal.asReadonly();
+
+  protected setInstance(instance: TileJSON): TileJSON {
+    this.instance = instance;
+
+    this._instanceSignal.set(instance);
+
+    return instance;
+  }
   constructor(@Host() layer: LayerTileComponent) {
     super(layer);
   }
 
   ngOnInit() {
-    this.instance = new TileJSON(this.createOptions());
+    this.setInstance(new TileJSON(this.createOptions()));
     this.host.instance.setSource(this.instance);
   }
 
   private createOptions(): Options {
     return {
-      attributions: this.attributions,
-      cacheSize: this.cacheSize,
-      crossOrigin: this.crossOrigin,
-      interpolate: this.interpolate,
-      jsonp: this.jsonp,
-      reprojectionErrorThreshold: this.reprojectionErrorThreshold,
-      tileJSON: this.tileJSON,
-      tileLoadFunction: this.tileLoadFunction,
-      tileSize: this.tileSize,
-      url: this.url,
-      wrapX: this.wrapX,
-      transition: this.transition,
-      zDirection: this.zDirection,
+      attributions: this.attributions(),
+      cacheSize: this.cacheSize(),
+      crossOrigin: this.crossOrigin(),
+      interpolate: this.interpolate(),
+      jsonp: this.jsonp(),
+      reprojectionErrorThreshold: this.reprojectionErrorThreshold(),
+      tileJSON: this.tileJSON(),
+      tileLoadFunction: this.tileLoadFunction(),
+      tileSize: this.tileSize(),
+      url: this.url(),
+      wrapX: this.wrapX(),
+      transition: this.transition(),
+      zDirection: this.zDirection(),
     };
   }
 }

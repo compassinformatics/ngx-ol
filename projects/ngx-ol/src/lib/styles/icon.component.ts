@@ -1,6 +1,5 @@
-import { Component, Input, Host, OnInit, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Host, OnInit, OnChanges, SimpleChanges, input, signal } from '@angular/core';
 import Icon from 'ol/style/Icon';
-
 
 import { StyleComponent } from './style.component';
 import { IconAnchorUnits, IconOrigin, Options } from 'ol/style/Icon';
@@ -13,52 +12,44 @@ import { DeclutterMode } from 'ol/style/Style';
   template: ` <div class="aol-style-icon"></div> `,
 })
 export class StyleIconComponent implements OnInit, OnChanges {
-  @Input()
-  anchor?: [number, number];
-  @Input()
-  anchorXUnits?: IconAnchorUnits;
-  @Input()
-  anchorYUnits?: IconAnchorUnits;
-  @Input()
-  anchorOrigin?: IconOrigin;
-  @Input()
-  color?: string | Color;
-  @Input()
-  crossOrigin?: string | null;
-  @Input()
-  img?: HTMLCanvasElement | HTMLImageElement | ImageBitmap;
-  @Input()
-  displacement?: number[];
-  @Input()
-  offset?: [number, number];
-  @Input()
-  offsetOrigin?: IconOrigin;
-  @Input()
-  opacity?: number;
-  @Input()
-  width?: number;
-  @Input()
-  height?: number;
-  @Input()
-  scale?: number | Size;
-  @Input()
-  declutterMode?: DeclutterMode;
-  @Input()
-  rotateWithView?: boolean;
-  @Input()
-  rotation?: number;
-  @Input()
-  size?: [number, number];
-  @Input()
-  src?: string;
+  anchor = input<[number, number]>();
+  anchorXUnits = input<IconAnchorUnits>();
+  anchorYUnits = input<IconAnchorUnits>();
+  anchorOrigin = input<IconOrigin>();
+  color = input<string | Color>();
+  crossOrigin = input<string | null>();
+  img = input<HTMLCanvasElement | HTMLImageElement | ImageBitmap>();
+  displacement = input<number[]>();
+  offset = input<[number, number]>();
+  offsetOrigin = input<IconOrigin>();
+  opacity = input<number>();
+  width = input<number>();
+  height = input<number>();
+  scale = input<number | Size>();
+  declutterMode = input<DeclutterMode>();
+  rotateWithView = input<boolean>();
+  rotation = input<number>();
+  size = input<[number, number]>();
+  src = input<string>();
 
   public instance: Icon;
 
+  protected readonly _instanceSignal = signal<Icon | undefined>(undefined);
+
+  readonly instanceSignal = this._instanceSignal.asReadonly();
+
+  protected setInstance(instance: Icon): Icon {
+    this.instance = instance;
+
+    this._instanceSignal.set(instance);
+
+    return instance;
+  }
   constructor(@Host() private host: StyleComponent) {}
 
   ngOnInit() {
     // console.log('creating ol.style.Icon instance with: ', this);
-    this.instance = new Icon(this.createOptions());
+    this.setInstance(new Icon(this.createOptions()));
     this.host.instance.setImage(this.instance);
   }
 
@@ -76,7 +67,7 @@ export class StyleIconComponent implements OnInit, OnChanges {
       this.instance.setScale(changes.scale.currentValue);
     }
     if (changes.src) {
-      this.instance = new Icon(this.createOptions());
+      this.setInstance(new Icon(this.createOptions()));
       this.host.instance.setImage(this.instance);
     }
     this.host.update();
@@ -85,25 +76,25 @@ export class StyleIconComponent implements OnInit, OnChanges {
 
   private createOptions(): Options {
     return {
-      anchor: this.anchor,
-      anchorXUnits: this.anchorXUnits,
-      anchorYUnits: this.anchorYUnits,
-      anchorOrigin: this.anchorOrigin,
-      color: this.color,
-      crossOrigin: this.crossOrigin,
-      img: this.img,
-      displacement: this.displacement,
-      offset: this.offset,
-      offsetOrigin: this.offsetOrigin,
-      opacity: this.opacity,
-      width: this.width,
-      height: this.height,
-      scale: this.scale,
-      declutterMode: this.declutterMode,
-      rotateWithView: this.rotateWithView,
-      rotation: this.rotation,
-      size: this.size,
-      src: this.src,
+      anchor: this.anchor(),
+      anchorXUnits: this.anchorXUnits(),
+      anchorYUnits: this.anchorYUnits(),
+      anchorOrigin: this.anchorOrigin(),
+      color: this.color(),
+      crossOrigin: this.crossOrigin(),
+      img: this.img(),
+      displacement: this.displacement(),
+      offset: this.offset(),
+      offsetOrigin: this.offsetOrigin(),
+      opacity: this.opacity(),
+      width: this.width(),
+      height: this.height(),
+      scale: this.scale(),
+      declutterMode: this.declutterMode(),
+      rotateWithView: this.rotateWithView(),
+      rotation: this.rotation(),
+      size: this.size(),
+      src: this.src(),
     };
   }
 }
