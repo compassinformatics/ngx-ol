@@ -9,8 +9,8 @@ import { Condition } from 'ol/events/condition';
   template: '',
 })
 export class DragRotateAndZoomInteractionComponent implements OnInit, OnDestroy {
-  condition = input<Condition>();
-  duration = input<number>();
+  readonly condition = input<Condition>();
+  readonly duration = input<number>();
 
   instance: DragRotateAndZoom;
 

@@ -21,16 +21,16 @@ import { DeclutterMode } from 'ol/style/Style';
   template: ` <ng-content></ng-content> `,
 })
 export class StyleCircleComponent implements AfterContentInit, OnChanges, OnDestroy {
-  fill = input<Fill>();
-  radius = input.required<number>();
-  stroke = input<Stroke>();
-  displacement = input<number[]>();
-  scale = input<number | Size>();
-  rotation = input<number>();
-  rotateWithView = input<boolean>();
-  declutterMode = input<DeclutterMode>();
+  readonly fill = input<Fill>();
+  readonly radius = input.required<number>();
+  readonly stroke = input<Stroke>();
+  readonly displacement = input<number[]>();
+  readonly scale = input<number | Size>();
+  readonly rotation = input<number>();
+  readonly rotateWithView = input<boolean>();
+  readonly declutterMode = input<DeclutterMode>();
 
-  public componentType = 'style-circle';
+  readonly componentType: string = 'style-circle';
   public instance: Circle;
   private childFill?: Fill;
   private childStroke?: Stroke;

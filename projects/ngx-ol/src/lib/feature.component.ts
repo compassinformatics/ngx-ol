@@ -18,19 +18,19 @@ import { SourceVectorComponent } from './sources/vector.component';
   template: ` <ng-content></ng-content> `,
 })
 export class FeatureComponent implements OnInit, OnDestroy, OnChanges {
-  id = input<string | number | undefined>();
+  readonly id = input<string | number | undefined>();
 
-  properties = input<Record<any, any>>();
+  readonly properties = input<Record<any, any>>();
 
-  feature = input<Feature>();
+  readonly feature = input<Feature>();
 
-  clickable = input<boolean>();
+  readonly clickable = input<boolean>();
 
-  olClick = output<{ event: MapBrowserEvent<MouseEvent> | any; feature: Feature }>();
-  singleClick = output<{ event: MapBrowserEvent<MouseEvent> | any; feature: Feature }>();
-  dblClick = output<{ event: MapBrowserEvent<MouseEvent> | any; feature: Feature }>();
+  readonly olClick = output<{ event: MapBrowserEvent<MouseEvent> | any; feature: Feature }>();
+  readonly singleClick = output<{ event: MapBrowserEvent<MouseEvent> | any; feature: Feature }>();
+  readonly dblClick = output<{ event: MapBrowserEvent<MouseEvent> | any; feature: Feature }>();
 
-  public componentType = 'feature';
+  readonly componentType: string = 'feature';
   public instance: Feature;
 
   protected readonly _instanceSignal = signal<Feature | undefined>(undefined);

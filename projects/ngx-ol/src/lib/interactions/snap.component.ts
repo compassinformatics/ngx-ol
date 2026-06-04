@@ -14,17 +14,17 @@ import Vector from 'ol/source/Vector';
   template: '',
 })
 export class SnapInteractionComponent implements OnInit, OnDestroy {
-  features = input<Collection<Feature>>();
-  edge = input<boolean>();
-  vertex = input<boolean>();
-  pixelTolerance = input<number>();
-  source = input<Vector>();
+  readonly features = input<Collection<Feature>>();
+  readonly edge = input<boolean>();
+  readonly vertex = input<boolean>();
+  readonly pixelTolerance = input<number>();
+  readonly source = input<Vector>();
 
-  olChange = output<BaseEvent>();
-  changeActive = output<ObjectEvent>();
-  olError = output<BaseEvent>();
-  propertyChange = output<ObjectEvent>();
-  snap = output<SnapEvent>();
+  readonly olChange = output<BaseEvent>();
+  readonly changeActive = output<ObjectEvent>();
+  readonly olError = output<BaseEvent>();
+  readonly propertyChange = output<ObjectEvent>();
+  readonly snap = output<SnapEvent>();
 
   instance: Snap;
 

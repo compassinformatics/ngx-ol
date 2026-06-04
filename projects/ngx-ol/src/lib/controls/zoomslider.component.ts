@@ -17,10 +17,10 @@ import { MapComponent } from '../map.component';
   template: ` <ng-content></ng-content> `,
 })
 export class ControlZoomSliderComponent implements OnInit, OnChanges, OnDestroy {
-  className = input<string>();
-  duration = input<number>();
-  render = input<(event: MapEvent) => void>();
-  target = input<string | HTMLElement>();
+  readonly className = input<string>();
+  readonly duration = input<number>();
+  readonly render = input<(event: MapEvent) => void>();
+  readonly target = input<string | HTMLElement>();
 
   instance: ZoomSlider;
 
@@ -35,7 +35,7 @@ export class ControlZoomSliderComponent implements OnInit, OnChanges, OnDestroy 
 
     return instance;
   }
-  constructor(private map: MapComponent) {
+  constructor(private readonly map: MapComponent) {
     // console.log('instancing aol-control-zoomslider');
   }
 

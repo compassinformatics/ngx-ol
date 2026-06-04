@@ -28,33 +28,33 @@ import BaseEvent from 'ol/events/Event';
   `,
 })
 export class MapComponent implements OnInit, AfterViewInit, OnChanges {
-  width = input('100%');
-  height = input('100%');
-  pixelRatio = input<number>();
-  keyboardEventTarget = input<HTMLElement | string>();
-  maxTilesLoading = input<number>();
-  moveTolerance = input<number>();
-  runOutsideAngular = input(true);
+  readonly width = input('100%');
+  readonly height = input('100%');
+  readonly pixelRatio = input<number>();
+  readonly keyboardEventTarget = input<HTMLElement | string>();
+  readonly maxTilesLoading = input<number>();
+  readonly moveTolerance = input<number>();
+  readonly runOutsideAngular = input(true);
 
-  olChange = output<BaseEvent>();
-  changeLayerGroup = output<ObjectEvent>();
-  changeSize = output<ObjectEvent>();
-  changeTarget = output<ObjectEvent>();
-  changeView = output<ObjectEvent>();
-  olClick = output<MapBrowserEvent<MouseEvent> | any>();
-  dblClick = output<MapBrowserEvent<MouseEvent> | any>();
-  olError = output<BaseEvent>();
-  loadEnd = output<MapEvent>();
-  loadStart = output<MapEvent>();
-  moveEnd = output<MapEvent>();
-  moveStart = output<MapEvent>();
-  pointerDrag = output<MapBrowserEvent<MouseEvent> | any>();
-  pointerMove = output<MapBrowserEvent<MouseEvent> | any>();
-  postCompose = output<RenderEvent>();
-  postRender = output<MapEvent>();
-  preCompose = output<RenderEvent>();
-  propertyChange = output<ObjectEvent>();
-  singleClick = output<MapBrowserEvent<MouseEvent> | any>();
+  readonly olChange = output<BaseEvent>();
+  readonly changeLayerGroup = output<ObjectEvent>();
+  readonly changeSize = output<ObjectEvent>();
+  readonly changeTarget = output<ObjectEvent>();
+  readonly changeView = output<ObjectEvent>();
+  readonly olClick = output<MapBrowserEvent<MouseEvent> | any>();
+  readonly dblClick = output<MapBrowserEvent<MouseEvent> | any>();
+  readonly olError = output<BaseEvent>();
+  readonly loadEnd = output<MapEvent>();
+  readonly loadStart = output<MapEvent>();
+  readonly moveEnd = output<MapEvent>();
+  readonly moveStart = output<MapEvent>();
+  readonly pointerDrag = output<MapBrowserEvent<MouseEvent> | any>();
+  readonly pointerMove = output<MapBrowserEvent<MouseEvent> | any>();
+  readonly postCompose = output<RenderEvent>();
+  readonly postRender = output<MapEvent>();
+  readonly preCompose = output<RenderEvent>();
+  readonly propertyChange = output<ObjectEvent>();
+  readonly singleClick = output<MapBrowserEvent<MouseEvent> | any>();
 
   public instance: Map;
 
@@ -69,15 +69,15 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
 
     return instance;
   }
-  public componentType = 'map';
+  readonly componentType: string = 'map';
 
   // we pass empty arrays to not get default controls/interactions because we have our own directives
-  controls: Control[] = [];
-  interactions: Interaction[] = [];
+  readonly controls: Control[] = [];
+  readonly interactions: Interaction[] = [];
 
   constructor(
-    private host: ElementRef,
-    private ngZone: NgZone,
+    private readonly host: ElementRef,
+    private readonly ngZone: NgZone,
   ) {}
 
   ngOnInit() {

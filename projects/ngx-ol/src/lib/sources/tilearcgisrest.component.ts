@@ -25,33 +25,33 @@ import { SourceComponent } from './source.component';
   ],
 })
 export class SourceTileArcGISRestComponent extends SourceComponent implements OnInit, OnChanges {
-  cacheSize = input<number>();
+  readonly cacheSize = input<number>();
 
-  crossOrigin = input<string | null>();
+  readonly crossOrigin = input<string | null>();
 
-  interpolate = input<boolean>();
+  readonly interpolate = input<boolean>();
 
-  params = input<{ [key: string]: any }>();
+  readonly params = input<{ [key: string]: any }>();
 
-  hidpi = input<boolean>();
+  readonly hidpi = input<boolean>();
 
-  tileGrid = input<TileGrid>();
+  readonly tileGrid = input<TileGrid>();
 
-  projection = input<ProjectionLike>();
+  readonly projection = input<ProjectionLike>();
 
-  reprojectionErrorThreshold = input<number>();
+  readonly reprojectionErrorThreshold = input<number>();
 
-  tileLoadFunction = input<LoadFunction>();
+  readonly tileLoadFunction = input<LoadFunction>();
 
-  url = input<string>();
+  readonly url = input<string>();
 
-  wrapX = input<boolean>();
+  readonly wrapX = input<boolean>();
 
-  transition = input<number>();
+  readonly transition = input<number>();
 
-  urls = input<string[]>();
+  readonly urls = input<string[]>();
 
-  zDirection = input<number | NearestDirectionFunction>();
+  readonly zDirection = input<number | NearestDirectionFunction>();
 
   instance: TileArcGISRest;
 

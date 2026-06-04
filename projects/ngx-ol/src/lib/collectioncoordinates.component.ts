@@ -14,10 +14,12 @@ import { ObjectEvent } from 'ol/Object';
   template: ` <div class="aol-collection-coordinates"></div> `,
 })
 export class CollectionCoordinatesComponent implements OnChanges, OnInit {
-  coordinates = input.required<Coordinate[] | Coordinate[][] | Coordinate[][][] | Array<number>>();
-  srid = input('EPSG:3857');
+  readonly coordinates = input.required<
+    Coordinate[] | Coordinate[][] | Coordinate[][][] | Array<number>
+  >();
+  readonly srid = input('EPSG:3857');
 
-  private host: any;
+  private readonly host: any;
   private readonly map = inject(MapComponent);
   private readonly geometryLinestring = inject(GeometryLinestringComponent, { optional: true });
   private readonly geometryPolygon = inject(GeometryPolygonComponent, { optional: true });

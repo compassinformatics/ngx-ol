@@ -8,13 +8,13 @@ import { ProjectionLike } from 'ol/proj';
   template: '',
 })
 export class FormatGeoJSONComponent {
-  featureClass = input<any>();
-  geometryName = input<string>();
-  dataProjection = input<ProjectionLike>();
-  featureProjection = input<ProjectionLike>();
-  extractGeometryName = input<boolean>();
+  readonly featureClass = input<any>();
+  readonly geometryName = input<string>();
+  readonly dataProjection = input<ProjectionLike>();
+  readonly featureProjection = input<ProjectionLike>();
+  readonly extractGeometryName = input<boolean>();
 
-  public componentType = 'format';
+  readonly componentType: string = 'format';
 
   instance: GeoJSON;
 

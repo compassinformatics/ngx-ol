@@ -18,16 +18,16 @@ import MapEvent from 'ol/MapEvent';
   template: ` <ng-content></ng-content> `,
 })
 export class ControlScaleLineComponent implements OnInit, OnChanges, OnDestroy {
-  className = input<string>();
-  minWidth = input<number>();
-  maxWidth = input<number>();
-  render = input<(event: MapEvent) => void>();
-  target = input<string | HTMLElement>();
-  units = input<Units>();
-  bar = input<boolean>();
-  steps = input<number>();
-  text = input<boolean>();
-  dpi = input<number>();
+  readonly className = input<string>();
+  readonly minWidth = input<number>();
+  readonly maxWidth = input<number>();
+  readonly render = input<(event: MapEvent) => void>();
+  readonly target = input<string | HTMLElement>();
+  readonly units = input<Units>();
+  readonly bar = input<boolean>();
+  readonly steps = input<number>();
+  readonly text = input<boolean>();
+  readonly dpi = input<number>();
 
   instance: ScaleLine;
 

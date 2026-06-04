@@ -17,23 +17,23 @@ import BaseVectorLayer from 'ol/layer/BaseVector';
   template: '',
 })
 export class ModifyInteractionComponent implements OnInit, OnDestroy {
-  condition = input<Condition>();
-  deleteCondition = input<Condition>();
-  insertVertexCondition = input<Condition>();
-  pixelTolerance = input<number>();
-  style = input<StyleLike | FlatStyleLike | undefined>();
-  features = input<Collection<Feature>>();
-  wrapX = input<boolean>();
-  source = input<Vector>();
-  hitDetection = input<boolean | BaseVectorLayer<any, any, any>>();
-  snapToPointer = input<boolean>();
+  readonly condition = input<Condition>();
+  readonly deleteCondition = input<Condition>();
+  readonly insertVertexCondition = input<Condition>();
+  readonly pixelTolerance = input<number>();
+  readonly style = input<StyleLike | FlatStyleLike | undefined>();
+  readonly features = input<Collection<Feature>>();
+  readonly wrapX = input<boolean>();
+  readonly source = input<Vector>();
+  readonly hitDetection = input<boolean | BaseVectorLayer<any, any, any>>();
+  readonly snapToPointer = input<boolean>();
 
-  olChange = output<BaseEvent>();
-  changeActive = output<ObjectEvent>();
-  olError = output<BaseEvent>();
-  modifyEnd = output<ModifyEvent>();
-  modifyStart = output<ModifyEvent>();
-  propertyChange = output<ObjectEvent>();
+  readonly olChange = output<BaseEvent>();
+  readonly changeActive = output<ObjectEvent>();
+  readonly olError = output<BaseEvent>();
+  readonly modifyEnd = output<ModifyEvent>();
+  readonly modifyStart = output<ModifyEvent>();
+  readonly propertyChange = output<ObjectEvent>();
 
   instance: Modify;
 

@@ -14,31 +14,31 @@ import { SourceComponent } from './source.component';
   providers: [{ provide: SourceComponent, useExisting: forwardRef(() => SourceZoomifyComponent) }],
 })
 export class SourceZoomifyComponent extends SourceComponent implements OnInit {
-  cacheSize = input<number>();
+  readonly cacheSize = input<number>();
 
-  crossOrigin = input<string | null>();
+  readonly crossOrigin = input<string | null>();
 
-  interpolate = input<boolean>();
+  readonly interpolate = input<boolean>();
 
-  projection = input<ProjectionLike>();
+  readonly projection = input<ProjectionLike>();
 
-  tilePixelRatio = input<number>();
+  readonly tilePixelRatio = input<number>();
 
-  reprojectionErrorThreshold = input<number>();
+  readonly reprojectionErrorThreshold = input<number>();
 
-  url = input.required<string>();
+  readonly url = input.required<string>();
 
-  tierSizeCalculation = input<TierSizeCalculation>();
+  readonly tierSizeCalculation = input<TierSizeCalculation>();
 
-  size = input.required<Size>();
+  readonly size = input.required<Size>();
 
-  extent = input<Extent>();
+  readonly extent = input<Extent>();
 
-  transition = input<number>();
+  readonly transition = input<number>();
 
-  tileSize = input<number>();
+  readonly tileSize = input<number>();
 
-  zDirection = input<number | NearestDirectionFunction>();
+  readonly zDirection = input<number | NearestDirectionFunction>();
 
   instance: Zoomify;
 

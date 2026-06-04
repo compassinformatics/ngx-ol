@@ -17,10 +17,10 @@ import { MapComponent } from './map.component';
   template: '<ng-content></ng-content>',
 })
 export class GraticuleComponent implements AfterContentInit, OnChanges, OnDestroy {
-  strokeStyle = input<Stroke>();
-  showLabels = input<boolean>();
-  lonLabelPosition = input<number>();
-  latLabelPosition = input<number>();
+  readonly strokeStyle = input<Stroke>();
+  readonly showLabels = input<boolean>();
+  readonly lonLabelPosition = input<number>();
+  readonly latLabelPosition = input<number>();
 
   instance: Graticule;
 
@@ -35,7 +35,7 @@ export class GraticuleComponent implements AfterContentInit, OnChanges, OnDestro
 
     return instance;
   }
-  public componentType = 'graticule';
+  readonly componentType: string = 'graticule';
 
   private readonly map = inject(MapComponent);
 

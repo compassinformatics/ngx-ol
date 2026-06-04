@@ -12,25 +12,25 @@ import { DeclutterMode } from 'ol/style/Style';
   template: ` <div class="aol-style-icon"></div> `,
 })
 export class StyleIconComponent implements OnInit, OnChanges {
-  anchor = input<[number, number]>();
-  anchorXUnits = input<IconAnchorUnits>();
-  anchorYUnits = input<IconAnchorUnits>();
-  anchorOrigin = input<IconOrigin>();
-  color = input<string | Color>();
-  crossOrigin = input<string | null>();
-  img = input<HTMLCanvasElement | HTMLImageElement | ImageBitmap>();
-  displacement = input<number[]>();
-  offset = input<[number, number]>();
-  offsetOrigin = input<IconOrigin>();
-  opacity = input<number>();
-  width = input<number>();
-  height = input<number>();
-  scale = input<number | Size>();
-  declutterMode = input<DeclutterMode>();
-  rotateWithView = input<boolean>();
-  rotation = input<number>();
-  size = input<[number, number]>();
-  src = input<string>();
+  readonly anchor = input<[number, number]>();
+  readonly anchorXUnits = input<IconAnchorUnits>();
+  readonly anchorYUnits = input<IconAnchorUnits>();
+  readonly anchorOrigin = input<IconOrigin>();
+  readonly color = input<string | Color>();
+  readonly crossOrigin = input<string | null>();
+  readonly img = input<HTMLCanvasElement | HTMLImageElement | ImageBitmap>();
+  readonly displacement = input<number[]>();
+  readonly offset = input<[number, number]>();
+  readonly offsetOrigin = input<IconOrigin>();
+  readonly opacity = input<number>();
+  readonly width = input<number>();
+  readonly height = input<number>();
+  readonly scale = input<number | Size>();
+  readonly declutterMode = input<DeclutterMode>();
+  readonly rotateWithView = input<boolean>();
+  readonly rotation = input<number>();
+  readonly size = input<[number, number]>();
+  readonly src = input<string>();
 
   public instance: Icon;
 

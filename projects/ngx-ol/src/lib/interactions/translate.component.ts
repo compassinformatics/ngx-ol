@@ -25,19 +25,19 @@ import { FilterFunction } from 'ol/interaction/Select';
   template: '',
 })
 export class TranslateInteractionComponent implements OnInit, OnChanges, OnDestroy {
-  condition = input<Condition>();
-  features = input<Collection<Feature>>();
-  layers = input<Layer[] | ((layer: Layer) => boolean)>();
-  filter = input<FilterFunction>();
-  hitTolerance = input<number>();
+  readonly condition = input<Condition>();
+  readonly features = input<Collection<Feature>>();
+  readonly layers = input<Layer[] | ((layer: Layer) => boolean)>();
+  readonly filter = input<FilterFunction>();
+  readonly hitTolerance = input<number>();
 
-  olChange = output<BaseEvent>();
-  changeActive = output<ObjectEvent>();
-  olError = output<BaseEvent>();
-  propertyChange = output<ObjectEvent>();
-  translateEnd = output<TranslateEvent>();
-  translateStart = output<TranslateEvent>();
-  translating = output<TranslateEvent>();
+  readonly olChange = output<BaseEvent>();
+  readonly changeActive = output<ObjectEvent>();
+  readonly olError = output<BaseEvent>();
+  readonly propertyChange = output<ObjectEvent>();
+  readonly translateEnd = output<TranslateEvent>();
+  readonly translateStart = output<TranslateEvent>();
+  readonly translating = output<TranslateEvent>();
 
   instance: Translate;
 

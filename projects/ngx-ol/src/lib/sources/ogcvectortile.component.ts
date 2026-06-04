@@ -27,18 +27,18 @@ import FeatureFormat from 'ol/format/Feature';
   ],
 })
 export class SourceOGCVectorTileComponent extends SourceComponent implements AfterContentInit {
-  url = input.required<string>();
-  context = input<any>();
-  mediaType = input<string>();
-  cacheSize = input<number>();
-  overlaps = input<boolean>();
-  projection = input<ProjectionLike>();
-  tileClass = input<typeof VectorTile>();
-  transition = input<number>();
-  wrapX = input<boolean>();
-  zDirection = input<number | NearestDirectionFunction>();
-  collections = input<string[]>();
-  format = input<FeatureFormat<any>>();
+  readonly url = input.required<string>();
+  readonly context = input<any>();
+  readonly mediaType = input<string>();
+  readonly cacheSize = input<number>();
+  readonly overlaps = input<boolean>();
+  readonly projection = input<ProjectionLike>();
+  readonly tileClass = input<typeof VectorTile>();
+  readonly transition = input<number>();
+  readonly wrapX = input<boolean>();
+  readonly zDirection = input<number | NearestDirectionFunction>();
+  readonly collections = input<string[]>();
+  readonly format = input<FeatureFormat<any>>();
 
   protected readonly formatMVTComponent = contentChild(FormatMVTComponent);
   protected readonly formatGeoJSONComponent = contentChild(FormatGeoJSONComponent);

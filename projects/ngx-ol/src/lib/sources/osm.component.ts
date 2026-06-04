@@ -7,14 +7,12 @@ import {
   input,
   output,
   signal,
-  inject,
 } from '@angular/core';
 import OSM from 'ol/source/OSM';
 import { Options } from 'ol/source/OSM';
 import { TileSourceEvent } from 'ol/source/Tile';
 import { LoadFunction } from 'ol/Tile';
 import { NearestDirectionFunction } from 'ol/array';
-import { LayerTileComponent } from '../layers/layertile.component';
 import { SourceComponent } from './source.component';
 import { SourceXYZComponent } from './xyz.component';
 
@@ -24,20 +22,20 @@ import { SourceXYZComponent } from './xyz.component';
   providers: [{ provide: SourceComponent, useExisting: forwardRef(() => SourceOsmComponent) }],
 })
 export class SourceOsmComponent extends SourceXYZComponent implements AfterContentInit, OnChanges {
-  cacheSize = input<number>();
-  crossOrigin = input<null | string>();
-  interpolate = input<boolean>();
-  maxZoom = input<number>();
-  reprojectionErrorThreshold = input<number>();
-  tileLoadFunction = input<LoadFunction>();
-  transition = input<number>();
-  url = input<string>();
-  wrapX = input<boolean>();
-  zDirection = input<number | NearestDirectionFunction>();
+  readonly cacheSize = input<number>();
+  readonly crossOrigin = input<null | string>();
+  readonly interpolate = input<boolean>();
+  readonly maxZoom = input<number>();
+  readonly reprojectionErrorThreshold = input<number>();
+  readonly tileLoadFunction = input<LoadFunction>();
+  readonly transition = input<number>();
+  readonly url = input<string>();
+  readonly wrapX = input<boolean>();
+  readonly zDirection = input<number | NearestDirectionFunction>();
 
-  tileLoadStart = output<TileSourceEvent>();
-  tileLoadEnd = output<TileSourceEvent>();
-  tileLoadError = output<TileSourceEvent>();
+  readonly tileLoadStart = output<TileSourceEvent>();
+  readonly tileLoadEnd = output<TileSourceEvent>();
+  readonly tileLoadError = output<TileSourceEvent>();
 
   instance: OSM;
 

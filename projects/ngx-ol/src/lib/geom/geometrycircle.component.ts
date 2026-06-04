@@ -11,11 +11,11 @@ import { GeometryLayout } from 'ol/geom/Geometry';
   template: ` <ng-content></ng-content> `,
 })
 export class GeometryCircleComponent extends SimpleGeometryComponent implements OnInit, OnChanges {
-  center = input<Coordinate>([0, 0]);
-  layout = input<GeometryLayout>();
-  radius = input<number>();
+  readonly center = input<Coordinate>([0, 0]);
+  readonly layout = input<GeometryLayout>();
+  readonly radius = input<number>();
 
-  public componentType = 'geometry-circle';
+  readonly componentType: string = 'geometry-circle';
   public instance: Circle;
 
   protected readonly _instanceSignal = signal<Circle | undefined>(undefined);

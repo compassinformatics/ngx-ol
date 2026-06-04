@@ -8,13 +8,13 @@ import { Options } from 'ol/format/MVT';
   template: '',
 })
 export class FormatMVTComponent {
-  featureClass = input<FeatureClass>();
-  geometryName = input<string>();
-  layerName = input<string>();
-  layers = input<string[]>();
-  idProperty = input<string>();
+  readonly featureClass = input<FeatureClass>();
+  readonly geometryName = input<string>();
+  readonly layerName = input<string>();
+  readonly layers = input<string[]>();
+  readonly idProperty = input<string>();
 
-  public componentType = 'format';
+  readonly componentType: string = 'format';
 
   instance: MVT;
 

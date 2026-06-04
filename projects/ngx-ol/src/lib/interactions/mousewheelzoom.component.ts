@@ -17,9 +17,9 @@ import { MapComponent } from '../map.component';
   template: '',
 })
 export class MouseWheelZoomInteractionComponent implements OnInit, OnChanges, OnDestroy {
-  duration = input<number>();
-  timeout = input<number>();
-  useAnchor = input<boolean>();
+  readonly duration = input<number>();
+  readonly timeout = input<number>();
+  readonly useAnchor = input<boolean>();
 
   instance: MouseWheelZoom;
 

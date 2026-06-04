@@ -30,20 +30,20 @@ export class SourceImageWMSComponent
   extends SourceComponent
   implements OnChanges, OnDestroy, OnInit
 {
-  crossOrigin = input<null | string>();
-  hidpi = input<boolean>();
-  serverType = input<ServerType>();
-  imageLoadFunction = input<LoadFunction>();
-  interpolate = input<boolean>();
-  params = input<{ [key: string]: any }>();
-  projection = input<ProjectionLike | string>();
-  ratio = input<number>();
-  resolutions = input<Array<number>>();
-  url = input<string>();
+  readonly crossOrigin = input<null | string>();
+  readonly hidpi = input<boolean>();
+  readonly serverType = input<ServerType>();
+  readonly imageLoadFunction = input<LoadFunction>();
+  readonly interpolate = input<boolean>();
+  readonly params = input<{ [key: string]: any }>();
+  readonly projection = input<ProjectionLike | string>();
+  readonly ratio = input<number>();
+  readonly resolutions = input<Array<number>>();
+  readonly url = input<string>();
 
-  imageLoadStart = output<ImageSourceEvent>();
-  imageLoadEnd = output<ImageSourceEvent>();
-  imageLoadError = output<ImageSourceEvent>();
+  readonly imageLoadStart = output<ImageSourceEvent>();
+  readonly imageLoadEnd = output<ImageSourceEvent>();
+  readonly imageLoadError = output<ImageSourceEvent>();
 
   instance: ImageWMS;
 

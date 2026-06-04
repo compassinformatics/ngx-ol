@@ -21,16 +21,16 @@ import { Coordinate } from 'ol/coordinate';
 export class OverlayComponent implements OnInit, OnDestroy, OnChanges {
   protected readonly content = contentChild(ContentComponent);
 
-  id = input<number | string | undefined>();
-  offset = input<number[]>();
-  positioning = input<Positioning>();
-  stopEvent = input<boolean>();
-  insertFirst = input<boolean>();
-  autoPan = input<boolean | PanIntoViewOptions>();
-  position = input<Coordinate | undefined>();
-  className = input<string>();
+  readonly id = input<number | string | undefined>();
+  readonly offset = input<number[]>();
+  readonly positioning = input<Positioning>();
+  readonly stopEvent = input<boolean>();
+  readonly insertFirst = input<boolean>();
+  readonly autoPan = input<boolean | PanIntoViewOptions>();
+  readonly position = input<Coordinate | undefined>();
+  readonly className = input<string>();
 
-  componentType = 'overlay';
+  readonly componentType: string = 'overlay';
   instance: Overlay;
   protected readonly _instanceSignal = signal<Overlay | undefined>(undefined);
   readonly instanceSignal = this._instanceSignal.asReadonly();

@@ -9,13 +9,13 @@ import { Size } from 'ol/size';
   template: '',
 })
 export class TileGridWMTSComponent extends TileGridComponent implements OnInit, OnChanges {
-  origin = input<Coordinate>();
-  origins = input<Coordinate[]>();
-  resolutions = input<number[]>();
-  matrixIds = input.required<string[]>();
-  sizes = input<Size[]>();
-  tileSize = input<number | Size>();
-  tileSizes = input<(number | Size)[]>();
+  readonly origin = input<Coordinate>();
+  readonly origins = input<Coordinate[]>();
+  readonly resolutions = input<number[]>();
+  readonly matrixIds = input.required<string[]>();
+  readonly sizes = input<Size[]>();
+  readonly tileSize = input<number | Size>();
+  readonly tileSizes = input<(number | Size)[]>();
 
   instance: WMTS;
 

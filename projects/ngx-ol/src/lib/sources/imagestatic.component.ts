@@ -26,16 +26,16 @@ import { ImageSourceEvent } from 'ol/source/Image';
   ],
 })
 export class SourceImageStaticComponent extends SourceComponent implements OnInit, OnChanges {
-  projection = input<ProjectionLike | string>();
-  imageExtent = input.required<Extent>();
-  url = input.required<string>();
-  crossOrigin = input<null | string>();
-  imageLoadFunction = input<LoadFunction>();
-  interpolate = input<boolean>();
+  readonly projection = input<ProjectionLike | string>();
+  readonly imageExtent = input.required<Extent>();
+  readonly url = input.required<string>();
+  readonly crossOrigin = input<null | string>();
+  readonly imageLoadFunction = input<LoadFunction>();
+  readonly interpolate = input<boolean>();
 
-  imageLoadStart = output<ImageSourceEvent>();
-  imageLoadEnd = output<ImageSourceEvent>();
-  imageLoadError = output<ImageSourceEvent>();
+  readonly imageLoadStart = output<ImageSourceEvent>();
+  readonly imageLoadEnd = output<ImageSourceEvent>();
+  readonly imageLoadError = output<ImageSourceEvent>();
 
   instance: ImageStatic;
 

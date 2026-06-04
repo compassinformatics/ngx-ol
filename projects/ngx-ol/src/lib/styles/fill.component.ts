@@ -12,7 +12,7 @@ import { ColorLike, PatternDescriptor } from 'ol/colorlike';
   template: ` <div class="aol-style-fill"></div> `,
 })
 export class StyleFillComponent implements OnInit, OnChanges {
-  color = input<Color | ColorLike | PatternDescriptor | null>();
+  readonly color = input<Color | ColorLike | PatternDescriptor | null>();
 
   public instance: Fill;
 

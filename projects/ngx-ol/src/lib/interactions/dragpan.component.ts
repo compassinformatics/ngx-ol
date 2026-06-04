@@ -10,8 +10,8 @@ import { Condition } from 'ol/events/condition';
   template: '',
 })
 export class DragPanInteractionComponent implements OnInit, OnDestroy {
-  condition = input<Condition>();
-  kinetic = input<Kinetic>();
+  readonly condition = input<Condition>();
+  readonly kinetic = input<Kinetic>();
 
   instance: DragPan;
 

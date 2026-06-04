@@ -9,7 +9,7 @@ import MultiPoint from 'ol/geom/MultiPoint';
   template: ` <ng-content></ng-content> `,
 })
 export class GeometryMultiPointComponent extends SimpleGeometryComponent implements OnInit {
-  public componentType = 'geometry-multipoint';
+  readonly componentType: string = 'geometry-multipoint';
   public instance: MultiPoint;
 
   protected readonly _instanceSignal = signal<MultiPoint | undefined>(undefined);

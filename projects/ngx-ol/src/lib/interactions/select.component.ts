@@ -25,22 +25,22 @@ import BaseEvent from 'ol/events/Event';
   template: '',
 })
 export class SelectInteractionComponent implements OnInit, OnChanges, OnDestroy {
-  addCondition = input<Condition>();
-  condition = input<Condition>();
-  layers = input<Layer[] | ((layer: Layer) => boolean)>();
-  style = input<StyleLike | null | undefined>();
-  removeCondition = input<Condition>();
-  toggleCondition = input<Condition>();
-  multi = input<boolean>();
-  features = input<Collection<Feature>>();
-  filter = input<FilterFunction>();
-  hitTolerance = input<number>();
+  readonly addCondition = input<Condition>();
+  readonly condition = input<Condition>();
+  readonly layers = input<Layer[] | ((layer: Layer) => boolean)>();
+  readonly style = input<StyleLike | null | undefined>();
+  readonly removeCondition = input<Condition>();
+  readonly toggleCondition = input<Condition>();
+  readonly multi = input<boolean>();
+  readonly features = input<Collection<Feature>>();
+  readonly filter = input<FilterFunction>();
+  readonly hitTolerance = input<number>();
 
-  olChange = output<BaseEvent>();
-  changeActive = output<ObjectEvent>();
-  olError = output<BaseEvent>();
-  propertyChange = output<ObjectEvent>();
-  olSelect = output<SelectEvent>();
+  readonly olChange = output<BaseEvent>();
+  readonly changeActive = output<ObjectEvent>();
+  readonly olError = output<BaseEvent>();
+  readonly propertyChange = output<ObjectEvent>();
+  readonly olSelect = output<SelectEvent>();
 
   instance: Select;
 

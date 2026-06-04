@@ -9,13 +9,13 @@ import { MapComponent } from '../map.component';
   template: '',
 })
 export class LinkInteractionComponent implements OnInit, OnDestroy {
-  animate = input<boolean | AnimationOptions>();
+  readonly animate = input<boolean | AnimationOptions>();
 
-  params = input<Params[]>();
+  readonly params = input<Params[]>();
 
-  replace = input<boolean>();
+  readonly replace = input<boolean>();
 
-  prefix = input<string>();
+  readonly prefix = input<string>();
 
   instance: Link;
 

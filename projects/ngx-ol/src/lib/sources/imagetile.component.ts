@@ -26,33 +26,33 @@ import { SourceComponent } from './source.component';
   ],
 })
 export class SourceImageTileComponent extends SourceComponent implements OnInit, OnChanges {
-  url = input<UrlLike>();
+  readonly url = input<UrlLike>();
 
-  loader = input<Loader>();
+  readonly loader = input<Loader>();
 
-  maxZoom = input<number>();
+  readonly maxZoom = input<number>();
 
-  minZoom = input<number>();
+  readonly minZoom = input<number>();
 
-  tileSize = input<number | Size>();
+  readonly tileSize = input<number | Size>();
 
-  gutter = input<number>();
+  readonly gutter = input<number>();
 
-  maxResolution = input<number>();
+  readonly maxResolution = input<number>();
 
-  projection = input<ProjectionLike>();
+  readonly projection = input<ProjectionLike>();
 
-  tileGrid = input<TileGrid>();
+  readonly tileGrid = input<TileGrid>();
 
-  state = input<State>();
+  readonly state = input<State>();
 
-  wrapX = input<boolean>();
+  readonly wrapX = input<boolean>();
 
-  transition = input<number>();
+  readonly transition = input<number>();
 
-  interpolate = input<boolean>();
+  readonly interpolate = input<boolean>();
 
-  crossOrigin = input<CrossOriginAttribute>();
+  readonly crossOrigin = input<CrossOriginAttribute>();
 
   instance: ImageTileSource;
 

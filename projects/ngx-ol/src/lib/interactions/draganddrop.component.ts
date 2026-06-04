@@ -10,9 +10,9 @@ import { ProjectionLike } from 'ol/proj';
   template: '',
 })
 export class DragAndDropInteractionComponent implements OnInit, OnDestroy {
-  formatConstructors = input<FeatureFormat[]>();
-  projection = input<ProjectionLike>();
-  target = input<HTMLElement>();
+  readonly formatConstructors = input<FeatureFormat[]>();
+  readonly projection = input<ProjectionLike>();
+  readonly target = input<HTMLElement>();
 
   instance: DragAndDrop;
 

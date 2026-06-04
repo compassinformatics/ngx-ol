@@ -28,14 +28,14 @@ import { SourceComponent } from './source.component';
   ],
 })
 export class SourceRasterComponent extends SourceComponent implements AfterContentInit, OnChanges {
-  operation = input<Operation>();
-  threads = input<number>();
-  lib = input<any>();
-  operationType = input<'pixel' | 'image'>();
-  resolutions = input<number[] | null>();
+  readonly operation = input<Operation>();
+  readonly threads = input<number>();
+  readonly lib = input<any>();
+  readonly operationType = input<'pixel' | 'image'>();
+  readonly resolutions = input<number[] | null>();
 
-  beforeOperations = output<RasterSourceEvent>();
-  afterOperations = output<RasterSourceEvent>();
+  readonly beforeOperations = output<RasterSourceEvent>();
+  readonly afterOperations = output<RasterSourceEvent>();
 
   instance: Raster;
 

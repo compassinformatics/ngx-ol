@@ -15,43 +15,43 @@ import { SourceComponent } from './source.component';
   providers: [{ provide: SourceComponent, useExisting: forwardRef(() => SourceIIIFComponent) }],
 })
 export class SourceIIIFComponent extends SourceComponent implements OnInit {
-  cacheSize = input<number>();
+  readonly cacheSize = input<number>();
 
-  crossOrigin = input<string | null>();
+  readonly crossOrigin = input<string | null>();
 
-  extent = input<Extent>();
+  readonly extent = input<Extent>();
 
-  format = input<string>();
+  readonly format = input<string>();
 
-  interpolate = input<boolean>();
+  readonly interpolate = input<boolean>();
 
-  projection = input<ProjectionLike>();
+  readonly projection = input<ProjectionLike>();
 
-  quality = input<string>();
+  readonly quality = input<string>();
 
-  reprojectionErrorThreshold = input<number>();
+  readonly reprojectionErrorThreshold = input<number>();
 
-  resolutions = input<number[]>();
+  readonly resolutions = input<number[]>();
 
-  size = input.required<Size>();
+  readonly size = input.required<Size>();
 
-  sizes = input<Size[]>();
+  readonly sizes = input<Size[]>();
 
-  state = input<State>();
+  readonly state = input<State>();
 
-  supports = input<string[]>();
+  readonly supports = input<string[]>();
 
-  tilePixelRatio = input<number>();
+  readonly tilePixelRatio = input<number>();
 
-  tileSize = input<number | Size>();
+  readonly tileSize = input<number | Size>();
 
-  transition = input<number>();
+  readonly transition = input<number>();
 
-  url = input<string>();
+  readonly url = input<string>();
 
-  version = input<string>();
+  readonly version = input<string>();
 
-  zDirection = input<number | NearestDirectionFunction>();
+  readonly zDirection = input<number | NearestDirectionFunction>();
 
   instance: IIIF;
 

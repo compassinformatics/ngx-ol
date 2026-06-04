@@ -23,23 +23,23 @@ import VectorSource from 'ol/source/Vector';
   template: ` <ng-content></ng-content> `,
 })
 export class LayerVectorComponent extends LayerComponent implements OnInit, OnDestroy, OnChanges {
-  renderOrder = input<OrderFunction>();
+  readonly renderOrder = input<OrderFunction>();
 
-  renderBuffer = input<number>();
+  readonly renderBuffer = input<number>();
 
-  style = input<StyleLike | FlatStyleLike | null | undefined>();
+  readonly style = input<StyleLike | FlatStyleLike | null | undefined>();
 
-  updateWhileAnimating = input<boolean>();
+  readonly updateWhileAnimating = input<boolean>();
 
-  updateWhileInteracting = input<boolean>();
+  readonly updateWhileInteracting = input<boolean>();
 
-  declutter = input<boolean | string | number>();
+  readonly declutter = input<boolean | string | number>();
 
-  background = input<BackgroundColor>();
+  readonly background = input<BackgroundColor>();
 
-  properties = input<Record<string, any>>();
+  readonly properties = input<Record<string, any>>();
 
-  source = input<VectorSource>();
+  readonly source = input<VectorSource>();
 
   constructor() {
     super(inject(LayerGroupComponent, { optional: true }) || inject(MapComponent));

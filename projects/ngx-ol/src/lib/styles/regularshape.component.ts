@@ -21,29 +21,29 @@ import { StyleComponent } from './style.component';
   template: ` <ng-content></ng-content> `,
 })
 export class StyleRegularShapeComponent implements AfterContentInit, OnChanges, OnDestroy {
-  fill = input<Fill>();
+  readonly fill = input<Fill>();
 
-  points = input.required<number>();
+  readonly points = input.required<number>();
 
-  radius = input.required<number>();
+  readonly radius = input.required<number>();
 
-  radius2 = input<number>();
+  readonly radius2 = input<number>();
 
-  angle = input<number>();
+  readonly angle = input<number>();
 
-  displacement = input<number[]>();
+  readonly displacement = input<number[]>();
 
-  stroke = input<Stroke>();
+  readonly stroke = input<Stroke>();
 
-  rotation = input<number>();
+  readonly rotation = input<number>();
 
-  rotateWithView = input<boolean>();
+  readonly rotateWithView = input<boolean>();
 
-  scale = input<number | Size>();
+  readonly scale = input<number | Size>();
 
-  declutterMode = input<DeclutterMode>();
+  readonly declutterMode = input<DeclutterMode>();
 
-  public componentType = 'style-regularshape';
+  readonly componentType: string = 'style-regularshape';
   public instance: RegularShape;
 
   protected readonly _instanceSignal = signal<RegularShape | undefined>(undefined);

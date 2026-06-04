@@ -12,11 +12,11 @@ import { ObjectEvent } from 'ol/Object';
   template: ` <div class="aol-coordinate"></div> `,
 })
 export class CoordinateComponent implements OnChanges, OnInit {
-  x = input.required<number>();
-  y = input.required<number>();
-  srid = input('EPSG:3857');
+  readonly x = input.required<number>();
+  readonly y = input.required<number>();
+  readonly srid = input('EPSG:3857');
 
-  private host: any;
+  private readonly host: any;
   private readonly map = inject(MapComponent);
   private readonly viewHost = inject(ViewComponent, { optional: true });
   private readonly geometryPointHost = inject(GeometryPointComponent, { optional: true });

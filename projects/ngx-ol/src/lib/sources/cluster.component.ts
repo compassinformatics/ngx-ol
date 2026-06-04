@@ -26,11 +26,11 @@ import { LayerVectorImageComponent } from '../layers/layervectorimage.component'
   providers: [{ provide: SourceComponent, useExisting: forwardRef(() => SourceClusterComponent) }],
 })
 export class SourceClusterComponent extends SourceComponent implements AfterContentInit, OnChanges {
-  distance = input<number>();
-  minDistance = input<number>();
-  geometryFunction = input<(feature: Feature) => Point>();
-  wrapX = input<boolean>();
-  createCluster = input<any>();
+  readonly distance = input<number>();
+  readonly minDistance = input<number>();
+  readonly geometryFunction = input<(feature: Feature) => Point>();
+  readonly wrapX = input<boolean>();
+  readonly createCluster = input<any>();
 
   protected readonly sourceVectorComponent = contentChild(SourceVectorComponent);
 
