@@ -87,8 +87,6 @@ export class SourceXYZComponent extends SourceComponent implements AfterContentI
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    const properties: { [index: string]: any } = {};
-
     if (!this.instance) {
       return;
     }
@@ -111,16 +109,16 @@ export class SourceXYZComponent extends SourceComponent implements AfterContentI
               this.instance.setUrls(changes[key].currentValue);
             }
             continue;
+          case 'url':
+            if (changes[key].currentValue !== undefined) {
+              this.instance.setUrl(changes[key].currentValue);
+              continue;
+            }
+            break;
           default:
             break;
         }
-        properties[key] = changes[key].currentValue;
       }
-    }
-
-    this.instance.setProperties(properties, false);
-    if (changes.hasOwnProperty('url')) {
-      this.init();
     }
   }
 

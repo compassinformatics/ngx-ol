@@ -25,7 +25,7 @@ class SourceImageWMSHostComponent {
   center = [0, 0];
   zoom = 2;
   url = 'https://example.com/wms';
-  params = signal({ LAYERS: 'basic' });
+  params = signal<Record<string, string>>({ LAYERS: 'basic', TIME: '2026-01-01' });
   loadStarts = 0;
 
   @ViewChild(SourceImageWMSComponent)
@@ -57,16 +57,39 @@ describe('SourceImageWMSComponent', () => {
     );
     expect(fixture.componentInstance.source.instance.getParams()).toMatchObject({
       LAYERS: 'basic',
+      TIME: '2026-01-01',
     });
 
     fixture.componentInstance.source.instance.dispatchEvent('imageloadstart');
     expect(fixture.componentInstance.loadStarts).toBe(1);
 
-    fixture.componentInstance.params.set({ LAYERS: 'updated' });
+    fixture.componentInstance.params.set({ LAYERS: 'updated', TIME: '2026-01-01' });
     fixture.detectChanges(false);
 
     expect(fixture.componentInstance.source.instance.getParams()).toMatchObject({
       LAYERS: 'updated',
+      TIME: '2026-01-01',
     });
+  });
+
+  it('replaces the image WMS source and keeps outputs bound when params are removed', () => {
+    const source = fixture.componentInstance.source.instance;
+
+    fixture.componentInstance.params.set({ LAYERS: 'updated' });
+    fixture.detectChanges(false);
+
+    expect(fixture.componentInstance.source.instance).not.toBe(source);
+    expect(fixture.componentInstance.layer.instance.getSource()).toBe(
+      fixture.componentInstance.source.instance,
+    );
+    const params = fixture.componentInstance.source.instance.getParams();
+
+    expect(params).toMatchObject({
+      LAYERS: 'updated',
+    });
+    expect(params['TIME']).toBeUndefined();
+
+    fixture.componentInstance.source.instance.dispatchEvent('imageloadstart');
+    expect(fixture.componentInstance.loadStarts).toBe(1);
   });
 });

@@ -78,24 +78,30 @@ export class SourceTileWMTSComponent
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    const properties: { [index: string]: any } = {};
     if (!this.instance) {
       return;
     }
     super.ngOnChanges(changes);
-    for (const key in changes) {
-      if (changes.hasOwnProperty(key)) {
-        switch (key) {
-          case 'url':
-            this.setLayerSource();
-            break;
-          default:
-            break;
-        }
-        properties[key] = changes[key].currentValue;
-      }
+    if (changes.hasOwnProperty('url') || this.hasRemovedDimensionKeys(changes)) {
+      this.setLayerSource();
+      return;
     }
-    this.instance.setProperties(properties, false);
+    if (changes.hasOwnProperty('dimensions')) {
+      this.instance.updateDimensions(changes.dimensions.currentValue ?? {});
+    }
+  }
+
+  private hasRemovedDimensionKeys(changes: SimpleChanges): boolean {
+    if (!changes.dimensions || changes.dimensions.firstChange) {
+      return false;
+    }
+
+    const previousDimensions = changes.dimensions.previousValue ?? {};
+    const nextDimensions = changes.dimensions.currentValue ?? {};
+
+    return Object.keys(previousDimensions).some(
+      (key) => !Object.prototype.hasOwnProperty.call(nextDimensions, key),
+    );
   }
 
   setLayerSource(): void {
@@ -130,8 +136,8 @@ export class SourceTileWMTSComponent
       style: this.style(),
       tileClass: this.tileClass(),
       tilePixelRatio: this.tilePixelRatio(),
-      format: this.format(),
       version: this.version(),
+      format: this.format(),
       matrixSet: this.matrixSet(),
       dimensions: this.dimensions(),
       url: this.url(),

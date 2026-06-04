@@ -71,9 +71,11 @@ export class SourceVectorComponent extends SourceComponent implements OnInit, On
     if (this.instance && changes.url?.currentValue) {
       this.instance.setUrl(changes.url.currentValue);
     }
-    if (features?.currentValue && this.instance) {
+    if (features && this.instance) {
       this.instance.clear();
-      this.instance.addFeatures(features.currentValue);
+      if (features.currentValue) {
+        this.instance.addFeatures(features.currentValue);
+      }
     }
   }
 

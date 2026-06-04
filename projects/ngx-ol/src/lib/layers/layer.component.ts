@@ -80,7 +80,6 @@ export abstract class LayerComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    const properties: { [index: string]: any } = {};
     if (!this.instance) {
       return;
     }
@@ -103,6 +102,10 @@ export abstract class LayerComponent implements OnInit, OnChanges, OnDestroy {
           if (value) {
             this.instance.on('postrender', value);
           }
+          continue;
+        }
+        if (key === 'properties') {
+          this.syncProperties(value, changes[key].previousValue);
           continue;
         }
         switch (key) {
@@ -131,12 +134,25 @@ export abstract class LayerComponent implements OnInit, OnChanges, OnDestroy {
             this.instance.setZIndex(value);
             continue;
           default:
-            properties[key] = value;
             break;
         }
       }
     }
-    // console.log('changes detected in aol-layer, setting new properties: ', properties);
-    this.instance.setProperties(properties, false);
+  }
+
+  private syncProperties(
+    nextProperties?: Record<string, any>,
+    previousProperties?: Record<string, any>,
+  ) {
+    if (previousProperties) {
+      const nextKeys = new Set(Object.keys(nextProperties ?? {}));
+      Object.keys(previousProperties)
+        .filter((key) => !nextKeys.has(key))
+        .forEach((key) => this.instance.unset(key, false));
+    }
+
+    if (nextProperties) {
+      this.instance.setProperties(nextProperties, false);
+    }
   }
 }

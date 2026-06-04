@@ -4,6 +4,8 @@ import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 import { AngularOpenlayersModule } from '../../public-api';
 import { StyleComponent } from './style.component';
 import { StyleRegularShapeComponent } from './regularshape.component';
+import Fill from 'ol/style/Fill';
+import Stroke from 'ol/style/Stroke';
 
 @Component({
   template: `
@@ -17,12 +19,14 @@ import { StyleRegularShapeComponent } from './regularshape.component';
                 [angle]="angle()"
                 [declutterMode]="declutterMode()"
                 [displacement]="displacement()"
+                [fill]="fill()"
                 [points]="points()"
                 [radius]="radius()"
                 [radius2]="radius2()"
                 [rotateWithView]="rotateWithView()"
                 [rotation]="rotation()"
                 [scale]="scale()"
+                [stroke]="stroke()"
               ></aol-style-regularshape>
             </aol-style>
           </aol-feature>
@@ -39,12 +43,14 @@ class StyleRegularShapeHostComponent {
   angle = signal(0);
   declutterMode = signal<'declutter' | 'obstacle' | 'none'>('declutter');
   displacement = signal([0, 0]);
+  fill = signal(new Fill({ color: '#ff0000' }));
   points = signal(5);
   radius = signal(14);
   radius2 = signal(7);
   rotateWithView = signal(false);
   rotation = signal(0);
   scale = signal(1);
+  stroke = signal(new Stroke({ color: '#0000ff', width: 2 }));
 
   @ViewChild(StyleRegularShapeComponent)
   regularShape!: StyleRegularShapeComponent;
@@ -126,5 +132,21 @@ describe('StyleRegularShapeComponent', () => {
     expectRecreatedAfter(() => fixture.componentInstance.rotateWithView.set(true));
     expectRecreatedAfter(() => fixture.componentInstance.scale.set(2));
     expectRecreatedAfter(() => fixture.componentInstance.declutterMode.set('obstacle'));
+  });
+
+  it('updates fill and stroke without recreating the regular shape', () => {
+    const previousShape = fixture.componentInstance.regularShape.instance;
+    const nextFill = new Fill({ color: '#00ff00' });
+    const nextStroke = new Stroke({ color: '#111111', width: 4 });
+
+    fixture.componentInstance.fill.set(nextFill);
+    fixture.componentInstance.stroke.set(nextStroke);
+
+    fixture.detectChanges(false);
+
+    expect(fixture.componentInstance.regularShape.instance).toBe(previousShape);
+    expect(fixture.componentInstance.regularShape.instance.getFill()).toBe(nextFill);
+    expect(fixture.componentInstance.regularShape.instance.getStroke()).toBe(nextStroke);
+    expect(fixture.componentInstance.style.instance.getImage()).toBe(previousShape);
   });
 });

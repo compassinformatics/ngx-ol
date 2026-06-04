@@ -3,6 +3,7 @@ import {
   forwardRef,
   Host,
   OnChanges,
+  OnDestroy,
   OnInit,
   SimpleChanges,
   input,
@@ -16,6 +17,8 @@ import { SourceComponent } from './source.component';
 import { ProjectionLike } from 'ol/proj';
 import { LoadFunction } from 'ol/Image';
 import { ImageSourceEvent } from 'ol/source/Image';
+import type { EventsKey } from 'ol/events';
+import { unByKey } from 'ol/Observable';
 
 @Component({
   selector: 'aol-source-imagearcgisrest',
@@ -24,7 +27,10 @@ import { ImageSourceEvent } from 'ol/source/Image';
     { provide: SourceComponent, useExisting: forwardRef(() => SourceImageArcGISRestComponent) },
   ],
 })
-export class SourceImageArcGISRestComponent extends SourceComponent implements OnInit, OnChanges {
+export class SourceImageArcGISRestComponent
+  extends SourceComponent
+  implements OnInit, OnChanges, OnDestroy
+{
   projection = input<ProjectionLike | string>();
   url = input<string>();
   crossOrigin = input<string | null>();
@@ -45,6 +51,8 @@ export class SourceImageArcGISRestComponent extends SourceComponent implements O
 
   readonly instanceSignal = this._instanceSignal.asReadonly();
 
+  private eventKeys: EventsKey[] = [];
+
   protected setInstance(instance: ImageArcGISRest): ImageArcGISRest {
     this.instance = instance;
 
@@ -57,21 +65,22 @@ export class SourceImageArcGISRestComponent extends SourceComponent implements O
   }
 
   ngOnInit() {
-    this.setInstance(new ImageArcGISRest(this.createOptions()));
-    this.host.instance.setSource(this.instance);
-    this.instance.on('imageloadstart', (event: ImageSourceEvent) =>
-      this.imageLoadStart.emit(event),
-    );
-    this.instance.on('imageloadend', (event: ImageSourceEvent) => this.imageLoadEnd.emit(event));
-    this.instance.on('imageloaderror', (event: ImageSourceEvent) =>
-      this.imageLoadError.emit(event),
-    );
+    this.setLayerSource();
   }
 
   ngOnChanges(changes: SimpleChanges) {
     super.ngOnChanges(changes);
+    if (!this.instance) {
+      return;
+    }
+
+    if (this.hasRemovedParamKeys(changes)) {
+      this.setLayerSource();
+      return;
+    }
+
     if (this.instance && changes.hasOwnProperty('params')) {
-      this.instance.updateParams(this.params());
+      this.instance.updateParams(this.params() ?? {});
     }
     if (this.instance && changes.imageLoadFunction?.currentValue) {
       this.instance.setImageLoadFunction(changes.imageLoadFunction.currentValue);
@@ -82,6 +91,11 @@ export class SourceImageArcGISRestComponent extends SourceComponent implements O
     if (this.instance && changes.resolutions) {
       this.instance.setResolutions(changes.resolutions.currentValue);
     }
+  }
+
+  ngOnDestroy() {
+    this.unbindInstanceEvents();
+    super.ngOnDestroy();
   }
 
   private createOptions(): Options {
@@ -97,5 +111,46 @@ export class SourceImageArcGISRestComponent extends SourceComponent implements O
       ratio: this.ratio(),
       resolutions: this.resolutions(),
     };
+  }
+
+  private setLayerSource(): void {
+    this.unbindInstanceEvents();
+    this.setInstance(new ImageArcGISRest(this.createOptions()));
+    this.host.instance.setSource(this.instance);
+    this.bindInstanceEvents();
+  }
+
+  private bindInstanceEvents(): void {
+    this.eventKeys = [
+      this.instance.on('imageloadstart', (event: ImageSourceEvent) =>
+        this.imageLoadStart.emit(event),
+      ),
+      this.instance.on('imageloadend', (event: ImageSourceEvent) => this.imageLoadEnd.emit(event)),
+      this.instance.on('imageloaderror', (event: ImageSourceEvent) =>
+        this.imageLoadError.emit(event),
+      ),
+    ];
+  }
+
+  private unbindInstanceEvents(): void {
+    if (!this.eventKeys.length) {
+      return;
+    }
+
+    unByKey(this.eventKeys);
+    this.eventKeys = [];
+  }
+
+  private hasRemovedParamKeys(changes: SimpleChanges): boolean {
+    if (!changes.params || changes.params.firstChange) {
+      return false;
+    }
+
+    const previousParams = changes.params.previousValue ?? {};
+    const nextParams = changes.params.currentValue ?? {};
+
+    return Object.keys(previousParams).some(
+      (key) => !Object.prototype.hasOwnProperty.call(nextParams, key),
+    );
   }
 }

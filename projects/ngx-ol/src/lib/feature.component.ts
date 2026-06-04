@@ -44,15 +44,9 @@ export class FeatureComponent implements OnInit, OnDestroy, OnChanges {
 
   ngOnInit() {
     this.setInstance(this.feature() || new Feature());
-    if (this.properties()) {
-      this.instance.setProperties(this.properties()!);
-    }
-    if (this.id() !== undefined) {
-      this.instance.setId(this.id());
-    }
-    if (this.clickable()) {
-      this.instance.set('__aol-feature', this);
-    }
+    this.syncProperties(this.properties());
+    this.syncId();
+    this.syncClickable();
     this.host.instance.addFeature(this.instance);
   }
 
@@ -62,23 +56,52 @@ export class FeatureComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    const { feature, clickable } = changes;
-    if (this.instance) {
-      this.instance.setId(this.id());
-    }
+    const { feature, clickable, id, properties } = changes;
 
     if (feature && !feature.firstChange) {
       this.instance.set('__aol-feature', null);
       this.host.instance.removeFeature(this.instance);
-      this.setInstance(feature.currentValue);
-      if (this.clickable()) {
-        this.instance.set('__aol-feature', this);
-      }
+      this.setInstance(feature.currentValue || new Feature());
+      this.syncProperties(this.properties());
+      this.syncId();
+      this.syncClickable();
       this.host.instance.addFeature(this.instance);
     }
 
+    if (id && !id.firstChange) {
+      this.syncId();
+    }
+
+    if (properties && !properties.firstChange && !(feature && !feature.firstChange)) {
+      this.syncProperties(properties.currentValue, properties.previousValue);
+    }
+
     if (clickable && !clickable.firstChange) {
-      this.instance.set('__aol-feature', clickable.currentValue ? this : null);
+      this.syncClickable();
+    }
+  }
+
+  private syncId() {
+    this.instance.setId(this.id());
+  }
+
+  private syncClickable() {
+    this.instance.set('__aol-feature', this.clickable() ? this : null);
+  }
+
+  private syncProperties(
+    nextProperties?: Record<any, any>,
+    previousProperties?: Record<any, any>,
+  ) {
+    if (previousProperties) {
+      const nextKeys = new Set(Object.keys(nextProperties ?? {}));
+      Object.keys(previousProperties)
+        .filter((key) => !nextKeys.has(key))
+        .forEach((key) => this.instance.unset(key));
+    }
+
+    if (nextProperties) {
+      this.instance.setProperties(nextProperties);
     }
   }
 }

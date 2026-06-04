@@ -14,6 +14,8 @@ import { ObjectEvent } from 'ol/Object';
 import { Extent } from 'ol/extent';
 import { Coordinate } from 'ol/coordinate';
 import BaseEvent from 'ol/events/Event';
+import type { EventsKey } from 'ol/events';
+import { unByKey } from 'ol/Observable';
 import { ProjectionLike } from 'ol/proj';
 
 @Component({
@@ -66,26 +68,16 @@ export class ViewComponent implements OnInit, OnChanges, OnDestroy {
     return instance;
   }
   public componentType = 'view';
+  private eventKeys: EventsKey[] = [];
 
   constructor(private host: MapComponent) {}
 
   ngOnInit() {
     // console.log('creating ol.View instance with: ', this);
-    this.setInstance(new View(this.createOptions()));
-    this.host.instance.setView(this.instance);
-
-    this.instance.on('change', (event: BaseEvent) => this.olChange.emit(event));
-    this.instance.on('change:center', (event: ObjectEvent) => this.changeCenter.emit(event));
-    this.instance.on('change:resolution', (event: ObjectEvent) =>
-      this.changeResolution.emit(event),
-    );
-    this.instance.on('change:rotation', (event: ObjectEvent) => this.changeRotation.emit(event));
-    this.instance.on('error', (event: BaseEvent) => this.olError.emit(event));
-    this.instance.on('propertychange', (event: ObjectEvent) => this.propertyChange.emit(event));
+    this.initializeInstance();
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    const properties: { [index: string]: any } = {};
     if (!this.instance) {
       return;
     }
@@ -103,8 +95,7 @@ export class ViewComponent implements OnInit, OnChanges, OnDestroy {
             }
             break;
           case 'projection':
-            this.setInstance(new View(this.createOptions()));
-            this.host.instance.setView(this.instance);
+            this.initializeInstance();
             break;
           case 'center':
             /** Work-around: setting the center via setProperties does not work. */
@@ -128,17 +119,40 @@ export class ViewComponent implements OnInit, OnChanges, OnDestroy {
           default:
             break;
         }
-        if (key !== 'zoomAnimation') {
-          properties[key] = changes[key].currentValue;
-        }
       }
     }
-    // console.log('changes detected in aol-view, setting new properties: ', properties);
-    this.instance.setProperties(properties, false);
   }
 
   ngOnDestroy() {
+    this.unbindInstanceEvents();
     // console.log('removing aol-view');
+  }
+
+  private initializeInstance() {
+    this.unbindInstanceEvents();
+    this.setInstance(new View(this.createOptions()));
+    this.host.instance.setView(this.instance);
+    this.bindInstanceEvents();
+  }
+
+  private bindInstanceEvents() {
+    this.eventKeys = [
+      this.instance.on('change', (event: BaseEvent) => this.olChange.emit(event)),
+      this.instance.on('change:center', (event: ObjectEvent) => this.changeCenter.emit(event)),
+      this.instance.on('change:resolution', (event: ObjectEvent) =>
+        this.changeResolution.emit(event),
+      ),
+      this.instance.on('change:rotation', (event: ObjectEvent) => this.changeRotation.emit(event)),
+      this.instance.on('error', (event: BaseEvent) => this.olError.emit(event)),
+      this.instance.on('propertychange', (event: ObjectEvent) => this.propertyChange.emit(event)),
+    ];
+  }
+
+  private unbindInstanceEvents() {
+    if (this.eventKeys.length) {
+      unByKey(this.eventKeys);
+      this.eventKeys = [];
+    }
   }
 
   private createOptions(): ViewOptions {

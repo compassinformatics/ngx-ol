@@ -30,7 +30,7 @@ class FeatureHostComponent {
   zoom = 2;
   feature = signal(new Feature());
   id = signal('feature-1');
-  properties = signal({ name: 'test' });
+  properties = signal<Record<string, string>>({ name: 'test' });
   clickable = signal(true);
 
   @ViewChild(FeatureComponent)
@@ -85,6 +85,22 @@ describe('FeatureComponent', () => {
     );
   });
 
+  it('updates and removes feature properties when template bindings change', () => {
+    fixture.componentInstance.properties.set({ name: 'updated', category: 'road' });
+
+    fixture.detectChanges();
+
+    expect(fixture.componentInstance.feature().get('name')).toBe('updated');
+    expect(fixture.componentInstance.feature().get('category')).toBe('road');
+
+    fixture.componentInstance.properties.set({ category: 'river' });
+
+    fixture.detectChanges();
+
+    expect(fixture.componentInstance.feature().get('name')).toBeUndefined();
+    expect(fixture.componentInstance.feature().get('category')).toBe('river');
+  });
+
   it('replaces the OpenLayers feature in the vector source when the binding changes', () => {
     const previousFeature = fixture.componentInstance.feature();
     const nextFeature = new Feature();
@@ -97,5 +113,7 @@ describe('FeatureComponent', () => {
     expect(fixture.componentInstance.source.instance.getFeatures()).toContain(nextFeature);
     expect(previousFeature.get('__aol-feature')).toBeNull();
     expect(nextFeature.get('__aol-feature')).toBe(fixture.componentInstance.featureComponent);
+    expect(nextFeature.getId()).toBe('feature-1');
+    expect(nextFeature.get('name')).toBe('test');
   });
 });

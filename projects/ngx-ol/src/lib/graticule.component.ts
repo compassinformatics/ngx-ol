@@ -21,13 +21,13 @@ export class GraticuleComponent implements AfterContentInit, OnChanges, OnDestro
   lonLabelPosition = input<number>();
   latLabelPosition = input<number>();
 
-  instance: any;
+  instance: Graticule;
 
-  protected readonly _instanceSignal = signal<any | undefined>(undefined);
+  protected readonly _instanceSignal = signal<Graticule | undefined>(undefined);
 
   readonly instanceSignal = this._instanceSignal.asReadonly();
 
-  protected setInstance(instance: any): any {
+  protected setInstance(instance: Graticule): Graticule {
     this.instance = instance;
 
     this._instanceSignal.set(instance);
@@ -39,37 +39,30 @@ export class GraticuleComponent implements AfterContentInit, OnChanges, OnDestro
   constructor(private map: MapComponent) {}
 
   ngOnChanges(changes: SimpleChanges) {
-    const properties: { [index: string]: any } = {};
-
     if (!this.instance) {
       return;
     }
 
-    for (const key in changes) {
-      if (changes.hasOwnProperty(key)) {
-        properties[key] = changes[key].currentValue;
-      }
-    }
-
-    if (properties) {
-      this.setInstance(new Graticule(properties));
-    }
+    this.instance.setMap(null);
+    this.setInstance(new Graticule(this.createOptions()));
     this.instance.setMap(this.map.instance);
   }
 
   ngAfterContentInit(): void {
-    this.setInstance(
-      new Graticule({
-        strokeStyle: this.strokeStyle(),
-        showLabels: this.showLabels(),
-        lonLabelPosition: this.lonLabelPosition(),
-        latLabelPosition: this.latLabelPosition(),
-      }),
-    );
+    this.setInstance(new Graticule(this.createOptions()));
     this.instance.setMap(this.map.instance);
   }
 
   ngOnDestroy(): void {
     this.instance.setMap(null);
+  }
+
+  private createOptions() {
+    return {
+      strokeStyle: this.strokeStyle(),
+      showLabels: this.showLabels(),
+      lonLabelPosition: this.lonLabelPosition(),
+      latLabelPosition: this.latLabelPosition(),
+    };
   }
 }

@@ -71,7 +71,6 @@ export class SourceImageStaticComponent extends SourceComponent implements OnIni
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    const properties: { [index: string]: any } = {};
     if (!this.instance) {
       return;
     }
@@ -85,10 +84,8 @@ export class SourceImageStaticComponent extends SourceComponent implements OnIni
           default:
             break;
         }
-        properties[key] = changes[key].currentValue;
       }
     }
-    this.instance.setProperties(properties, false);
   }
 
   private createOptions(): Options {

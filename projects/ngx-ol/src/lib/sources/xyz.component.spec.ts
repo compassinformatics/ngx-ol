@@ -74,14 +74,14 @@ describe('SourceXYZComponent', () => {
     expect(host.tileLoadError).toHaveBeenCalledOnce();
   });
 
-  it('recreates and re-registers the source when the URL binding changes', () => {
+  it('updates the existing source URL when the URL binding changes', () => {
     const host = fixture!.componentInstance;
     const previousSource = host.source.instance;
 
     host.url.set('https://tiles.example.com/{z}/{x}/{y}.png');
     fixture!.detectChanges();
 
-    expect(host.source.instance).not.toBe(previousSource);
+    expect(host.source.instance).toBe(previousSource);
     expect(host.layer.instance.getSource()).toBe(host.source.instance);
     expect(host.source.instance.getUrls()).toEqual([
       'https://tiles.example.com/{z}/{x}/{y}.png',

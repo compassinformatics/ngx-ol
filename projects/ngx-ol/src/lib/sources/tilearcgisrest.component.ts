@@ -71,14 +71,22 @@ export class SourceTileArcGISRestComponent extends SourceComponent implements On
   }
 
   ngOnInit() {
-    this.setInstance(new TileArcGISRest(this.createOptions()));
-    this.host.instance.setSource(this.instance);
+    this.setLayerSource();
   }
 
   ngOnChanges(changes: SimpleChanges) {
     super.ngOnChanges(changes);
-    if (this.instance && changes.hasOwnProperty('params') && this.params()) {
-      this.instance.updateParams(this.params());
+    if (!this.instance) {
+      return;
+    }
+
+    if (this.hasRemovedParamKeys(changes)) {
+      this.setLayerSource();
+      return;
+    }
+
+    if (this.instance && changes.hasOwnProperty('params')) {
+      this.instance.updateParams(this.params() ?? {});
     }
     if (this.instance && changes.tileLoadFunction?.currentValue) {
       this.instance.setTileLoadFunction(changes.tileLoadFunction.currentValue);
@@ -109,5 +117,23 @@ export class SourceTileArcGISRestComponent extends SourceComponent implements On
       urls: this.urls(),
       zDirection: this.zDirection(),
     };
+  }
+
+  private setLayerSource(): void {
+    this.setInstance(new TileArcGISRest(this.createOptions()));
+    this.host.instance.setSource(this.instance);
+  }
+
+  private hasRemovedParamKeys(changes: SimpleChanges): boolean {
+    if (!changes.params || changes.params.firstChange) {
+      return false;
+    }
+
+    const previousParams = changes.params.previousValue ?? {};
+    const nextParams = changes.params.currentValue ?? {};
+
+    return Object.keys(previousParams).some(
+      (key) => !Object.prototype.hasOwnProperty.call(nextParams, key),
+    );
   }
 }

@@ -100,6 +100,32 @@ describe('ViewComponent', () => {
     );
   });
 
+  it('keeps forwarding view outputs after a projection-triggered rebuild', () => {
+    fixture.componentInstance.projection.set('EPSG:4326');
+    fixture.detectChanges();
+
+    fixture.componentInstance.change.mockClear();
+    fixture.componentInstance.centerChanged.mockClear();
+    fixture.componentInstance.resolutionChanged.mockClear();
+    fixture.componentInstance.rotationChanged.mockClear();
+    fixture.componentInstance.error.mockClear();
+    fixture.componentInstance.propertyChange.mockClear();
+
+    fixture.componentInstance.view.instance.dispatchEvent('change');
+    fixture.componentInstance.view.instance.dispatchEvent('change:center');
+    fixture.componentInstance.view.instance.dispatchEvent('change:resolution');
+    fixture.componentInstance.view.instance.dispatchEvent('change:rotation');
+    fixture.componentInstance.view.instance.dispatchEvent('error');
+    fixture.componentInstance.view.instance.dispatchEvent('propertychange');
+
+    expect(fixture.componentInstance.change).toHaveBeenCalledOnce();
+    expect(fixture.componentInstance.centerChanged).toHaveBeenCalledOnce();
+    expect(fixture.componentInstance.resolutionChanged).toHaveBeenCalledOnce();
+    expect(fixture.componentInstance.rotationChanged).toHaveBeenCalledOnce();
+    expect(fixture.componentInstance.error).toHaveBeenCalledOnce();
+    expect(fixture.componentInstance.propertyChange).toHaveBeenCalledOnce();
+  });
+
   it('animates zoom changes when zoom animation is enabled', () => {
     const animate = vi.spyOn(fixture.componentInstance.view.instance, 'animate');
 
@@ -111,18 +137,24 @@ describe('ViewComponent', () => {
     expect(animate).toHaveBeenCalledWith({ zoom: 6 });
   });
 
-  it('updates OpenLayers view constraints and state from specialized bindings', () => {
+  it('updates OpenLayers view constraints from specialized bindings', () => {
     fixture.componentInstance.maxZoom.set(12);
     fixture.componentInstance.minZoom.set(1);
-    fixture.componentInstance.resolution.set(4);
     fixture.componentInstance.rotation.set(0.5);
 
     fixture.detectChanges();
 
     expect(fixture.componentInstance.view.instance.getMaxZoom()).toBe(12);
     expect(fixture.componentInstance.view.instance.getMinZoom()).toBe(1);
-    expect(fixture.componentInstance.view.instance.getResolution()).toBe(4);
     expect(fixture.componentInstance.view.instance.getRotation()).toBe(0.5);
+  });
+
+  it('updates OpenLayers view resolution from the resolution binding', () => {
+    fixture.componentInstance.resolution.set(4);
+
+    fixture.detectChanges();
+
+    expect(fixture.componentInstance.view.instance.getResolution()).toBe(4);
   });
 
   it('forwards OpenLayers view events through template outputs', () => {

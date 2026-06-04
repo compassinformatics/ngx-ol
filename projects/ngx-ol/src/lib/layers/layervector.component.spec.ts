@@ -13,6 +13,7 @@ import { LayerVectorComponent } from './layervector.component';
         [opacity]="opacity()"
         [postrender]="postrender()"
         [prerender]="prerender()"
+        [properties]="properties()"
         [visible]="visible()"
         [zIndex]="zIndex()"
       ></aol-layer-vector>
@@ -27,6 +28,7 @@ class LayerVectorHostComponent {
   opacity = signal(0.6);
   postrender = signal(vi.fn());
   prerender = signal(vi.fn());
+  properties = signal<Record<string, string>>({ name: 'roads', category: 'transport' });
   visible = signal(true);
   zIndex = signal(1);
 
@@ -57,6 +59,8 @@ describe('LayerVectorComponent', () => {
     expect(fixture.componentInstance.layer.instance.getOpacity()).toBe(0.6);
     expect(fixture.componentInstance.layer.instance.getVisible()).toBe(true);
     expect(fixture.componentInstance.layer.instance.getZIndex()).toBe(1);
+    expect(fixture.componentInstance.layer.instance.get('name')).toBe('roads');
+    expect(fixture.componentInstance.layer.instance.get('category')).toBe('transport');
     expect(fixture.componentInstance.map.instance.getLayers().getArray()).toContain(
       fixture.componentInstance.layer.instance,
     );
@@ -72,6 +76,15 @@ describe('LayerVectorComponent', () => {
     expect(fixture.componentInstance.layer.instance.getOpacity()).toBe(0.25);
     expect(fixture.componentInstance.layer.instance.getVisible()).toBe(false);
     expect(fixture.componentInstance.layer.instance.getZIndex()).toBe(5);
+  });
+
+  it('updates and removes explicit OpenLayers layer properties when bindings change', () => {
+    fixture.componentInstance.properties.set({ category: 'water' });
+
+    fixture.detectChanges();
+
+    expect(fixture.componentInstance.layer.instance.get('name')).toBeUndefined();
+    expect(fixture.componentInstance.layer.instance.get('category')).toBe('water');
   });
 
   it('updates render event handlers when template bindings change', () => {

@@ -15,6 +15,7 @@ import { SourceTileWMTSComponent } from './tilewmts.component';
           [layer]="layerName"
           [style]="styleName"
           [matrixSet]="matrixSet"
+          [dimensions]="dimensions()"
           [url]="url()"
           (tileLoadStart)="tileLoadStart($event)"
           (tileLoadEnd)="tileLoadEnd($event)"
@@ -38,6 +39,7 @@ class SourceTileWmtsHostComponent {
   layerName = 'demo';
   styleName = 'default';
   matrixSet = 'webmercator';
+  dimensions = signal<Record<string, string>>({ TIME: '2026-01-01', ELEVATION: '0' });
   url = signal('https://example.com/wmts');
   origin: [number, number] = [0, 0];
   resolutions = [2, 1];
@@ -101,6 +103,34 @@ describe('SourceTileWMTSComponent', () => {
 
     expect(host.source.instance).not.toBe(previousSource);
     expect(host.layer.instance.getSource()).toBe(host.source.instance);
+  });
+
+  it('updates WMTS dimensions without recreating the source when keys are retained', () => {
+    const host = fixture!.componentInstance;
+    const previousSource = host.source.instance;
+
+    host.dimensions.set({ TIME: '2026-01-02', ELEVATION: '0' });
+
+    fixture!.detectChanges();
+
+    expect(host.source.instance).toBe(previousSource);
+    expect(host.source.instance.getDimensions()).toEqual({
+      TIME: '2026-01-02',
+      ELEVATION: '0',
+    });
+  });
+
+  it('recreates the WMTS source when dimension keys are removed', () => {
+    const host = fixture!.componentInstance;
+    const previousSource = host.source.instance;
+
+    host.dimensions.set({ TIME: '2026-01-03' });
+
+    fixture!.detectChanges();
+
+    expect(host.source.instance).not.toBe(previousSource);
+    expect(host.layer.instance.getSource()).toBe(host.source.instance);
+    expect(host.source.instance.getDimensions()).toEqual({ TIME: '2026-01-03' });
   });
 
   it('clears the tile layer source when the source component is destroyed', () => {

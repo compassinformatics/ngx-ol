@@ -2,6 +2,7 @@ import {
   Component,
   Host,
   OnChanges,
+  OnDestroy,
   OnInit,
   forwardRef,
   SimpleChanges,
@@ -17,13 +18,15 @@ import { ProjectionLike } from 'ol/proj';
 import { LoadFunction } from 'ol/Image';
 import { ImageSourceEvent } from 'ol/source/Image';
 import { ServerType } from 'ol/source/wms';
+import type { EventsKey } from 'ol/events';
+import { unByKey } from 'ol/Observable';
 
 @Component({
   selector: 'aol-source-imagewms',
   template: ` <ng-content></ng-content> `,
   providers: [{ provide: SourceComponent, useExisting: forwardRef(() => SourceImageWMSComponent) }],
 })
-export class SourceImageWMSComponent extends SourceComponent implements OnChanges, OnInit {
+export class SourceImageWMSComponent extends SourceComponent implements OnChanges, OnDestroy, OnInit {
   crossOrigin = input<null | string>();
   hidpi = input<boolean>();
   serverType = input<ServerType>();
@@ -45,6 +48,8 @@ export class SourceImageWMSComponent extends SourceComponent implements OnChange
 
   readonly instanceSignal = this._instanceSignal.asReadonly();
 
+  private eventKeys: EventsKey[] = [];
+
   protected setInstance(instance: ImageWMS): ImageWMS {
     this.instance = instance;
 
@@ -57,21 +62,22 @@ export class SourceImageWMSComponent extends SourceComponent implements OnChange
   }
 
   ngOnInit() {
-    this.setInstance(new ImageWMS(this.createOptions()));
-    this.host.instance.setSource(this.instance);
-    this.instance.on('imageloadstart', (event: ImageSourceEvent) =>
-      this.imageLoadStart.emit(event),
-    );
-    this.instance.on('imageloadend', (event: ImageSourceEvent) => this.imageLoadEnd.emit(event));
-    this.instance.on('imageloaderror', (event: ImageSourceEvent) =>
-      this.imageLoadError.emit(event),
-    );
+    this.setLayerSource();
   }
 
   ngOnChanges(changes: SimpleChanges) {
     super.ngOnChanges(changes);
+    if (!this.instance) {
+      return;
+    }
+
+    if (this.hasRemovedParamKeys(changes)) {
+      this.setLayerSource();
+      return;
+    }
+
     if (this.instance && changes.hasOwnProperty('params')) {
-      this.instance.updateParams(this.params());
+      this.instance.updateParams(this.params() ?? {});
     }
     if (this.instance && changes.imageLoadFunction?.currentValue) {
       this.instance.setImageLoadFunction(changes.imageLoadFunction.currentValue);
@@ -82,6 +88,11 @@ export class SourceImageWMSComponent extends SourceComponent implements OnChange
     if (this.instance && changes.resolutions) {
       this.instance.setResolutions(changes.resolutions.currentValue);
     }
+  }
+
+  ngOnDestroy() {
+    this.unbindInstanceEvents();
+    super.ngOnDestroy();
   }
 
   private createOptions(): Options {
@@ -98,5 +109,46 @@ export class SourceImageWMSComponent extends SourceComponent implements OnChange
       resolutions: this.resolutions(),
       url: this.url(),
     };
+  }
+
+  private setLayerSource(): void {
+    this.unbindInstanceEvents();
+    this.setInstance(new ImageWMS(this.createOptions()));
+    this.host.instance.setSource(this.instance);
+    this.bindInstanceEvents();
+  }
+
+  private bindInstanceEvents(): void {
+    this.eventKeys = [
+      this.instance.on('imageloadstart', (event: ImageSourceEvent) =>
+        this.imageLoadStart.emit(event),
+      ),
+      this.instance.on('imageloadend', (event: ImageSourceEvent) => this.imageLoadEnd.emit(event)),
+      this.instance.on('imageloaderror', (event: ImageSourceEvent) =>
+        this.imageLoadError.emit(event),
+      ),
+    ];
+  }
+
+  private unbindInstanceEvents(): void {
+    if (!this.eventKeys.length) {
+      return;
+    }
+
+    unByKey(this.eventKeys);
+    this.eventKeys = [];
+  }
+
+  private hasRemovedParamKeys(changes: SimpleChanges): boolean {
+    if (!changes.params || changes.params.firstChange) {
+      return false;
+    }
+
+    const previousParams = changes.params.previousValue ?? {};
+    const nextParams = changes.params.currentValue ?? {};
+
+    return Object.keys(previousParams).some(
+      (key) => !Object.prototype.hasOwnProperty.call(nextParams, key),
+    );
   }
 }

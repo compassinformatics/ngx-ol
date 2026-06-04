@@ -58,7 +58,8 @@ export class StyleRegularShapeComponent implements AfterContentInit, OnChanges, 
 
   update() {
     if (this.instance) {
-      this.setInstance(new RegularShape(this.createOptions()));
+      this.instance.setFill(this.fill() ?? null);
+      this.instance.setStroke(this.stroke() ?? null);
       this.host.instance.setImage(this.instance);
     }
     this.host.update();
@@ -85,6 +86,29 @@ export class StyleRegularShapeComponent implements AfterContentInit, OnChanges, 
         !changes.scale &&
         !changes.declutterMode)
     ) {
+      return;
+    }
+
+    const requiresReload =
+      changes.points ||
+      changes.radius ||
+      changes.radius2 ||
+      changes.angle ||
+      changes.displacement ||
+      changes.rotation ||
+      changes.rotateWithView ||
+      changes.scale ||
+      changes.declutterMode;
+
+    if (!requiresReload) {
+      if (changes.fill) {
+        this.instance.setFill(changes.fill.currentValue ?? null);
+      }
+      if (changes.stroke) {
+        this.instance.setStroke(changes.stroke.currentValue ?? null);
+      }
+      this.host.instance.setImage(this.instance);
+      this.host.update();
       return;
     }
 

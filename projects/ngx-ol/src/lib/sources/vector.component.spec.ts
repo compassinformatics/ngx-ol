@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, signal, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import Feature from 'ol/Feature';
 import Point from 'ol/geom/Point';
@@ -12,7 +12,7 @@ import { SourceVectorComponent } from './vector.component';
     <aol-map width="320px" height="240px">
       <aol-view [center]="center" [zoom]="zoom"></aol-view>
       <aol-layer-vector>
-        <aol-source-vector [features]="features"></aol-source-vector>
+        <aol-source-vector [features]="features()"></aol-source-vector>
       </aol-layer-vector>
     </aol-map>
   `,
@@ -22,7 +22,7 @@ import { SourceVectorComponent } from './vector.component';
 class SourceVectorHostComponent {
   center = [0, 0];
   zoom = 2;
-  features = [new Feature(new Point([1, 2]))];
+  features = signal<Feature[] | undefined>([new Feature(new Point([1, 2]))]);
 
   @ViewChild(SourceVectorComponent)
   source!: SourceVectorComponent;
@@ -52,5 +52,13 @@ describe('SourceVectorComponent', () => {
       fixture.componentInstance.source.instance,
     );
     expect(fixture.componentInstance.source.instance.getFeatures()).toHaveLength(1);
+  });
+
+  it('clears existing features when the features binding is cleared', () => {
+    fixture.componentInstance.features.set(undefined);
+
+    fixture.detectChanges();
+
+    expect(fixture.componentInstance.source.instance.getFeatures()).toHaveLength(0);
   });
 });

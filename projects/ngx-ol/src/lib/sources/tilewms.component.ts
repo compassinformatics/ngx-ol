@@ -61,12 +61,20 @@ export class SourceTileWMSComponent extends SourceComponent implements OnChanges
   }
 
   ngOnInit() {
-    this.setInstance(new TileWMS(this.createOptions()));
-    this.host.instance.setSource(this.instance);
+    this.setLayerSource();
   }
 
   ngOnChanges(changes: SimpleChanges) {
     super.ngOnChanges(changes);
+    if (!this.instance) {
+      return;
+    }
+
+    if (this.hasRemovedParamKeys(changes)) {
+      this.setLayerSource();
+      return;
+    }
+
     if (this.instance && changes.hasOwnProperty('params')) {
       this.instance.updateParams(this.params());
     }
@@ -103,5 +111,23 @@ export class SourceTileWMSComponent extends SourceComponent implements OnChanges
       transition: this.transition(),
       zDirection: this.zDirection(),
     };
+  }
+
+  private setLayerSource(): void {
+    this.setInstance(new TileWMS(this.createOptions()));
+    this.host.instance.setSource(this.instance);
+  }
+
+  private hasRemovedParamKeys(changes: SimpleChanges): boolean {
+    if (!changes.params || changes.params.firstChange) {
+      return false;
+    }
+
+    const previousParams = changes.params.previousValue ?? {};
+    const nextParams = changes.params.currentValue ?? {};
+
+    return Object.keys(previousParams).some(
+      (key) => !Object.prototype.hasOwnProperty.call(nextParams, key),
+    );
   }
 }

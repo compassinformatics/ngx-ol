@@ -77,8 +77,6 @@ export class SourceOsmComponent extends SourceXYZComponent implements AfterConte
       return;
     }
 
-    const properties: { [index: string]: any } = {};
-
     for (const key in changes) {
       switch (key) {
         case 'attributions':
@@ -93,11 +91,7 @@ export class SourceOsmComponent extends SourceXYZComponent implements AfterConte
         default:
           break;
       }
-
-      properties[key] = changes[key].currentValue;
     }
-
-    this.instance.setProperties(properties, false);
   }
 
   protected override createOptions(): Options {

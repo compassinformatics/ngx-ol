@@ -25,7 +25,7 @@ class SourceImageArcGISRestHostComponent {
   center = [0, 0];
   zoom = 2;
   url = 'https://example.com/arcgis/rest/services/demo/MapServer';
-  params = signal({ LAYERS: 'show:1' });
+  params = signal<Record<string, string>>({ LAYERS: 'show:1', TIME: '2026-01-01' });
   loadStarts = 0;
 
   @ViewChild(SourceImageArcGISRestComponent)
@@ -57,16 +57,39 @@ describe('SourceImageArcGISRestComponent', () => {
     );
     expect(fixture.componentInstance.source.instance.getParams()).toMatchObject({
       LAYERS: 'show:1',
+      TIME: '2026-01-01',
     });
 
     fixture.componentInstance.source.instance.dispatchEvent('imageloadstart');
     expect(fixture.componentInstance.loadStarts).toBe(1);
 
-    fixture.componentInstance.params.set({ LAYERS: 'show:2' });
+    fixture.componentInstance.params.set({ LAYERS: 'show:2', TIME: '2026-01-01' });
     fixture.detectChanges(false);
 
     expect(fixture.componentInstance.source.instance.getParams()).toMatchObject({
       LAYERS: 'show:2',
+      TIME: '2026-01-01',
     });
+  });
+
+  it('replaces the image ArcGIS source and keeps outputs bound when params are removed', () => {
+    const source = fixture.componentInstance.source.instance;
+
+    fixture.componentInstance.params.set({ LAYERS: 'show:2' });
+    fixture.detectChanges(false);
+
+    expect(fixture.componentInstance.source.instance).not.toBe(source);
+    expect(fixture.componentInstance.layer.instance.getSource()).toBe(
+      fixture.componentInstance.source.instance,
+    );
+    const params = fixture.componentInstance.source.instance.getParams();
+
+    expect(params).toMatchObject({
+      LAYERS: 'show:2',
+    });
+    expect(params['TIME']).toBeUndefined();
+
+    fixture.componentInstance.source.instance.dispatchEvent('imageloadstart');
+    expect(fixture.componentInstance.loadStarts).toBe(1);
   });
 });
