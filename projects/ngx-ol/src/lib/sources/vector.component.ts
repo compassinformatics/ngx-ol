@@ -1,11 +1,10 @@
 import {
   Component,
-  Host,
   OnChanges,
   OnInit,
-  Optional,
   SimpleChanges,
   forwardRef,
+  inject,
   input,
   signal,
 } from '@angular/core';
@@ -48,12 +47,12 @@ export class SourceVectorComponent extends SourceComponent implements OnInit, On
 
     return instance;
   }
-  constructor(
-    @Optional() @Host() vectorLayer: LayerVectorComponent,
-    @Optional() @Host() vectorImageLayer: LayerVectorImageComponent,
-    @Optional() @Host() heatmapLayer: LayerHeatmapComponent,
-  ) {
-    super(vectorLayer || vectorImageLayer || heatmapLayer);
+  constructor() {
+    super(
+      inject(LayerVectorComponent, { optional: true, host: true }) ||
+        inject(LayerVectorImageComponent, { optional: true, host: true }) ||
+        inject(LayerHeatmapComponent, { optional: true, host: true })!,
+    );
   }
 
   ngOnInit() {

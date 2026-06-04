@@ -1,13 +1,12 @@
 import {
   Component,
   forwardRef,
-  Host,
   OnChanges,
   OnInit,
-  Optional,
   SimpleChanges,
   input,
   signal,
+  inject,
 } from '@angular/core';
 import type { ProjectionLike } from 'ol/proj';
 import type { Size } from 'ol/size';
@@ -68,8 +67,8 @@ export class SourceImageTileComponent extends SourceComponent implements OnInit,
 
     return instance;
   }
-  constructor(@Optional() @Host() layer?: LayerWebGLTileComponent) {
-    super(layer!);
+  constructor() {
+    super(inject(LayerWebGLTileComponent, { optional: true, host: true })!);
   }
 
   ngOnInit() {

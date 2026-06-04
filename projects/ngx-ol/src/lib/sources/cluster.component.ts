@@ -1,12 +1,11 @@
 import {
   AfterContentInit,
   Component,
-  forwardRef,
-  Host,
   OnChanges,
-  Optional,
   SimpleChanges,
   contentChild,
+  forwardRef,
+  inject,
   input,
   signal,
 } from '@angular/core';
@@ -50,11 +49,11 @@ export class SourceClusterComponent extends SourceComponent implements AfterCont
   }
   source: Vector<any>;
 
-  constructor(
-    @Optional() @Host() vectorLayer: LayerVectorComponent,
-    @Optional() @Host() vectorImageLayer: LayerVectorImageComponent,
-  ) {
-    super(vectorLayer || vectorImageLayer);
+  constructor() {
+    super(
+      inject(LayerVectorComponent, { optional: true, host: true }) ||
+        inject(LayerVectorImageComponent, { optional: true, host: true })!,
+    );
   }
 
   ngAfterContentInit() {

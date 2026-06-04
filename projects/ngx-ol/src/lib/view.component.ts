@@ -7,6 +7,7 @@ import {
   input,
   output,
   signal,
+  inject,
 } from '@angular/core';
 import View, { ViewOptions } from 'ol/View';
 import { MapComponent } from './map.component';
@@ -70,7 +71,7 @@ export class ViewComponent implements OnInit, OnChanges, OnDestroy {
   public componentType = 'view';
   private eventKeys: EventsKey[] = [];
 
-  constructor(private host: MapComponent) {}
+  private readonly host = inject(MapComponent);
 
   ngOnInit() {
     // console.log('creating ol.View instance with: ', this);

@@ -7,6 +7,7 @@ import {
   input,
   output,
   signal,
+  inject,
 } from '@angular/core';
 import Translate from 'ol/interaction/Translate';
 import Collection from 'ol/Collection';
@@ -51,7 +52,7 @@ export class TranslateInteractionComponent implements OnInit, OnChanges, OnDestr
 
     return instance;
   }
-  constructor(private map: MapComponent) {}
+  private readonly map = inject(MapComponent);
 
   ngOnInit() {
     this.setInstance(new Translate(this.createOptions()));

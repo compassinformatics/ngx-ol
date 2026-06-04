@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, input, output, signal } from '@angular/core';
+import { Component, OnDestroy, OnInit, input, output, signal, inject } from '@angular/core';
 import { MapComponent } from '../map.component';
 import Modify from 'ol/interaction/Modify';
 import Collection from 'ol/Collection';
@@ -48,7 +48,7 @@ export class ModifyInteractionComponent implements OnInit, OnDestroy {
 
     return instance;
   }
-  constructor(private map: MapComponent) {}
+  private readonly map = inject(MapComponent);
 
   ngOnInit() {
     this.setInstance(new Modify(this.createOptions()));

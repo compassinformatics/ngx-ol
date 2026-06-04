@@ -2,14 +2,13 @@ import {
   AfterContentInit,
   Component,
   forwardRef,
-  Host,
   OnChanges,
-  Optional,
   SimpleChanges,
   contentChild,
   input,
   output,
   signal,
+  inject,
 } from '@angular/core';
 import { Size } from 'ol/size';
 import XYZ from 'ol/source/XYZ';
@@ -70,12 +69,8 @@ export class SourceXYZComponent extends SourceComponent implements AfterContentI
 
     return instance;
   }
-  constructor(
-    @Optional()
-    @Host()
-    protected layer?: LayerTileComponent,
-  ) {
-    super(layer!);
+  constructor() {
+    super(inject(LayerTileComponent, { optional: true, host: true })!);
   }
 
   ngAfterContentInit() {

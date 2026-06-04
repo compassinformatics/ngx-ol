@@ -1,4 +1,4 @@
-import { Component, Host, OnInit, forwardRef, input, signal } from '@angular/core';
+import { Component, OnInit, forwardRef, input, signal, inject } from '@angular/core';
 import TileJSON from 'ol/source/TileJSON';
 import { Config, Options } from 'ol/source/TileJSON';
 import { LoadFunction } from 'ol/Tile';
@@ -39,8 +39,8 @@ export class SourceTileJSONComponent extends SourceComponent implements OnInit {
 
     return instance;
   }
-  constructor(@Host() layer: LayerTileComponent) {
-    super(layer);
+  constructor() {
+    super(inject(LayerTileComponent, { host: true }));
   }
 
   ngOnInit() {

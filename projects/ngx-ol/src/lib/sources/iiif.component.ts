@@ -1,4 +1,4 @@
-import { Component, forwardRef, Host, OnInit, Optional, input, signal } from '@angular/core';
+import { Component, forwardRef, OnInit, input, signal, inject } from '@angular/core';
 import type { NearestDirectionFunction } from 'ol/array';
 import type { Extent } from 'ol/extent';
 import type { ProjectionLike } from 'ol/proj';
@@ -66,8 +66,8 @@ export class SourceIIIFComponent extends SourceComponent implements OnInit {
 
     return instance;
   }
-  constructor(@Optional() @Host() layer?: LayerTileComponent) {
-    super(layer!);
+  constructor() {
+    super(inject(LayerTileComponent, { optional: true, host: true })!);
   }
 
   ngOnInit() {

@@ -1,12 +1,12 @@
 import {
   Component,
-  Host,
   OnChanges,
   OnInit,
   forwardRef,
   SimpleChanges,
   input,
   signal,
+  inject,
 } from '@angular/core';
 import { LayerTileComponent } from '../layers/layertile.component';
 import { SourceComponent } from './source.component';
@@ -56,8 +56,8 @@ export class SourceTileWMSComponent extends SourceComponent implements OnChanges
 
     return instance;
   }
-  constructor(@Host() layer: LayerTileComponent) {
-    super(layer);
+  constructor() {
+    super(inject(LayerTileComponent, { host: true }));
   }
 
   ngOnInit() {

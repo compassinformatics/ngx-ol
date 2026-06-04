@@ -1,4 +1,4 @@
-import { Component, Host, OnInit, forwardRef, input, signal } from '@angular/core';
+import { Component, OnInit, forwardRef, input, signal, inject } from '@angular/core';
 import { SourceComponent } from './source.component';
 import { LayerTileComponent } from '../layers/layertile.component';
 import UTFGrid from 'ol/source/UTFGrid';
@@ -32,8 +32,8 @@ export class SourceUTFGridComponent extends SourceComponent implements OnInit {
 
     return instance;
   }
-  constructor(@Host() layer: LayerTileComponent) {
-    super(layer);
+  constructor() {
+    super(inject(LayerTileComponent, { host: true }));
   }
 
   ngOnInit() {

@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, input, signal } from '@angular/core';
+import { Component, OnDestroy, OnInit, input, signal, inject } from '@angular/core';
 import KeyboardZoom from 'ol/interaction/KeyboardZoom';
 import { Options } from 'ol/interaction/KeyboardZoom';
 import { MapComponent } from '../map.component';
@@ -24,7 +24,7 @@ export class KeyboardZoomInteractionComponent implements OnInit, OnDestroy {
 
     return instance;
   }
-  constructor(private map: MapComponent) {}
+  private readonly map = inject(MapComponent);
 
   ngOnInit() {
     this.setInstance(new KeyboardZoom(this.createOptions()));

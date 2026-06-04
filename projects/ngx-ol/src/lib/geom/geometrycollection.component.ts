@@ -1,4 +1,4 @@
-import { Component, OnChanges, OnInit, SimpleChanges, input, signal } from '@angular/core';
+import { Component, OnChanges, OnInit, SimpleChanges, input, signal, inject } from '@angular/core';
 import Geometry from 'ol/geom/Geometry';
 import GeometryCollection from 'ol/geom/GeometryCollection';
 import { FeatureComponent } from '../feature.component';
@@ -21,7 +21,7 @@ export class GeometryCollectionComponent implements OnInit, OnChanges {
     this._instanceSignal.set(instance);
     return instance;
   }
-  constructor(private host: FeatureComponent) {}
+  private readonly host = inject(FeatureComponent);
 
   ngOnInit() {
     this.setInstance(new GeometryCollection(this.geometries()));

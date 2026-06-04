@@ -6,6 +6,7 @@ import {
   SimpleChanges,
   input,
   signal,
+  inject,
 } from '@angular/core';
 import ScaleLine from 'ol/control/ScaleLine';
 import { MapComponent } from '../map.component';
@@ -41,7 +42,7 @@ export class ControlScaleLineComponent implements OnInit, OnChanges, OnDestroy {
 
     return instance;
   }
-  constructor(private map: MapComponent) {}
+  private readonly map = inject(MapComponent);
 
   ngOnInit() {
     this.setInstance(new ScaleLine(this.createOptions()));

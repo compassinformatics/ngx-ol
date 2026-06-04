@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, SkipSelf, Optional, signal } from '@angular/core';
+import { Component, OnDestroy, OnInit, inject, signal } from '@angular/core';
 import Group from 'ol/layer/Group';
 import { Options } from 'ol/layer/Group';
 import { LayerComponent } from './layer.component';
@@ -19,13 +19,8 @@ export class LayerGroupComponent extends LayerComponent implements OnInit, OnDes
     this._instanceSignal.set(instance);
     return instance;
   }
-  constructor(
-    map: MapComponent,
-    @SkipSelf()
-    @Optional()
-    group?: LayerGroupComponent,
-  ) {
-    super(group || map);
+  constructor() {
+    super(inject(LayerGroupComponent, { optional: true, skipSelf: true }) || inject(MapComponent));
   }
 
   ngOnInit() {

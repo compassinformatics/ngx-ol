@@ -1,6 +1,5 @@
 import {
   Component,
-  Host,
   OnChanges,
   OnDestroy,
   OnInit,
@@ -9,6 +8,7 @@ import {
   input,
   output,
   signal,
+  inject,
 } from '@angular/core';
 import ImageWMS from 'ol/source/ImageWMS';
 import { Options } from 'ol/source/ImageWMS';
@@ -60,8 +60,8 @@ export class SourceImageWMSComponent
 
     return instance;
   }
-  constructor(@Host() layer: LayerImageComponent) {
-    super(layer);
+  constructor() {
+    super(inject(LayerImageComponent, { host: true }));
   }
 
   ngOnInit() {

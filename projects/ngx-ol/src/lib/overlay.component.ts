@@ -7,6 +7,7 @@ import {
   contentChild,
   input,
   signal,
+  inject,
 } from '@angular/core';
 import { MapComponent } from './map.component';
 import Overlay, { Options, PanIntoViewOptions, Positioning } from 'ol/Overlay';
@@ -41,7 +42,7 @@ export class OverlayComponent implements OnInit, OnDestroy, OnChanges {
   }
   element: HTMLElement;
 
-  constructor(private map: MapComponent) {}
+  private readonly map = inject(MapComponent);
 
   ngOnInit() {
     const content = this.content();

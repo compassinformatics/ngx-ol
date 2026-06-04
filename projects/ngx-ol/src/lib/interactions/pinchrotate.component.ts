@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, input, signal } from '@angular/core';
+import { Component, OnDestroy, OnInit, input, signal, inject } from '@angular/core';
 import PinchRotate from 'ol/interaction/PinchRotate';
 import type { Options } from 'ol/interaction/PinchRotate';
 import { MapComponent } from '../map.component';
@@ -25,7 +25,7 @@ export class PinchRotateInteractionComponent implements OnInit, OnDestroy {
 
     return instance;
   }
-  constructor(private map: MapComponent) {}
+  private readonly map = inject(MapComponent);
 
   ngOnInit() {
     this.setInstance(new PinchRotate(this.createOptions()));

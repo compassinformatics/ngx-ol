@@ -1,4 +1,4 @@
-import { Component, Host, OnInit, Optional, forwardRef, input, signal } from '@angular/core';
+import { Component, OnInit, forwardRef, inject, input, signal } from '@angular/core';
 import { LayerVectorComponent } from '../layers/layervector.component';
 import { SourceComponent } from './source.component';
 import FeatureFormat from 'ol/format/Feature';
@@ -35,11 +35,11 @@ export class SourceGeoJSONComponent extends SourceComponent implements OnInit {
   }
   format: FeatureFormat;
 
-  constructor(
-    @Optional() @Host() vectorLayer: LayerVectorComponent,
-    @Optional() @Host() vectorImageLayer: LayerVectorImageComponent,
-  ) {
-    super(vectorLayer || vectorImageLayer);
+  constructor() {
+    super(
+      inject(LayerVectorComponent, { optional: true, host: true }) ||
+        inject(LayerVectorImageComponent, { optional: true, host: true })!,
+    );
   }
 
   ngOnInit() {

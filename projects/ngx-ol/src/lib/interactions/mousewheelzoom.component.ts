@@ -6,6 +6,7 @@ import {
   SimpleChanges,
   input,
   signal,
+  inject,
 } from '@angular/core';
 import MouseWheelZoom from 'ol/interaction/MouseWheelZoom';
 import { Options } from 'ol/interaction/MouseWheelZoom';
@@ -33,7 +34,7 @@ export class MouseWheelZoomInteractionComponent implements OnInit, OnChanges, On
 
     return instance;
   }
-  constructor(private map: MapComponent) {}
+  private readonly map = inject(MapComponent);
 
   ngOnInit() {
     this.setInstance(new MouseWheelZoom(this.createOptions()));

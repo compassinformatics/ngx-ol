@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, contentChild, signal } from '@angular/core';
+import { Component, OnDestroy, OnInit, contentChild, signal, inject } from '@angular/core';
 import Control from 'ol/control/Control';
 import { Options } from 'ol/control/Control';
 import { MapComponent } from '../map.component';
@@ -23,7 +23,7 @@ export class ControlComponent implements OnInit, OnDestroy {
   }
   element: HTMLElement;
 
-  constructor(private map: MapComponent) {}
+  private readonly map = inject(MapComponent);
 
   ngOnInit() {
     const content = this.content();

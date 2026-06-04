@@ -1,10 +1,10 @@
 import {
   AfterContentInit,
   Component,
-  Host,
   OnChanges,
   OnDestroy,
   SimpleChanges,
+  inject,
   input,
   signal,
 } from '@angular/core';
@@ -54,7 +54,7 @@ export class StyleRegularShapeComponent implements AfterContentInit, OnChanges, 
     this._instanceSignal.set(instance);
     return instance;
   }
-  constructor(@Host() private host: StyleComponent) {}
+  private readonly host = inject(StyleComponent, { host: true });
 
   update() {
     if (this.instance) {

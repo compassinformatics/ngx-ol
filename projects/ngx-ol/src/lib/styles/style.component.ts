@@ -1,12 +1,4 @@
-import {
-  Component,
-  Optional,
-  OnChanges,
-  OnInit,
-  SimpleChanges,
-  input,
-  signal,
-} from '@angular/core';
+import { Component, OnChanges, OnInit, SimpleChanges, inject, input, signal } from '@angular/core';
 import Fill from 'ol/style/Fill';
 import Image from 'ol/style/Image';
 import Stroke from 'ol/style/Stroke';
@@ -46,15 +38,14 @@ export class StyleComponent implements OnInit, OnChanges {
     return instance;
   }
   public componentType = 'style';
-  private readonly host: FeatureComponent | LayerVectorComponent;
+  private readonly host: FeatureComponent | LayerVectorComponent | LayerVectorImageComponent;
+  private readonly featureHost = inject(FeatureComponent, { optional: true });
+  private readonly vectorLayer = inject(LayerVectorComponent, { optional: true });
+  private readonly vectorImageLayer = inject(LayerVectorImageComponent, { optional: true });
 
-  constructor(
-    @Optional() featureHost: FeatureComponent,
-    @Optional() vectorLayer: LayerVectorComponent,
-    @Optional() vectorImageLayer: LayerVectorImageComponent,
-  ) {
+  constructor() {
     // console.log('creating aol-style');
-    this.host = featureHost || vectorLayer || vectorImageLayer;
+    this.host = (this.featureHost || this.vectorLayer || this.vectorImageLayer)!;
     if (!this.host) {
       throw new Error('aol-style must be applied to a feature or a layer');
     }

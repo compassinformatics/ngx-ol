@@ -5,10 +5,10 @@ import {
   SimpleChanges,
   contentChild,
   forwardRef,
-  Host,
   input,
   output,
   signal,
+  inject,
 } from '@angular/core';
 import Raster from 'ol/source/Raster';
 import Source from 'ol/source/Source';
@@ -54,8 +54,8 @@ export class SourceRasterComponent extends SourceComponent implements AfterConte
 
   protected readonly sourceComponent = contentChild(SourceComponent);
 
-  constructor(@Host() layer: LayerImageComponent) {
-    super(layer);
+  constructor() {
+    super(inject(LayerImageComponent, { host: true }));
   }
 
   ngAfterContentInit() {

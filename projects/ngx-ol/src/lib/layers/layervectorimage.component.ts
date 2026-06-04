@@ -2,10 +2,10 @@ import {
   Component,
   OnDestroy,
   OnInit,
-  Optional,
   OnChanges,
   SimpleChanges,
   input,
+  inject,
 } from '@angular/core';
 import { MapComponent } from '../map.component';
 import VectorImage from 'ol/layer/VectorImage';
@@ -39,8 +39,8 @@ export class LayerVectorImageComponent
 
   source = input<VectorSource>();
 
-  constructor(map: MapComponent, @Optional() group?: LayerGroupComponent) {
-    super(group || map);
+  constructor() {
+    super(inject(LayerGroupComponent, { optional: true }) || inject(MapComponent));
   }
 
   ngOnInit() {

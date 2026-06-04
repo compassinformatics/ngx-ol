@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, input, signal } from '@angular/core';
+import { Component, OnDestroy, OnInit, input, signal, inject } from '@angular/core';
 import KeyboardPan from 'ol/interaction/KeyboardPan';
 import { Options } from 'ol/interaction/KeyboardPan';
 import { MapComponent } from '../map.component';
@@ -24,7 +24,7 @@ export class KeyboardPanInteractionComponent implements OnInit, OnDestroy {
 
     return instance;
   }
-  constructor(private map: MapComponent) {}
+  private readonly map = inject(MapComponent);
 
   ngOnInit() {
     this.setInstance(new KeyboardPan(this.createOptions()));

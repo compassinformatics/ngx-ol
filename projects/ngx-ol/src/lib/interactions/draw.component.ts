@@ -7,6 +7,7 @@ import {
   input,
   output,
   signal,
+  inject,
 } from '@angular/core';
 import { MapComponent } from '../map.component';
 import Draw from 'ol/interaction/Draw';
@@ -69,7 +70,7 @@ export class DrawInteractionComponent implements OnInit, OnChanges, OnDestroy {
 
     return instance;
   }
-  constructor(private map: MapComponent) {}
+  private readonly map = inject(MapComponent);
 
   ngOnInit() {
     this.initializeInstance();

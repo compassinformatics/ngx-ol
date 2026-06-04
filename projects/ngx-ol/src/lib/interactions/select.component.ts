@@ -7,6 +7,7 @@ import {
   input,
   output,
   signal,
+  inject,
 } from '@angular/core';
 import { MapComponent } from '../map.component';
 import Select from 'ol/interaction/Select';
@@ -54,7 +55,7 @@ export class SelectInteractionComponent implements OnInit, OnChanges, OnDestroy 
 
     return instance;
   }
-  constructor(private map: MapComponent) {}
+  private readonly map = inject(MapComponent);
 
   ngOnInit() {
     this.setInstance(new Select(this.createOptions()));

@@ -3,10 +3,10 @@ import {
   OnChanges,
   OnDestroy,
   OnInit,
-  Optional,
   SimpleChanges,
   input,
   signal,
+  inject,
 } from '@angular/core';
 import WebGLTileLayer from 'ol/layer/WebGLTile';
 import type { Options, SourceType, Style } from 'ol/layer/WebGLTile';
@@ -54,8 +54,8 @@ export class LayerWebGLTileComponent
 
     return instance;
   }
-  constructor(map: MapComponent, @Optional() group?: LayerGroupComponent) {
-    super(group || map);
+  constructor() {
+    super(inject(LayerGroupComponent, { optional: true }) || inject(MapComponent));
   }
 
   ngOnInit() {

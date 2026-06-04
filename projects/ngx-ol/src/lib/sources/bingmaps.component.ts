@@ -1,4 +1,4 @@
-import { Component, Host, OnInit, forwardRef, input, signal } from '@angular/core';
+import { Component, OnInit, forwardRef, input, signal, inject } from '@angular/core';
 import BingMaps from 'ol/source/BingMaps';
 import { Options } from 'ol/source/BingMaps';
 import { SourceComponent } from './source.component';
@@ -41,8 +41,8 @@ export class SourceBingmapsComponent extends SourceComponent implements OnInit {
 
     return instance;
   }
-  constructor(@Host() layer: LayerTileComponent) {
-    super(layer);
+  constructor() {
+    super(inject(LayerTileComponent, { host: true }));
   }
 
   ngOnInit() {

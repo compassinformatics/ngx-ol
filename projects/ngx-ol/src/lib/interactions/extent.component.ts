@@ -7,6 +7,7 @@ import {
   input,
   output,
   signal,
+  inject,
 } from '@angular/core';
 import type { Condition } from 'ol/events/condition';
 import type { Extent as ExtentType } from 'ol/extent';
@@ -47,7 +48,7 @@ export class ExtentInteractionComponent implements OnInit, OnChanges, OnDestroy 
 
     return instance;
   }
-  constructor(private map: MapComponent) {}
+  private readonly map = inject(MapComponent);
 
   ngOnInit() {
     this.setInstance(new ExtentInteraction(this.createOptions()));

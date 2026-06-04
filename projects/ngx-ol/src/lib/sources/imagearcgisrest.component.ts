@@ -1,7 +1,6 @@
 import {
   Component,
   forwardRef,
-  Host,
   OnChanges,
   OnDestroy,
   OnInit,
@@ -9,6 +8,7 @@ import {
   input,
   output,
   signal,
+  inject,
 } from '@angular/core';
 import ImageArcGISRest from 'ol/source/ImageArcGISRest';
 import { Options } from 'ol/source/ImageArcGISRest';
@@ -60,8 +60,8 @@ export class SourceImageArcGISRestComponent
 
     return instance;
   }
-  constructor(@Host() layer: LayerImageComponent) {
-    super(layer);
+  constructor() {
+    super(inject(LayerImageComponent, { host: true }));
   }
 
   ngOnInit() {

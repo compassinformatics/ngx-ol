@@ -7,6 +7,7 @@ import {
   input,
   output,
   signal,
+  inject,
 } from '@angular/core';
 import Feature from 'ol/Feature';
 import MapBrowserEvent from 'ol/MapBrowserEvent';
@@ -40,7 +41,7 @@ export class FeatureComponent implements OnInit, OnDestroy, OnChanges {
     this._instanceSignal.set(instance);
     return instance;
   }
-  constructor(private host: SourceVectorComponent) {}
+  private readonly host = inject(SourceVectorComponent);
 
   ngOnInit() {
     this.setInstance(this.feature() || new Feature());

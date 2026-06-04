@@ -3,10 +3,10 @@ import {
   OnChanges,
   OnDestroy,
   OnInit,
-  Optional,
   SimpleChanges,
   input,
   signal,
+  inject,
 } from '@angular/core';
 import type { FeatureLike } from 'ol/Feature';
 import Heatmap from 'ol/layer/Heatmap';
@@ -50,8 +50,8 @@ export class LayerHeatmapComponent extends LayerComponent implements OnInit, OnD
 
     return instance;
   }
-  constructor(map: MapComponent, @Optional() group?: LayerGroupComponent) {
-    super(group || map);
+  constructor() {
+    super(inject(LayerGroupComponent, { optional: true }) || inject(MapComponent));
   }
 
   ngOnInit() {

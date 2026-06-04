@@ -1,4 +1,4 @@
-import { Component, OnChanges, OnInit, Optional, SimpleChanges, input } from '@angular/core';
+import { Component, OnChanges, OnInit, SimpleChanges, input, inject } from '@angular/core';
 import Image from 'ol/layer/Image';
 import { Options } from 'ol/layer/BaseImage';
 import { MapComponent } from '../map.component';
@@ -13,8 +13,8 @@ import ImageSource from 'ol/source/Image';
 export class LayerImageComponent extends LayerComponent implements OnInit, OnChanges {
   source = input<ImageSource>();
 
-  constructor(map: MapComponent, @Optional() group?: LayerGroupComponent) {
-    super(group || map);
+  constructor() {
+    super(inject(LayerGroupComponent, { optional: true }) || inject(MapComponent));
   }
 
   ngOnInit() {

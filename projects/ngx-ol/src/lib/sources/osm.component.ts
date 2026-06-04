@@ -2,13 +2,12 @@ import {
   AfterContentInit,
   Component,
   forwardRef,
-  Host,
   OnChanges,
-  Optional,
   SimpleChanges,
   input,
   output,
   signal,
+  inject,
 } from '@angular/core';
 import OSM from 'ol/source/OSM';
 import { Options } from 'ol/source/OSM';
@@ -53,12 +52,8 @@ export class SourceOsmComponent extends SourceXYZComponent implements AfterConte
 
     return instance;
   }
-  constructor(
-    @Optional()
-    @Host()
-    protected layer?: LayerTileComponent,
-  ) {
-    super(layer);
+  constructor() {
+    super();
   }
 
   ngAfterContentInit() {

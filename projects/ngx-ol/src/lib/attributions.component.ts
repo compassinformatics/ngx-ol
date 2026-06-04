@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, Host, contentChildren, signal } from '@angular/core';
+import { AfterViewInit, Component, contentChildren, inject, signal } from '@angular/core';
 import { SourceComponent } from './sources/source.component';
 import { AttributionComponent } from './attribution.component';
 
@@ -22,7 +22,7 @@ export class AttributionsComponent implements AfterViewInit {
 
     return instance;
   }
-  constructor(@Host() private source: SourceComponent) {}
+  private readonly source = inject(SourceComponent, { host: true });
 
   /* we can do this at the very end */
   ngAfterViewInit() {

@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, inject } from '@angular/core';
 
 @Component({
   selector: 'aol-attribution',
@@ -7,7 +7,7 @@ import { Component, ElementRef, OnInit } from '@angular/core';
 export class AttributionComponent implements OnInit {
   label: string;
 
-  constructor(private elementRef: ElementRef) {}
+  private readonly elementRef = inject(ElementRef);
 
   ngOnInit() {
     this.label = this.elementRef.nativeElement.innerHTML;

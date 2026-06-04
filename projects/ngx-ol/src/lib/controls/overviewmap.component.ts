@@ -6,6 +6,7 @@ import {
   SimpleChanges,
   input,
   signal,
+  inject,
 } from '@angular/core';
 import Collection from 'ol/Collection';
 import MapEvent from 'ol/MapEvent';
@@ -45,7 +46,7 @@ export class ControlOverviewMapComponent implements OnInit, OnChanges, OnDestroy
 
     return instance;
   }
-  constructor(private map: MapComponent) {}
+  private readonly map = inject(MapComponent);
 
   ngOnInit() {
     this.setInstance(new OverviewMap(this.createOptions()));

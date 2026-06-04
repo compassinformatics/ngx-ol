@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, input, output, signal } from '@angular/core';
+import { Component, OnDestroy, OnInit, input, output, signal, inject } from '@angular/core';
 import BaseEvent from 'ol/events/Event';
 import { SnapEvent } from 'ol/events/SnapEvent';
 import Snap from 'ol/interaction/Snap';
@@ -39,7 +39,7 @@ export class SnapInteractionComponent implements OnInit, OnDestroy {
 
     return instance;
   }
-  constructor(private map: MapComponent) {}
+  private readonly map = inject(MapComponent);
 
   ngOnInit() {
     this.setInstance(new Snap(this.createOptions()));

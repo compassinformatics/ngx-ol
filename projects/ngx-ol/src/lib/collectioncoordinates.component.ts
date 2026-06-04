@@ -1,4 +1,4 @@
-import { Component, OnChanges, OnInit, Optional, SimpleChanges, input } from '@angular/core';
+import { Component, OnChanges, OnInit, SimpleChanges, inject, input } from '@angular/core';
 import { MapComponent } from './map.component';
 import { GeometryLinestringComponent } from './geom/geometrylinestring.component';
 import { GeometryPolygonComponent } from './geom/geometrypolygon.component';
@@ -18,26 +18,29 @@ export class CollectionCoordinatesComponent implements OnChanges, OnInit {
   srid = input('EPSG:3857');
 
   private host: any;
+  private readonly map = inject(MapComponent);
+  private readonly geometryLinestring = inject(GeometryLinestringComponent, { optional: true });
+  private readonly geometryPolygon = inject(GeometryPolygonComponent, { optional: true });
+  private readonly geometryMultipoint = inject(GeometryMultiPointComponent, { optional: true });
+  private readonly geometryMultilinestring = inject(GeometryMultiLinestringComponent, {
+    optional: true,
+  });
+  private readonly geometryMultipolygon = inject(GeometryMultiPolygonComponent, {
+    optional: true,
+  });
   private mapSrid = 'EPSG:3857';
 
-  constructor(
-    private map: MapComponent,
-    @Optional() geometryLinestring: GeometryLinestringComponent,
-    @Optional() geometryPolygon: GeometryPolygonComponent,
-    @Optional() geometryMultipoint: GeometryMultiPointComponent,
-    @Optional() geometryMultilinestring: GeometryMultiLinestringComponent,
-    @Optional() geometryMultipolygon: GeometryMultiPolygonComponent,
-  ) {
-    if (!!geometryLinestring) {
-      this.host = geometryLinestring;
-    } else if (!!geometryPolygon) {
-      this.host = geometryPolygon;
-    } else if (!!geometryMultipoint) {
-      this.host = geometryMultipoint;
-    } else if (!!geometryMultilinestring) {
-      this.host = geometryMultilinestring;
-    } else if (!!geometryMultipolygon) {
-      this.host = geometryMultipolygon;
+  constructor() {
+    if (!!this.geometryLinestring) {
+      this.host = this.geometryLinestring;
+    } else if (!!this.geometryPolygon) {
+      this.host = this.geometryPolygon;
+    } else if (!!this.geometryMultipoint) {
+      this.host = this.geometryMultipoint;
+    } else if (!!this.geometryMultilinestring) {
+      this.host = this.geometryMultilinestring;
+    } else if (!!this.geometryMultipolygon) {
+      this.host = this.geometryMultipolygon;
     } else {
       throw new Error('aol-collection-coordinates must be a child of a geometry component');
     }

@@ -1,10 +1,10 @@
 import {
-  Component,
-  Host,
   AfterContentInit,
+  Component,
   OnChanges,
   OnDestroy,
   SimpleChanges,
+  inject,
   input,
   signal,
 } from '@angular/core';
@@ -43,7 +43,7 @@ export class StyleCircleComponent implements AfterContentInit, OnChanges, OnDest
     this._instanceSignal.set(instance);
     return instance;
   }
-  constructor(@Host() private host: StyleComponent) {}
+  private readonly host = inject(StyleComponent, { host: true });
 
   setFill(fill: Fill) {
     this.childFill = fill;

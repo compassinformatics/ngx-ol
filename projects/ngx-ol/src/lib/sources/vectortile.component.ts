@@ -1,11 +1,11 @@
 import {
   Component,
-  Host,
   forwardRef,
   AfterContentInit,
   contentChild,
   input,
   signal,
+  inject,
 } from '@angular/core';
 import VectorTile from 'ol/source/VectorTile';
 import { Options } from 'ol/source/VectorTile';
@@ -70,8 +70,8 @@ export class SourceVectorTileComponent extends SourceComponent implements AfterC
   }
   tileGrid: TileGrid;
 
-  constructor(@Host() layer: LayerVectorTileComponent) {
-    super(layer);
+  constructor() {
+    super(inject(LayerVectorTileComponent, { host: true }));
   }
 
   ngAfterContentInit() {

@@ -2,10 +2,10 @@ import {
   Component,
   OnDestroy,
   OnInit,
-  Optional,
   OnChanges,
   SimpleChanges,
   input,
+  inject,
 } from '@angular/core';
 import Tile from 'ol/layer/Tile';
 import { Options } from 'ol/layer/BaseTile';
@@ -24,8 +24,8 @@ export class LayerTileComponent extends LayerComponent implements OnInit, OnDest
   cacheSize = input<number>();
   source = input<TileSource>();
 
-  constructor(map: MapComponent, @Optional() group?: LayerGroupComponent) {
-    super(group || map);
+  constructor() {
+    super(inject(LayerGroupComponent, { optional: true }) || inject(MapComponent));
   }
 
   ngOnInit() {

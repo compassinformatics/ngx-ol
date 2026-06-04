@@ -1,11 +1,11 @@
 import {
   Component,
-  Host,
   forwardRef,
   AfterContentInit,
   contentChild,
   input,
   signal,
+  inject,
 } from '@angular/core';
 import OGCVectorTile from 'ol/source/OGCVectorTile';
 import { Options } from 'ol/source/OGCVectorTile';
@@ -58,8 +58,8 @@ export class SourceOGCVectorTileComponent extends SourceComponent implements Aft
   }
   tileGrid: TileGrid;
 
-  constructor(@Host() layer: LayerVectorTileComponent) {
-    super(layer);
+  constructor() {
+    super(inject(LayerVectorTileComponent, { host: true }));
   }
 
   ngAfterContentInit() {

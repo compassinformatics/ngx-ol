@@ -1,6 +1,5 @@
 import {
   Component,
-  Host,
   forwardRef,
   OnChanges,
   SimpleChanges,
@@ -8,6 +7,7 @@ import {
   input,
   output,
   signal,
+  inject,
 } from '@angular/core';
 import ImageStatic from 'ol/source/ImageStatic';
 import { Options } from 'ol/source/ImageStatic';
@@ -50,8 +50,8 @@ export class SourceImageStaticComponent extends SourceComponent implements OnIni
 
     return instance;
   }
-  constructor(@Host() layer: LayerImageComponent) {
-    super(layer);
+  constructor() {
+    super(inject(LayerImageComponent, { host: true }));
   }
 
   setLayerSource(): void {

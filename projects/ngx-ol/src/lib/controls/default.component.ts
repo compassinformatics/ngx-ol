@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, input, signal } from '@angular/core';
+import { Component, OnDestroy, OnInit, input, signal, inject } from '@angular/core';
 import Control from 'ol/control/Control';
 import { defaults } from 'ol/control/defaults';
 import { DefaultsOptions } from 'ol/control/defaults';
@@ -34,7 +34,7 @@ export class DefaultControlComponent implements OnInit, OnDestroy {
 
     return instance;
   }
-  constructor(private map: MapComponent) {}
+  private readonly map = inject(MapComponent);
 
   ngOnInit() {
     // console.log('ol.control.defaults init: ', this);

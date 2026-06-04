@@ -6,6 +6,7 @@ import {
   OnDestroy,
   input,
   signal,
+  inject,
 } from '@angular/core';
 import Graticule from 'ol/layer/Graticule';
 import Stroke from 'ol/style/Stroke';
@@ -36,7 +37,7 @@ export class GraticuleComponent implements AfterContentInit, OnChanges, OnDestro
   }
   public componentType = 'graticule';
 
-  constructor(private map: MapComponent) {}
+  private readonly map = inject(MapComponent);
 
   ngOnChanges(changes: SimpleChanges) {
     if (!this.instance) {

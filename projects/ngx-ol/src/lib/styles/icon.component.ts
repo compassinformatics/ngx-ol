@@ -1,4 +1,4 @@
-import { Component, Host, OnInit, OnChanges, SimpleChanges, input, signal } from '@angular/core';
+import { Component, OnChanges, OnInit, SimpleChanges, inject, input, signal } from '@angular/core';
 import Icon from 'ol/style/Icon';
 
 import { StyleComponent } from './style.component';
@@ -45,7 +45,7 @@ export class StyleIconComponent implements OnInit, OnChanges {
 
     return instance;
   }
-  constructor(@Host() private host: StyleComponent) {}
+  private readonly host = inject(StyleComponent, { host: true });
 
   ngOnInit() {
     // console.log('creating ol.style.Icon instance with: ', this);

@@ -1,12 +1,4 @@
-import {
-  Component,
-  Optional,
-  OnInit,
-  OnChanges,
-  SimpleChanges,
-  input,
-  signal,
-} from '@angular/core';
+import { Component, OnInit, OnChanges, SimpleChanges, inject, input, signal } from '@angular/core';
 import Stroke from 'ol/style/Stroke';
 import { Options } from 'ol/style/Stroke';
 import { StyleComponent } from './style.component';
@@ -43,21 +35,20 @@ export class StyleStrokeComponent implements OnInit, OnChanges {
   }
   /* the typings do not have the setters */
   private readonly host: StyleComponent | StyleCircleComponent | StyleTextComponent;
+  private readonly styleHost = inject(StyleComponent, { optional: true });
+  private readonly styleCircleHost = inject(StyleCircleComponent, { optional: true });
+  private readonly styleTextHost = inject(StyleTextComponent, { optional: true });
 
-  constructor(
-    @Optional() styleHost: StyleComponent,
-    @Optional() styleCircleHost: StyleCircleComponent,
-    @Optional() styleTextHost: StyleTextComponent,
-  ) {
-    if (!styleHost) {
+  constructor() {
+    if (!this.styleHost) {
       throw new Error('aol-style-stroke must be a descendant of aol-style');
     }
-    if (!!styleTextHost) {
-      this.host = styleTextHost;
-    } else if (!!styleCircleHost) {
-      this.host = styleCircleHost;
+    if (!!this.styleTextHost) {
+      this.host = this.styleTextHost;
+    } else if (!!this.styleCircleHost) {
+      this.host = this.styleCircleHost;
     } else {
-      this.host = styleHost;
+      this.host = this.styleHost;
     }
     // console.log('creating aol-style-stroke with: ', this);
   }

@@ -1,12 +1,12 @@
 import {
   Component,
   forwardRef,
-  Host,
   OnChanges,
   OnInit,
   SimpleChanges,
   input,
   signal,
+  inject,
 } from '@angular/core';
 import type { NearestDirectionFunction } from 'ol/array';
 import type { ProjectionLike } from 'ol/proj';
@@ -66,8 +66,8 @@ export class SourceTileArcGISRestComponent extends SourceComponent implements On
 
     return instance;
   }
-  constructor(@Host() layer: LayerTileComponent) {
-    super(layer);
+  constructor() {
+    super(inject(LayerTileComponent, { host: true }));
   }
 
   ngOnInit() {

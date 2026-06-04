@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, input, signal } from '@angular/core';
+import { Component, OnDestroy, OnInit, input, signal, inject } from '@angular/core';
 import DragBox from 'ol/interaction/DragBox';
 import { Options } from 'ol/interaction/DragBox';
 import { MapComponent } from '../map.component';
@@ -27,7 +27,7 @@ export class DragBoxInteractionComponent implements OnInit, OnDestroy {
 
     return instance;
   }
-  constructor(private map: MapComponent) {}
+  private readonly map = inject(MapComponent);
 
   ngOnInit() {
     this.setInstance(new DragBox(this.createOptions()));

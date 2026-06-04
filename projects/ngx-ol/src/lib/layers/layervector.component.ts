@@ -2,10 +2,10 @@ import {
   Component,
   OnDestroy,
   OnInit,
-  Optional,
   OnChanges,
   SimpleChanges,
   input,
+  inject,
 } from '@angular/core';
 import { MapComponent } from '../map.component';
 import Vector from 'ol/layer/Vector';
@@ -41,8 +41,8 @@ export class LayerVectorComponent extends LayerComponent implements OnInit, OnDe
 
   source = input<VectorSource>();
 
-  constructor(map: MapComponent, @Optional() group?: LayerGroupComponent) {
-    super(group || map);
+  constructor() {
+    super(inject(LayerGroupComponent, { optional: true }) || inject(MapComponent));
   }
 
   ngOnInit() {

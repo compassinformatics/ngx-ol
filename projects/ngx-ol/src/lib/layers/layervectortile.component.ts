@@ -1,4 +1,4 @@
-import { Component, OnInit, Optional, SimpleChanges, OnChanges, input } from '@angular/core';
+import { Component, OnInit, SimpleChanges, OnChanges, input, inject } from '@angular/core';
 import VectorTile from 'ol/layer/VectorTile';
 import { MapComponent } from '../map.component';
 import { LayerComponent } from './layer.component';
@@ -24,8 +24,8 @@ export class LayerVectorTileComponent extends LayerComponent implements OnInit, 
   visible = input<boolean>();
   source = input<VectorTileSource>();
 
-  constructor(map: MapComponent, @Optional() group?: LayerGroupComponent) {
-    super(group || map);
+  constructor() {
+    super(inject(LayerGroupComponent, { optional: true }) || inject(MapComponent));
   }
 
   ngOnInit() {

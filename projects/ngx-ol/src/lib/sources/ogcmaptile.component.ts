@@ -1,4 +1,4 @@
-import { AfterContentInit, Component, Host, forwardRef, input, signal } from '@angular/core';
+import { AfterContentInit, Component, forwardRef, input, signal, inject } from '@angular/core';
 import { ProjectionLike } from 'ol/proj';
 import OGCMapTile from 'ol/source/OGCMapTile';
 import { Options } from 'ol/source/OGCMapTile';
@@ -40,8 +40,8 @@ export class SourceOGCMapTileComponent extends SourceComponent implements AfterC
 
     return instance;
   }
-  constructor(@Host() layer: LayerTileComponent) {
-    super(layer);
+  constructor() {
+    super(inject(LayerTileComponent, { host: true }));
   }
 
   ngAfterContentInit() {
