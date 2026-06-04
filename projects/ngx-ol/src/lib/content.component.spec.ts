@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 import { AngularOpenlayersModule } from '../public-api';
@@ -14,8 +14,7 @@ import { ContentComponent } from './content.component';
   imports: [AngularOpenlayersModule],
 })
 class ContentHostComponent {
-  @ViewChild(ContentComponent)
-  content!: ContentComponent;
+  readonly content = viewChild.required<ContentComponent>(ContentComponent);
 }
 
 describe('ContentComponent', () => {
@@ -35,7 +34,7 @@ describe('ContentComponent', () => {
   });
 
   it('exposes the projected host element through Angular queries', () => {
-    expect(fixture.componentInstance.content.elementRef.nativeElement.textContent).toContain(
+    expect(fixture.componentInstance.content().elementRef.nativeElement.textContent).toContain(
       'Projected content',
     );
   });

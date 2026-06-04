@@ -1,4 +1,4 @@
-import { Component, signal, ViewChild } from '@angular/core';
+import { Component, signal, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 import { AngularOpenlayersModule } from '../../public-api';
@@ -28,11 +28,9 @@ class StyleCircleHostComponent {
   zoom = 2;
   radius = signal(8);
 
-  @ViewChild(StyleCircleComponent)
-  circle!: StyleCircleComponent;
+  readonly circle = viewChild.required<StyleCircleComponent>(StyleCircleComponent);
 
-  @ViewChild(StyleComponent)
-  style!: StyleComponent;
+  readonly style = viewChild.required<StyleComponent>(StyleComponent);
 }
 
 describe('StyleCircleComponent', () => {
@@ -52,9 +50,9 @@ describe('StyleCircleComponent', () => {
   });
 
   it('creates a circle image style and applies it to the style host', () => {
-    expect(fixture.componentInstance.circle.instance.getRadius()).toBe(8);
-    expect(fixture.componentInstance.style.instance.getImage()).toBe(
-      fixture.componentInstance.circle.instance,
+    expect(fixture.componentInstance.circle().instance.getRadius()).toBe(8);
+    expect(fixture.componentInstance.style().instance.getImage()).toBe(
+      fixture.componentInstance.circle().instance,
     );
   });
 
@@ -63,9 +61,9 @@ describe('StyleCircleComponent', () => {
 
     fixture.detectChanges(false);
 
-    expect(fixture.componentInstance.circle.instance.getRadius()).toBe(12);
-    expect(fixture.componentInstance.style.instance.getImage()).toBe(
-      fixture.componentInstance.circle.instance,
+    expect(fixture.componentInstance.circle().instance.getRadius()).toBe(12);
+    expect(fixture.componentInstance.style().instance.getImage()).toBe(
+      fixture.componentInstance.circle().instance,
     );
   });
 });

@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 import { AngularOpenlayersModule } from '../../public-api';
@@ -21,11 +21,9 @@ class ControlZoomHostComponent {
   duration = 0;
   delta = 2;
 
-  @ViewChild(ControlZoomComponent)
-  control!: ControlZoomComponent;
+  readonly control = viewChild.required<ControlZoomComponent>(ControlZoomComponent);
 
-  @ViewChild(ViewComponent)
-  view!: ViewComponent;
+  readonly view = viewChild.required<ViewComponent>(ViewComponent);
 }
 
 describe('ControlZoomComponent', () => {
@@ -45,19 +43,15 @@ describe('ControlZoomComponent', () => {
   });
 
   it('wires the zoom buttons to the map view using bound Angular inputs', () => {
-    const zoomInButton = fixture.nativeElement.querySelector(
-      '.ol-zoom-in',
-    ) as HTMLButtonElement;
-    const zoomOutButton = fixture.nativeElement.querySelector(
-      '.ol-zoom-out',
-    ) as HTMLButtonElement;
+    const zoomInButton = fixture.nativeElement.querySelector('.ol-zoom-in') as HTMLButtonElement;
+    const zoomOutButton = fixture.nativeElement.querySelector('.ol-zoom-out') as HTMLButtonElement;
 
-    expect(fixture.componentInstance.view.instance.getZoom()).toBe(2);
+    expect(fixture.componentInstance.view().instance.getZoom()).toBe(2);
 
     zoomInButton.click();
-    expect(fixture.componentInstance.view.instance.getZoom()).toBe(4);
+    expect(fixture.componentInstance.view().instance.getZoom()).toBe(4);
 
     zoomOutButton.click();
-    expect(fixture.componentInstance.view.instance.getZoom()).toBe(2);
+    expect(fixture.componentInstance.view().instance.getZoom()).toBe(2);
   });
 });

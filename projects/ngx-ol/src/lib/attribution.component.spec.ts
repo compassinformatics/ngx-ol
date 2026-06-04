@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 import { AngularOpenlayersModule } from '../public-api';
@@ -10,8 +10,7 @@ import { AttributionComponent } from './attribution.component';
   imports: [AngularOpenlayersModule],
 })
 class AttributionHostComponent {
-  @ViewChild(AttributionComponent)
-  attribution!: AttributionComponent;
+  readonly attribution = viewChild.required<AttributionComponent>(AttributionComponent);
 }
 
 describe('AttributionComponent', () => {
@@ -31,6 +30,6 @@ describe('AttributionComponent', () => {
   });
 
   it('captures its projected markup as the attribution label', () => {
-    expect(fixture.componentInstance.attribution.label).toBe('Data Provider');
+    expect(fixture.componentInstance.attribution().label).toBe('Data Provider');
   });
 });

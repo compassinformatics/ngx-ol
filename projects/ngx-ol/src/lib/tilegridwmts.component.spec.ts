@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import WMTS from 'ol/tilegrid/WMTS';
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
@@ -21,8 +21,7 @@ class TileGridWmtsHostComponent {
   matrixIds = ['0', '1'];
   origin: [number, number] = [0, 0];
 
-  @ViewChild(TileGridWMTSComponent)
-  tileGrid!: TileGridWMTSComponent;
+  readonly tileGrid = viewChild.required<TileGridWMTSComponent>(TileGridWMTSComponent);
 }
 
 describe('TileGridWMTSComponent', () => {
@@ -42,6 +41,6 @@ describe('TileGridWMTSComponent', () => {
   });
 
   it('creates a WMTS tile grid from template bindings', () => {
-    expect(fixture.componentInstance.tileGrid.instance).toBeInstanceOf(WMTS);
+    expect(fixture.componentInstance.tileGrid().instance).toBeInstanceOf(WMTS);
   });
 });

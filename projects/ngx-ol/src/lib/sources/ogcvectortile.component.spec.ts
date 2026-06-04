@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 import { AngularOpenlayersModule } from '../../public-api';
@@ -24,11 +24,9 @@ class SourceOgcVectorTileHostComponent {
   zoom = 2;
   url = 'https://example.com/ogc-vectortiles.json';
 
-  @ViewChild(SourceOGCVectorTileComponent)
-  source!: SourceOGCVectorTileComponent;
+  readonly source = viewChild.required<SourceOGCVectorTileComponent>(SourceOGCVectorTileComponent);
 
-  @ViewChild(LayerVectorTileComponent)
-  layer!: LayerVectorTileComponent;
+  readonly layer = viewChild.required<LayerVectorTileComponent>(LayerVectorTileComponent);
 }
 
 describe('SourceOGCVectorTileComponent', () => {
@@ -48,8 +46,8 @@ describe('SourceOGCVectorTileComponent', () => {
   });
 
   it('binds an OGC vector tile source into the vector tile layer and prefers child helpers', () => {
-    expect(fixture.componentInstance.layer.instance.getSource()).toBe(
-      fixture.componentInstance.source.instance,
+    expect(fixture.componentInstance.layer().instance.getSource()).toBe(
+      fixture.componentInstance.source().instance,
     );
   });
 });

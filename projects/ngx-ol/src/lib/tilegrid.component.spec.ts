@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 import { AngularOpenlayersModule } from '../public-api';
@@ -13,8 +13,7 @@ class TileGridHostComponent {
   resolutions = [2, 1];
   origin: [number, number] = [0, 0];
 
-  @ViewChild(TileGridComponent)
-  tileGrid!: TileGridComponent;
+  readonly tileGrid = viewChild.required<TileGridComponent>(TileGridComponent);
 }
 
 describe('TileGridComponent', () => {
@@ -34,6 +33,6 @@ describe('TileGridComponent', () => {
   });
 
   it('creates a tile grid from template bindings', () => {
-    expect(fixture.componentInstance.tileGrid.instance.getResolutions()).toEqual([2, 1]);
+    expect(fixture.componentInstance.tileGrid().instance.getResolutions()).toEqual([2, 1]);
   });
 });

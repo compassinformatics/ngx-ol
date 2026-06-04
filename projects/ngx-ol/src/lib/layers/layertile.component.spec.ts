@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 import { AngularOpenlayersModule } from '../../public-api';
@@ -19,8 +19,7 @@ class LayerTileHostComponent {
   zoom = 2;
   opacity = 0.4;
 
-  @ViewChild(LayerTileComponent)
-  layer!: LayerTileComponent;
+  readonly layer = viewChild.required<LayerTileComponent>(LayerTileComponent);
 }
 
 describe('LayerTileComponent', () => {
@@ -40,6 +39,6 @@ describe('LayerTileComponent', () => {
   });
 
   it('creates a tile layer from template inputs', () => {
-    expect(fixture.componentInstance.layer.instance.getOpacity()).toBe(0.4);
+    expect(fixture.componentInstance.layer().instance.getOpacity()).toBe(0.4);
   });
 });

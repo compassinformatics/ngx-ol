@@ -26,7 +26,10 @@ import { unByKey } from 'ol/Observable';
   template: ` <ng-content></ng-content> `,
   providers: [{ provide: SourceComponent, useExisting: forwardRef(() => SourceImageWMSComponent) }],
 })
-export class SourceImageWMSComponent extends SourceComponent implements OnChanges, OnDestroy, OnInit {
+export class SourceImageWMSComponent
+  extends SourceComponent
+  implements OnChanges, OnDestroy, OnInit
+{
   crossOrigin = input<null | string>();
   hidpi = input<boolean>();
   serverType = input<ServerType>();

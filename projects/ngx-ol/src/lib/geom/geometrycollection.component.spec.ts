@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import GeometryCollection from 'ol/geom/GeometryCollection';
 import Point from 'ol/geom/Point';
@@ -28,11 +28,9 @@ class GeometryCollectionHostComponent {
   zoom = 2;
   geometries = [new Point([1, 2]), new Point([3, 4])];
 
-  @ViewChild(GeometryCollectionComponent)
-  geometry!: GeometryCollectionComponent;
+  readonly geometry = viewChild.required<GeometryCollectionComponent>(GeometryCollectionComponent);
 
-  @ViewChild(FeatureComponent)
-  feature!: FeatureComponent;
+  readonly feature = viewChild.required<FeatureComponent>(FeatureComponent);
 }
 
 describe('GeometryCollectionComponent', () => {
@@ -52,16 +50,17 @@ describe('GeometryCollectionComponent', () => {
   });
 
   it('attaches the bound geometry collection to its feature', () => {
-    expect(fixture.componentInstance.geometry.instance).toBeInstanceOf(GeometryCollection);
+    expect(fixture.componentInstance.geometry().instance).toBeInstanceOf(GeometryCollection);
     expect(
-      fixture.componentInstance.geometry.instance.getGeometries().map((geometry) =>
-        (geometry as any).getCoordinates(),
-      ),
+      fixture.componentInstance
+        .geometry()
+        .instance.getGeometries()
+        .map((geometry) => (geometry as any).getCoordinates()),
     ).toEqual(
       fixture.componentInstance.geometries.map((geometry) => (geometry as any).getCoordinates()),
     );
-    expect(fixture.componentInstance.feature.instance.getGeometry()).toBe(
-      fixture.componentInstance.geometry.instance,
+    expect(fixture.componentInstance.feature().instance.getGeometry()).toBe(
+      fixture.componentInstance.geometry().instance,
     );
   });
 });

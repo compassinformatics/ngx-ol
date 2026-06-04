@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import MultiPoint from 'ol/geom/MultiPoint';
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
@@ -14,7 +14,10 @@ import { GeometryMultiPointComponent } from './geometrymultipoint.component';
         <aol-source-vector>
           <aol-feature>
             <aol-geometry-multipoint>
-              <aol-collection-coordinates [coordinates]="coordinates" [srid]="srid"></aol-collection-coordinates>
+              <aol-collection-coordinates
+                [coordinates]="coordinates"
+                [srid]="srid"
+              ></aol-collection-coordinates>
             </aol-geometry-multipoint>
           </aol-feature>
         </aol-source-vector>
@@ -33,11 +36,9 @@ class GeometryMultiPointHostComponent {
     [2, 2],
   ];
 
-  @ViewChild(GeometryMultiPointComponent)
-  geometry!: GeometryMultiPointComponent;
+  readonly geometry = viewChild.required<GeometryMultiPointComponent>(GeometryMultiPointComponent);
 
-  @ViewChild(FeatureComponent)
-  feature!: FeatureComponent;
+  readonly feature = viewChild.required<FeatureComponent>(FeatureComponent);
 }
 
 describe('GeometryMultiPointComponent', () => {
@@ -57,11 +58,11 @@ describe('GeometryMultiPointComponent', () => {
   });
 
   it('binds multipoint coordinates through Angular inputs and attaches the geometry to the feature', () => {
-    expect(fixture.componentInstance.geometry.instance).toBeInstanceOf(MultiPoint);
-    expect(fixture.componentInstance.feature.instance.getGeometry()).toBe(
-      fixture.componentInstance.geometry.instance,
+    expect(fixture.componentInstance.geometry().instance).toBeInstanceOf(MultiPoint);
+    expect(fixture.componentInstance.feature().instance.getGeometry()).toBe(
+      fixture.componentInstance.geometry().instance,
     );
-    expect(fixture.componentInstance.geometry.instance.getCoordinates()).toEqual(
+    expect(fixture.componentInstance.geometry().instance.getCoordinates()).toEqual(
       fixture.componentInstance.coordinates,
     );
   });

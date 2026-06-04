@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import Collection from 'ol/Collection';
 import Feature from 'ol/Feature';
@@ -36,11 +36,9 @@ class SnapInteractionHostComponent {
   error = vi.fn();
   propertyChange = vi.fn();
 
-  @ViewChild(SnapInteractionComponent)
-  interaction!: SnapInteractionComponent;
+  readonly interaction = viewChild.required<SnapInteractionComponent>(SnapInteractionComponent);
 
-  @ViewChild(MapComponent)
-  map!: MapComponent;
+  readonly map = viewChild.required<MapComponent>(MapComponent);
 }
 
 describe('SnapInteractionComponent', () => {
@@ -62,13 +60,13 @@ describe('SnapInteractionComponent', () => {
   it('adds a snap interaction to the map and forwards OpenLayers events', () => {
     const host = fixture.componentInstance;
 
-    expect(host.map.instance.getInteractions().getArray()).toContain(host.interaction.instance);
+    expect(host.map().instance.getInteractions().getArray()).toContain(host.interaction().instance);
 
-    host.interaction.instance.dispatchEvent('snap');
-    host.interaction.instance.dispatchEvent('change');
-    host.interaction.instance.dispatchEvent('change:active');
-    host.interaction.instance.dispatchEvent('error');
-    host.interaction.instance.dispatchEvent('propertychange');
+    host.interaction().instance.dispatchEvent('snap');
+    host.interaction().instance.dispatchEvent('change');
+    host.interaction().instance.dispatchEvent('change:active');
+    host.interaction().instance.dispatchEvent('error');
+    host.interaction().instance.dispatchEvent('propertychange');
 
     expect(host.snap).toHaveBeenCalledOnce();
     expect(host.change).toHaveBeenCalledOnce();

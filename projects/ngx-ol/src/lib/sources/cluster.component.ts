@@ -1,12 +1,12 @@
 import {
   AfterContentInit,
   Component,
-  ContentChild,
   forwardRef,
   Host,
   OnChanges,
   Optional,
   SimpleChanges,
+  contentChild,
   input,
   signal,
 } from '@angular/core';
@@ -33,8 +33,7 @@ export class SourceClusterComponent extends SourceComponent implements AfterCont
   wrapX = input<boolean>();
   createCluster = input<any>();
 
-  @ContentChild(SourceVectorComponent, { static: false })
-  sourceVectorComponent: SourceVectorComponent;
+  protected readonly sourceVectorComponent = contentChild(SourceVectorComponent);
 
   instance: Cluster<any>;
 
@@ -59,7 +58,11 @@ export class SourceClusterComponent extends SourceComponent implements AfterCont
   }
 
   ngAfterContentInit() {
-    this.source = this.sourceVectorComponent.instance;
+    const sourceVectorComponent = this.sourceVectorComponent();
+
+    if (sourceVectorComponent) {
+      this.source = sourceVectorComponent.instance;
+    }
 
     this.setInstance(new Cluster(this.createOptions()));
     this.host.instance.setSource(this.instance);

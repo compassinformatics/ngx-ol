@@ -89,10 +89,7 @@ export class FeatureComponent implements OnInit, OnDestroy, OnChanges {
     this.instance.set('__aol-feature', this.clickable() ? this : null);
   }
 
-  private syncProperties(
-    nextProperties?: Record<any, any>,
-    previousProperties?: Record<any, any>,
-  ) {
+  private syncProperties(nextProperties?: Record<any, any>, previousProperties?: Record<any, any>) {
     if (previousProperties) {
       const nextKeys = new Set(Object.keys(nextProperties ?? {}));
       Object.keys(previousProperties)

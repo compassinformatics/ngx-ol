@@ -1,4 +1,4 @@
-import { Component, signal, ViewChild } from '@angular/core';
+import { Component, signal, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import Feature from 'ol/Feature';
 import Point from 'ol/geom/Point';
@@ -24,11 +24,9 @@ class SourceVectorHostComponent {
   zoom = 2;
   features = signal<Feature[] | undefined>([new Feature(new Point([1, 2]))]);
 
-  @ViewChild(SourceVectorComponent)
-  source!: SourceVectorComponent;
+  readonly source = viewChild.required<SourceVectorComponent>(SourceVectorComponent);
 
-  @ViewChild(LayerVectorComponent)
-  layer!: LayerVectorComponent;
+  readonly layer = viewChild.required<LayerVectorComponent>(LayerVectorComponent);
 }
 
 describe('SourceVectorComponent', () => {
@@ -48,10 +46,10 @@ describe('SourceVectorComponent', () => {
   });
 
   it('binds a vector source into the vector layer through template inputs', () => {
-    expect(fixture.componentInstance.layer.instance.getSource()).toBe(
-      fixture.componentInstance.source.instance,
+    expect(fixture.componentInstance.layer().instance.getSource()).toBe(
+      fixture.componentInstance.source().instance,
     );
-    expect(fixture.componentInstance.source.instance.getFeatures()).toHaveLength(1);
+    expect(fixture.componentInstance.source().instance.getFeatures()).toHaveLength(1);
   });
 
   it('clears existing features when the features binding is cleared', () => {
@@ -59,6 +57,6 @@ describe('SourceVectorComponent', () => {
 
     fixture.detectChanges();
 
-    expect(fixture.componentInstance.source.instance.getFeatures()).toHaveLength(0);
+    expect(fixture.componentInstance.source().instance.getFeatures()).toHaveLength(0);
   });
 });

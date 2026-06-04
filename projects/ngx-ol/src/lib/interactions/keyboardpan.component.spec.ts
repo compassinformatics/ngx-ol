@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 import { AngularOpenlayersModule } from '../../public-api';
@@ -20,11 +20,11 @@ class KeyboardPanInteractionHostComponent {
   zoom = 2;
   pixelDelta = 64;
 
-  @ViewChild(KeyboardPanInteractionComponent)
-  interaction!: KeyboardPanInteractionComponent;
+  readonly interaction = viewChild.required<KeyboardPanInteractionComponent>(
+    KeyboardPanInteractionComponent,
+  );
 
-  @ViewChild(MapComponent)
-  map!: MapComponent;
+  readonly map = viewChild.required<MapComponent>(MapComponent);
 }
 
 describe('KeyboardPanInteractionComponent', () => {
@@ -45,8 +45,8 @@ describe('KeyboardPanInteractionComponent', () => {
 
   it('adds and removes a keyboard-pan interaction with the host map lifecycle', () => {
     const host = fixture!.componentInstance;
-    const map = host.map.instance;
-    const interaction = host.interaction.instance;
+    const map = host.map().instance;
+    const interaction = host.interaction().instance;
 
     expect(map.getInteractions().getArray()).toContain(interaction);
 

@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 import { AngularOpenlayersModule } from '../../public-api';
@@ -9,9 +9,7 @@ import { DblClickDragZoomInteractionComponent } from './dblclickdragzoom.compone
   template: `
     <aol-map width="320px" height="240px">
       <aol-view [center]="center" [zoom]="zoom"></aol-view>
-      <aol-interaction-dblclickdragzoom
-        [duration]="duration"
-      ></aol-interaction-dblclickdragzoom>
+      <aol-interaction-dblclickdragzoom [duration]="duration"></aol-interaction-dblclickdragzoom>
     </aol-map>
   `,
   standalone: true,
@@ -22,11 +20,11 @@ class DblClickDragZoomInteractionHostComponent {
   zoom = 2;
   duration = 100;
 
-  @ViewChild(DblClickDragZoomInteractionComponent)
-  interaction!: DblClickDragZoomInteractionComponent;
+  readonly interaction = viewChild.required<DblClickDragZoomInteractionComponent>(
+    DblClickDragZoomInteractionComponent,
+  );
 
-  @ViewChild(MapComponent)
-  map!: MapComponent;
+  readonly map = viewChild.required<MapComponent>(MapComponent);
 }
 
 describe('DblClickDragZoomInteractionComponent', () => {
@@ -47,8 +45,8 @@ describe('DblClickDragZoomInteractionComponent', () => {
 
   it('adds and removes a double-click drag zoom interaction with the host map lifecycle', () => {
     const host = fixture!.componentInstance;
-    const map = host.map.instance;
-    const interaction = host.interaction.instance;
+    const map = host.map().instance;
+    const interaction = host.interaction().instance;
 
     expect(map.getInteractions().getArray()).toContain(interaction);
 

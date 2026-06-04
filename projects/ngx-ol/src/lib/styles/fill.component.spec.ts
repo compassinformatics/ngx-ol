@@ -1,4 +1,4 @@
-import { Component, QueryList, signal, ViewChild, ViewChildren } from '@angular/core';
+import { Component, signal, viewChild, viewChildren } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 import { AngularOpenlayersModule } from '../../public-api';
@@ -30,11 +30,9 @@ class StyleFillHostComponent {
   zoom = 2;
   color = signal('#00ff00');
 
-  @ViewChild(StyleFillComponent)
-  fill!: StyleFillComponent;
+  readonly fill = viewChild.required<StyleFillComponent>(StyleFillComponent);
 
-  @ViewChild(StyleComponent)
-  style!: StyleComponent;
+  readonly style = viewChild.required<StyleComponent>(StyleComponent);
 }
 
 @Component({
@@ -75,14 +73,11 @@ class NestedStyleFillHostComponent {
   text = 'Label';
   textColor = '#0000ff';
 
-  @ViewChild(StyleCircleComponent)
-  circle!: StyleCircleComponent;
+  readonly circle = viewChild.required<StyleCircleComponent>(StyleCircleComponent);
 
-  @ViewChild(StyleTextComponent)
-  textStyle!: StyleTextComponent;
+  readonly textStyle = viewChild.required<StyleTextComponent>(StyleTextComponent);
 
-  @ViewChildren(StyleFillComponent)
-  fills!: QueryList<StyleFillComponent>;
+  readonly fills = viewChildren<StyleFillComponent>(StyleFillComponent);
 }
 
 describe('StyleFillComponent', () => {
@@ -106,9 +101,9 @@ describe('StyleFillComponent', () => {
   });
 
   it('creates a fill and applies it to the style host', () => {
-    expect(fixture.componentInstance.fill.instance.getColor()).toBe('#00ff00');
-    expect(fixture.componentInstance.style.instance.getFill()).toBe(
-      fixture.componentInstance.fill.instance,
+    expect(fixture.componentInstance.fill().instance.getColor()).toBe('#00ff00');
+    expect(fixture.componentInstance.style().instance.getFill()).toBe(
+      fixture.componentInstance.fill().instance,
     );
   });
 
@@ -117,9 +112,9 @@ describe('StyleFillComponent', () => {
 
     fixture.detectChanges(false);
 
-    expect(fixture.componentInstance.fill.instance.getColor()).toBe('#0000ff');
-    expect(fixture.componentInstance.style.instance.getFill()).toBe(
-      fixture.componentInstance.fill.instance,
+    expect(fixture.componentInstance.fill().instance.getColor()).toBe('#0000ff');
+    expect(fixture.componentInstance.style().instance.getFill()).toBe(
+      fixture.componentInstance.fill().instance,
     );
   });
 
@@ -132,10 +127,10 @@ describe('StyleFillComponent', () => {
   it('applies fill children to circle and text style hosts', () => {
     const nestedFixture = TestBed.createComponent(NestedStyleFillHostComponent);
     nestedFixture.detectChanges();
-    const fills = nestedFixture.componentInstance.fills.toArray();
+    const fills = nestedFixture.componentInstance.fills();
 
-    expect(nestedFixture.componentInstance.circle.instance.getFill()).toBe(fills[0].instance);
-    expect(nestedFixture.componentInstance.textStyle.instance.getFill()).toBe(fills[1].instance);
+    expect(nestedFixture.componentInstance.circle().instance.getFill()).toBe(fills[0].instance);
+    expect(nestedFixture.componentInstance.textStyle().instance.getFill()).toBe(fills[1].instance);
 
     nestedFixture.destroy();
   });

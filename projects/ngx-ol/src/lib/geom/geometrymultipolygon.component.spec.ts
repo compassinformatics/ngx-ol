@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import MultiPolygon from 'ol/geom/MultiPolygon';
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
@@ -14,7 +14,10 @@ import { GeometryMultiPolygonComponent } from './geometrymultipolygon.component'
         <aol-source-vector>
           <aol-feature>
             <aol-geometry-multipolygon>
-              <aol-collection-coordinates [coordinates]="coordinates" [srid]="srid"></aol-collection-coordinates>
+              <aol-collection-coordinates
+                [coordinates]="coordinates"
+                [srid]="srid"
+              ></aol-collection-coordinates>
             </aol-geometry-multipolygon>
           </aol-feature>
         </aol-source-vector>
@@ -39,11 +42,11 @@ class GeometryMultiPolygonHostComponent {
     ],
   ];
 
-  @ViewChild(GeometryMultiPolygonComponent)
-  geometry!: GeometryMultiPolygonComponent;
+  readonly geometry = viewChild.required<GeometryMultiPolygonComponent>(
+    GeometryMultiPolygonComponent,
+  );
 
-  @ViewChild(FeatureComponent)
-  feature!: FeatureComponent;
+  readonly feature = viewChild.required<FeatureComponent>(FeatureComponent);
 }
 
 describe('GeometryMultiPolygonComponent', () => {
@@ -63,12 +66,12 @@ describe('GeometryMultiPolygonComponent', () => {
   });
 
   it('attaches the bound multi-polygon geometry to its feature', () => {
-    expect(fixture.componentInstance.geometry.instance).toBeInstanceOf(MultiPolygon);
-    expect(fixture.componentInstance.geometry.instance.getCoordinates()).toEqual(
+    expect(fixture.componentInstance.geometry().instance).toBeInstanceOf(MultiPolygon);
+    expect(fixture.componentInstance.geometry().instance.getCoordinates()).toEqual(
       fixture.componentInstance.coordinates,
     );
-    expect(fixture.componentInstance.feature.instance.getGeometry()).toBe(
-      fixture.componentInstance.geometry.instance,
+    expect(fixture.componentInstance.feature().instance.getGeometry()).toBe(
+      fixture.componentInstance.geometry().instance,
     );
   });
 });

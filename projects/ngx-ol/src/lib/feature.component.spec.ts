@@ -1,4 +1,4 @@
-import { Component, signal, ViewChild } from '@angular/core';
+import { Component, signal, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import Feature from 'ol/Feature';
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
@@ -33,11 +33,9 @@ class FeatureHostComponent {
   properties = signal<Record<string, string>>({ name: 'test' });
   clickable = signal(true);
 
-  @ViewChild(FeatureComponent)
-  featureComponent!: FeatureComponent;
+  readonly featureComponent = viewChild.required<FeatureComponent>(FeatureComponent);
 
-  @ViewChild(SourceVectorComponent)
-  source!: SourceVectorComponent;
+  readonly source = viewChild.required<SourceVectorComponent>(SourceVectorComponent);
 }
 
 describe('FeatureComponent', () => {
@@ -57,13 +55,13 @@ describe('FeatureComponent', () => {
   });
 
   it('adds the bound feature to the vector source and applies metadata', () => {
-    expect(fixture.componentInstance.source.instance.getFeatures()).toContain(
+    expect(fixture.componentInstance.source().instance.getFeatures()).toContain(
       fixture.componentInstance.feature(),
     );
     expect(fixture.componentInstance.feature().getId()).toBe('feature-1');
     expect(fixture.componentInstance.feature().get('name')).toBe('test');
     expect(fixture.componentInstance.feature().get('__aol-feature')).toBe(
-      fixture.componentInstance.featureComponent,
+      fixture.componentInstance.featureComponent(),
     );
   });
 
@@ -81,7 +79,7 @@ describe('FeatureComponent', () => {
     fixture.detectChanges();
 
     expect(fixture.componentInstance.feature().get('__aol-feature')).toBe(
-      fixture.componentInstance.featureComponent,
+      fixture.componentInstance.featureComponent(),
     );
   });
 
@@ -109,10 +107,12 @@ describe('FeatureComponent', () => {
 
     fixture.detectChanges();
 
-    expect(fixture.componentInstance.source.instance.getFeatures()).not.toContain(previousFeature);
-    expect(fixture.componentInstance.source.instance.getFeatures()).toContain(nextFeature);
+    expect(fixture.componentInstance.source().instance.getFeatures()).not.toContain(
+      previousFeature,
+    );
+    expect(fixture.componentInstance.source().instance.getFeatures()).toContain(nextFeature);
     expect(previousFeature.get('__aol-feature')).toBeNull();
-    expect(nextFeature.get('__aol-feature')).toBe(fixture.componentInstance.featureComponent);
+    expect(nextFeature.get('__aol-feature')).toBe(fixture.componentInstance.featureComponent());
     expect(nextFeature.getId()).toBe('feature-1');
     expect(nextFeature.get('name')).toBe('test');
   });

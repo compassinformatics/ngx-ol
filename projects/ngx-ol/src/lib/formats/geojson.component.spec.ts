@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import GeoJSON from 'ol/format/GeoJSON';
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
@@ -19,8 +19,7 @@ class FormatGeoJSONHostComponent {
   geometryName = 'geom';
   dataProjection = 'EPSG:4326';
 
-  @ViewChild(FormatGeoJSONComponent)
-  format!: FormatGeoJSONComponent;
+  readonly format = viewChild.required<FormatGeoJSONComponent>(FormatGeoJSONComponent);
 }
 
 describe('FormatGeoJSONComponent', () => {
@@ -40,6 +39,6 @@ describe('FormatGeoJSONComponent', () => {
   });
 
   it('creates a GeoJSON format from template bindings', () => {
-    expect(fixture.componentInstance.format.instance).toBeInstanceOf(GeoJSON);
+    expect(fixture.componentInstance.format().instance).toBeInstanceOf(GeoJSON);
   });
 });

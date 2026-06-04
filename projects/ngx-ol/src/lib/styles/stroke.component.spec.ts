@@ -1,4 +1,4 @@
-import { Component, QueryList, signal, ViewChild, ViewChildren } from '@angular/core';
+import { Component, signal, viewChild, viewChildren } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 import { AngularOpenlayersModule } from '../../public-api';
@@ -44,11 +44,9 @@ class StyleStrokeHostComponent {
   miterLimit = signal(4);
   width = signal(2);
 
-  @ViewChild(StyleStrokeComponent)
-  stroke!: StyleStrokeComponent;
+  readonly stroke = viewChild.required<StyleStrokeComponent>(StyleStrokeComponent);
 
-  @ViewChild(StyleComponent)
-  style!: StyleComponent;
+  readonly style = viewChild.required<StyleComponent>(StyleComponent);
 }
 
 @Component({
@@ -91,14 +89,11 @@ class NestedStyleStrokeHostComponent {
   textColor = '#0000ff';
   textWidth = 4;
 
-  @ViewChild(StyleCircleComponent)
-  circle!: StyleCircleComponent;
+  readonly circle = viewChild.required<StyleCircleComponent>(StyleCircleComponent);
 
-  @ViewChild(StyleTextComponent)
-  textStyle!: StyleTextComponent;
+  readonly textStyle = viewChild.required<StyleTextComponent>(StyleTextComponent);
 
-  @ViewChildren(StyleStrokeComponent)
-  strokes!: QueryList<StyleStrokeComponent>;
+  readonly strokes = viewChildren<StyleStrokeComponent>(StyleStrokeComponent);
 }
 
 describe('StyleStrokeComponent', () => {
@@ -122,15 +117,15 @@ describe('StyleStrokeComponent', () => {
   });
 
   it('creates a stroke and applies it to the style host', () => {
-    expect(fixture.componentInstance.stroke.instance.getColor()).toBe('#ff0000');
-    expect(fixture.componentInstance.stroke.instance.getLineDash()).toEqual([1, 2]);
-    expect(fixture.componentInstance.stroke.instance.getLineDashOffset()).toBe(0);
-    expect(fixture.componentInstance.stroke.instance.getLineCap()).toBe('round');
-    expect(fixture.componentInstance.stroke.instance.getLineJoin()).toBe('round');
-    expect(fixture.componentInstance.stroke.instance.getMiterLimit()).toBe(4);
-    expect(fixture.componentInstance.stroke.instance.getWidth()).toBe(2);
-    expect(fixture.componentInstance.style.instance.getStroke()).toBe(
-      fixture.componentInstance.stroke.instance,
+    expect(fixture.componentInstance.stroke().instance.getColor()).toBe('#ff0000');
+    expect(fixture.componentInstance.stroke().instance.getLineDash()).toEqual([1, 2]);
+    expect(fixture.componentInstance.stroke().instance.getLineDashOffset()).toBe(0);
+    expect(fixture.componentInstance.stroke().instance.getLineCap()).toBe('round');
+    expect(fixture.componentInstance.stroke().instance.getLineJoin()).toBe('round');
+    expect(fixture.componentInstance.stroke().instance.getMiterLimit()).toBe(4);
+    expect(fixture.componentInstance.stroke().instance.getWidth()).toBe(2);
+    expect(fixture.componentInstance.style().instance.getStroke()).toBe(
+      fixture.componentInstance.stroke().instance,
     );
   });
 
@@ -145,15 +140,15 @@ describe('StyleStrokeComponent', () => {
 
     fixture.detectChanges(false);
 
-    expect(fixture.componentInstance.stroke.instance.getColor()).toBe('#0000ff');
-    expect(fixture.componentInstance.stroke.instance.getLineDash()).toEqual([4, 8]);
-    expect(fixture.componentInstance.stroke.instance.getLineDashOffset()).toBe(2);
-    expect(fixture.componentInstance.stroke.instance.getLineCap()).toBe('square');
-    expect(fixture.componentInstance.stroke.instance.getLineJoin()).toBe('bevel');
-    expect(fixture.componentInstance.stroke.instance.getMiterLimit()).toBe(8);
-    expect(fixture.componentInstance.stroke.instance.getWidth()).toBe(6);
-    expect(fixture.componentInstance.style.instance.getStroke()).toBe(
-      fixture.componentInstance.stroke.instance,
+    expect(fixture.componentInstance.stroke().instance.getColor()).toBe('#0000ff');
+    expect(fixture.componentInstance.stroke().instance.getLineDash()).toEqual([4, 8]);
+    expect(fixture.componentInstance.stroke().instance.getLineDashOffset()).toBe(2);
+    expect(fixture.componentInstance.stroke().instance.getLineCap()).toBe('square');
+    expect(fixture.componentInstance.stroke().instance.getLineJoin()).toBe('bevel');
+    expect(fixture.componentInstance.stroke().instance.getMiterLimit()).toBe(8);
+    expect(fixture.componentInstance.stroke().instance.getWidth()).toBe(6);
+    expect(fixture.componentInstance.style().instance.getStroke()).toBe(
+      fixture.componentInstance.stroke().instance,
     );
   });
 
@@ -166,10 +161,10 @@ describe('StyleStrokeComponent', () => {
   it('applies stroke children to circle and text style hosts', () => {
     const nestedFixture = TestBed.createComponent(NestedStyleStrokeHostComponent);
     nestedFixture.detectChanges();
-    const strokes = nestedFixture.componentInstance.strokes.toArray();
+    const strokes = nestedFixture.componentInstance.strokes();
 
-    expect(nestedFixture.componentInstance.circle.instance.getStroke()).toBe(strokes[0].instance);
-    expect(nestedFixture.componentInstance.textStyle.instance.getStroke()).toBe(
+    expect(nestedFixture.componentInstance.circle().instance.getStroke()).toBe(strokes[0].instance);
+    expect(nestedFixture.componentInstance.textStyle().instance.getStroke()).toBe(
       strokes[1].instance,
     );
 

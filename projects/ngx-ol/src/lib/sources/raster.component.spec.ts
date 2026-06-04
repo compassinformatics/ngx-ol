@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 import { AngularOpenlayersModule } from '../../public-api';
@@ -12,10 +12,7 @@ import { SourceImageStaticComponent } from './imagestatic.component';
       <aol-view [center]="center" [zoom]="zoom"></aol-view>
       <aol-layer-image>
         <aol-source-raster>
-          <aol-source-imagestatic
-            [url]="url"
-            [imageExtent]="imageExtent"
-          ></aol-source-imagestatic>
+          <aol-source-imagestatic [url]="url" [imageExtent]="imageExtent"></aol-source-imagestatic>
         </aol-source-raster>
       </aol-layer-image>
     </aol-map>
@@ -29,14 +26,13 @@ class SourceRasterHostComponent {
   url = 'https://example.com/image.png';
   imageExtent: [number, number, number, number] = [0, 0, 10, 10];
 
-  @ViewChild(SourceRasterComponent)
-  source!: SourceRasterComponent;
+  readonly source = viewChild.required<SourceRasterComponent>(SourceRasterComponent);
 
-  @ViewChild(SourceImageStaticComponent)
-  nestedSource!: SourceImageStaticComponent;
+  readonly nestedSource = viewChild.required<SourceImageStaticComponent>(
+    SourceImageStaticComponent,
+  );
 
-  @ViewChild(LayerImageComponent)
-  layer!: LayerImageComponent;
+  readonly layer = viewChild.required<LayerImageComponent>(LayerImageComponent);
 }
 
 describe('SourceRasterComponent', () => {
@@ -56,11 +52,11 @@ describe('SourceRasterComponent', () => {
   });
 
   it('binds a raster source into the image layer and uses its nested source helper', () => {
-    expect(fixture.componentInstance.layer.instance.getSource()).toBe(
-      fixture.componentInstance.source.instance,
+    expect(fixture.componentInstance.layer().instance.getSource()).toBe(
+      fixture.componentInstance.source().instance,
     );
-    expect(fixture.componentInstance.source.sources).toEqual([
-      fixture.componentInstance.nestedSource.instance,
+    expect(fixture.componentInstance.source().sources).toEqual([
+      fixture.componentInstance.nestedSource().instance,
     ]);
   });
 });

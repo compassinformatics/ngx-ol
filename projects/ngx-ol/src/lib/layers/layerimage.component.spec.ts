@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 import { AngularOpenlayersModule } from '../../public-api';
@@ -19,8 +19,7 @@ class LayerImageHostComponent {
   zoom = 2;
   opacity = 0.5;
 
-  @ViewChild(LayerImageComponent)
-  layer!: LayerImageComponent;
+  readonly layer = viewChild.required<LayerImageComponent>(LayerImageComponent);
 }
 
 describe('LayerImageComponent', () => {
@@ -40,6 +39,6 @@ describe('LayerImageComponent', () => {
   });
 
   it('creates an image layer from template inputs', () => {
-    expect(fixture.componentInstance.layer.instance.getOpacity()).toBe(0.5);
+    expect(fixture.componentInstance.layer().instance.getOpacity()).toBe(0.5);
   });
 });

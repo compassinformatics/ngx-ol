@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 import { AngularOpenlayersModule } from '../public-api';
@@ -21,8 +21,7 @@ class OverlayHostComponent {
   zoom = 2;
   position: [number, number] = [1, 2];
 
-  @ViewChild(OverlayComponent)
-  overlay!: OverlayComponent;
+  readonly overlay = viewChild.required<OverlayComponent>(OverlayComponent);
 }
 
 describe('OverlayComponent', () => {
@@ -42,6 +41,6 @@ describe('OverlayComponent', () => {
   });
 
   it('creates an overlay and binds its position from the template', () => {
-    expect(fixture.componentInstance.overlay.instance.getPosition()).toEqual([1, 2]);
+    expect(fixture.componentInstance.overlay().instance.getPosition()).toEqual([1, 2]);
   });
 });

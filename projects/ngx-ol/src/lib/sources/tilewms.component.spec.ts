@@ -1,4 +1,4 @@
-import { Component, signal, ViewChild } from '@angular/core';
+import { Component, signal, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 import { AngularOpenlayersModule } from '../../public-api';
@@ -23,11 +23,9 @@ class SourceTileWMSHostComponent {
   url = 'https://example.com/wms';
   params = signal<Record<string, string>>({ LAYERS: 'basic', TIME: '2026-01-01' });
 
-  @ViewChild(SourceTileWMSComponent)
-  source!: SourceTileWMSComponent;
+  readonly source = viewChild.required<SourceTileWMSComponent>(SourceTileWMSComponent);
 
-  @ViewChild(LayerTileComponent)
-  layer!: LayerTileComponent;
+  readonly layer = viewChild.required<LayerTileComponent>(LayerTileComponent);
 }
 
 describe('SourceTileWMSComponent', () => {
@@ -47,39 +45,39 @@ describe('SourceTileWMSComponent', () => {
   });
 
   it('binds WMS params into the layer source through Angular inputs', () => {
-    expect(fixture.componentInstance.layer.instance.getSource()).toBe(
-      fixture.componentInstance.source.instance,
+    expect(fixture.componentInstance.layer().instance.getSource()).toBe(
+      fixture.componentInstance.source().instance,
     );
-    expect(fixture.componentInstance.source.instance.getParams()).toMatchObject({
+    expect(fixture.componentInstance.source().instance.getParams()).toMatchObject({
       LAYERS: 'basic',
       TIME: '2026-01-01',
     });
   });
 
   it('updates retained WMS params without replacing the source', () => {
-    const source = fixture.componentInstance.source.instance;
+    const source = fixture.componentInstance.source().instance;
 
     fixture.componentInstance.params.set({ LAYERS: 'updated', TIME: '2026-01-01' });
     fixture.detectChanges(false);
 
-    expect(fixture.componentInstance.source.instance).toBe(source);
-    expect(fixture.componentInstance.source.instance.getParams()).toMatchObject({
+    expect(fixture.componentInstance.source().instance).toBe(source);
+    expect(fixture.componentInstance.source().instance.getParams()).toMatchObject({
       LAYERS: 'updated',
       TIME: '2026-01-01',
     });
   });
 
   it('replaces the source when removed WMS params would otherwise stay merged', () => {
-    const source = fixture.componentInstance.source.instance;
+    const source = fixture.componentInstance.source().instance;
 
     fixture.componentInstance.params.set({ LAYERS: 'updated' });
     fixture.detectChanges(false);
 
-    expect(fixture.componentInstance.source.instance).not.toBe(source);
-    expect(fixture.componentInstance.layer.instance.getSource()).toBe(
-      fixture.componentInstance.source.instance,
+    expect(fixture.componentInstance.source().instance).not.toBe(source);
+    expect(fixture.componentInstance.layer().instance.getSource()).toBe(
+      fixture.componentInstance.source().instance,
     );
-    const params = fixture.componentInstance.source.instance.getParams();
+    const params = fixture.componentInstance.source().instance.getParams();
 
     expect(params).toMatchObject({
       LAYERS: 'updated',

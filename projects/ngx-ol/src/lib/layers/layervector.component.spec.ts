@@ -1,4 +1,4 @@
-import { Component, signal, ViewChild } from '@angular/core';
+import { Component, signal, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { AngularOpenlayersModule } from '../../public-api';
@@ -32,11 +32,9 @@ class LayerVectorHostComponent {
   visible = signal(true);
   zIndex = signal(1);
 
-  @ViewChild(LayerVectorComponent)
-  layer!: LayerVectorComponent;
+  readonly layer = viewChild.required<LayerVectorComponent>(LayerVectorComponent);
 
-  @ViewChild(MapComponent)
-  map!: MapComponent;
+  readonly map = viewChild.required<MapComponent>(MapComponent);
 }
 
 describe('LayerVectorComponent', () => {
@@ -56,13 +54,13 @@ describe('LayerVectorComponent', () => {
   });
 
   it('creates a vector layer from template inputs', () => {
-    expect(fixture.componentInstance.layer.instance.getOpacity()).toBe(0.6);
-    expect(fixture.componentInstance.layer.instance.getVisible()).toBe(true);
-    expect(fixture.componentInstance.layer.instance.getZIndex()).toBe(1);
-    expect(fixture.componentInstance.layer.instance.get('name')).toBe('roads');
-    expect(fixture.componentInstance.layer.instance.get('category')).toBe('transport');
-    expect(fixture.componentInstance.map.instance.getLayers().getArray()).toContain(
-      fixture.componentInstance.layer.instance,
+    expect(fixture.componentInstance.layer().instance.getOpacity()).toBe(0.6);
+    expect(fixture.componentInstance.layer().instance.getVisible()).toBe(true);
+    expect(fixture.componentInstance.layer().instance.getZIndex()).toBe(1);
+    expect(fixture.componentInstance.layer().instance.get('name')).toBe('roads');
+    expect(fixture.componentInstance.layer().instance.get('category')).toBe('transport');
+    expect(fixture.componentInstance.map().instance.getLayers().getArray()).toContain(
+      fixture.componentInstance.layer().instance,
     );
   });
 
@@ -73,9 +71,9 @@ describe('LayerVectorComponent', () => {
 
     fixture.detectChanges();
 
-    expect(fixture.componentInstance.layer.instance.getOpacity()).toBe(0.25);
-    expect(fixture.componentInstance.layer.instance.getVisible()).toBe(false);
-    expect(fixture.componentInstance.layer.instance.getZIndex()).toBe(5);
+    expect(fixture.componentInstance.layer().instance.getOpacity()).toBe(0.25);
+    expect(fixture.componentInstance.layer().instance.getVisible()).toBe(false);
+    expect(fixture.componentInstance.layer().instance.getZIndex()).toBe(5);
   });
 
   it('updates and removes explicit OpenLayers layer properties when bindings change', () => {
@@ -83,8 +81,8 @@ describe('LayerVectorComponent', () => {
 
     fixture.detectChanges();
 
-    expect(fixture.componentInstance.layer.instance.get('name')).toBeUndefined();
-    expect(fixture.componentInstance.layer.instance.get('category')).toBe('water');
+    expect(fixture.componentInstance.layer().instance.get('name')).toBeUndefined();
+    expect(fixture.componentInstance.layer().instance.get('category')).toBe('water');
   });
 
   it('updates render event handlers when template bindings change', () => {
@@ -93,8 +91,8 @@ describe('LayerVectorComponent', () => {
     const nextPrerender = vi.fn();
     const nextPostrender = vi.fn();
 
-    fixture.componentInstance.layer.instance.dispatchEvent('prerender');
-    fixture.componentInstance.layer.instance.dispatchEvent('postrender');
+    fixture.componentInstance.layer().instance.dispatchEvent('prerender');
+    fixture.componentInstance.layer().instance.dispatchEvent('postrender');
 
     expect(originalPrerender).toHaveBeenCalledOnce();
     expect(originalPostrender).toHaveBeenCalledOnce();
@@ -104,8 +102,8 @@ describe('LayerVectorComponent', () => {
 
     fixture.detectChanges();
 
-    fixture.componentInstance.layer.instance.dispatchEvent('prerender');
-    fixture.componentInstance.layer.instance.dispatchEvent('postrender');
+    fixture.componentInstance.layer().instance.dispatchEvent('prerender');
+    fixture.componentInstance.layer().instance.dispatchEvent('postrender');
 
     expect(originalPrerender).toHaveBeenCalledOnce();
     expect(originalPostrender).toHaveBeenCalledOnce();

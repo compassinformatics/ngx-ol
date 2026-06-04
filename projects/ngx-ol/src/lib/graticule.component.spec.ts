@@ -1,4 +1,4 @@
-import { Component, signal, ViewChild } from '@angular/core';
+import { Component, signal, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { AngularOpenlayersModule } from '../public-api';
@@ -20,11 +20,9 @@ class GraticuleHostComponent {
   zoom = 2;
   showLabels = signal(true);
 
-  @ViewChild(GraticuleComponent)
-  graticule!: GraticuleComponent;
+  readonly graticule = viewChild.required<GraticuleComponent>(GraticuleComponent);
 
-  @ViewChild(MapComponent)
-  map!: MapComponent;
+  readonly map = viewChild.required<MapComponent>(MapComponent);
 }
 
 describe('GraticuleComponent', () => {
@@ -44,18 +42,18 @@ describe('GraticuleComponent', () => {
   });
 
   it('creates a graticule bound to the map from template inputs', () => {
-    expect(fixture.componentInstance.graticule.instance).toBeDefined();
-    expect(fixture.componentInstance.graticule.instance.getMeridians()).toBeDefined();
+    expect(fixture.componentInstance.graticule().instance).toBeDefined();
+    expect(fixture.componentInstance.graticule().instance.getMeridians()).toBeDefined();
   });
 
   it('detaches the previous graticule when input changes require a rebuild', () => {
-    const previousGraticule = fixture.componentInstance.graticule.instance;
+    const previousGraticule = fixture.componentInstance.graticule().instance;
     const setMap = vi.spyOn(previousGraticule, 'setMap');
 
     fixture.componentInstance.showLabels.set(false);
     fixture.detectChanges();
 
-    expect(fixture.componentInstance.graticule.instance).not.toBe(previousGraticule);
+    expect(fixture.componentInstance.graticule().instance).not.toBe(previousGraticule);
     expect(setMap).toHaveBeenCalledWith(null);
   });
 });

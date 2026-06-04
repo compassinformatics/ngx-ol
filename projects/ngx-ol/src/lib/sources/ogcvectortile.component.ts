@@ -2,8 +2,8 @@ import {
   Component,
   Host,
   forwardRef,
-  ContentChild,
   AfterContentInit,
+  contentChild,
   input,
   signal,
 } from '@angular/core';
@@ -40,10 +40,8 @@ export class SourceOGCVectorTileComponent extends SourceComponent implements Aft
   collections = input<string[]>();
   format = input<FeatureFormat<any>>();
 
-  @ContentChild(FormatMVTComponent, { static: false })
-  formatMVTComponent: FormatMVTComponent | FormatGeoJSONComponent;
-  @ContentChild(FormatGeoJSONComponent, { static: false })
-  formatGeoJSONComponent: FormatGeoJSONComponent;
+  protected readonly formatMVTComponent = contentChild(FormatMVTComponent);
+  protected readonly formatGeoJSONComponent = contentChild(FormatGeoJSONComponent);
 
   public instance: OGCVectorTile;
 
@@ -66,11 +64,14 @@ export class SourceOGCVectorTileComponent extends SourceComponent implements Aft
 
   ngAfterContentInit() {
     let format: FeatureFormat<any> | undefined = this.format();
-    if (this.formatMVTComponent) {
-      format = this.formatMVTComponent.instance;
+    const formatMVTComponent = this.formatMVTComponent();
+    const formatGeoJSONComponent = this.formatGeoJSONComponent();
+
+    if (formatMVTComponent) {
+      format = formatMVTComponent.instance;
     }
-    if (this.formatGeoJSONComponent) {
-      format = this.formatGeoJSONComponent.instance;
+    if (formatGeoJSONComponent) {
+      format = formatGeoJSONComponent.instance;
     }
 
     this.setInstance(new OGCVectorTile(this.createOptions(format)));

@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import MVT from 'ol/format/MVT';
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
@@ -13,8 +13,7 @@ import { FormatMVTComponent } from './mvt.component';
 class FormatMVTHostComponent {
   featureClass = undefined;
 
-  @ViewChild(FormatMVTComponent)
-  format!: FormatMVTComponent;
+  readonly format = viewChild.required<FormatMVTComponent>(FormatMVTComponent);
 }
 
 describe('FormatMVTComponent', () => {
@@ -34,6 +33,6 @@ describe('FormatMVTComponent', () => {
   });
 
   it('creates an MVT format from template bindings', () => {
-    expect(fixture.componentInstance.format.instance).toBeInstanceOf(MVT);
+    expect(fixture.componentInstance.format().instance).toBeInstanceOf(MVT);
   });
 });

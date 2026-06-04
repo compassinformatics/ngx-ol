@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import type { Params } from 'ol/interaction/Link';
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
@@ -27,11 +27,9 @@ class LinkInteractionHostComponent {
   prefix = 'demo';
   params: Params[] = ['x', 'y', 'z', 'r'];
 
-  @ViewChild(LinkInteractionComponent)
-  interaction!: LinkInteractionComponent;
+  readonly interaction = viewChild.required<LinkInteractionComponent>(LinkInteractionComponent);
 
-  @ViewChild(MapComponent)
-  map!: MapComponent;
+  readonly map = viewChild.required<MapComponent>(MapComponent);
 }
 
 describe('LinkInteractionComponent', () => {
@@ -52,8 +50,8 @@ describe('LinkInteractionComponent', () => {
 
   it('adds and removes a link interaction with the host map lifecycle', () => {
     const host = fixture!.componentInstance;
-    const map = host.map.instance;
-    const interaction = host.interaction.instance;
+    const map = host.map().instance;
+    const interaction = host.interaction().instance;
 
     expect(map.getInteractions().getArray()).toContain(interaction);
 

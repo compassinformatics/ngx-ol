@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 import { AngularOpenlayersModule } from '../../public-api';
@@ -22,11 +22,9 @@ class SourceImageTileHostComponent {
   zoom = 2;
   url = 'https://example.com/{z}/{x}/{y}.png';
 
-  @ViewChild(SourceImageTileComponent)
-  source!: SourceImageTileComponent;
+  readonly source = viewChild.required<SourceImageTileComponent>(SourceImageTileComponent);
 
-  @ViewChild(LayerWebGLTileComponent)
-  layer!: LayerWebGLTileComponent;
+  readonly layer = viewChild.required<LayerWebGLTileComponent>(LayerWebGLTileComponent);
 }
 
 describe('SourceImageTileComponent', () => {
@@ -46,8 +44,8 @@ describe('SourceImageTileComponent', () => {
   });
 
   it('binds its image tile source into the WebGL tile layer through Angular inputs', () => {
-    expect(fixture.componentInstance.layer.instance.getSource()).toBe(
-      fixture.componentInstance.source.instance,
+    expect(fixture.componentInstance.layer().instance.getSource()).toBe(
+      fixture.componentInstance.source().instance,
     );
   });
 });

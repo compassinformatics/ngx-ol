@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 import { AngularOpenlayersModule } from '../public-api';
@@ -27,11 +27,9 @@ class AttributionsHostComponent {
   zoom = 2;
   url = 'https://example.com/{z}/{x}/{y}.png';
 
-  @ViewChild(AttributionsComponent)
-  attributions!: AttributionsComponent;
+  readonly attributions = viewChild.required<AttributionsComponent>(AttributionsComponent);
 
-  @ViewChild(SourceXYZComponent)
-  source!: SourceXYZComponent;
+  readonly source = viewChild.required<SourceXYZComponent>(SourceXYZComponent);
 }
 
 describe('AttributionsComponent', () => {
@@ -51,8 +49,8 @@ describe('AttributionsComponent', () => {
   });
 
   it('collects child attribution labels and applies them to the source', () => {
-    expect(fixture.componentInstance.attributions.instance).toEqual(['First', 'Second']);
-    expect(fixture.componentInstance.source.instance.getAttributions()?.({} as any)).toEqual([
+    expect(fixture.componentInstance.attributions().instance).toEqual(['First', 'Second']);
+    expect(fixture.componentInstance.source().instance.getAttributions()?.({} as any)).toEqual([
       'First',
       'Second',
     ]);

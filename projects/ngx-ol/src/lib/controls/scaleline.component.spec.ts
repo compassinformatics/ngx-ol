@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import type { Units } from 'ol/control/ScaleLine';
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
@@ -21,11 +21,9 @@ class ControlScaleLineHostComponent {
   zoom = 2;
   units: Units = 'metric';
 
-  @ViewChild(ControlScaleLineComponent)
-  control!: ControlScaleLineComponent;
+  readonly control = viewChild.required<ControlScaleLineComponent>(ControlScaleLineComponent);
 
-  @ViewChild(MapComponent)
-  map!: MapComponent;
+  readonly map = viewChild.required<MapComponent>(MapComponent);
 }
 
 describe('ControlScaleLineComponent', () => {
@@ -46,8 +44,8 @@ describe('ControlScaleLineComponent', () => {
 
   it('adds and removes a scale line control with the host map lifecycle', () => {
     const host = fixture!.componentInstance;
-    const map = host.map.instance;
-    const control = host.control.instance;
+    const map = host.map().instance;
+    const control = host.control().instance;
 
     expect(map.getControls().getArray()).toContain(control);
 

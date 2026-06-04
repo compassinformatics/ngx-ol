@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 import { AngularOpenlayersModule } from '../../public-api';
@@ -23,11 +23,9 @@ class SourceZoomifyHostComponent {
   url = 'https://example.com/zoomify/';
   size: [number, number] = [1024, 1024];
 
-  @ViewChild(SourceZoomifyComponent)
-  source!: SourceZoomifyComponent;
+  readonly source = viewChild.required<SourceZoomifyComponent>(SourceZoomifyComponent);
 
-  @ViewChild(LayerTileComponent)
-  layer!: LayerTileComponent;
+  readonly layer = viewChild.required<LayerTileComponent>(LayerTileComponent);
 }
 
 describe('SourceZoomifyComponent', () => {
@@ -47,8 +45,8 @@ describe('SourceZoomifyComponent', () => {
   });
 
   it('binds a Zoomify source into the tile layer through template inputs', () => {
-    expect(fixture.componentInstance.layer.instance.getSource()).toBe(
-      fixture.componentInstance.source.instance,
+    expect(fixture.componentInstance.layer().instance.getSource()).toBe(
+      fixture.componentInstance.source().instance,
     );
   });
 });

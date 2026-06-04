@@ -1,4 +1,4 @@
-import { Component, signal, ViewChild } from '@angular/core';
+import { Component, signal, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 import { AngularOpenlayersModule } from '../../public-api';
@@ -28,11 +28,9 @@ class SourceImageWMSHostComponent {
   params = signal<Record<string, string>>({ LAYERS: 'basic', TIME: '2026-01-01' });
   loadStarts = 0;
 
-  @ViewChild(SourceImageWMSComponent)
-  source!: SourceImageWMSComponent;
+  readonly source = viewChild.required<SourceImageWMSComponent>(SourceImageWMSComponent);
 
-  @ViewChild(LayerImageComponent)
-  layer!: LayerImageComponent;
+  readonly layer = viewChild.required<LayerImageComponent>(LayerImageComponent);
 }
 
 describe('SourceImageWMSComponent', () => {
@@ -52,44 +50,44 @@ describe('SourceImageWMSComponent', () => {
   });
 
   it('binds WMS image params and emits image load events through Angular bindings', () => {
-    expect(fixture.componentInstance.layer.instance.getSource()).toBe(
-      fixture.componentInstance.source.instance,
+    expect(fixture.componentInstance.layer().instance.getSource()).toBe(
+      fixture.componentInstance.source().instance,
     );
-    expect(fixture.componentInstance.source.instance.getParams()).toMatchObject({
+    expect(fixture.componentInstance.source().instance.getParams()).toMatchObject({
       LAYERS: 'basic',
       TIME: '2026-01-01',
     });
 
-    fixture.componentInstance.source.instance.dispatchEvent('imageloadstart');
+    fixture.componentInstance.source().instance.dispatchEvent('imageloadstart');
     expect(fixture.componentInstance.loadStarts).toBe(1);
 
     fixture.componentInstance.params.set({ LAYERS: 'updated', TIME: '2026-01-01' });
     fixture.detectChanges(false);
 
-    expect(fixture.componentInstance.source.instance.getParams()).toMatchObject({
+    expect(fixture.componentInstance.source().instance.getParams()).toMatchObject({
       LAYERS: 'updated',
       TIME: '2026-01-01',
     });
   });
 
   it('replaces the image WMS source and keeps outputs bound when params are removed', () => {
-    const source = fixture.componentInstance.source.instance;
+    const source = fixture.componentInstance.source().instance;
 
     fixture.componentInstance.params.set({ LAYERS: 'updated' });
     fixture.detectChanges(false);
 
-    expect(fixture.componentInstance.source.instance).not.toBe(source);
-    expect(fixture.componentInstance.layer.instance.getSource()).toBe(
-      fixture.componentInstance.source.instance,
+    expect(fixture.componentInstance.source().instance).not.toBe(source);
+    expect(fixture.componentInstance.layer().instance.getSource()).toBe(
+      fixture.componentInstance.source().instance,
     );
-    const params = fixture.componentInstance.source.instance.getParams();
+    const params = fixture.componentInstance.source().instance.getParams();
 
     expect(params).toMatchObject({
       LAYERS: 'updated',
     });
     expect(params['TIME']).toBeUndefined();
 
-    fixture.componentInstance.source.instance.dispatchEvent('imageloadstart');
+    fixture.componentInstance.source().instance.dispatchEvent('imageloadstart');
     expect(fixture.componentInstance.loadStarts).toBe(1);
   });
 });

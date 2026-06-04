@@ -3,9 +3,9 @@ import {
   Host,
   forwardRef,
   AfterContentInit,
-  ContentChild,
   SimpleChanges,
   OnChanges,
+  contentChild,
   input,
   output,
   signal,
@@ -56,8 +56,7 @@ export class SourceTileWMTSComponent
   tileLoadEnd = output<TileSourceEvent>();
   tileLoadError = output<TileSourceEvent>();
 
-  @ContentChild(TileGridWMTSComponent, { static: false })
-  tileGridWMTS: TileGridWMTSComponent;
+  protected readonly tileGridWMTS = contentChild(TileGridWMTSComponent);
 
   instance: SourceWMTS;
   private contentTileGrid?: WMTS;
@@ -113,8 +112,10 @@ export class SourceTileWMTSComponent
   }
 
   ngAfterContentInit(): void {
-    if (this.tileGridWMTS) {
-      this.contentTileGrid = this.tileGridWMTS.instance;
+    const tileGridWMTS = this.tileGridWMTS();
+
+    if (tileGridWMTS) {
+      this.contentTileGrid = tileGridWMTS.instance;
     }
     if (this.contentTileGrid ?? this.tileGrid()) {
       this.setLayerSource();

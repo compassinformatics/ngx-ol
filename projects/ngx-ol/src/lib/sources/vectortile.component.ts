@@ -2,8 +2,8 @@ import {
   Component,
   Host,
   forwardRef,
-  ContentChild,
   AfterContentInit,
+  contentChild,
   input,
   signal,
 } from '@angular/core';
@@ -51,12 +51,9 @@ export class SourceVectorTileComponent extends SourceComponent implements AfterC
   zDirection = input<number | NearestDirectionFunction>();
   format = input<FeatureFormat<any>>();
 
-  @ContentChild(FormatMVTComponent, { static: false })
-  formatMVTComponent: FormatMVTComponent;
-  @ContentChild(FormatGeoJSONComponent, { static: false })
-  formatGeoJSONComponent: FormatGeoJSONComponent;
-  @ContentChild(TileGridComponent, { static: false })
-  tileGridComponent: TileGridComponent;
+  protected readonly formatMVTComponent = contentChild(FormatMVTComponent);
+  protected readonly formatGeoJSONComponent = contentChild(FormatGeoJSONComponent);
+  protected readonly tileGridComponent = contentChild(TileGridComponent);
 
   public instance: VectorTile;
 
@@ -79,13 +76,19 @@ export class SourceVectorTileComponent extends SourceComponent implements AfterC
 
   ngAfterContentInit() {
     let format: FeatureFormat<any> | undefined = this.format();
-    if (this.formatMVTComponent) {
-      format = this.formatMVTComponent.instance;
+    const formatMVTComponent = this.formatMVTComponent();
+    const formatGeoJSONComponent = this.formatGeoJSONComponent();
+    const tileGridComponent = this.tileGridComponent();
+
+    if (formatMVTComponent) {
+      format = formatMVTComponent.instance;
     }
-    if (this.formatGeoJSONComponent) {
-      format = this.formatGeoJSONComponent.instance;
+    if (formatGeoJSONComponent) {
+      format = formatGeoJSONComponent.instance;
     }
-    this.tileGrid = this.tileGridComponent.instance;
+    if (tileGridComponent) {
+      this.tileGrid = tileGridComponent.instance;
+    }
 
     this.setInstance(new VectorTile(this.createOptions(format)));
     this.host.instance.setSource(this.instance);

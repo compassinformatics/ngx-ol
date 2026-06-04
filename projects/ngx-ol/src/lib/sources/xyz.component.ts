@@ -1,12 +1,12 @@
 import {
   AfterContentInit,
   Component,
-  ContentChild,
   forwardRef,
   Host,
   OnChanges,
   Optional,
   SimpleChanges,
+  contentChild,
   input,
   output,
   signal,
@@ -50,8 +50,7 @@ export class SourceXYZComponent extends SourceComponent implements AfterContentI
   wrapX = input<boolean>();
   zDirection = input<number | NearestDirectionFunction>();
 
-  @ContentChild(TileGridComponent, { static: false })
-  tileGridXYZ: TileGridComponent;
+  protected readonly tileGridXYZ = contentChild(TileGridComponent);
 
   tileLoadStart = output<TileSourceEvent>();
   tileLoadEnd = output<TileSourceEvent>();
@@ -80,8 +79,10 @@ export class SourceXYZComponent extends SourceComponent implements AfterContentI
   }
 
   ngAfterContentInit() {
-    if (this.tileGridXYZ) {
-      this.contentTileGrid = this.tileGridXYZ.instance;
+    const tileGridXYZ = this.tileGridXYZ();
+
+    if (tileGridXYZ) {
+      this.contentTileGrid = tileGridXYZ.instance;
     }
     this.init();
   }

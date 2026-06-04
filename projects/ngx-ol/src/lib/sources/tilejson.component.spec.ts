@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import type { Config } from 'ol/source/TileJSON';
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
@@ -27,11 +27,9 @@ class SourceTileJSONHostComponent {
     maxzoom: 3,
   };
 
-  @ViewChild(SourceTileJSONComponent)
-  source!: SourceTileJSONComponent;
+  readonly source = viewChild.required<SourceTileJSONComponent>(SourceTileJSONComponent);
 
-  @ViewChild(LayerTileComponent)
-  layer!: LayerTileComponent;
+  readonly layer = viewChild.required<LayerTileComponent>(LayerTileComponent);
 }
 
 describe('SourceTileJSONComponent', () => {
@@ -51,10 +49,10 @@ describe('SourceTileJSONComponent', () => {
   });
 
   it('binds TileJSON configuration into the tile layer through Angular inputs', () => {
-    expect(fixture.componentInstance.layer.instance.getSource()).toBe(
-      fixture.componentInstance.source.instance,
+    expect(fixture.componentInstance.layer().instance.getSource()).toBe(
+      fixture.componentInstance.source().instance,
     );
-    expect(fixture.componentInstance.source.instance.getTileJSON()).toEqual(
+    expect(fixture.componentInstance.source().instance.getTileJSON()).toEqual(
       fixture.componentInstance.tileJSON,
     );
   });

@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import MapBrowserEvent from 'ol/MapBrowserEvent';
 import MapBrowserEventType from 'ol/MapBrowserEventType';
@@ -12,7 +12,10 @@ import { DoubleClickZoomInteractionComponent } from './doubleclickzoom.component
   template: `
     <aol-map width="320px" height="240px">
       <aol-view [center]="center" [zoom]="zoom"></aol-view>
-      <aol-interaction-doubleclickzoom [duration]="duration" [delta]="delta"></aol-interaction-doubleclickzoom>
+      <aol-interaction-doubleclickzoom
+        [duration]="duration"
+        [delta]="delta"
+      ></aol-interaction-doubleclickzoom>
     </aol-map>
   `,
   standalone: true,
@@ -24,14 +27,13 @@ class DoubleClickZoomHostComponent {
   duration = 0;
   delta = 2;
 
-  @ViewChild(DoubleClickZoomInteractionComponent)
-  interaction!: DoubleClickZoomInteractionComponent;
+  readonly interaction = viewChild.required<DoubleClickZoomInteractionComponent>(
+    DoubleClickZoomInteractionComponent,
+  );
 
-  @ViewChild(MapComponent)
-  map!: MapComponent;
+  readonly map = viewChild.required<MapComponent>(MapComponent);
 
-  @ViewChild(ViewComponent)
-  view!: ViewComponent;
+  readonly view = viewChild.required<ViewComponent>(ViewComponent);
 }
 
 describe('DoubleClickZoomInteractionComponent', () => {
@@ -58,7 +60,7 @@ describe('DoubleClickZoomInteractionComponent', () => {
     } as unknown as MouseEvent;
     const event = new MapBrowserEvent(
       MapBrowserEventType.DBLCLICK,
-      fixture.componentInstance.map.instance,
+      fixture.componentInstance.map().instance,
       originalEvent,
       false,
       undefined,
@@ -66,12 +68,12 @@ describe('DoubleClickZoomInteractionComponent', () => {
     );
     event.coordinate = [0, 0];
 
-    expect(fixture.componentInstance.view.instance.getZoom()).toBe(2);
+    expect(fixture.componentInstance.view().instance.getZoom()).toBe(2);
 
-    const handled = fixture.componentInstance.interaction.instance.handleEvent(event);
+    const handled = fixture.componentInstance.interaction().instance.handleEvent(event);
 
     expect(handled).toBe(false);
     expect(preventDefault).toHaveBeenCalledOnce();
-    expect(fixture.componentInstance.view.instance.getZoom()).toBe(4);
+    expect(fixture.componentInstance.view().instance.getZoom()).toBe(4);
   });
 });
