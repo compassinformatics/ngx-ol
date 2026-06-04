@@ -1,0 +1,83 @@
+<div class="layout demo-layout">
+  <aol-map class="map demo-map" tabindex="0">
+    <aol-view [zoom]="zoom()" [center]="center()"></aol-view>
+
+    <aol-layer-tile>
+      <aol-source-osm></aol-source-osm>
+    </aol-layer-tile>
+
+    <aol-interaction-default></aol-interaction-default>
+
+    <aol-control-overviewmap
+      [collapsed]="overviewCollapsed()"
+      [collapsible]="overviewCollapsible()"
+      [rotateWithView]="overviewRotateWithView()"
+    ></aol-control-overviewmap>
+    <aol-control-scaleline [units]="scaleUnits()"></aol-control-scaleline>
+    <aol-control-mouseposition [projection]="mouseProjection()"></aol-control-mouseposition>
+    <aol-control-zoom></aol-control-zoom>
+    <aol-control-attribution
+      [collapsed]="attributionCollapsed()"
+      [collapsible]="true"
+    ></aol-control-attribution>
+  </aol-map>
+
+  <aside class="panel demo-panel">
+    <h2>Reactive controls</h2>
+    <p>Use this page for OpenLayers controls only.</p>
+
+    <fieldset>
+      <legend>Overview map</legend>
+      <button type="button" (click)="toggleOverviewCollapsed()">
+        {{ overviewCollapsed() ? 'Expand' : 'Collapse' }} overview
+      </button>
+      <label>
+        <input
+          type="checkbox"
+          [checked]="overviewCollapsible()"
+          (change)="toggleOverviewCollapsible()"
+        />
+        Collapsible
+      </label>
+      <label>
+        <input
+          type="checkbox"
+          [checked]="overviewRotateWithView()"
+          (change)="toggleOverviewRotation()"
+        />
+        Rotate with view
+      </label>
+    </fieldset>
+
+    <fieldset>
+      <legend>Scale and mouse position</legend>
+      <label for="reactive-scale-units">Scale units</label>
+      <select
+        id="reactive-scale-units"
+        [value]="scaleUnits()"
+        (change)="setScaleUnits($any($event.target).value)"
+      >
+        <option value="metric">Metric</option>
+        <option value="imperial">Imperial</option>
+        <option value="nautical">Nautical</option>
+      </select>
+
+      <label for="reactive-mouse-projection">Mouse projection</label>
+      <select
+        id="reactive-mouse-projection"
+        [value]="mouseProjection()"
+        (change)="setMouseProjection($any($event.target).value)"
+      >
+        <option value="EPSG:4326">EPSG:4326</option>
+        <option value="EPSG:3857">EPSG:3857</option>
+      </select>
+    </fieldset>
+
+    <fieldset>
+      <legend>Attribution</legend>
+      <button type="button" (click)="toggleAttribution()">
+        {{ attributionCollapsed() ? 'Expand' : 'Collapse' }} attribution
+      </button>
+    </fieldset>
+  </aside>
+</div>

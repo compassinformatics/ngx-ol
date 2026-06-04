@@ -72,7 +72,43 @@ export class DrawInteractionComponent implements OnInit, OnChanges, OnDestroy {
   constructor(private map: MapComponent) {}
 
   ngOnInit() {
+    this.initializeInstance();
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    const liveUpdateKeys = ['trace'];
+    const requiresReload = Object.keys(changes).some(
+      (key) => !liveUpdateKeys.includes(key) && !changes[key].firstChange,
+    );
+
+    if (this.instance && requiresReload) {
+      this.reloadInstance();
+      return;
+    }
+
+    if (this.instance && changes.trace?.currentValue !== undefined) {
+      this.instance.setTrace(changes.trace.currentValue);
+    }
+  }
+
+  ngOnDestroy() {
+    if (this.instance) {
+      this.map.instance.removeInteraction(this.instance);
+    }
+  }
+
+  private initializeInstance() {
     this.setInstance(new Draw(this.createOptions()));
+    this.bindInstanceEvents();
+    this.map.instance.addInteraction(this.instance);
+  }
+
+  private reloadInstance() {
+    this.map.instance.removeInteraction(this.instance);
+    this.initializeInstance();
+  }
+
+  private bindInstanceEvents() {
     this.instance.on('change', (event: BaseEvent) => this.olChange.emit(event));
     this.instance.on('change:active', (event: ObjectEvent) => this.changeActive.emit(event));
     this.instance.on('drawabort', (event: DrawEvent) => this.drawAbort.emit(event));
@@ -80,17 +116,6 @@ export class DrawInteractionComponent implements OnInit, OnChanges, OnDestroy {
     this.instance.on('drawstart', (event: DrawEvent) => this.drawStart.emit(event));
     this.instance.on('error', (event: BaseEvent) => this.olError.emit(event));
     this.instance.on('propertychange', (event: ObjectEvent) => this.propertyChange.emit(event));
-    this.map.instance.addInteraction(this.instance);
-  }
-
-  ngOnDestroy() {
-    this.map.instance.removeInteraction(this.instance);
-  }
-
-  ngOnChanges(changes: SimpleChanges) {
-    if (this.instance && changes.trace?.currentValue !== undefined) {
-      this.instance.setTrace(changes.trace.currentValue);
-    }
   }
 
   private createOptions(): Options {

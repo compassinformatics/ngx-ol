@@ -1,0 +1,103 @@
+<div class="layout demo-layout">
+  <aol-map class="map demo-map" tabindex="0">
+    <aol-view [zoom]="zoom()" [center]="center()"></aol-view>
+
+    <aol-layer-tile>
+      <aol-source-osm></aol-source-osm>
+    </aol-layer-tile>
+
+    <aol-layer-vector>
+      <aol-source-vector [features]="features"></aol-source-vector>
+      <aol-style>
+        <aol-style-circle [radius]="9">
+          <aol-style-stroke color="#0f172a" [width]="2"></aol-style-stroke>
+          <aol-style-fill color="#facc15"></aol-style-fill>
+        </aol-style-circle>
+      </aol-style>
+    </aol-layer-vector>
+
+    <aol-interaction-default
+      [dragPan]="defaultDragPan()"
+      [mouseWheelZoom]="defaultMouseWheelZoom()"
+      [doubleClickZoom]="defaultDoubleClickZoom()"
+    ></aol-interaction-default>
+    <aol-interaction-mousewheelzoom [useAnchor]="mouseWheelAnchor()"></aol-interaction-mousewheelzoom>
+    @if (selectEnabled()) {
+      <aol-interaction-select
+        [hitTolerance]="selectHitTolerance()"
+        (olSelect)="selectChanged()"
+      ></aol-interaction-select>
+    }
+
+    <aol-control-scaleline></aol-control-scaleline>
+    <aol-control-zoom></aol-control-zoom>
+    <aol-control-attribution></aol-control-attribution>
+  </aol-map>
+
+  <aside class="panel demo-panel">
+    <h2>Reactive interactions</h2>
+    <p>Use this page for navigation and selection interactions only.</p>
+
+    <fieldset>
+      <legend>Default navigation</legend>
+      <label>
+        <input type="checkbox" [checked]="defaultDragPan()" (change)="toggleDefaultDragPan()" />
+        Drag pan
+      </label>
+      <label>
+        <input
+          type="checkbox"
+          [checked]="defaultMouseWheelZoom()"
+          (change)="toggleDefaultMouseWheelZoom()"
+        />
+        Default mouse wheel zoom
+      </label>
+      <label>
+        <input
+          type="checkbox"
+          [checked]="defaultDoubleClickZoom()"
+          (change)="toggleDefaultDoubleClickZoom()"
+        />
+        Double-click zoom
+      </label>
+    </fieldset>
+
+    <fieldset>
+      <legend>Mouse wheel zoom</legend>
+      <label>
+        <input
+          type="checkbox"
+          [checked]="mouseWheelAnchor()"
+          (change)="toggleMouseWheelAnchor()"
+        />
+        Enable mouse-location zoom anchor
+      </label>
+      <p class="hint">
+        When false, wheel zooming uses the center of the map instead of the mouse location.
+      </p>
+      <button type="button" (click)="resetWheelTestView()">Reset wheel test view</button>
+    </fieldset>
+
+    <fieldset>
+      <legend>Select</legend>
+      <label>
+        <input type="checkbox" [checked]="selectEnabled()" (change)="toggleSelectEnabled()" />
+        Enable select interaction
+      </label>
+
+      <label for="reactive-hit-tolerance">Select hit tolerance: {{ selectHitTolerance() }}</label>
+      <input
+        id="reactive-hit-tolerance"
+        type="range"
+        min="0"
+        max="24"
+        [value]="selectHitTolerance()"
+        (input)="setSelectHitTolerance($any($event.target).valueAsNumber)"
+      />
+    </fieldset>
+
+    <section class="status" aria-live="polite">
+      <p>{{ status() }}</p>
+    </section>
+  </aside>
+</div>

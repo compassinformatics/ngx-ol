@@ -33,6 +33,13 @@ import { Overlay } from './overlay/overlay';
 import { Overview } from './overview/overview';
 import { PinchRotateDemo } from './pinch-rotate/pinch-rotate';
 import { Raster } from './raster/raster';
+import { ReactiveControls } from './reactive-controls/reactive-controls';
+import { ReactiveDrawings } from './reactive-drawings/reactive-drawings';
+import { ReactiveInteractions } from './reactive-interactions/reactive-interactions';
+import { ReactiveOverlays } from './reactive-overlays/reactive-overlays';
+import { ReactiveSources } from './reactive-sources/reactive-sources';
+import { ReactiveStyles } from './reactive-styles/reactive-styles';
+import { ReactiveViewLayers } from './reactive-view-layers/reactive-view-layers';
 import { RegularShapeDemo } from './regular-shape/regular-shape';
 import { SelectInteraction } from './select-interaction/select-interaction';
 import { SideBySide } from './side-by-side/side-by-side';
@@ -72,6 +79,15 @@ export const routes: Routes = [
   { path: 'clickable-feature', component: ClickableFeatureDemo },
   { path: 'cluster', component: Cluster },
   { path: 'raster', component: Raster },
+  { path: 'reactive-sources', component: ReactiveSources },
+  { path: 'reactive-layers', component: ReactiveViewLayers },
+  { path: 'reactive-controls', component: ReactiveControls },
+  { path: 'reactive-interactions', component: ReactiveInteractions },
+  { path: 'reactive-drawings', component: ReactiveDrawings },
+  { path: 'reactive-overlays', component: ReactiveOverlays },
+  { path: 'reactive-styles', component: ReactiveStyles },
+  { path: 'reactive-services', redirectTo: 'reactive-sources' },
+  { path: 'reactive-view-layers', redirectTo: 'reactive-layers' },
   { path: 'arcgis-image', component: ArcgisImage },
   { path: 'arcgis-tiled', component: ArcgisTiled },
   { path: 'tile-arcgis-rest', component: TileArcgisRest },

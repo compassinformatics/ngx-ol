@@ -1,0 +1,38 @@
+:host {
+  display: block;
+  height: 100%;
+}
+
+.panel {
+  display: grid;
+  align-content: start;
+  gap: 0.85rem;
+}
+
+.panel h2,
+.panel p,
+.panel fieldset,
+.panel label {
+  margin: 0;
+}
+
+.panel fieldset {
+  display: grid;
+  gap: 0.55rem;
+}
+
+.panel label {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.panel fieldset label:has(input[type='checkbox']) {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.panel button,
+.panel select {
+  min-height: 2rem;
+}

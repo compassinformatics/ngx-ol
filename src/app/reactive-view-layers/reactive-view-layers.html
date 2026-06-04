@@ -1,0 +1,201 @@
+<div class="layout demo-layout">
+  <aol-map class="map demo-map">
+    <aol-view
+      [zoom]="zoom()"
+      [center]="center()"
+      [rotation]="rotation()"
+      [minZoom]="minZoom()"
+      [maxZoom]="maxZoom()"
+      [constrainResolution]="false"
+    ></aol-view>
+
+    <aol-layer-tile>
+      <aol-source-osm></aol-source-osm>
+    </aol-layer-tile>
+
+    <aol-layer-vector
+      [opacity]="layerOpacity()"
+      [visible]="layerVisible()"
+      [zIndex]="layerZIndex()"
+      [minZoom]="layerMinZoom()"
+      [maxZoom]="layerMaxZoom()"
+      [extent]="layerExtent()"
+    >
+      <aol-source-vector [features]="features()"></aol-source-vector>
+      <aol-style>
+        <aol-style-circle [radius]="7">
+          <aol-style-stroke color="#0f172a" [width]="2"></aol-style-stroke>
+          <aol-style-fill color="#f8fafc"></aol-style-fill>
+        </aol-style-circle>
+      </aol-style>
+    </aol-layer-vector>
+
+    <aol-layer-heatmap
+      [opacity]="heatmapOpacity()"
+      [visible]="heatmapVisible()"
+      [blur]="heatmapBlur()"
+      [radius]="heatmapRadius()"
+    >
+      <aol-source-vector [features]="features()"></aol-source-vector>
+    </aol-layer-heatmap>
+
+    <aol-interaction-default></aol-interaction-default>
+    <aol-control-scaleline></aol-control-scaleline>
+    <aol-control-zoom></aol-control-zoom>
+    <aol-control-attribution></aol-control-attribution>
+  </aol-map>
+
+  <aside class="panel demo-panel">
+    <h2>Reactive layers</h2>
+    <p>Use this page to change view constraints and layer properties without recreating layers.</p>
+
+    <fieldset>
+      <legend>View</legend>
+      <label for="reactive-view-zoom">Zoom: {{ zoom() }}</label>
+      <input
+        id="reactive-view-zoom"
+        type="range"
+        min="3"
+        max="12"
+        step="0.25"
+        [value]="zoom()"
+        (input)="setZoom($any($event.target).valueAsNumber)"
+      />
+
+      <label for="reactive-view-rotation">Rotation: {{ rotation() }}</label>
+      <input
+        id="reactive-view-rotation"
+        type="range"
+        min="-3.14"
+        max="3.14"
+        step="0.05"
+        [value]="rotation()"
+        (input)="setRotation($any($event.target).valueAsNumber)"
+      />
+
+      <label for="reactive-view-min-zoom">Min zoom: {{ minZoom() }}</label>
+      <input
+        id="reactive-view-min-zoom"
+        type="range"
+        min="1"
+        max="6"
+        [value]="minZoom()"
+        (input)="setMinZoom($any($event.target).valueAsNumber)"
+      />
+
+      <label for="reactive-view-max-zoom">Max zoom: {{ maxZoom() }}</label>
+      <input
+        id="reactive-view-max-zoom"
+        type="range"
+        min="8"
+        max="18"
+        [value]="maxZoom()"
+        (input)="setMaxZoom($any($event.target).valueAsNumber)"
+      />
+    </fieldset>
+
+    <fieldset>
+      <legend>Vector layer</legend>
+      <label>
+        <input
+          type="checkbox"
+          [checked]="layerVisible()"
+          (change)="setLayerVisible($any($event.target).checked)"
+        />
+        Visible
+      </label>
+      <label>
+        <input
+          type="checkbox"
+          [checked]="layerExtentEnabled()"
+          (change)="toggleLayerExtent()"
+        />
+        Restrict to extent
+      </label>
+
+      <label for="reactive-layer-opacity">Opacity: {{ layerOpacity() }}</label>
+      <input
+        id="reactive-layer-opacity"
+        type="range"
+        min="0"
+        max="1"
+        step="0.05"
+        [value]="layerOpacity()"
+        (input)="setLayerOpacity($any($event.target).valueAsNumber)"
+      />
+
+      <label for="reactive-layer-z">Z index: {{ layerZIndex() }}</label>
+      <input
+        id="reactive-layer-z"
+        type="range"
+        min="0"
+        max="5"
+        [value]="layerZIndex()"
+        (input)="setLayerZIndex($any($event.target).valueAsNumber)"
+      />
+
+      <label for="reactive-layer-min-zoom">Min zoom: {{ layerMinZoom() }}</label>
+      <input
+        id="reactive-layer-min-zoom"
+        type="range"
+        min="1"
+        max="8"
+        [value]="layerMinZoom()"
+        (input)="setLayerMinZoom($any($event.target).valueAsNumber)"
+      />
+
+      <label for="reactive-layer-max-zoom">Max zoom: {{ layerMaxZoom() }}</label>
+      <input
+        id="reactive-layer-max-zoom"
+        type="range"
+        min="8"
+        max="18"
+        [value]="layerMaxZoom()"
+        (input)="setLayerMaxZoom($any($event.target).valueAsNumber)"
+      />
+    </fieldset>
+
+    <fieldset>
+      <legend>Heatmap layer</legend>
+      <label>
+        <input
+          type="checkbox"
+          [checked]="heatmapVisible()"
+          (change)="setHeatmapVisible($any($event.target).checked)"
+        />
+        Visible
+      </label>
+
+      <label for="reactive-heatmap-opacity">Opacity: {{ heatmapOpacity() }}</label>
+      <input
+        id="reactive-heatmap-opacity"
+        type="range"
+        min="0"
+        max="1"
+        step="0.05"
+        [value]="heatmapOpacity()"
+        (input)="setHeatmapOpacity($any($event.target).valueAsNumber)"
+      />
+
+      <label for="reactive-heatmap-blur">Blur: {{ heatmapBlur() }}</label>
+      <input
+        id="reactive-heatmap-blur"
+        type="range"
+        min="1"
+        max="40"
+        [value]="heatmapBlur()"
+        (input)="setHeatmapBlur($any($event.target).valueAsNumber)"
+      />
+
+      <label for="reactive-heatmap-radius">Radius: {{ heatmapRadius() }}</label>
+      <input
+        id="reactive-heatmap-radius"
+        type="range"
+        min="2"
+        max="30"
+        [value]="heatmapRadius()"
+        (input)="setHeatmapRadius($any($event.target).valueAsNumber)"
+      />
+    </fieldset>
+  </aside>
+</div>

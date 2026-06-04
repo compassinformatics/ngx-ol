@@ -27,3 +27,17 @@ class WorkerStub {
 globalThis.ResizeObserver ??= ResizeObserverStub as unknown as typeof ResizeObserver;
 globalThis.PointerEvent ??= MouseEvent as unknown as typeof PointerEvent;
 globalThis.Worker ??= WorkerStub as unknown as typeof Worker;
+
+HTMLCanvasElement.prototype.getContext = (() =>
+  ({
+    canvas: document.createElement('canvas'),
+    createLinearGradient: () => ({
+      addColorStop(): void {},
+    }),
+    fillRect(): void {},
+    clearRect(): void {},
+    drawImage(): void {},
+    getImageData: () => ({
+      data: new Uint8ClampedArray(4),
+    }),
+  }) as unknown as RenderingContext) as typeof HTMLCanvasElement.prototype.getContext;

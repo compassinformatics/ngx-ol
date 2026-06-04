@@ -1,0 +1,82 @@
+<div class="layout demo-layout">
+  <aol-map class="map demo-map">
+    <aol-view [zoom]="zoom()" [center]="center()"></aol-view>
+
+    <aol-layer-tile>
+      <aol-source-osm></aol-source-osm>
+    </aol-layer-tile>
+
+    <aol-layer-vector>
+      <aol-source-vector>
+        <aol-feature>
+          <aol-geometry-point>
+            <aol-coordinate [x]="marker()[0]" [y]="marker()[1]"></aol-coordinate>
+          </aol-geometry-point>
+          <aol-style>
+            <aol-style-circle [radius]="10">
+              <aol-style-stroke color="#0f172a" [width]="2"></aol-style-stroke>
+              <aol-style-fill color="#facc15"></aol-style-fill>
+            </aol-style-circle>
+          </aol-style>
+        </aol-feature>
+      </aol-source-vector>
+    </aol-layer-vector>
+
+    <aol-overlay
+      [position]="marker()"
+      [offset]="overlayOffset()"
+      [positioning]="overlayPositioning()"
+    >
+      <aol-content>
+        <div class="map-callout">Reactive overlay</div>
+      </aol-content>
+    </aol-overlay>
+
+    <aol-interaction-default></aol-interaction-default>
+    <aol-control-scaleline></aol-control-scaleline>
+    <aol-control-zoom></aol-control-zoom>
+    <aol-control-attribution></aol-control-attribution>
+  </aol-map>
+
+  <aside class="panel demo-panel">
+    <h2>Reactive overlays</h2>
+    <p>Use this page for overlay position, offset, and positioning reactivity.</p>
+
+    <fieldset>
+      <legend>Overlay</legend>
+      <button type="button" (click)="moveOverlay()">Move overlay and feature</button>
+      <button type="button" (click)="resetOverlay()">Reset overlay</button>
+
+      <label for="reactive-overlay-positioning">Positioning</label>
+      <select
+        id="reactive-overlay-positioning"
+        [value]="overlayPositioning()"
+        (change)="setOverlayPositioning($any($event.target).value)"
+      >
+        <option value="bottom-left">Bottom left</option>
+        <option value="top-right">Top right</option>
+        <option value="center-center">Center</option>
+      </select>
+
+      <label for="reactive-offset-x">Offset X: {{ overlayOffset()[0] }}</label>
+      <input
+        id="reactive-offset-x"
+        type="range"
+        min="-60"
+        max="60"
+        [value]="overlayOffset()[0]"
+        (input)="setOffsetX($any($event.target).valueAsNumber)"
+      />
+
+      <label for="reactive-offset-y">Offset Y: {{ overlayOffset()[1] }}</label>
+      <input
+        id="reactive-offset-y"
+        type="range"
+        min="-60"
+        max="60"
+        [value]="overlayOffset()[1]"
+        (input)="setOffsetY($any($event.target).valueAsNumber)"
+      />
+    </fieldset>
+  </aside>
+</div>

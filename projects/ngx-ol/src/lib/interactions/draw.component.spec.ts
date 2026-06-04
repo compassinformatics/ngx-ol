@@ -1,6 +1,7 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, signal, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import VectorSource from 'ol/source/Vector';
+import type { Type } from 'ol/geom/Geometry';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { AngularOpenlayersModule } from '../../public-api';
 import { MapComponent } from '../map.component';
@@ -11,7 +12,8 @@ import { DrawInteractionComponent } from './draw.component';
     <aol-map width="320px" height="240px">
       <aol-view [center]="center" [zoom]="zoom"></aol-view>
       <aol-interaction-draw
-        [type]="type"
+        [type]="type()"
+        [trace]="trace()"
         [source]="source"
         (drawStart)="drawStart($event)"
         (drawEnd)="drawEnd($event)"
@@ -29,7 +31,8 @@ import { DrawInteractionComponent } from './draw.component';
 class DrawInteractionHostComponent {
   center = [0, 0];
   zoom = 2;
-  type = 'Point' as const;
+  type = signal<Type>('Point');
+  trace = signal(false);
   source = new VectorSource();
   drawStart = vi.fn();
   drawEnd = vi.fn();
@@ -82,5 +85,27 @@ describe('DrawInteractionComponent', () => {
     expect(host.changeActive).toHaveBeenCalledOnce();
     expect(host.error).toHaveBeenCalledOnce();
     expect(host.propertyChange).toHaveBeenCalledOnce();
+  });
+
+  it('replaces the registered draw interaction when the draw type changes', () => {
+    const host = fixture.componentInstance;
+    const oldInteraction = host.interaction.instance;
+
+    host.type.set('Polygon');
+    fixture.detectChanges(false);
+
+    expect(host.interaction.instance).not.toBe(oldInteraction);
+    expect(host.map.instance.getInteractions().getArray()).toContain(host.interaction.instance);
+    expect(host.map.instance.getInteractions().getArray()).not.toContain(oldInteraction);
+  });
+
+  it('updates trace without replacing the draw interaction', () => {
+    const host = fixture.componentInstance;
+    const interaction = host.interaction.instance;
+
+    host.trace.set(true);
+    fixture.detectChanges(false);
+
+    expect(host.interaction.instance).toBe(interaction);
   });
 });

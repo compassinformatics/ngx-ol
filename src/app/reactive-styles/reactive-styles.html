@@ -1,0 +1,244 @@
+<div class="layout demo-layout">
+  <aol-map class="map demo-map">
+    <aol-view [zoom]="zoom()" [center]="center()"></aol-view>
+
+    <aol-layer-tile>
+      <aol-source-osm></aol-source-osm>
+    </aol-layer-tile>
+
+    <aol-layer-vector>
+      <aol-source-vector>
+        <aol-feature>
+          <aol-geometry-point>
+            <aol-coordinate [x]="point()[0]" [y]="point()[1]" srid="EPSG:4326"></aol-coordinate>
+          </aol-geometry-point>
+          <aol-style>
+            <aol-style-circle
+              [radius]="markerRadius()"
+              [rotation]="markerRotation()"
+              [rotateWithView]="true"
+            >
+              <aol-style-stroke color="#0f172a" [width]="2"></aol-style-stroke>
+              <aol-style-fill color="#fde047"></aol-style-fill>
+            </aol-style-circle>
+            <aol-style-text
+              [text]="labelText()"
+              [scale]="labelScale()"
+              [offsetY]="labelOffsetY()"
+              [rotation]="labelRotation()"
+              [placement]="labelPlacement()"
+              textAlign="center"
+              textBaseline="middle"
+            >
+              <aol-style-fill color="#111827"></aol-style-fill>
+              <aol-style-stroke color="#ffffff" [width]="4"></aol-style-stroke>
+            </aol-style-text>
+          </aol-style>
+        </aol-feature>
+
+        <aol-feature>
+          <aol-geometry-linestring>
+            <aol-collection-coordinates [coordinates]="line()" srid="EPSG:4326">
+            </aol-collection-coordinates>
+          </aol-geometry-linestring>
+          <aol-style>
+            <aol-style-stroke
+              color="#f97316"
+              [width]="strokeWidth()"
+              [lineDash]="strokeDashPattern()"
+              lineCap="round"
+              lineJoin="round"
+            ></aol-style-stroke>
+          </aol-style>
+        </aol-feature>
+
+        <aol-feature>
+          <aol-geometry-polygon>
+            <aol-collection-coordinates [coordinates]="polygon()" srid="EPSG:4326">
+            </aol-collection-coordinates>
+          </aol-geometry-polygon>
+          <aol-style>
+            <aol-style-stroke color="#0369a1" [width]="strokeWidth()"></aol-style-stroke>
+            <aol-style-fill [color]="fillColor()"></aol-style-fill>
+          </aol-style>
+        </aol-feature>
+
+        <aol-feature>
+          <aol-geometry-circle [radius]="circleRadius()">
+            <aol-coordinate [x]="-2.6" [y]="53.3" srid="EPSG:4326"></aol-coordinate>
+          </aol-geometry-circle>
+          <aol-style>
+            <aol-style-stroke color="#16a34a" [width]="strokeWidth()"></aol-style-stroke>
+            <aol-style-fill color="rgb(22 163 74 / 0.18)"></aol-style-fill>
+          </aol-style>
+        </aol-feature>
+      </aol-source-vector>
+    </aol-layer-vector>
+
+    <aol-interaction-default></aol-interaction-default>
+    <aol-control-scaleline></aol-control-scaleline>
+    <aol-control-zoom></aol-control-zoom>
+    <aol-control-attribution></aol-control-attribution>
+  </aol-map>
+
+  <aside class="panel demo-panel">
+    <h2>Reactive styles and geometry</h2>
+    <p>Change geometry coordinates and style properties without replacing template components.</p>
+
+    <fieldset>
+      <legend>Point geometry</legend>
+      <label for="reactive-point-lon">Longitude: {{ point()[0] }}</label>
+      <input
+        id="reactive-point-lon"
+        type="range"
+        min="-7"
+        max="-1"
+        step="0.1"
+        [value]="point()[0]"
+        (input)="setPointLongitude($any($event.target).valueAsNumber)"
+      />
+
+      <label for="reactive-point-lat">Latitude: {{ point()[1] }}</label>
+      <input
+        id="reactive-point-lat"
+        type="range"
+        min="52"
+        max="56"
+        step="0.1"
+        [value]="point()[1]"
+        (input)="setPointLatitude($any($event.target).valueAsNumber)"
+      />
+    </fieldset>
+
+    <fieldset>
+      <legend>Shape geometry</legend>
+      <label for="reactive-polygon-offset">Polygon offset: {{ polygonOffset() }}</label>
+      <input
+        id="reactive-polygon-offset"
+        type="range"
+        min="-1"
+        max="1"
+        step="0.05"
+        [value]="polygonOffset()"
+        (input)="setPolygonOffset($any($event.target).valueAsNumber)"
+      />
+
+      <label for="reactive-circle-radius">Circle radius: {{ circleRadius() }}</label>
+      <input
+        id="reactive-circle-radius"
+        type="range"
+        min="50000"
+        max="350000"
+        step="10000"
+        [value]="circleRadius()"
+        (input)="setCircleRadius($any($event.target).valueAsNumber)"
+      />
+    </fieldset>
+
+    <fieldset>
+      <legend>Marker style</legend>
+      <label for="reactive-marker-radius">Radius: {{ markerRadius() }}</label>
+      <input
+        id="reactive-marker-radius"
+        type="range"
+        min="4"
+        max="24"
+        [value]="markerRadius()"
+        (input)="setMarkerRadius($any($event.target).valueAsNumber)"
+      />
+
+      <label for="reactive-marker-rotation">Rotation: {{ markerRotation() }}</label>
+      <input
+        id="reactive-marker-rotation"
+        type="range"
+        min="0"
+        max="6.28"
+        step="0.1"
+        [value]="markerRotation()"
+        (input)="setMarkerRotation($any($event.target).valueAsNumber)"
+      />
+    </fieldset>
+
+    <fieldset>
+      <legend>Stroke and fill</legend>
+      <label>
+        <input type="checkbox" [checked]="strokeDash()" (change)="toggleStrokeDash()" />
+        Dashed line
+      </label>
+
+      <label for="reactive-stroke-width">Stroke width: {{ strokeWidth() }}</label>
+      <input
+        id="reactive-stroke-width"
+        type="range"
+        min="1"
+        max="12"
+        [value]="strokeWidth()"
+        (input)="setStrokeWidth($any($event.target).valueAsNumber)"
+      />
+
+      <label for="reactive-fill-opacity">Fill opacity: {{ fillOpacity() }}</label>
+      <input
+        id="reactive-fill-opacity"
+        type="range"
+        min="0"
+        max="0.8"
+        step="0.02"
+        [value]="fillOpacity()"
+        (input)="setFillOpacity($any($event.target).valueAsNumber)"
+      />
+    </fieldset>
+
+    <fieldset>
+      <legend>Text style</legend>
+      <label for="reactive-label-text">Label text</label>
+      <input
+        id="reactive-label-text"
+        type="text"
+        [value]="labelText()"
+        (input)="setLabelText($any($event.target).value)"
+      />
+
+      <label for="reactive-label-placement">Placement</label>
+      <select
+        id="reactive-label-placement"
+        [value]="labelPlacement()"
+        (change)="setLabelPlacement($any($event.target).value)"
+      >
+        <option value="point">Point</option>
+        <option value="line">Line</option>
+      </select>
+
+      <label for="reactive-label-scale">Scale: {{ labelScale() }}</label>
+      <input
+        id="reactive-label-scale"
+        type="range"
+        min="0.6"
+        max="3"
+        step="0.1"
+        [value]="labelScale()"
+        (input)="setLabelScale($any($event.target).valueAsNumber)"
+      />
+
+      <label for="reactive-label-offset">Offset Y: {{ labelOffsetY() }}</label>
+      <input
+        id="reactive-label-offset"
+        type="range"
+        min="-60"
+        max="60"
+        [value]="labelOffsetY()"
+        (input)="setLabelOffsetY($any($event.target).valueAsNumber)"
+      />
+
+      <label for="reactive-label-rotation">Rotation: {{ labelRotation() }}</label>
+      <input
+        id="reactive-label-rotation"
+        type="range"
+        min="-3.14"
+        max="3.14"
+        step="0.1"
+        [value]="labelRotation()"
+        (input)="setLabelRotation($any($event.target).valueAsNumber)"
+      />
+    </fieldset>
+  </aside>
+</div>
