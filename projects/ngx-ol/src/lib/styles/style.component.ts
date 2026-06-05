@@ -1,4 +1,4 @@
-import { Component, Input, Optional, OnInit } from '@angular/core';
+import { Component, OnChanges, OnInit, SimpleChanges, inject, input, signal } from '@angular/core';
 import Fill from 'ol/style/Fill';
 import Image from 'ol/style/Image';
 import Stroke from 'ol/style/Stroke';
@@ -14,35 +14,38 @@ import { LayerVectorImageComponent } from '../layers/layervectorimage.component'
   selector: 'aol-style',
   template: ` <ng-content></ng-content> `,
 })
-export class StyleComponent implements OnInit {
-  @Input()
-  geometry?: string | Geometry | GeometryFunction;
-  @Input()
-  fill?: Fill;
-  @Input()
-  image?: Image;
-  @Input()
-  renderer?: RenderFunction;
-  @Input()
-  hitDetectionRenderer?: RenderFunction;
-  @Input()
-  stroke?: Stroke;
-  @Input()
-  text?: Text;
-  @Input()
-  zIndex?: number;
+export class StyleComponent implements OnInit, OnChanges {
+  readonly geometry = input<string | Geometry | GeometryFunction>();
+  readonly fill = input<Fill>();
+  readonly image = input<Image>();
+  readonly renderer = input<RenderFunction>();
+  readonly hitDetectionRenderer = input<RenderFunction>();
+  readonly stroke = input<Stroke>();
+  readonly text = input<Text>();
+  readonly zIndex = input<number>();
 
   public instance: Style;
-  public componentType = 'style';
-  private readonly host: FeatureComponent | LayerVectorComponent;
 
-  constructor(
-    @Optional() featureHost: FeatureComponent,
-    @Optional() vectorLayer: LayerVectorComponent,
-    @Optional() vectorImageLayer: LayerVectorImageComponent,
-  ) {
+  protected readonly _instanceSignal = signal<Style | undefined>(undefined);
+
+  readonly instanceSignal = this._instanceSignal.asReadonly();
+
+  protected setInstance(instance: Style): Style {
+    this.instance = instance;
+
+    this._instanceSignal.set(instance);
+
+    return instance;
+  }
+  readonly componentType: string = 'style';
+  private readonly host: FeatureComponent | LayerVectorComponent | LayerVectorImageComponent;
+  private readonly featureHost = inject(FeatureComponent, { optional: true });
+  private readonly vectorLayer = inject(LayerVectorComponent, { optional: true });
+  private readonly vectorImageLayer = inject(LayerVectorImageComponent, { optional: true });
+
+  constructor() {
     // console.log('creating aol-style');
-    this.host = featureHost || vectorLayer || vectorImageLayer;
+    this.host = (this.featureHost || this.vectorLayer || this.vectorImageLayer)!;
     if (!this.host) {
       throw new Error('aol-style must be applied to a feature or a layer');
     }
@@ -55,20 +58,51 @@ export class StyleComponent implements OnInit {
 
   ngOnInit() {
     // console.log('creating aol-style instance with: ', this);
-    this.instance = new Style(this.createOptions());
+    this.setInstance(new Style(this.createOptions()));
     this.host.instance.setStyle(this.instance);
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (!this.instance) {
+      return;
+    }
+    if (changes.geometry) {
+      this.instance.setGeometry(changes.geometry.currentValue);
+    }
+    if (changes.fill) {
+      this.instance.setFill(changes.fill.currentValue);
+    }
+    if (changes.image) {
+      this.instance.setImage(changes.image.currentValue);
+    }
+    if (changes.renderer) {
+      this.instance.setRenderer(changes.renderer.currentValue);
+    }
+    if (changes.hitDetectionRenderer) {
+      this.instance.setHitDetectionRenderer(changes.hitDetectionRenderer.currentValue);
+    }
+    if (changes.stroke) {
+      this.instance.setStroke(changes.stroke.currentValue);
+    }
+    if (changes.text) {
+      this.instance.setText(changes.text.currentValue);
+    }
+    if (changes.zIndex) {
+      this.instance.setZIndex(changes.zIndex.currentValue);
+    }
+    this.update();
   }
 
   private createOptions(): Options {
     return {
-      geometry: this.geometry,
-      fill: this.fill,
-      image: this.image,
-      renderer: this.renderer,
-      hitDetectionRenderer: this.hitDetectionRenderer,
-      stroke: this.stroke,
-      text: this.text,
-      zIndex: this.zIndex,
+      geometry: this.geometry(),
+      fill: this.fill(),
+      image: this.image(),
+      renderer: this.renderer(),
+      hitDetectionRenderer: this.hitDetectionRenderer(),
+      stroke: this.stroke(),
+      text: this.text(),
+      zIndex: this.zIndex(),
     };
   }
 }

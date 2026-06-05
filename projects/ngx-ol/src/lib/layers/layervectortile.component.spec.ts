@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import MVT from 'ol/format/MVT';
 import Style from 'ol/style/Style';
@@ -26,8 +26,7 @@ class LayerVectorTileHostComponent {
   });
   style: Style | null = new Style();
 
-  @ViewChild(LayerVectorTileComponent)
-  layer!: LayerVectorTileComponent;
+  readonly layer = viewChild.required<LayerVectorTileComponent>(LayerVectorTileComponent);
 }
 
 describe('LayerVectorTileComponent', () => {
@@ -47,10 +46,10 @@ describe('LayerVectorTileComponent', () => {
   });
 
   it('binds its vector tile source and style through Angular inputs', () => {
-    expect(fixture.componentInstance.layer.instance.getSource()).toBe(
+    expect(fixture.componentInstance.layer().instance.getSource()).toBe(
       fixture.componentInstance.source,
     );
-    expect(fixture.componentInstance.layer.instance.getStyle()).toBe(
+    expect(fixture.componentInstance.layer().instance.getStyle()).toBe(
       fixture.componentInstance.style,
     );
   });

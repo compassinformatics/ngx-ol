@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 import { AngularOpenlayersModule } from '../../public-api';
@@ -20,11 +20,9 @@ class ControlOverviewMapHostComponent {
   zoom = 2;
   collapsed = false;
 
-  @ViewChild(ControlOverviewMapComponent)
-  control!: ControlOverviewMapComponent;
+  readonly control = viewChild.required<ControlOverviewMapComponent>(ControlOverviewMapComponent);
 
-  @ViewChild(MapComponent)
-  map!: MapComponent;
+  readonly map = viewChild.required<MapComponent>(MapComponent);
 }
 
 describe('ControlOverviewMapComponent', () => {
@@ -45,8 +43,8 @@ describe('ControlOverviewMapComponent', () => {
 
   it('adds and removes an overview map control with the host map lifecycle', () => {
     const host = fixture!.componentInstance;
-    const map = host.map.instance;
-    const control = host.control.instance;
+    const map = host.map().instance;
+    const control = host.control().instance;
 
     expect(map.getControls().getArray()).toContain(control);
 

@@ -1,4 +1,4 @@
-import { Component, Host, Input, OnInit, forwardRef } from '@angular/core';
+import { Component, OnInit, forwardRef, input, signal, inject } from '@angular/core';
 import BingMaps from 'ol/source/BingMaps';
 import { Options } from 'ol/source/BingMaps';
 import { SourceComponent } from './source.component';
@@ -12,59 +12,59 @@ import { NearestDirectionFunction } from 'ol/array';
   providers: [{ provide: SourceComponent, useExisting: forwardRef(() => SourceBingmapsComponent) }],
 })
 export class SourceBingmapsComponent extends SourceComponent implements OnInit {
-  @Input()
-  cacheSize?: number;
-  @Input()
-  hidpi?: boolean;
-  @Input()
-  culture?: string;
-  @Input()
-  key: string;
-  @Input()
-  imagerySet: 'Road' | 'Aerial' | 'AerialWithLabels' | 'collinsBart' | 'ordnanceSurvey' = 'Aerial';
-  @Input()
-  maxZoom?: number;
-  @Input()
-  reprojectionErrorThreshold?: number;
-  @Input()
-  tileLoadFunction?: LoadFunction;
-  @Input()
-  wrapX?: boolean;
-  @Input()
-  interpolate?: boolean;
-  @Input()
-  placeholderTiles?: boolean;
-  @Input()
-  transition?: number;
-  @Input()
-  zDirection?: number | NearestDirectionFunction;
+  readonly cacheSize = input<number>();
+  readonly hidpi = input<boolean>();
+  readonly culture = input<string>();
+  readonly key = input.required<string>();
+  readonly imagerySet = input<
+    'Road' | 'Aerial' | 'AerialWithLabels' | 'collinsBart' | 'ordnanceSurvey'
+  >('Aerial');
+  readonly maxZoom = input<number>();
+  readonly reprojectionErrorThreshold = input<number>();
+  readonly tileLoadFunction = input<LoadFunction>();
+  readonly wrapX = input<boolean>();
+  readonly interpolate = input<boolean>();
+  readonly placeholderTiles = input<boolean>();
+  readonly transition = input<number>();
+  readonly zDirection = input<number | NearestDirectionFunction>();
 
   instance: BingMaps;
 
-  constructor(@Host() layer: LayerTileComponent) {
-    super(layer);
+  protected readonly _instanceSignal = signal<BingMaps | undefined>(undefined);
+
+  readonly instanceSignal = this._instanceSignal.asReadonly();
+
+  protected setInstance(instance: BingMaps): BingMaps {
+    this.instance = instance;
+
+    this._instanceSignal.set(instance);
+
+    return instance;
+  }
+  constructor() {
+    super(inject(LayerTileComponent, { host: true }));
   }
 
   ngOnInit() {
-    this.instance = new BingMaps(this.createOptions());
+    this.setInstance(new BingMaps(this.createOptions()));
     this.host.instance.setSource(this.instance);
   }
 
   private createOptions(): Options {
     return {
-      cacheSize: this.cacheSize,
-      hidpi: this.hidpi,
-      culture: this.culture,
-      key: this.key,
-      imagerySet: this.imagerySet,
-      maxZoom: this.maxZoom,
-      reprojectionErrorThreshold: this.reprojectionErrorThreshold,
-      tileLoadFunction: this.tileLoadFunction,
-      wrapX: this.wrapX,
-      interpolate: this.interpolate,
-      placeholderTiles: this.placeholderTiles,
-      transition: this.transition,
-      zDirection: this.zDirection,
+      cacheSize: this.cacheSize(),
+      hidpi: this.hidpi(),
+      culture: this.culture(),
+      key: this.key(),
+      imagerySet: this.imagerySet(),
+      maxZoom: this.maxZoom(),
+      reprojectionErrorThreshold: this.reprojectionErrorThreshold(),
+      tileLoadFunction: this.tileLoadFunction(),
+      wrapX: this.wrapX(),
+      interpolate: this.interpolate(),
+      placeholderTiles: this.placeholderTiles(),
+      transition: this.transition(),
+      zDirection: this.zDirection(),
     };
   }
 }

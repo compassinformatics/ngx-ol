@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import Feature from 'ol/Feature';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
@@ -80,11 +80,9 @@ class MapHostComponent {
   propertyChange = vi.fn();
   mapSingleClick = vi.fn();
 
-  @ViewChild(MapComponent)
-  map!: MapComponent;
+  readonly map = viewChild.required<MapComponent>(MapComponent);
 
-  @ViewChild(FeatureComponent)
-  featureComponent!: FeatureComponent;
+  readonly featureComponent = viewChild.required<FeatureComponent>(FeatureComponent);
 
   onOlClick() {
     this.olClick();
@@ -112,8 +110,7 @@ class RunOutsideAngularMapHostComponent {
   center = [0, 0];
   zoom = 2;
 
-  @ViewChild(MapComponent)
-  map!: MapComponent;
+  readonly map = viewChild.required<MapComponent>(MapComponent);
 }
 
 describe('MapComponent', () => {
@@ -135,38 +132,38 @@ describe('MapComponent', () => {
   it('creates the OpenLayers map from bound host inputs', () => {
     const mapTarget = fixture.nativeElement.querySelector('aol-map > div') as HTMLDivElement;
 
-    expect(fixture.componentInstance.map.instance).toBeDefined();
+    expect(fixture.componentInstance.map().instance).toBeDefined();
     expect(mapTarget.style.width).toBe('320px');
     expect(mapTarget.style.height).toBe('240px');
   });
 
   it('creates the map when runOutsideAngular is disabled', () => {
-    expect(fixture.componentInstance.map.instance).toBeDefined();
+    expect(fixture.componentInstance.map().instance).toBeDefined();
   });
 
   it('creates the map through the default runOutsideAngular path', () => {
     const outsideAngularFixture = TestBed.createComponent(RunOutsideAngularMapHostComponent);
     outsideAngularFixture.detectChanges();
 
-    expect(outsideAngularFixture.componentInstance.map.instance).toBeDefined();
+    expect(outsideAngularFixture.componentInstance.map().instance).toBeDefined();
 
     outsideAngularFixture.destroy();
   });
 
   it('emits feature click outputs for clickable features', () => {
-    vi.spyOn(fixture.componentInstance.map.instance, 'forEachFeatureAtPixel').mockImplementation(
+    vi.spyOn(fixture.componentInstance.map().instance, 'forEachFeatureAtPixel').mockImplementation(
       (_pixel, callback) => {
         callback(fixture.componentInstance.feature, null as any, null as any);
         return fixture.componentInstance.feature;
       },
     );
 
-    fixture.componentInstance.map.instance.dispatchEvent({ type: 'click', pixel: [1, 1] } as any);
-    fixture.componentInstance.map.instance.dispatchEvent({
+    fixture.componentInstance.map().instance.dispatchEvent({ type: 'click', pixel: [1, 1] } as any);
+    fixture.componentInstance.map().instance.dispatchEvent({
       type: 'singleclick',
       pixel: [1, 1],
     } as any);
-    fixture.componentInstance.map.instance.dispatchEvent({
+    fixture.componentInstance.map().instance.dispatchEvent({
       type: 'dblclick',
       pixel: [1, 1],
     } as any);
@@ -182,22 +179,22 @@ describe('MapComponent', () => {
   it('forwards OpenLayers map events through Angular outputs', () => {
     vi.clearAllMocks();
 
-    fixture.componentInstance.map.instance.dispatchEvent('change');
-    fixture.componentInstance.map.instance.dispatchEvent('change:layergroup');
-    fixture.componentInstance.map.instance.dispatchEvent('change:size');
-    fixture.componentInstance.map.instance.dispatchEvent('change:target');
-    fixture.componentInstance.map.instance.dispatchEvent('change:view');
-    fixture.componentInstance.map.instance.dispatchEvent('error');
-    fixture.componentInstance.map.instance.dispatchEvent('loadend');
-    fixture.componentInstance.map.instance.dispatchEvent('loadstart');
-    fixture.componentInstance.map.instance.dispatchEvent('moveend');
-    fixture.componentInstance.map.instance.dispatchEvent('movestart');
-    fixture.componentInstance.map.instance.dispatchEvent('pointerdrag');
-    fixture.componentInstance.map.instance.dispatchEvent('pointermove');
-    fixture.componentInstance.map.instance.dispatchEvent('postcompose');
-    fixture.componentInstance.map.instance.dispatchEvent('postrender');
-    fixture.componentInstance.map.instance.dispatchEvent('precompose');
-    fixture.componentInstance.map.instance.dispatchEvent('propertychange');
+    fixture.componentInstance.map().instance.dispatchEvent('change');
+    fixture.componentInstance.map().instance.dispatchEvent('change:layergroup');
+    fixture.componentInstance.map().instance.dispatchEvent('change:size');
+    fixture.componentInstance.map().instance.dispatchEvent('change:target');
+    fixture.componentInstance.map().instance.dispatchEvent('change:view');
+    fixture.componentInstance.map().instance.dispatchEvent('error');
+    fixture.componentInstance.map().instance.dispatchEvent('loadend');
+    fixture.componentInstance.map().instance.dispatchEvent('loadstart');
+    fixture.componentInstance.map().instance.dispatchEvent('moveend');
+    fixture.componentInstance.map().instance.dispatchEvent('movestart');
+    fixture.componentInstance.map().instance.dispatchEvent('pointerdrag');
+    fixture.componentInstance.map().instance.dispatchEvent('pointermove');
+    fixture.componentInstance.map().instance.dispatchEvent('postcompose');
+    fixture.componentInstance.map().instance.dispatchEvent('postrender');
+    fixture.componentInstance.map().instance.dispatchEvent('precompose');
+    fixture.componentInstance.map().instance.dispatchEvent('propertychange');
 
     expect(fixture.componentInstance.mapChange).toHaveBeenCalledOnce();
     expect(fixture.componentInstance.mapChangeLayerGroup).toHaveBeenCalledOnce();

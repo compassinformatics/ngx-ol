@@ -1,19 +1,18 @@
 import {
   AfterContentInit,
   Component,
-  EventEmitter,
   forwardRef,
-  Host,
-  Input,
-  Optional,
-  Output,
+  OnChanges,
+  SimpleChanges,
+  input,
+  output,
+  signal,
 } from '@angular/core';
 import OSM from 'ol/source/OSM';
 import { Options } from 'ol/source/OSM';
 import { TileSourceEvent } from 'ol/source/Tile';
 import { LoadFunction } from 'ol/Tile';
 import { NearestDirectionFunction } from 'ol/array';
-import { LayerTileComponent } from '../layers/layertile.component';
 import { SourceComponent } from './source.component';
 import { SourceXYZComponent } from './xyz.component';
 
@@ -22,69 +21,87 @@ import { SourceXYZComponent } from './xyz.component';
   template: ` <div class="aol-source-osm"></div> `,
   providers: [{ provide: SourceComponent, useExisting: forwardRef(() => SourceOsmComponent) }],
 })
-export class SourceOsmComponent extends SourceXYZComponent implements AfterContentInit {
-  @Input()
-  cacheSize?: number;
-  @Input()
-  crossOrigin?: string;
-  @Input()
-  interpolate?: boolean;
-  @Input()
-  maxZoom?: number;
-  @Input()
-  reprojectionErrorThreshold?: number;
-  @Input()
-  tileLoadFunction?: LoadFunction;
-  @Input()
-  transition?: number;
-  @Input()
-  url?: string;
-  @Input()
-  wrapX?: boolean;
-  @Input()
-  zDirection?: number | NearestDirectionFunction;
+export class SourceOsmComponent extends SourceXYZComponent implements AfterContentInit, OnChanges {
+  readonly cacheSize = input<number>();
+  readonly crossOrigin = input<null | string>();
+  readonly interpolate = input<boolean>();
+  readonly maxZoom = input<number>();
+  readonly reprojectionErrorThreshold = input<number>();
+  readonly tileLoadFunction = input<LoadFunction>();
+  readonly transition = input<number>();
+  readonly url = input<string>();
+  readonly wrapX = input<boolean>();
+  readonly zDirection = input<number | NearestDirectionFunction>();
 
-  @Output()
-  tileLoadStart = new EventEmitter<TileSourceEvent>();
-  @Output()
-  tileLoadEnd = new EventEmitter<TileSourceEvent>();
-  @Output()
-  tileLoadError = new EventEmitter<TileSourceEvent>();
+  readonly tileLoadStart = output<TileSourceEvent>();
+  readonly tileLoadEnd = output<TileSourceEvent>();
+  readonly tileLoadError = output<TileSourceEvent>();
 
   instance: OSM;
 
-  constructor(
-    @Optional()
-    @Host()
-    protected layer?: LayerTileComponent,
-  ) {
-    super(layer);
+  protected readonly _instanceSignal = signal<OSM | undefined>(undefined);
+
+  readonly instanceSignal = this._instanceSignal.asReadonly();
+
+  protected setInstance(instance: OSM): OSM {
+    this.instance = instance;
+
+    this._instanceSignal.set(instance);
+
+    return instance;
+  }
+  constructor() {
+    super();
   }
 
   ngAfterContentInit() {
-    if (this.tileGridXYZ) {
-      this.tileGrid = this.tileGridXYZ.instance;
+    const tileGridXYZ = this.tileGridXYZ();
+
+    if (tileGridXYZ) {
+      this.contentTileGrid = tileGridXYZ.instance;
     }
-    this.instance = new OSM(this.createOptions());
+    this.setInstance(new OSM(this.createOptions()));
     this.instance.on('tileloadstart', (event: TileSourceEvent) => this.tileLoadStart.emit(event));
     this.instance.on('tileloadend', (event: TileSourceEvent) => this.tileLoadEnd.emit(event));
     this.instance.on('tileloaderror', (event: TileSourceEvent) => this.tileLoadError.emit(event));
     this.register(this.instance);
   }
 
+  ngOnChanges(changes: SimpleChanges) {
+    if (!this.instance) {
+      return;
+    }
+
+    for (const key in changes) {
+      switch (key) {
+        case 'attributions':
+          this.instance.setAttributions(changes[key].currentValue);
+          continue;
+        case 'tileLoadFunction':
+          this.instance.setTileLoadFunction(changes[key].currentValue);
+          continue;
+        case 'url':
+          this.instance.setUrl(changes[key].currentValue);
+          continue;
+        default:
+          break;
+      }
+    }
+  }
+
   protected override createOptions(): Options {
     return {
-      attributions: this.attributions,
-      cacheSize: this.cacheSize,
-      crossOrigin: this.crossOrigin,
-      interpolate: this.interpolate,
-      maxZoom: this.maxZoom,
-      reprojectionErrorThreshold: this.reprojectionErrorThreshold,
-      tileLoadFunction: this.tileLoadFunction,
-      transition: this.transition,
-      url: this.url,
-      wrapX: this.wrapX,
-      zDirection: this.zDirection,
+      attributions: this.attributions(),
+      cacheSize: this.cacheSize(),
+      crossOrigin: this.crossOrigin(),
+      interpolate: this.interpolate(),
+      maxZoom: this.maxZoom(),
+      reprojectionErrorThreshold: this.reprojectionErrorThreshold(),
+      tileLoadFunction: this.tileLoadFunction(),
+      transition: this.transition(),
+      url: this.url(),
+      wrapX: this.wrapX(),
+      zDirection: this.zDirection(),
     };
   }
 }

@@ -1,4 +1,12 @@
-import { OnDestroy, OnInit, OnChanges, Input, SimpleChanges, Directive } from '@angular/core';
+import {
+  OnDestroy,
+  OnInit,
+  OnChanges,
+  SimpleChanges,
+  Directive,
+  input,
+  signal,
+} from '@angular/core';
 import Event from 'ol/events/Event';
 import { MapComponent } from '../map.component';
 import { LayerGroupComponent } from './layergroup.component';
@@ -8,63 +16,61 @@ import { RenderFunction } from 'ol/layer/Layer';
 @Directive()
 // eslint-disable-next-line @angular-eslint/directive-class-suffix
 export abstract class LayerComponent implements OnInit, OnChanges, OnDestroy {
-  @Input()
-  id: string | number;
-  @Input()
-  className: string;
-  @Input()
-  opacity: number;
-  @Input()
-  visible: boolean;
-  @Input()
-  extent?: Extent;
-  @Input()
-  zIndex?: number;
-  @Input()
-  minResolution?: number;
-  @Input()
-  maxResolution?: number;
-  @Input()
-  minZoom?: number;
-  @Input()
-  maxZoom?: number;
-  @Input()
-  render?: RenderFunction;
-  @Input()
-  properties?: Record<string, any>;
+  readonly id = input<string | number>();
+  readonly className = input<string>();
+  readonly opacity = input<number>();
+  readonly visible = input<boolean>();
+  readonly extent = input<Extent>();
+  readonly zIndex = input<number>();
+  readonly minResolution = input<number>();
+  readonly maxResolution = input<number>();
+  readonly minZoom = input<number>();
+  readonly maxZoom = input<number>();
+  readonly render = input<RenderFunction>();
+  readonly properties = input<Record<string, any>>();
 
-  @Input()
-  prerender: (evt: Event) => void;
-  @Input()
-  postrender: (evt: Event) => void;
+  readonly prerender = input<(evt: Event) => void>();
+  readonly postrender = input<(evt: Event) => void>();
 
   public instance: any;
-  public componentType = 'layer';
 
-  protected constructor(protected host: MapComponent | LayerGroupComponent) {}
+  protected readonly _instanceSignal = signal<any | undefined>(undefined);
+
+  readonly instanceSignal = this._instanceSignal.asReadonly();
+
+  protected setInstance(instance: any): any {
+    this.instance = instance;
+
+    this._instanceSignal.set(instance);
+
+    return instance;
+  }
+  readonly componentType: string = 'layer';
+
+  protected constructor(protected readonly host: MapComponent | LayerGroupComponent) {}
 
   protected createLayerOptions() {
     return {
-      className: this.className,
-      opacity: this.opacity,
-      visible: this.visible,
-      extent: this.extent,
-      zIndex: this.zIndex,
-      minResolution: this.minResolution,
-      maxResolution: this.maxResolution,
-      minZoom: this.minZoom,
-      maxZoom: this.maxZoom,
-      render: this.render,
-      properties: this.properties,
+      className: this.className(),
+      opacity: this.opacity(),
+      visible: this.visible(),
+      extent: this.extent(),
+      zIndex: this.zIndex(),
+      minResolution: this.minResolution(),
+      maxResolution: this.maxResolution(),
+      minZoom: this.minZoom(),
+      maxZoom: this.maxZoom(),
+      render: this.render(),
+      properties: this.properties(),
     };
   }
 
   ngOnInit() {
-    if (this.prerender !== null && this.prerender !== undefined) {
-      this.instance.on('prerender', this.prerender);
+    if (this.prerender() !== null && this.prerender() !== undefined) {
+      this.instance.on('prerender', this.prerender());
     }
-    if (this.postrender !== null && this.postrender !== undefined) {
-      this.instance.on('postrender', this.postrender);
+    if (this.postrender() !== null && this.postrender() !== undefined) {
+      this.instance.on('postrender', this.postrender());
     }
     this.host.instance.getLayers().push(this.instance);
   }
@@ -74,24 +80,79 @@ export abstract class LayerComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    const properties: { [index: string]: any } = {};
     if (!this.instance) {
       return;
     }
     for (const key in changes) {
       if (changes.hasOwnProperty(key)) {
-        properties[key] = changes[key].currentValue;
+        const value = changes[key].currentValue;
         if (key === 'prerender') {
-          this.instance.un('prerender', changes[key].previousValue);
-          this.instance.on('prerender', changes[key].currentValue);
+          if (changes[key].previousValue) {
+            this.instance.un('prerender', changes[key].previousValue);
+          }
+          if (value) {
+            this.instance.on('prerender', value);
+          }
+          continue;
         }
         if (key === 'postrender') {
-          this.instance.un('postrender', changes[key].previousValue);
-          this.instance.on('postrender', changes[key].currentValue);
+          if (changes[key].previousValue) {
+            this.instance.un('postrender', changes[key].previousValue);
+          }
+          if (value) {
+            this.instance.on('postrender', value);
+          }
+          continue;
+        }
+        if (key === 'properties') {
+          this.syncProperties(value, changes[key].previousValue);
+          continue;
+        }
+        switch (key) {
+          case 'extent':
+            this.instance.setExtent(value);
+            continue;
+          case 'maxResolution':
+            this.instance.setMaxResolution(value);
+            continue;
+          case 'minResolution':
+            this.instance.setMinResolution(value);
+            continue;
+          case 'maxZoom':
+            this.instance.setMaxZoom(value);
+            continue;
+          case 'minZoom':
+            this.instance.setMinZoom(value);
+            continue;
+          case 'opacity':
+            this.instance.setOpacity(value);
+            continue;
+          case 'visible':
+            this.instance.setVisible(value);
+            continue;
+          case 'zIndex':
+            this.instance.setZIndex(value);
+            continue;
+          default:
+            break;
         }
       }
     }
-    // console.log('changes detected in aol-layer, setting new properties: ', properties);
-    this.instance.setProperties(properties, false);
+  }
+
+  private syncProperties(
+    nextProperties?: Record<string, any>,
+    previousProperties?: Record<string, any>,
+  ) {
+    if (previousProperties) {
+      const nextKeys = new Set(Object.keys(nextProperties ?? {}));
+      Object.keys(previousProperties)
+        .filter((key) => !nextKeys.has(key))
+        .forEach((key) => this.instance.unset(key, false));
+    }
+
+    if (nextProperties) {
+      this.instance.setProperties(nextProperties, false);
+    }
   }
 }

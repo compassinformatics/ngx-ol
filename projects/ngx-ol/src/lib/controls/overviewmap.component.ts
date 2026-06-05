@@ -1,4 +1,13 @@
-import { Component, Input, OnDestroy, OnInit, OnChanges, SimpleChanges } from '@angular/core';
+import {
+  Component,
+  OnDestroy,
+  OnInit,
+  OnChanges,
+  SimpleChanges,
+  input,
+  signal,
+  inject,
+} from '@angular/core';
 import Collection from 'ol/Collection';
 import MapEvent from 'ol/MapEvent';
 import BaseLayer from 'ol/layer/Base';
@@ -12,35 +21,35 @@ import { MapComponent } from '../map.component';
   template: ` <ng-content></ng-content> `,
 })
 export class ControlOverviewMapComponent implements OnInit, OnChanges, OnDestroy {
-  @Input()
-  className?: string;
-  @Input()
-  collapsed?: boolean;
-  @Input()
-  collapseLabel?: string | HTMLElement;
-  @Input()
-  collapsible?: boolean;
-  @Input()
-  label?: string | HTMLElement;
-  @Input()
-  layers?: BaseLayer[] | Collection<BaseLayer>;
-  @Input()
-  render?: (event: MapEvent) => void;
-  @Input()
-  rotateWithView?: boolean;
-  @Input()
-  target?: string | HTMLElement;
-  @Input()
-  tipLabel?: string;
-  @Input()
-  view?: View;
+  readonly className = input<string>();
+  readonly collapsed = input<boolean>();
+  readonly collapseLabel = input<string | HTMLElement>();
+  readonly collapsible = input<boolean>();
+  readonly label = input<string | HTMLElement>();
+  readonly layers = input<BaseLayer[] | Collection<BaseLayer>>();
+  readonly render = input<(event: MapEvent) => void>();
+  readonly rotateWithView = input<boolean>();
+  readonly target = input<string | HTMLElement>();
+  readonly tipLabel = input<string>();
+  readonly view = input<View>();
 
   instance: OverviewMap;
 
-  constructor(private map: MapComponent) {}
+  protected readonly _instanceSignal = signal<OverviewMap | undefined>(undefined);
+
+  readonly instanceSignal = this._instanceSignal.asReadonly();
+
+  protected setInstance(instance: OverviewMap): OverviewMap {
+    this.instance = instance;
+
+    this._instanceSignal.set(instance);
+
+    return instance;
+  }
+  private readonly map = inject(MapComponent);
 
   ngOnInit() {
-    this.instance = new OverviewMap(this.createOptions());
+    this.setInstance(new OverviewMap(this.createOptions()));
     this.map.instance.addControl(this.instance);
   }
 
@@ -49,30 +58,42 @@ export class ControlOverviewMapComponent implements OnInit, OnChanges, OnDestroy
   }
 
   ngOnChanges(changes: SimpleChanges) {
+    if (!this.instance) {
+      return;
+    }
+    if (changes.collapsible?.currentValue !== undefined) {
+      this.instance.setCollapsible(changes.collapsible.currentValue);
+    }
+    if (changes.collapsed?.currentValue !== undefined) {
+      this.instance.setCollapsed(changes.collapsed.currentValue);
+    }
+    if (changes.rotateWithView?.currentValue !== undefined) {
+      this.instance.setRotateWithView(changes.rotateWithView.currentValue);
+    }
     if (this.instance != null && changes.hasOwnProperty('view')) {
-      this.reloadInstance();
+      this.replaceInstance();
     }
   }
 
-  private reloadInstance() {
+  private replaceInstance() {
     this.map.instance.removeControl(this.instance);
-    this.instance = new OverviewMap(this.createOptions());
+    this.setInstance(new OverviewMap(this.createOptions()));
     this.map.instance.addControl(this.instance);
   }
 
   private createOptions(): Options {
     return {
-      className: this.className,
-      collapsed: this.collapsed,
-      collapseLabel: this.collapseLabel,
-      collapsible: this.collapsible,
-      label: this.label,
-      layers: this.layers,
-      render: this.render,
-      rotateWithView: this.rotateWithView,
-      target: this.target,
-      tipLabel: this.tipLabel,
-      view: this.view,
+      className: this.className(),
+      collapsed: this.collapsed(),
+      collapseLabel: this.collapseLabel(),
+      collapsible: this.collapsible(),
+      label: this.label(),
+      layers: this.layers(),
+      render: this.render(),
+      rotateWithView: this.rotateWithView(),
+      target: this.target(),
+      tipLabel: this.tipLabel(),
+      view: this.view(),
     };
   }
 }

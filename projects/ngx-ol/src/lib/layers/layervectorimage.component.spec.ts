@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import Feature from 'ol/Feature';
 import Geometry from 'ol/geom/Geometry';
@@ -27,8 +27,7 @@ class LayerVectorImageHostComponent {
   }) as VectorSource;
   style: Style | null = new Style();
 
-  @ViewChild(LayerVectorImageComponent)
-  layer!: LayerVectorImageComponent;
+  readonly layer = viewChild.required<LayerVectorImageComponent>(LayerVectorImageComponent);
 }
 
 describe('LayerVectorImageComponent', () => {
@@ -48,10 +47,10 @@ describe('LayerVectorImageComponent', () => {
   });
 
   it('binds its source and style through Angular inputs', () => {
-    expect(fixture.componentInstance.layer.instance.getSource()).toBe(
+    expect(fixture.componentInstance.layer().instance.getSource()).toBe(
       fixture.componentInstance.source,
     );
-    expect(fixture.componentInstance.layer.instance.getStyle()).toBe(
+    expect(fixture.componentInstance.layer().instance.getStyle()).toBe(
       fixture.componentInstance.style,
     );
   });

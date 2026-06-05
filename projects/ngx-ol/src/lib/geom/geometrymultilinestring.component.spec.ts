@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import MultiLineString from 'ol/geom/MultiLineString';
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
@@ -14,7 +14,10 @@ import { GeometryMultiLinestringComponent } from './geometrymultilinestring.comp
         <aol-source-vector>
           <aol-feature>
             <aol-geometry-multilinestring>
-              <aol-collection-coordinates [coordinates]="coordinates" [srid]="srid"></aol-collection-coordinates>
+              <aol-collection-coordinates
+                [coordinates]="coordinates"
+                [srid]="srid"
+              ></aol-collection-coordinates>
             </aol-geometry-multilinestring>
           </aol-feature>
         </aol-source-vector>
@@ -39,11 +42,11 @@ class GeometryMultiLinestringHostComponent {
     ],
   ];
 
-  @ViewChild(GeometryMultiLinestringComponent)
-  geometry!: GeometryMultiLinestringComponent;
+  readonly geometry = viewChild.required<GeometryMultiLinestringComponent>(
+    GeometryMultiLinestringComponent,
+  );
 
-  @ViewChild(FeatureComponent)
-  feature!: FeatureComponent;
+  readonly feature = viewChild.required<FeatureComponent>(FeatureComponent);
 }
 
 describe('GeometryMultiLinestringComponent', () => {
@@ -63,12 +66,12 @@ describe('GeometryMultiLinestringComponent', () => {
   });
 
   it('attaches the bound multi-line string geometry to its feature', () => {
-    expect(fixture.componentInstance.geometry.instance).toBeInstanceOf(MultiLineString);
-    expect(fixture.componentInstance.geometry.instance.getCoordinates()).toEqual(
+    expect(fixture.componentInstance.geometry().instance).toBeInstanceOf(MultiLineString);
+    expect(fixture.componentInstance.geometry().instance.getCoordinates()).toEqual(
       fixture.componentInstance.coordinates,
     );
-    expect(fixture.componentInstance.feature.instance.getGeometry()).toBe(
-      fixture.componentInstance.geometry.instance,
+    expect(fixture.componentInstance.feature().instance.getGeometry()).toBe(
+      fixture.componentInstance.geometry().instance,
     );
   });
 });

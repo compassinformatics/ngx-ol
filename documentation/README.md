@@ -8,26 +8,83 @@ Version 22 normalizes output names. The `ol` prefix is only used where the unpre
 
 Migration table:
 
-| Before | After |
-| --- | --- |
+| Before                 | After                |
+| ---------------------- | -------------------- |
 | `(olChangeLayerGroup)` | `(changeLayerGroup)` |
-| `(olChangeSize)` | `(changeSize)` |
-| `(olChangeTarget)` | `(changeTarget)` |
-| `(olChangeView)` | `(changeView)` |
-| `(olPostCompose)` | `(postCompose)` |
-| `(olPreCompose)` | `(preCompose)` |
-| `(olPropertyChange)` | `(propertyChange)` |
-| `(olChangeActive)` | `(changeActive)` |
-| `(olDrawAbort)` | `(drawAbort)` |
-| `(olModifyStart)` | `(modifyStart)` |
-| `(olModifyEnd)` | `(modifyEnd)` |
-| `(olSnap)` | `(snap)` |
+| `(olChangeSize)`       | `(changeSize)`       |
+| `(olChangeTarget)`     | `(changeTarget)`     |
+| `(olChangeView)`       | `(changeView)`       |
+| `(olPostCompose)`      | `(postCompose)`      |
+| `(olPreCompose)`       | `(preCompose)`       |
+| `(olPropertyChange)`   | `(propertyChange)`   |
+| `(olChangeActive)`     | `(changeActive)`     |
+| `(olDrawAbort)`        | `(drawAbort)`        |
+| `(olModifyStart)`      | `(modifyStart)`      |
+| `(olModifyEnd)`        | `(modifyEnd)`        |
+| `(olSnap)`             | `(snap)`             |
 
 `olPostRender` has been removed. Use `(postRender)`.
+
+## Input reactivity notes
+
+Most inputs are forwarded to OpenLayers with the matching setter when OpenLayers exposes one. Some OpenLayers options are constructor-only, so changing the Angular input after the component has created its OL instance will not change the existing OL object. For those inputs, recreate the wrapper component with Angular control flow if the value needs to change.
+
+Example:
+
+```html
+@if (tileJsonTheme() === 'light') {
+<aol-source-tilejson url="/tile-json/carto-light.json"></aol-source-tilejson>
+} @else {
+<aol-source-tilejson url="/tile-json/carto-dark.json"></aol-source-tilejson>
+}
+```
+
+Known init-only or rebuild-backed inputs:
+
+| Component area             | Setter-backed/live inputs                                                                                                                                                                                                                                                                                                 | Init-only or rebuild-backed inputs                                                                                                                                                                                                                                                                                                    |
+| -------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `aol-map`                  | `width`, `height` update map size.                                                                                                                                                                                                                                                                                        | `pixelRatio`, `keyboardEventTarget`, `maxTilesLoading`, `moveTolerance`, and `runOutsideAngular` are used when the `ol/Map` is created.                                                                                                                                                                                               |
+| `aol-view`                 | `center`, `zoom`, `maxZoom`, `minZoom`, `resolution`, `rotation`, and `constrainResolution` use OL setters. `zoomAnimation` affects future `zoom` changes.                                                                                                                                                                | `projection` recreates the `ol/View`. `constrainRotation`, `enableRotation`, `extent`, `maxResolution`, `minResolution`, `resolutions`, `zoomFactor`, `constrainOnlyCenter`, `smoothExtentConstraint`, `smoothResolutionConstraint`, `showFullExtent`, `multiWorld`, and `padding` are constructor-only unless the view is recreated. |
+| Base layers                | `extent`, `maxResolution`, `minResolution`, `maxZoom`, `minZoom`, `opacity`, `visible`, `zIndex`, `properties`, `prerender`, and `postrender` are synced.                                                                                                                                                                 | `className` and `render` are constructor-only.                                                                                                                                                                                                                                                                                        |
+| Vector layers              | `style`, `renderOrder`, and `source` are synced where supported. Heatmap `gradient`, `radius`, `blur`, and `source` are synced. Tile layer `preload`, `useInterimTilesOnError`, and `source` are synced. WebGL tile `style` and `source` are synced.                                                                      | Vector layer constructor options such as `renderBuffer`, `declutter`, `background`, `updateWhileAnimating`, `updateWhileInteracting`, `imageRatio`, `renderMode`, `weight`, `cacheSize`, `sources`, `map`, and WebGL `useInterimTilesOnError` are init-only unless the layer is recreated.                                            |
+| Tiled sources              | `aol-source-osm` syncs `url` and `tileLoadFunction`. `aol-source-xyz` syncs `url`, `urls`, `tileLoadFunction`, and `tileUrlFunction`. `aol-source-tilewms` and `aol-source-tilearcgisrest` sync `url`, `urls`, `tileLoadFunction`, and `params`; removed param keys recreate the source.                                  | Other tile source constructor options such as cache, projection, tile grid, tile size, interpolation, transition, wrap, z direction, HiDPI, gutter, server type, tile class, and reprojection settings are init-only unless the source is recreated.                                                                                  |
+| `aol-source-tilejson`      | None after init.                                                                                                                                                                                                                                                                                                          | `url`, `tileJSON`, and all other TileJSON options are init-only. Recreate the component to load a different TileJSON document.                                                                                                                                                                                                        |
+| `aol-source-tilewmts`      | `dimensions` updates with `updateDimensions()` when keys are added or changed.                                                                                                                                                                                                                                            | `url` changes and removed dimension keys recreate the source. Other WMTS options, including `layer`, `style`, `matrixSet`, `format`, `tileGrid`, request encoding, tile class, projection, and tile pixel ratio, are init-only unless the source is recreated.                                                                        |
+| Image sources              | `aol-source-imagewms` and `aol-source-imagearcgisrest` sync `url`, `imageLoadFunction`, `resolutions`, and `params`; removed param keys recreate the source.                                                                                                                                                              | `crossOrigin`, `hidpi`, `interpolate`, `projection`, `ratio`, and WMS server type are init-only. `aol-source-imagestatic` recreates the source when its inputs change.                                                                                                                                                                |
+| Vector and cluster sources | Vector source `loader` and `url` are synced. Cluster source `distance` and `minDistance` are synced.                                                                                                                                                                                                                      | Vector `features`, `format`, `strategy`, spatial index, overlaps, and wrap settings are init-only. Cluster `geometryFunction`, `wrapX`, and `createCluster` are init-only.                                                                                                                                                            |
+| Init-only source families  |                                                                                                                                                                                                                                                                                                                           | `aol-source-bingmaps`, `aol-source-geojson`, `aol-source-iiif`, `aol-source-ogcmaptile`, `aol-source-ogcvectortile`, `aol-source-utfgrid`, `aol-source-vectortile`, and `aol-source-zoomify` use their inputs when the source is created.                                                                                             |
+| Formats                    |                                                                                                                                                                                                                                                                                                                           | `aol-format-geojson` and `aol-format-mvt` inputs are init-only.                                                                                                                                                                                                                                                                       |
+| Controls                   | Attribution `collapsed`/`collapsible`, fullscreen/rotate/zoom/zoomslider/zoomtoextent `target`, mouse position `coordinateFormat`/`projection`, overview `collapsed`/`collapsible`/`rotateWithView`, and scale line `units`/`dpi` are synced.                                                                             | Default controls and most control display options such as labels, CSS class names, render callbacks, durations, source, keys, overview layers/view, scale bar options, and zoom deltas are init-only.                                                                                                                                 |
+| Interactions               | Draw `trace`, extent `extent`, mouse wheel zoom `useAnchor`, select `hitTolerance`, and translate `hitTolerance` are synced. Draw recreates the interaction for other input changes.                                                                                                                                      | Default interactions and most interaction constructor options are init-only: predicates/conditions, durations, deltas, kinetic settings, feature collections, layers, filters, styles, sources, format constructors, history/link params, snap options, and modify options.                                                           |
+| Styles                     | Fill/stroke/text/style setters are synced where OpenLayers exposes setters. Circle style syncs radius, displacement, scale, rotation, rotate-with-view, fill, and stroke. Icon syncs anchor, displacement, opacity, rotate-with-view, rotation, scale, and recreates for `src`. Regular shape syncs fill/stroke directly. | Icon image construction options such as anchor units/origin, color, crossOrigin, `img`, offset/origin, width, height, size, and declutter mode are init-only. Regular shape structural options such as points, radius, radius2, angle, displacement, rotation, rotate-with-view, scale, and declutter mode recreate the style image.  |
+| Geometry                   | Coordinates, geometry collections, point coordinates, circle center/radius, and coordinate SRID transforms are synced.                                                                                                                                                                                                    | Geometry layout options and base geometry SRID are init-only unless the child coordinate component performs the transform.                                                                                                                                                                                                            |
+| `aol-feature`              | `id` and `properties` are synced.                                                                                                                                                                                                                                                                                         | Changing the `feature` input replaces the wrapped OL feature instance.                                                                                                                                                                                                                                                                |
+
+## Instance timing
+
+Every wrapper exposes the underlying OpenLayers object through `instance` and `instanceSignal`. Version 22 keeps both APIs.
+
+Most wrappers create their OpenLayers instance during `ngOnInit`, after Angular inputs are available. Components that need projected child components, such as child tile grids, child formats, raster child sources, or child styles, create their instance during content initialization instead.
+
+`instanceSignal()` is `undefined` until the wrapper has enough inputs and child content to create a valid OpenLayers instance. It is updated whenever ngx-ol intentionally replaces the underlying OL instance, for example when changing a constructor-only input that has a documented rebuild path.
+
+Use `instanceSignal()` when code needs to wait until the OpenLayers object is ready:
+
+```ts
+protected readonly mapComponent = viewChild.required(MapComponent);
+
+protected rotate(): void {
+  this.mapComponent().instanceSignal()?.getView().animate({
+    rotation: Math.PI / 8,
+  });
+}
+```
 
 ## Table of contents
 
 - [v22 output name changes](#v22-output-name-changes)
+- [Input reactivity notes](#input-reactivity-notes)
+- [Instance timing](#instance-timing)
 - [Modules](#modules)
 - [Map setup](#map-setup)
 - [Layer groups](#layer-groups)
@@ -502,7 +559,8 @@ Inputs:
 <aol-layer-image>
   <aol-source-imagewms
     [url]="'https://example.com/geoserver/wms'"
-    [params]="{ LAYERS: 'workspace:layer' }">
+    [params]="{ LAYERS: 'workspace:layer' }"
+  >
   </aol-source-imagewms>
 </aol-layer-image>
 ```
@@ -1338,9 +1396,7 @@ Inputs:
 ```html
 <aol-overlay [position]="[-907904, 7065770]">
   <aol-content>
-    <div class="my-overlay-class">
-      Overlay content
-    </div>
+    <div class="my-overlay-class">Overlay content</div>
   </aol-content>
 </aol-overlay>
 ```

@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 import { AngularOpenlayersModule } from '../../public-api';
@@ -28,14 +28,11 @@ class SourceVectorTileHostComponent {
   origin: [number, number] = [0, 0];
   resolutions = [2, 1];
 
-  @ViewChild(SourceVectorTileComponent)
-  source!: SourceVectorTileComponent;
+  readonly source = viewChild.required<SourceVectorTileComponent>(SourceVectorTileComponent);
 
-  @ViewChild(LayerVectorTileComponent)
-  layer!: LayerVectorTileComponent;
+  readonly layer = viewChild.required<LayerVectorTileComponent>(LayerVectorTileComponent);
 
-  @ViewChild(TileGridComponent)
-  tileGrid!: TileGridComponent;
+  readonly tileGrid = viewChild.required<TileGridComponent>(TileGridComponent);
 }
 
 describe('SourceVectorTileComponent', () => {
@@ -55,11 +52,11 @@ describe('SourceVectorTileComponent', () => {
   });
 
   it('binds a vector tile source into the vector tile layer and prefers child helpers', () => {
-    expect(fixture.componentInstance.layer.instance.getSource()).toBe(
-      fixture.componentInstance.source.instance,
+    expect(fixture.componentInstance.layer().instance.getSource()).toBe(
+      fixture.componentInstance.source().instance,
     );
-    expect(fixture.componentInstance.source.instance.getTileGrid()).toBe(
-      fixture.componentInstance.tileGrid.instance,
+    expect(fixture.componentInstance.source().instance.getTileGrid()).toBe(
+      fixture.componentInstance.tileGrid().instance,
     );
   });
 });

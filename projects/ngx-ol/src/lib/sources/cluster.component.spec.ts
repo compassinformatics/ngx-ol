@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import Feature from 'ol/Feature';
 import Point from 'ol/geom/Point';
@@ -28,14 +28,11 @@ class SourceClusterHostComponent {
   distance = 20;
   features = [new Feature(new Point([0, 0]))];
 
-  @ViewChild(SourceClusterComponent)
-  cluster!: SourceClusterComponent;
+  readonly cluster = viewChild.required<SourceClusterComponent>(SourceClusterComponent);
 
-  @ViewChild(SourceVectorComponent)
-  vectorSource!: SourceVectorComponent;
+  readonly vectorSource = viewChild.required<SourceVectorComponent>(SourceVectorComponent);
 
-  @ViewChild(LayerVectorImageComponent)
-  layer!: LayerVectorImageComponent;
+  readonly layer = viewChild.required<LayerVectorImageComponent>(LayerVectorImageComponent);
 }
 
 describe('SourceClusterComponent', () => {
@@ -55,12 +52,12 @@ describe('SourceClusterComponent', () => {
   });
 
   it('binds the nested vector source into the cluster source through the template', () => {
-    expect(fixture.componentInstance.cluster.instance.getSource()).toBe(
-      fixture.componentInstance.vectorSource.instance,
+    expect(fixture.componentInstance.cluster().instance.getSource()).toBe(
+      fixture.componentInstance.vectorSource().instance,
     );
-    expect(fixture.componentInstance.layer.instance.getSource()).toBe(
-      fixture.componentInstance.cluster.instance,
+    expect(fixture.componentInstance.layer().instance.getSource()).toBe(
+      fixture.componentInstance.cluster().instance,
     );
-    expect(fixture.componentInstance.cluster.instance.getDistance()).toBe(20);
+    expect(fixture.componentInstance.cluster().instance.getDistance()).toBe(20);
   });
 });

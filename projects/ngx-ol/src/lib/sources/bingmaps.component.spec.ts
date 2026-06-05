@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { AngularOpenlayersModule } from '../../public-api';
@@ -26,16 +26,13 @@ class SourceBingMapsHostComponent {
   center = [0, 0];
   zoom = 2;
   apiKey = 'test-key';
-  imagerySet: 'Road' | 'Aerial' | 'AerialWithLabels' | 'collinsBart' | 'ordnanceSurvey' =
-    'Road';
+  imagerySet: 'Road' | 'Aerial' | 'AerialWithLabels' | 'collinsBart' | 'ordnanceSurvey' = 'Road';
   culture = 'en-IE';
   hidpi = true;
 
-  @ViewChild(SourceBingmapsComponent)
-  source!: SourceBingmapsComponent;
+  readonly source = viewChild.required<SourceBingmapsComponent>(SourceBingmapsComponent);
 
-  @ViewChild(LayerTileComponent)
-  layer!: LayerTileComponent;
+  readonly layer = viewChild.required<LayerTileComponent>(LayerTileComponent);
 }
 
 describe('SourceBingmapsComponent', () => {
@@ -78,11 +75,11 @@ describe('SourceBingmapsComponent', () => {
   });
 
   it('binds Bing Maps options into the tile layer through Angular inputs', () => {
-    expect(fixture.componentInstance.layer.instance.getSource()).toBe(
-      fixture.componentInstance.source.instance,
+    expect(fixture.componentInstance.layer().instance.getSource()).toBe(
+      fixture.componentInstance.source().instance,
     );
-    expect(fixture.componentInstance.source.instance.getApiKey()).toBe('test-key');
-    expect(fixture.componentInstance.source.instance.getImagerySet()).toBe('Road');
+    expect(fixture.componentInstance.source().instance.getApiKey()).toBe('test-key');
+    expect(fixture.componentInstance.source().instance.getImagerySet()).toBe('Road');
     expect(globalThis.fetch).toHaveBeenCalledOnce();
   });
 });

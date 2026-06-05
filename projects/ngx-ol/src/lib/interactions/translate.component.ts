@@ -1,4 +1,14 @@
-import { Component, OnDestroy, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import {
+  Component,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  SimpleChanges,
+  input,
+  output,
+  signal,
+  inject,
+} from '@angular/core';
 import Translate from 'ol/interaction/Translate';
 import Collection from 'ol/Collection';
 import Feature from 'ol/Feature';
@@ -14,39 +24,38 @@ import { FilterFunction } from 'ol/interaction/Select';
   selector: 'aol-interaction-translate',
   template: '',
 })
-export class TranslateInteractionComponent implements OnInit, OnDestroy {
-  @Input()
-  condition?: Condition;
-  @Input()
-  features?: Collection<Feature>;
-  @Input()
-  layers?: Layer[] | ((layer: Layer) => boolean);
-  @Input()
-  filter?: FilterFunction;
-  @Input()
-  hitTolerance?: number;
+export class TranslateInteractionComponent implements OnInit, OnChanges, OnDestroy {
+  readonly condition = input<Condition>();
+  readonly features = input<Collection<Feature>>();
+  readonly layers = input<Layer[] | ((layer: Layer) => boolean)>();
+  readonly filter = input<FilterFunction>();
+  readonly hitTolerance = input<number>();
 
-  @Output()
-  olChange = new EventEmitter<BaseEvent>();
-  @Output()
-  changeActive = new EventEmitter<ObjectEvent>();
-  @Output()
-  olError = new EventEmitter<BaseEvent>();
-  @Output()
-  propertyChange = new EventEmitter<ObjectEvent>();
-  @Output()
-  translateEnd = new EventEmitter<TranslateEvent>();
-  @Output()
-  translateStart = new EventEmitter<TranslateEvent>();
-  @Output()
-  translating = new EventEmitter<TranslateEvent>();
+  readonly olChange = output<BaseEvent>();
+  readonly changeActive = output<ObjectEvent>();
+  readonly olError = output<BaseEvent>();
+  readonly propertyChange = output<ObjectEvent>();
+  readonly translateEnd = output<TranslateEvent>();
+  readonly translateStart = output<TranslateEvent>();
+  readonly translating = output<TranslateEvent>();
 
   instance: Translate;
 
-  constructor(private map: MapComponent) {}
+  protected readonly _instanceSignal = signal<Translate | undefined>(undefined);
+
+  readonly instanceSignal = this._instanceSignal.asReadonly();
+
+  protected setInstance(instance: Translate): Translate {
+    this.instance = instance;
+
+    this._instanceSignal.set(instance);
+
+    return instance;
+  }
+  private readonly map = inject(MapComponent);
 
   ngOnInit() {
-    this.instance = new Translate(this.createOptions());
+    this.setInstance(new Translate(this.createOptions()));
 
     this.instance.on('change', (event: BaseEvent) => this.olChange.emit(event));
     this.instance.on('change:active', (event: ObjectEvent) => this.changeActive.emit(event));
@@ -63,13 +72,19 @@ export class TranslateInteractionComponent implements OnInit, OnDestroy {
     this.map.instance.removeInteraction(this.instance);
   }
 
+  ngOnChanges(changes: SimpleChanges) {
+    if (this.instance && changes.hitTolerance?.currentValue !== undefined) {
+      this.instance.setHitTolerance(changes.hitTolerance.currentValue);
+    }
+  }
+
   private createOptions(): Options {
     return {
-      condition: this.condition,
-      features: this.features,
-      layers: this.layers,
-      filter: this.filter,
-      hitTolerance: this.hitTolerance,
+      condition: this.condition(),
+      features: this.features(),
+      layers: this.layers(),
+      filter: this.filter(),
+      hitTolerance: this.hitTolerance(),
     };
   }
 }

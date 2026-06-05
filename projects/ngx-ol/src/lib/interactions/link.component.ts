@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, input, signal, inject } from '@angular/core';
 import Link from 'ol/interaction/Link';
 import type { Options, Params } from 'ol/interaction/Link';
 import type { AnimationOptions } from 'ol/View';
@@ -9,24 +9,31 @@ import { MapComponent } from '../map.component';
   template: '',
 })
 export class LinkInteractionComponent implements OnInit, OnDestroy {
-  @Input()
-  animate?: boolean | AnimationOptions;
+  readonly animate = input<boolean | AnimationOptions>();
 
-  @Input()
-  params?: Params[];
+  readonly params = input<Params[]>();
 
-  @Input()
-  replace?: boolean;
+  readonly replace = input<boolean>();
 
-  @Input()
-  prefix?: string;
+  readonly prefix = input<string>();
 
   instance: Link;
 
-  constructor(private map: MapComponent) {}
+  protected readonly _instanceSignal = signal<Link | undefined>(undefined);
+
+  readonly instanceSignal = this._instanceSignal.asReadonly();
+
+  protected setInstance(instance: Link): Link {
+    this.instance = instance;
+
+    this._instanceSignal.set(instance);
+
+    return instance;
+  }
+  private readonly map = inject(MapComponent);
 
   ngOnInit() {
-    this.instance = new Link(this.createOptions());
+    this.setInstance(new Link(this.createOptions()));
     this.map.instance.addInteraction(this.instance);
   }
 
@@ -36,10 +43,10 @@ export class LinkInteractionComponent implements OnInit, OnDestroy {
 
   private createOptions(): Options {
     return {
-      animate: this.animate,
-      params: this.params,
-      replace: this.replace,
-      prefix: this.prefix,
+      animate: this.animate(),
+      params: this.params(),
+      replace: this.replace(),
+      prefix: this.prefix(),
     };
   }
 }

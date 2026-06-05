@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, OnInit, input, signal } from '@angular/core';
 import MVT from 'ol/format/MVT';
 import { FeatureClass } from 'ol/Feature';
 import { Options } from 'ol/format/MVT';
@@ -7,33 +7,39 @@ import { Options } from 'ol/format/MVT';
   selector: 'aol-format-mvt',
   template: '',
 })
-export class FormatMVTComponent {
-  @Input()
-  featureClass?: FeatureClass;
-  @Input()
-  geometryName?: string;
-  @Input()
-  layerName?: string;
-  @Input()
-  layers?: string[];
-  @Input()
-  idProperty?: string;
+export class FormatMVTComponent implements OnInit {
+  readonly featureClass = input<FeatureClass>();
+  readonly geometryName = input<string>();
+  readonly layerName = input<string>();
+  readonly layers = input<string[]>();
+  readonly idProperty = input<string>();
 
-  public componentType = 'format';
+  readonly componentType: string = 'format';
 
   instance: MVT;
 
-  constructor() {
-    this.instance = new MVT(this.createOptions());
+  protected readonly _instanceSignal = signal<MVT | undefined>(undefined);
+
+  readonly instanceSignal = this._instanceSignal.asReadonly();
+
+  protected setInstance(instance: MVT): MVT {
+    this.instance = instance;
+
+    this._instanceSignal.set(instance);
+
+    return instance;
+  }
+  ngOnInit() {
+    this.setInstance(new MVT(this.createOptions()));
   }
 
   private createOptions(): Options<any> {
     return {
-      featureClass: this.featureClass,
-      geometryName: this.geometryName,
-      layerName: this.layerName,
-      layers: this.layers,
-      idProperty: this.idProperty,
+      featureClass: this.featureClass(),
+      geometryName: this.geometryName(),
+      layerName: this.layerName(),
+      layers: this.layers(),
+      idProperty: this.idProperty(),
     };
   }
 }

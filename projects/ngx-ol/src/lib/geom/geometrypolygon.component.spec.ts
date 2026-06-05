@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import Polygon from 'ol/geom/Polygon';
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
@@ -14,7 +14,10 @@ import { GeometryPolygonComponent } from './geometrypolygon.component';
         <aol-source-vector>
           <aol-feature>
             <aol-geometry-polygon>
-              <aol-collection-coordinates [coordinates]="coordinates" [srid]="srid"></aol-collection-coordinates>
+              <aol-collection-coordinates
+                [coordinates]="coordinates"
+                [srid]="srid"
+              ></aol-collection-coordinates>
             </aol-geometry-polygon>
           </aol-feature>
         </aol-source-vector>
@@ -37,11 +40,9 @@ class GeometryPolygonHostComponent {
     ],
   ];
 
-  @ViewChild(GeometryPolygonComponent)
-  geometry!: GeometryPolygonComponent;
+  readonly geometry = viewChild.required<GeometryPolygonComponent>(GeometryPolygonComponent);
 
-  @ViewChild(FeatureComponent)
-  feature!: FeatureComponent;
+  readonly feature = viewChild.required<FeatureComponent>(FeatureComponent);
 }
 
 describe('GeometryPolygonComponent', () => {
@@ -61,11 +62,11 @@ describe('GeometryPolygonComponent', () => {
   });
 
   it('binds polygon coordinates through Angular inputs and attaches the geometry to the feature', () => {
-    expect(fixture.componentInstance.geometry.instance).toBeInstanceOf(Polygon);
-    expect(fixture.componentInstance.feature.instance.getGeometry()).toBe(
-      fixture.componentInstance.geometry.instance,
+    expect(fixture.componentInstance.geometry().instance).toBeInstanceOf(Polygon);
+    expect(fixture.componentInstance.feature().instance.getGeometry()).toBe(
+      fixture.componentInstance.geometry().instance,
     );
-    expect(fixture.componentInstance.geometry.instance.getCoordinates()).toEqual(
+    expect(fixture.componentInstance.geometry().instance.getCoordinates()).toEqual(
       fixture.componentInstance.coordinates,
     );
   });

@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, input, signal, inject } from '@angular/core';
 import PinchRotate from 'ol/interaction/PinchRotate';
 import type { Options } from 'ol/interaction/PinchRotate';
 import { MapComponent } from '../map.component';
@@ -8,18 +8,27 @@ import { MapComponent } from '../map.component';
   template: '',
 })
 export class PinchRotateInteractionComponent implements OnInit, OnDestroy {
-  @Input()
-  duration?: number;
+  readonly duration = input<number>();
 
-  @Input()
-  threshold?: number;
+  readonly threshold = input<number>();
 
   instance: PinchRotate;
 
-  constructor(private map: MapComponent) {}
+  protected readonly _instanceSignal = signal<PinchRotate | undefined>(undefined);
+
+  readonly instanceSignal = this._instanceSignal.asReadonly();
+
+  protected setInstance(instance: PinchRotate): PinchRotate {
+    this.instance = instance;
+
+    this._instanceSignal.set(instance);
+
+    return instance;
+  }
+  private readonly map = inject(MapComponent);
 
   ngOnInit() {
-    this.instance = new PinchRotate(this.createOptions());
+    this.setInstance(new PinchRotate(this.createOptions()));
     this.map.instance.addInteraction(this.instance);
   }
 
@@ -29,8 +38,8 @@ export class PinchRotateInteractionComponent implements OnInit, OnDestroy {
 
   private createOptions(): Options {
     return {
-      duration: this.duration,
-      threshold: this.threshold,
+      duration: this.duration(),
+      threshold: this.threshold(),
     };
   }
 }

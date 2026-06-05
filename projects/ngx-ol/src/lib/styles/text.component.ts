@@ -1,4 +1,4 @@
-import { Component, Input, Optional, OnInit, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, OnInit, OnChanges, SimpleChanges, inject, input, signal } from '@angular/core';
 import Fill from 'ol/style/Fill';
 import Stroke from 'ol/style/Stroke';
 import Text from 'ol/style/Text';
@@ -12,52 +12,45 @@ import { Size } from 'ol/size';
   template: ` <div class="aol-style-text"></div> `,
 })
 export class StyleTextComponent implements OnInit, OnChanges {
-  @Input()
-  font?: string | undefined;
-  @Input()
-  maxAngle?: number | undefined;
-  @Input()
-  offsetX?: number | undefined;
-  @Input()
-  offsetY?: number | undefined;
-  @Input()
-  overflow?: boolean | undefined;
-  @Input()
-  placement?: TextPlacement | undefined;
-  @Input()
-  repeat?: number | undefined;
-  @Input()
-  scale?: number | Size | undefined;
-  @Input()
-  rotateWithView?: boolean | undefined;
-  @Input()
-  rotation?: number | undefined;
-  @Input()
-  text?: string | string[] | undefined;
-  @Input()
-  textAlign?: CanvasTextAlign | undefined;
-  @Input()
-  justify?: TextJustify | undefined;
-  @Input()
-  textBaseline?: CanvasTextBaseline | undefined;
-  @Input()
-  fill?: Fill | undefined;
-  @Input()
-  stroke?: Stroke | undefined;
-  @Input()
-  backgroundFill?: Fill | undefined;
-  @Input()
-  backgroundStroke?: Stroke | undefined;
-  @Input()
-  padding?: number[] | undefined;
-  @Input()
-  declutterMode?: DeclutterMode | undefined;
+  readonly font = input<string | undefined>();
+  readonly maxAngle = input<number | undefined>();
+  readonly offsetX = input<number | undefined>();
+  readonly offsetY = input<number | undefined>();
+  readonly overflow = input<boolean | undefined>();
+  readonly placement = input<TextPlacement | undefined>();
+  readonly repeat = input<number | undefined>();
+  readonly scale = input<number | Size | undefined>();
+  readonly rotateWithView = input<boolean | undefined>();
+  readonly rotation = input<number | undefined>();
+  readonly text = input<string | string[] | undefined>();
+  readonly textAlign = input<CanvasTextAlign | undefined>();
+  readonly justify = input<TextJustify | undefined>();
+  readonly textBaseline = input<CanvasTextBaseline | undefined>();
+  readonly fill = input<Fill | undefined>();
+  readonly stroke = input<Stroke | undefined>();
+  readonly backgroundFill = input<Fill | undefined>();
+  readonly backgroundStroke = input<Stroke | undefined>();
+  readonly padding = input<number[] | undefined>();
+  readonly declutterMode = input<DeclutterMode | undefined>();
 
   public instance: Text;
-  public componentType = 'style-text';
 
-  constructor(@Optional() private host: StyleComponent) {
-    if (!host) {
+  protected readonly _instanceSignal = signal<Text | undefined>(undefined);
+
+  readonly instanceSignal = this._instanceSignal.asReadonly();
+
+  protected setInstance(instance: Text): Text {
+    this.instance = instance;
+
+    this._instanceSignal.set(instance);
+
+    return instance;
+  }
+  readonly componentType: string = 'style-text';
+  private readonly host = inject(StyleComponent, { optional: true })!;
+
+  constructor() {
+    if (!this.host) {
       throw new Error('aol-style-text must be a descendant of aol-style');
     }
     // console.log('creating aol-style-text with: ', this);
@@ -65,7 +58,7 @@ export class StyleTextComponent implements OnInit, OnChanges {
 
   ngOnInit() {
     // console.log('creating ol.style.Text instance with: ', this);
-    this.instance = new Text(this.createOptions());
+    this.setInstance(new Text(this.createOptions()));
     this.host.instance.setText(this.instance);
   }
 
@@ -76,11 +69,26 @@ export class StyleTextComponent implements OnInit, OnChanges {
     if (changes.font) {
       this.instance.setFont(changes.font.currentValue);
     }
+    if (changes.maxAngle?.currentValue !== undefined) {
+      this.instance.setMaxAngle(changes.maxAngle.currentValue);
+    }
     if (changes.offsetX) {
       this.instance.setOffsetX(changes.offsetX.currentValue);
     }
     if (changes.offsetY) {
       this.instance.setOffsetY(changes.offsetY.currentValue);
+    }
+    if (changes.overflow?.currentValue !== undefined) {
+      this.instance.setOverflow(changes.overflow.currentValue);
+    }
+    if (changes.placement?.currentValue !== undefined) {
+      this.instance.setPlacement(changes.placement.currentValue);
+    }
+    if (changes.repeat) {
+      this.instance.setRepeat(changes.repeat.currentValue);
+    }
+    if (changes.rotateWithView?.currentValue !== undefined) {
+      this.instance.setRotateWithView(changes.rotateWithView.currentValue);
     }
     if (changes.scale) {
       this.instance.setScale(changes.scale.currentValue);
@@ -94,8 +102,26 @@ export class StyleTextComponent implements OnInit, OnChanges {
     if (changes.textAlign) {
       this.instance.setTextAlign(changes.textAlign.currentValue);
     }
+    if (changes.justify) {
+      this.instance.setJustify(changes.justify.currentValue);
+    }
     if (changes.textBaseline) {
       this.instance.setTextBaseline(changes.textBaseline.currentValue);
+    }
+    if (changes.fill) {
+      this.instance.setFill(changes.fill.currentValue);
+    }
+    if (changes.stroke) {
+      this.instance.setStroke(changes.stroke.currentValue);
+    }
+    if (changes.backgroundFill) {
+      this.instance.setBackgroundFill(changes.backgroundFill.currentValue);
+    }
+    if (changes.backgroundStroke) {
+      this.instance.setBackgroundStroke(changes.backgroundStroke.currentValue);
+    }
+    if (changes.padding) {
+      this.instance.setPadding(changes.padding.currentValue);
     }
     this.host.update();
     // console.log('changes detected in aol-style-text, setting new properties: ', changes);
@@ -105,26 +131,26 @@ export class StyleTextComponent implements OnInit, OnChanges {
 
   private createOptions(): Options {
     return {
-      font: this.font,
-      maxAngle: this.maxAngle,
-      offsetX: this.offsetX,
-      offsetY: this.offsetY,
-      overflow: this.overflow,
-      placement: this.placement,
-      repeat: this.repeat,
-      scale: this.scale,
-      rotateWithView: this.rotateWithView,
-      rotation: this.rotation,
-      text: this.text,
-      textAlign: this.textAlign,
-      justify: this.justify,
-      textBaseline: this.textBaseline,
-      fill: this.fill,
-      stroke: this.stroke,
-      backgroundFill: this.backgroundFill,
-      backgroundStroke: this.backgroundStroke,
-      padding: this.padding,
-      declutterMode: this.declutterMode,
+      font: this.font(),
+      maxAngle: this.maxAngle(),
+      offsetX: this.offsetX(),
+      offsetY: this.offsetY(),
+      overflow: this.overflow(),
+      placement: this.placement(),
+      repeat: this.repeat(),
+      scale: this.scale(),
+      rotateWithView: this.rotateWithView(),
+      rotation: this.rotation(),
+      text: this.text(),
+      textAlign: this.textAlign(),
+      justify: this.justify(),
+      textBaseline: this.textBaseline(),
+      fill: this.fill(),
+      stroke: this.stroke(),
+      backgroundFill: this.backgroundFill(),
+      backgroundStroke: this.backgroundStroke(),
+      padding: this.padding(),
+      declutterMode: this.declutterMode(),
     };
   }
 }

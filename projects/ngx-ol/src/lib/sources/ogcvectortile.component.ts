@@ -1,4 +1,12 @@
-import { Component, Host, Input, forwardRef, ContentChild, AfterContentInit } from '@angular/core';
+import {
+  Component,
+  forwardRef,
+  AfterContentInit,
+  contentChild,
+  input,
+  signal,
+  inject,
+} from '@angular/core';
 import OGCVectorTile from 'ol/source/OGCVectorTile';
 import { Options } from 'ol/source/OGCVectorTile';
 import TileGrid from 'ol/tilegrid/TileGrid';
@@ -19,60 +27,73 @@ import FeatureFormat from 'ol/format/Feature';
   ],
 })
 export class SourceOGCVectorTileComponent extends SourceComponent implements AfterContentInit {
-  @Input() url: string;
-  @Input() context?: any;
-  @Input() mediaType?: string;
-  @Input() cacheSize?: number;
-  @Input() overlaps?: boolean;
-  @Input() projection?: ProjectionLike;
-  @Input() tileClass?: typeof VectorTile;
-  @Input() transition?: number;
-  @Input() wrapX?: boolean;
-  @Input() zDirection?: number | NearestDirectionFunction;
-  @Input() collections?: string[];
-  @Input() format?: FeatureFormat<any>;
+  readonly url = input.required<string>();
+  readonly context = input<any>();
+  readonly mediaType = input<string>();
+  readonly cacheSize = input<number>();
+  readonly overlaps = input<boolean>();
+  readonly projection = input<ProjectionLike>();
+  readonly tileClass = input<typeof VectorTile>();
+  readonly transition = input<number>();
+  readonly wrapX = input<boolean>();
+  readonly zDirection = input<number | NearestDirectionFunction>();
+  readonly collections = input<string[]>();
+  readonly format = input<FeatureFormat<any>>();
 
-  @ContentChild(FormatMVTComponent, { static: false })
-  formatMVTComponent: FormatMVTComponent | FormatGeoJSONComponent;
-  @ContentChild(FormatGeoJSONComponent, { static: false })
-  formatGeoJSONComponent: FormatGeoJSONComponent;
+  protected readonly formatMVTComponent = contentChild(FormatMVTComponent);
+  protected readonly formatGeoJSONComponent = contentChild(FormatGeoJSONComponent);
 
   public instance: OGCVectorTile;
+
+  protected readonly _instanceSignal = signal<OGCVectorTile | undefined>(undefined);
+
+  readonly instanceSignal = this._instanceSignal.asReadonly();
+
+  protected setInstance(instance: OGCVectorTile): OGCVectorTile {
+    this.instance = instance;
+
+    this._instanceSignal.set(instance);
+
+    return instance;
+  }
   tileGrid: TileGrid;
 
-  constructor(@Host() layer: LayerVectorTileComponent) {
-    super(layer);
+  constructor() {
+    super(inject(LayerVectorTileComponent, { host: true }));
   }
 
   ngAfterContentInit() {
-    let format: FeatureFormat<any> | undefined = this.format;
-    if (this.formatMVTComponent) {
-      format = this.formatMVTComponent.instance;
+    let format: FeatureFormat<any> | undefined = this.format();
+    const formatMVTComponent = this.formatMVTComponent();
+    const formatGeoJSONComponent = this.formatGeoJSONComponent();
+
+    if (formatMVTComponent) {
+      format = formatMVTComponent.instance;
     }
-    if (this.formatGeoJSONComponent) {
-      format = this.formatGeoJSONComponent.instance;
+    if (formatGeoJSONComponent) {
+      format = formatGeoJSONComponent.instance;
     }
 
-    this.instance = new OGCVectorTile(this.createOptions(format));
+    this.setInstance(new OGCVectorTile(this.createOptions(format)));
     this.host.instance.setSource(this.instance);
   }
 
   private createOptions(format: FeatureFormat<any> | undefined): Options<any> {
     return {
-      url: this.url,
-      context: this.context,
+      url: this.url(),
+      context: this.context(),
       format,
-      mediaType: this.mediaType,
-      attributions: this.attributions,
-      attributionsCollapsible: this.attributionsCollapsible,
-      cacheSize: this.cacheSize,
-      overlaps: this.overlaps,
-      projection: this.projection,
-      tileClass: this.tileClass,
-      transition: this.transition,
-      wrapX: this.wrapX,
-      zDirection: this.zDirection,
-      collections: this.collections,
+      mediaType: this.mediaType(),
+      attributions: this.attributions(),
+      attributionsCollapsible: this.attributionsCollapsible(),
+      cacheSize: this.cacheSize(),
+      overlaps: this.overlaps(),
+      projection: this.projection(),
+      tileClass: this.tileClass(),
+      transition: this.transition(),
+      wrapX: this.wrapX(),
+      zDirection: this.zDirection(),
+      collections: this.collections(),
     };
   }
 }

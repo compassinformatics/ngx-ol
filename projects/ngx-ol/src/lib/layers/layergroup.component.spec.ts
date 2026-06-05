@@ -1,4 +1,4 @@
-import { Component, signal, ViewChild } from '@angular/core';
+import { Component, signal, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 import { AngularOpenlayersModule } from '../../public-api';
@@ -22,11 +22,9 @@ class LayerGroupHostComponent {
   zoom = 2;
   opacity = signal(0.7);
 
-  @ViewChild(LayerGroupComponent)
-  layerGroup!: LayerGroupComponent;
+  readonly layerGroup = viewChild.required<LayerGroupComponent>(LayerGroupComponent);
 
-  @ViewChild(MapComponent)
-  map!: MapComponent;
+  readonly map = viewChild.required<MapComponent>(MapComponent);
 }
 
 describe('LayerGroupComponent', () => {
@@ -48,15 +46,15 @@ describe('LayerGroupComponent', () => {
   it('creates a layer group from template inputs', () => {
     const host = fixture!.componentInstance;
 
-    expect(host.layerGroup.instance.getOpacity()).toBe(0.7);
-    expect(host.layerGroup.instance.getLayers().getLength()).toBe(1);
-    expect(host.map.instance.getLayers().getArray()).toContain(host.layerGroup.instance);
+    expect(host.layerGroup().instance.getOpacity()).toBe(0.7);
+    expect(host.layerGroup().instance.getLayers().getLength()).toBe(1);
+    expect(host.map().instance.getLayers().getArray()).toContain(host.layerGroup().instance);
   });
 
   it('updates and removes the OpenLayers group through Angular bindings and lifecycle', () => {
     const host = fixture!.componentInstance;
-    const map = host.map.instance;
-    const layerGroup = host.layerGroup.instance;
+    const map = host.map().instance;
+    const layerGroup = host.layerGroup().instance;
 
     host.opacity.set(0.4);
     fixture!.detectChanges();

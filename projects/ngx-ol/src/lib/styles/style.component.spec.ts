@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 import { AngularOpenlayersModule } from '../../public-api';
@@ -26,11 +26,9 @@ class StyleHostComponent {
   zoom = 2;
   zIndex = 3;
 
-  @ViewChild(StyleComponent)
-  style!: StyleComponent;
+  readonly style = viewChild.required<StyleComponent>(StyleComponent);
 
-  @ViewChild(FeatureComponent)
-  feature!: FeatureComponent;
+  readonly feature = viewChild.required<FeatureComponent>(FeatureComponent);
 }
 
 @Component({
@@ -57,10 +55,10 @@ describe('StyleComponent', () => {
   });
 
   it('creates a style and attaches it to the host feature', () => {
-    expect(fixture.componentInstance.feature.instance.getStyle()).toBe(
-      fixture.componentInstance.style.instance,
+    expect(fixture.componentInstance.feature().instance.getStyle()).toBe(
+      fixture.componentInstance.style().instance,
     );
-    expect(fixture.componentInstance.style.instance.getZIndex()).toBe(3);
+    expect(fixture.componentInstance.style().instance.getZIndex()).toBe(3);
   });
 
   it('throws when rendered without a feature or layer host', () => {

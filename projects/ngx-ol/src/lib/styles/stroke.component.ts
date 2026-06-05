@@ -1,4 +1,4 @@
-import { Component, Input, Optional, OnInit, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, OnInit, OnChanges, SimpleChanges, inject, input, signal } from '@angular/core';
 import Stroke from 'ol/style/Stroke';
 import { Options } from 'ol/style/Stroke';
 import { StyleComponent } from './style.component';
@@ -12,46 +12,50 @@ import { ColorLike } from 'ol/colorlike';
   template: ` <div class="aol-style-stroke"></div> `,
 })
 export class StyleStrokeComponent implements OnInit, OnChanges {
-  @Input()
-  color?: Color | ColorLike;
-  @Input()
-  lineCap?: CanvasLineCap | undefined;
-  @Input()
-  lineDash?: number[];
-  @Input()
-  lineDashOffset?: number | undefined;
-  @Input()
-  lineJoin?: CanvasLineJoin | undefined;
-  @Input()
-  miterLimit?: number;
-  @Input()
-  width?: number;
+  readonly color = input<Color | ColorLike>();
+  readonly lineCap = input<CanvasLineCap | undefined>();
+  readonly lineDash = input<number[]>();
+  readonly lineDashOffset = input<number | undefined>();
+  readonly lineJoin = input<CanvasLineJoin | undefined>();
+  readonly miterLimit = input<number>();
+  readonly width = input<number>();
 
   public instance: Stroke;
+
+  protected readonly _instanceSignal = signal<Stroke | undefined>(undefined);
+
+  readonly instanceSignal = this._instanceSignal.asReadonly();
+
+  protected setInstance(instance: Stroke): Stroke {
+    this.instance = instance;
+
+    this._instanceSignal.set(instance);
+
+    return instance;
+  }
   /* the typings do not have the setters */
   private readonly host: StyleComponent | StyleCircleComponent | StyleTextComponent;
+  private readonly styleHost = inject(StyleComponent, { optional: true });
+  private readonly styleCircleHost = inject(StyleCircleComponent, { optional: true });
+  private readonly styleTextHost = inject(StyleTextComponent, { optional: true });
 
-  constructor(
-    @Optional() styleHost: StyleComponent,
-    @Optional() styleCircleHost: StyleCircleComponent,
-    @Optional() styleTextHost: StyleTextComponent,
-  ) {
-    if (!styleHost) {
+  constructor() {
+    if (!this.styleHost) {
       throw new Error('aol-style-stroke must be a descendant of aol-style');
     }
-    if (!!styleTextHost) {
-      this.host = styleTextHost;
-    } else if (!!styleCircleHost) {
-      this.host = styleCircleHost;
+    if (!!this.styleTextHost) {
+      this.host = this.styleTextHost;
+    } else if (!!this.styleCircleHost) {
+      this.host = this.styleCircleHost;
     } else {
-      this.host = styleHost;
+      this.host = this.styleHost;
     }
     // console.log('creating aol-style-stroke with: ', this);
   }
 
   ngOnInit() {
     // console.log('creating ol.style.Stroke instance with: ', this);
-    this.instance = new Stroke(this.createOptions());
+    this.setInstance(new Stroke(this.createOptions()));
     switch (this.host.componentType) {
       case 'style':
         this.host.instance.setStroke(this.instance);
@@ -61,7 +65,7 @@ export class StyleStrokeComponent implements OnInit, OnChanges {
         this.host.instance.setStroke(this.instance);
         break;
       case 'style-circle':
-        (this.host as StyleCircleComponent).stroke = this.instance;
+        (this.host as StyleCircleComponent).setStroke(this.instance);
         // console.log('setting ol.style.circle instance\'s stroke:', this.host);
         break;
       default:
@@ -101,13 +105,13 @@ export class StyleStrokeComponent implements OnInit, OnChanges {
 
   private createOptions(): Options {
     return {
-      color: this.color,
-      lineCap: this.lineCap,
-      lineDash: this.lineDash,
-      lineDashOffset: this.lineDashOffset,
-      lineJoin: this.lineJoin,
-      miterLimit: this.miterLimit,
-      width: this.width,
+      color: this.color(),
+      lineCap: this.lineCap(),
+      lineDash: this.lineDash(),
+      lineDashOffset: this.lineDashOffset(),
+      lineJoin: this.lineJoin(),
+      miterLimit: this.miterLimit(),
+      width: this.width(),
     };
   }
 }

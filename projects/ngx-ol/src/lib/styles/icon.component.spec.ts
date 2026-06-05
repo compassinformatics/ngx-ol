@@ -1,4 +1,4 @@
-import { Component, signal, ViewChild } from '@angular/core';
+import { Component, signal, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 import { AngularOpenlayersModule } from '../../public-api';
@@ -36,11 +36,9 @@ class StyleIconHostComponent {
   rotation = signal(0);
   scale = signal(1);
 
-  @ViewChild(StyleIconComponent)
-  icon!: StyleIconComponent;
+  readonly icon = viewChild.required<StyleIconComponent>(StyleIconComponent);
 
-  @ViewChild(StyleComponent)
-  style!: StyleComponent;
+  readonly style = viewChild.required<StyleComponent>(StyleComponent);
 }
 
 describe('StyleIconComponent', () => {
@@ -60,14 +58,14 @@ describe('StyleIconComponent', () => {
   });
 
   it('creates an icon style and applies it to the style host', () => {
-    expect(fixture.componentInstance.icon.instance.getOpacity()).toBe(0.5);
-    expect(fixture.componentInstance.style.instance.getImage()).toBe(
-      fixture.componentInstance.icon.instance,
+    expect(fixture.componentInstance.icon().instance.getOpacity()).toBe(0.5);
+    expect(fixture.componentInstance.style().instance.getImage()).toBe(
+      fixture.componentInstance.icon().instance,
     );
   });
 
   it('updates the OpenLayers icon style when template bindings change', () => {
-    const previousIcon = fixture.componentInstance.icon.instance;
+    const previousIcon = fixture.componentInstance.icon().instance;
 
     fixture.componentInstance.opacity.set(0.75);
     fixture.componentInstance.rotation.set(1);
@@ -76,12 +74,12 @@ describe('StyleIconComponent', () => {
 
     fixture.detectChanges(false);
 
-    expect(fixture.componentInstance.icon.instance).not.toBe(previousIcon);
-    expect(fixture.componentInstance.icon.instance.getOpacity()).toBe(0.75);
-    expect(fixture.componentInstance.icon.instance.getRotation()).toBe(1);
-    expect(fixture.componentInstance.icon.instance.getScale()).toBe(2);
-    expect(fixture.componentInstance.style.instance.getImage()).toBe(
-      fixture.componentInstance.icon.instance,
+    expect(fixture.componentInstance.icon().instance).not.toBe(previousIcon);
+    expect(fixture.componentInstance.icon().instance.getOpacity()).toBe(0.75);
+    expect(fixture.componentInstance.icon().instance.getRotation()).toBe(1);
+    expect(fixture.componentInstance.icon().instance.getScale()).toBe(2);
+    expect(fixture.componentInstance.style().instance.getImage()).toBe(
+      fixture.componentInstance.icon().instance,
     );
   });
 });

@@ -1,13 +1,14 @@
 import {
   Component,
-  Host,
-  Input,
   OnChanges,
+  OnDestroy,
   OnInit,
   forwardRef,
   SimpleChanges,
-  Output,
-  EventEmitter,
+  input,
+  output,
+  signal,
+  inject,
 } from '@angular/core';
 import ImageWMS from 'ol/source/ImageWMS';
 import { Options } from 'ol/source/ImageWMS';
@@ -17,78 +18,140 @@ import { ProjectionLike } from 'ol/proj';
 import { LoadFunction } from 'ol/Image';
 import { ImageSourceEvent } from 'ol/source/Image';
 import { ServerType } from 'ol/source/wms';
+import type { EventsKey } from 'ol/events';
+import { unByKey } from 'ol/Observable';
 
 @Component({
   selector: 'aol-source-imagewms',
   template: ` <ng-content></ng-content> `,
   providers: [{ provide: SourceComponent, useExisting: forwardRef(() => SourceImageWMSComponent) }],
 })
-export class SourceImageWMSComponent extends SourceComponent implements OnChanges, OnInit {
-  @Input()
-  crossOrigin?: null | string;
-  @Input()
-  hidpi?: boolean;
-  @Input()
-  serverType?: ServerType;
-  @Input()
-  imageLoadFunction?: LoadFunction;
-  @Input()
-  interpolate?: boolean;
-  @Input()
-  params?: { [key: string]: any };
-  @Input()
-  projection?: ProjectionLike | string;
-  @Input()
-  ratio?: number;
-  @Input()
-  resolutions?: Array<number>;
-  @Input()
-  url?: string;
+export class SourceImageWMSComponent
+  extends SourceComponent
+  implements OnChanges, OnDestroy, OnInit
+{
+  readonly crossOrigin = input<null | string>();
+  readonly hidpi = input<boolean>();
+  readonly serverType = input<ServerType>();
+  readonly imageLoadFunction = input<LoadFunction>();
+  readonly interpolate = input<boolean>();
+  readonly params = input<{ [key: string]: any }>();
+  readonly projection = input<ProjectionLike | string>();
+  readonly ratio = input<number>();
+  readonly resolutions = input<Array<number>>();
+  readonly url = input<string>();
 
-  @Output()
-  imageLoadStart = new EventEmitter<ImageSourceEvent>();
-  @Output()
-  imageLoadEnd = new EventEmitter<ImageSourceEvent>();
-  @Output()
-  imageLoadError = new EventEmitter<ImageSourceEvent>();
+  readonly imageLoadStart = output<ImageSourceEvent>();
+  readonly imageLoadEnd = output<ImageSourceEvent>();
+  readonly imageLoadError = output<ImageSourceEvent>();
 
   instance: ImageWMS;
 
-  constructor(@Host() layer: LayerImageComponent) {
-    super(layer);
+  protected readonly _instanceSignal = signal<ImageWMS | undefined>(undefined);
+
+  readonly instanceSignal = this._instanceSignal.asReadonly();
+
+  private eventKeys: EventsKey[] = [];
+
+  protected setInstance(instance: ImageWMS): ImageWMS {
+    this.instance = instance;
+
+    this._instanceSignal.set(instance);
+
+    return instance;
+  }
+  constructor() {
+    super(inject(LayerImageComponent, { host: true }));
   }
 
   ngOnInit() {
-    this.instance = new ImageWMS(this.createOptions());
-    this.host.instance.setSource(this.instance);
-    this.instance.on('imageloadstart', (event: ImageSourceEvent) =>
-      this.imageLoadStart.emit(event),
-    );
-    this.instance.on('imageloadend', (event: ImageSourceEvent) => this.imageLoadEnd.emit(event));
-    this.instance.on('imageloaderror', (event: ImageSourceEvent) =>
-      this.imageLoadError.emit(event),
-    );
+    this.replaceInstance();
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (this.instance && changes.hasOwnProperty('params')) {
-      this.instance.updateParams(this.params);
+    super.ngOnChanges(changes);
+    if (!this.instance) {
+      return;
     }
+
+    if (this.hasRemovedParamKeys(changes)) {
+      this.replaceInstance();
+      return;
+    }
+
+    if (this.instance && changes.hasOwnProperty('params')) {
+      this.instance.updateParams(this.params() ?? {});
+    }
+    if (this.instance && changes.imageLoadFunction?.currentValue) {
+      this.instance.setImageLoadFunction(changes.imageLoadFunction.currentValue);
+    }
+    if (this.instance && changes.url) {
+      this.instance.setUrl(changes.url.currentValue);
+    }
+    if (this.instance && changes.resolutions) {
+      this.instance.setResolutions(changes.resolutions.currentValue);
+    }
+  }
+
+  ngOnDestroy() {
+    this.unbindInstanceEvents();
+    super.ngOnDestroy();
   }
 
   private createOptions(): Options {
     return {
-      attributions: this.attributions,
-      crossOrigin: this.crossOrigin,
-      hidpi: this.hidpi,
-      serverType: this.serverType,
-      imageLoadFunction: this.imageLoadFunction,
-      interpolate: this.interpolate,
-      params: this.params,
-      projection: this.projection,
-      ratio: this.ratio,
-      resolutions: this.resolutions,
-      url: this.url,
+      attributions: this.attributions(),
+      crossOrigin: this.crossOrigin(),
+      hidpi: this.hidpi(),
+      serverType: this.serverType(),
+      imageLoadFunction: this.imageLoadFunction(),
+      interpolate: this.interpolate(),
+      params: this.params(),
+      projection: this.projection(),
+      ratio: this.ratio(),
+      resolutions: this.resolutions(),
+      url: this.url(),
     };
+  }
+
+  private replaceInstance(): void {
+    this.unbindInstanceEvents();
+    this.setInstance(new ImageWMS(this.createOptions()));
+    this.host.instance.setSource(this.instance);
+    this.bindInstanceEvents();
+  }
+
+  private bindInstanceEvents(): void {
+    this.eventKeys = [
+      this.instance.on('imageloadstart', (event: ImageSourceEvent) =>
+        this.imageLoadStart.emit(event),
+      ),
+      this.instance.on('imageloadend', (event: ImageSourceEvent) => this.imageLoadEnd.emit(event)),
+      this.instance.on('imageloaderror', (event: ImageSourceEvent) =>
+        this.imageLoadError.emit(event),
+      ),
+    ];
+  }
+
+  private unbindInstanceEvents(): void {
+    if (!this.eventKeys.length) {
+      return;
+    }
+
+    unByKey(this.eventKeys);
+    this.eventKeys = [];
+  }
+
+  private hasRemovedParamKeys(changes: SimpleChanges): boolean {
+    if (!changes.params || changes.params.firstChange) {
+      return false;
+    }
+
+    const previousParams = changes.params.previousValue ?? {};
+    const nextParams = changes.params.currentValue ?? {};
+
+    return Object.keys(previousParams).some(
+      (key) => !Object.prototype.hasOwnProperty.call(nextParams, key),
+    );
   }
 }

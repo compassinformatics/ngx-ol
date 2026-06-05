@@ -1,4 +1,4 @@
-import { Component, forwardRef, Host, Input, OnInit, Optional } from '@angular/core';
+import { Component, forwardRef, OnInit, input, signal, inject } from '@angular/core';
 import type { NearestDirectionFunction } from 'ol/array';
 import type { Extent } from 'ol/extent';
 import type { ProjectionLike } from 'ol/proj';
@@ -15,97 +15,89 @@ import { SourceComponent } from './source.component';
   providers: [{ provide: SourceComponent, useExisting: forwardRef(() => SourceIIIFComponent) }],
 })
 export class SourceIIIFComponent extends SourceComponent implements OnInit {
-  @Input()
-  cacheSize?: number;
+  readonly cacheSize = input<number>();
 
-  @Input()
-  crossOrigin?: string | null;
+  readonly crossOrigin = input<string | null>();
 
-  @Input()
-  extent?: Extent;
+  readonly extent = input<Extent>();
 
-  @Input()
-  format?: string;
+  readonly format = input<string>();
 
-  @Input()
-  interpolate?: boolean;
+  readonly interpolate = input<boolean>();
 
-  @Input()
-  projection?: ProjectionLike;
+  readonly projection = input<ProjectionLike>();
 
-  @Input()
-  quality?: string;
+  readonly quality = input<string>();
 
-  @Input()
-  reprojectionErrorThreshold?: number;
+  readonly reprojectionErrorThreshold = input<number>();
 
-  @Input()
-  resolutions?: number[];
+  readonly resolutions = input<number[]>();
 
-  @Input()
-  size: Size;
+  readonly size = input.required<Size>();
 
-  @Input()
-  sizes?: Size[];
+  readonly sizes = input<Size[]>();
 
-  @Input()
-  state?: State;
+  readonly state = input<State>();
 
-  @Input()
-  supports?: string[];
+  readonly supports = input<string[]>();
 
-  @Input()
-  tilePixelRatio?: number;
+  readonly tilePixelRatio = input<number>();
 
-  @Input()
-  tileSize?: number | Size;
+  readonly tileSize = input<number | Size>();
 
-  @Input()
-  transition?: number;
+  readonly transition = input<number>();
 
-  @Input()
-  url?: string;
+  readonly url = input<string>();
 
-  @Input()
-  version?: string;
+  readonly version = input<string>();
 
-  @Input()
-  zDirection?: number | NearestDirectionFunction;
+  readonly zDirection = input<number | NearestDirectionFunction>();
 
   instance: IIIF;
 
-  constructor(@Optional() @Host() layer?: LayerTileComponent) {
-    super(layer!);
+  protected readonly _instanceSignal = signal<IIIF | undefined>(undefined);
+
+  readonly instanceSignal = this._instanceSignal.asReadonly();
+
+  protected setInstance(instance: IIIF): IIIF {
+    this.instance = instance;
+
+    this._instanceSignal.set(instance);
+
+    return instance;
+  }
+  constructor() {
+    super(inject(LayerTileComponent, { optional: true, host: true })!);
   }
 
   ngOnInit() {
-    this.instance = new IIIF(this.createOptions());
+    this.setInstance(new IIIF(this.createOptions()));
     this.register(this.instance);
   }
 
   private createOptions(): Options {
     return {
-      attributions: this.attributions,
-      attributionsCollapsible: this.attributionsCollapsible,
-      cacheSize: this.cacheSize,
-      crossOrigin: this.crossOrigin,
-      extent: this.extent,
-      format: this.format,
-      interpolate: this.interpolate,
-      projection: this.projection,
-      quality: this.quality,
-      reprojectionErrorThreshold: this.reprojectionErrorThreshold,
-      resolutions: this.resolutions,
-      size: this.size,
-      sizes: this.sizes,
-      state: this.state,
-      supports: this.supports,
-      tilePixelRatio: this.tilePixelRatio,
-      tileSize: this.tileSize,
-      transition: this.transition,
-      url: this.url,
-      version: this.version,
-      zDirection: this.zDirection,
+      attributions: this.attributions(),
+      attributionsCollapsible: this.attributionsCollapsible(),
+      cacheSize: this.cacheSize(),
+      crossOrigin: this.crossOrigin(),
+      extent: this.extent(),
+      format: this.format(),
+      interpolate: this.interpolate(),
+      projection: this.projection(),
+      quality: this.quality(),
+      reprojectionErrorThreshold: this.reprojectionErrorThreshold(),
+      resolutions: this.resolutions(),
+      size: this.size(),
+      sizes: this.sizes(),
+      state: this.state(),
+      supports: this.supports(),
+      tilePixelRatio: this.tilePixelRatio(),
+      tileSize: this.tileSize(),
+      transition: this.transition(),
+      url: this.url(),
+      version: this.version(),
+      zDirection: this.zDirection(),
     };
   }
 }

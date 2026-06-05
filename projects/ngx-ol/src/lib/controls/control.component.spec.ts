@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 import { AngularOpenlayersModule } from '../../public-api';
@@ -21,11 +21,9 @@ class ControlHostComponent {
   center = [0, 0];
   zoom = 2;
 
-  @ViewChild(ControlComponent)
-  control!: ControlComponent;
+  readonly control = viewChild.required<ControlComponent>(ControlComponent);
 
-  @ViewChild(MapComponent)
-  map!: MapComponent;
+  readonly map = viewChild.required<MapComponent>(MapComponent);
 }
 
 describe('ControlComponent', () => {
@@ -46,8 +44,8 @@ describe('ControlComponent', () => {
 
   it('projects custom content into an OpenLayers control attached to the map', () => {
     const host = fixture!.componentInstance;
-    const map = host.map.instance;
-    const control = host.control.instance;
+    const map = host.map().instance;
+    const control = host.control().instance;
 
     expect(map.getControls().getArray()).toContain(control);
     expect(fixture!.nativeElement.textContent).toContain('Custom');

@@ -1,4 +1,4 @@
-import { Component, signal, ViewChild } from '@angular/core';
+import { Component, signal, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 import { AngularOpenlayersModule } from '../../public-api';
@@ -44,11 +44,9 @@ class StyleTextHostComponent {
   textAlign = signal<CanvasTextAlign>('center');
   textBaseline = signal<CanvasTextBaseline>('middle');
 
-  @ViewChild(StyleTextComponent)
-  textStyle!: StyleTextComponent;
+  readonly textStyle = viewChild.required<StyleTextComponent>(StyleTextComponent);
 
-  @ViewChild(StyleComponent)
-  style!: StyleComponent;
+  readonly style = viewChild.required<StyleComponent>(StyleComponent);
 }
 
 @Component({
@@ -75,12 +73,12 @@ describe('StyleTextComponent', () => {
   });
 
   it('creates a text style and applies it to the style host', () => {
-    expect(fixture.componentInstance.textStyle.instance.getText()).toBe('Label');
-    expect(fixture.componentInstance.textStyle.instance.getFont()).toBe('12px sans-serif');
-    expect(fixture.componentInstance.textStyle.instance.getTextAlign()).toBe('center');
-    expect(fixture.componentInstance.textStyle.instance.getTextBaseline()).toBe('middle');
-    expect(fixture.componentInstance.style.instance.getText()).toBe(
-      fixture.componentInstance.textStyle.instance,
+    expect(fixture.componentInstance.textStyle().instance.getText()).toBe('Label');
+    expect(fixture.componentInstance.textStyle().instance.getFont()).toBe('12px sans-serif');
+    expect(fixture.componentInstance.textStyle().instance.getTextAlign()).toBe('center');
+    expect(fixture.componentInstance.textStyle().instance.getTextBaseline()).toBe('middle');
+    expect(fixture.componentInstance.style().instance.getText()).toBe(
+      fixture.componentInstance.textStyle().instance,
     );
   });
 
@@ -96,16 +94,16 @@ describe('StyleTextComponent', () => {
 
     fixture.detectChanges(false);
 
-    expect(fixture.componentInstance.textStyle.instance.getText()).toBe('Updated label');
-    expect(fixture.componentInstance.textStyle.instance.getFont()).toBe('14px serif');
-    expect(fixture.componentInstance.textStyle.instance.getOffsetX()).toBe(10);
-    expect(fixture.componentInstance.textStyle.instance.getOffsetY()).toBe(20);
-    expect(fixture.componentInstance.textStyle.instance.getScale()).toBe(2);
-    expect(fixture.componentInstance.textStyle.instance.getRotation()).toBe(1);
-    expect(fixture.componentInstance.textStyle.instance.getTextAlign()).toBe('left');
-    expect(fixture.componentInstance.textStyle.instance.getTextBaseline()).toBe('top');
-    expect(fixture.componentInstance.style.instance.getText()).toBe(
-      fixture.componentInstance.textStyle.instance,
+    expect(fixture.componentInstance.textStyle().instance.getText()).toBe('Updated label');
+    expect(fixture.componentInstance.textStyle().instance.getFont()).toBe('14px serif');
+    expect(fixture.componentInstance.textStyle().instance.getOffsetX()).toBe(10);
+    expect(fixture.componentInstance.textStyle().instance.getOffsetY()).toBe(20);
+    expect(fixture.componentInstance.textStyle().instance.getScale()).toBe(2);
+    expect(fixture.componentInstance.textStyle().instance.getRotation()).toBe(1);
+    expect(fixture.componentInstance.textStyle().instance.getTextAlign()).toBe('left');
+    expect(fixture.componentInstance.textStyle().instance.getTextBaseline()).toBe('top');
+    expect(fixture.componentInstance.style().instance.getText()).toBe(
+      fixture.componentInstance.textStyle().instance,
     );
   });
 
@@ -114,17 +112,17 @@ describe('StyleTextComponent', () => {
 
     fixture.detectChanges(false);
 
-    expect(fixture.componentInstance.textStyle.instance.getFont()).toBe('16px serif');
-    expect(fixture.componentInstance.textStyle.instance.getTextBaseline()).toBe('middle');
+    expect(fixture.componentInstance.textStyle().instance.getFont()).toBe('16px serif');
+    expect(fixture.componentInstance.textStyle().instance.getTextBaseline()).toBe('middle');
 
     fixture.componentInstance.textBaseline.set('bottom');
 
     fixture.detectChanges(false);
 
-    expect(fixture.componentInstance.textStyle.instance.getFont()).toBe('16px serif');
-    expect(fixture.componentInstance.textStyle.instance.getTextBaseline()).toBe('bottom');
-    expect(fixture.componentInstance.style.instance.getText()).toBe(
-      fixture.componentInstance.textStyle.instance,
+    expect(fixture.componentInstance.textStyle().instance.getFont()).toBe('16px serif');
+    expect(fixture.componentInstance.textStyle().instance.getTextBaseline()).toBe('bottom');
+    expect(fixture.componentInstance.style().instance.getText()).toBe(
+      fixture.componentInstance.textStyle().instance,
     );
   });
 

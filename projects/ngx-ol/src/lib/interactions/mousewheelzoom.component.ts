@@ -1,4 +1,13 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import {
+  Component,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  SimpleChanges,
+  input,
+  signal,
+  inject,
+} from '@angular/core';
 import MouseWheelZoom from 'ol/interaction/MouseWheelZoom';
 import { Options } from 'ol/interaction/MouseWheelZoom';
 import { MapComponent } from '../map.component';
@@ -7,20 +16,28 @@ import { MapComponent } from '../map.component';
   selector: 'aol-interaction-mousewheelzoom',
   template: '',
 })
-export class MouseWheelZoomInteractionComponent implements OnInit, OnDestroy {
-  @Input()
-  duration?: number;
-  @Input()
-  timeout?: number;
-  @Input()
-  useAnchor?: boolean;
+export class MouseWheelZoomInteractionComponent implements OnInit, OnChanges, OnDestroy {
+  readonly duration = input<number>();
+  readonly timeout = input<number>();
+  readonly useAnchor = input<boolean>();
 
   instance: MouseWheelZoom;
 
-  constructor(private map: MapComponent) {}
+  protected readonly _instanceSignal = signal<MouseWheelZoom | undefined>(undefined);
+
+  readonly instanceSignal = this._instanceSignal.asReadonly();
+
+  protected setInstance(instance: MouseWheelZoom): MouseWheelZoom {
+    this.instance = instance;
+
+    this._instanceSignal.set(instance);
+
+    return instance;
+  }
+  private readonly map = inject(MapComponent);
 
   ngOnInit() {
-    this.instance = new MouseWheelZoom(this.createOptions());
+    this.setInstance(new MouseWheelZoom(this.createOptions()));
     this.map.instance.addInteraction(this.instance);
   }
 
@@ -28,11 +45,17 @@ export class MouseWheelZoomInteractionComponent implements OnInit, OnDestroy {
     this.map.instance.removeInteraction(this.instance);
   }
 
+  ngOnChanges(changes: SimpleChanges) {
+    if (this.instance && changes.useAnchor?.currentValue !== undefined) {
+      this.instance.setMouseAnchor(changes.useAnchor.currentValue);
+    }
+  }
+
   private createOptions(): Options {
     return {
-      duration: this.duration,
-      timeout: this.timeout,
-      useAnchor: this.useAnchor,
+      duration: this.duration(),
+      timeout: this.timeout(),
+      useAnchor: this.useAnchor(),
     };
   }
 }

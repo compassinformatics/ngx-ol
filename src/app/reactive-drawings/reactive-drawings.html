@@ -1,0 +1,181 @@
+<div class="layout demo-layout">
+  <aol-map class="map demo-map" tabindex="0">
+    <aol-view [zoom]="zoom()" [center]="center()"></aol-view>
+
+    <aol-layer-tile>
+      <aol-source-osm></aol-source-osm>
+    </aol-layer-tile>
+
+    <aol-layer-vector>
+      <aol-source-vector [features]="featureCollection"></aol-source-vector>
+      <aol-style>
+        <aol-style-circle [radius]="8">
+          <aol-style-stroke color="#0f172a" [width]="2"></aol-style-stroke>
+          <aol-style-fill color="#facc15"></aol-style-fill>
+        </aol-style-circle>
+        <aol-style-stroke color="#2563eb" [width]="3"></aol-style-stroke>
+        <aol-style-fill color="rgba(37, 99, 235, 0.18)"></aol-style-fill>
+      </aol-style>
+    </aol-layer-vector>
+
+    <aol-interaction-default></aol-interaction-default>
+
+    @if (drawEnabled()) {
+      <aol-interaction-draw
+        [type]="drawType()"
+        [features]="featureCollection"
+        [trace]="drawTrace()"
+        [freehand]="drawFreehand()"
+        [snapTolerance]="drawSnapTolerance()"
+        (drawStart)="interactionStarted('Draw')"
+        (drawEnd)="interactionEnded('Draw')"
+      ></aol-interaction-draw>
+    }
+
+    @if (modifyEnabled()) {
+      <aol-interaction-modify
+        [features]="featureCollection"
+        [pixelTolerance]="modifyPixelTolerance()"
+        (modifyStart)="interactionStarted('Modify')"
+        (modifyEnd)="interactionEnded('Modify')"
+      ></aol-interaction-modify>
+    }
+
+    @if (snapEnabled()) {
+      <aol-interaction-snap
+        [features]="featureCollection"
+        [edge]="snapEdges()"
+        [vertex]="snapVertices()"
+        [pixelTolerance]="snapPixelTolerance()"
+      ></aol-interaction-snap>
+    }
+
+    @if (translateEnabled()) {
+      <aol-interaction-translate
+        [features]="featureCollection"
+        [hitTolerance]="translateHitTolerance()"
+        (translateStart)="interactionStarted('Translate')"
+        (translateEnd)="interactionEnded('Translate')"
+      ></aol-interaction-translate>
+    }
+
+    <aol-control-scaleline></aol-control-scaleline>
+    <aol-control-zoom></aol-control-zoom>
+    <aol-control-attribution></aol-control-attribution>
+  </aol-map>
+
+  <aside class="panel demo-panel">
+    <h2>Reactive drawings</h2>
+    <p>
+      Use this page for drawing and editing interactions: draw, modify, snap, and translate.
+    </p>
+
+    <fieldset>
+      <legend>Draw</legend>
+      <label>
+        <input type="checkbox" [checked]="drawEnabled()" (change)="toggleDrawEnabled()" />
+        Enable draw interaction
+      </label>
+
+      <label for="reactive-draw-type">Draw type</label>
+      <select
+        id="reactive-draw-type"
+        [value]="drawType()"
+        (change)="setDrawType($any($event.target).value)"
+      >
+        <option value="Point">Point</option>
+        <option value="LineString">LineString</option>
+        <option value="Polygon">Polygon</option>
+      </select>
+
+      <label>
+        <input type="checkbox" [checked]="drawTrace()" (change)="toggleDrawTrace()" />
+        Trace existing geometry
+      </label>
+      <label>
+        <input type="checkbox" [checked]="drawFreehand()" (change)="toggleDrawFreehand()" />
+        Freehand mode
+      </label>
+
+      <label for="reactive-draw-snap">Draw snap tolerance: {{ drawSnapTolerance() }}</label>
+      <input
+        id="reactive-draw-snap"
+        type="range"
+        min="4"
+        max="32"
+        [value]="drawSnapTolerance()"
+        (input)="setDrawSnapTolerance($any($event.target).valueAsNumber)"
+      />
+    </fieldset>
+
+    <fieldset>
+      <legend>Modify and snap</legend>
+      <label>
+        <input type="checkbox" [checked]="modifyEnabled()" (change)="toggleModifyEnabled()" />
+        Enable modify interaction
+      </label>
+      <label for="reactive-modify-tolerance">
+        Modify pixel tolerance: {{ modifyPixelTolerance() }}
+      </label>
+      <input
+        id="reactive-modify-tolerance"
+        type="range"
+        min="2"
+        max="32"
+        [value]="modifyPixelTolerance()"
+        (input)="setModifyPixelTolerance($any($event.target).valueAsNumber)"
+      />
+
+      <label>
+        <input type="checkbox" [checked]="snapEnabled()" (change)="toggleSnapEnabled()" />
+        Enable snap interaction
+      </label>
+      <label>
+        <input type="checkbox" [checked]="snapEdges()" (change)="toggleSnapEdges()" />
+        Snap to edges
+      </label>
+      <label>
+        <input type="checkbox" [checked]="snapVertices()" (change)="toggleSnapVertices()" />
+        Snap to vertices
+      </label>
+      <label for="reactive-snap-tolerance">Snap pixel tolerance: {{ snapPixelTolerance() }}</label>
+      <input
+        id="reactive-snap-tolerance"
+        type="range"
+        min="2"
+        max="32"
+        [value]="snapPixelTolerance()"
+        (input)="setSnapPixelTolerance($any($event.target).valueAsNumber)"
+      />
+    </fieldset>
+
+    <fieldset>
+      <legend>Translate</legend>
+      <label>
+        <input
+          type="checkbox"
+          [checked]="translateEnabled()"
+          (change)="toggleTranslateEnabled()"
+        />
+        Enable translate interaction
+      </label>
+      <label for="reactive-translate-tolerance">
+        Translate hit tolerance: {{ translateHitTolerance() }}
+      </label>
+      <input
+        id="reactive-translate-tolerance"
+        type="range"
+        min="0"
+        max="32"
+        [value]="translateHitTolerance()"
+        (input)="setTranslateHitTolerance($any($event.target).valueAsNumber)"
+      />
+    </fieldset>
+
+    <section class="status" aria-live="polite">
+      <p>{{ status() }}</p>
+      <p>Features: {{ featureCollection.getLength() }}</p>
+      <button type="button" (click)="resetFeatures()">Reset features</button>
+    </section>
+  </aside>
+</div>

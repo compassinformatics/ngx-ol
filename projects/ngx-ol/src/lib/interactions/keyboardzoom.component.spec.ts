@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 import { AngularOpenlayersModule } from '../../public-api';
@@ -20,11 +20,11 @@ class KeyboardZoomInteractionHostComponent {
   zoom = 2;
   delta = 2;
 
-  @ViewChild(KeyboardZoomInteractionComponent)
-  interaction!: KeyboardZoomInteractionComponent;
+  readonly interaction = viewChild.required<KeyboardZoomInteractionComponent>(
+    KeyboardZoomInteractionComponent,
+  );
 
-  @ViewChild(MapComponent)
-  map!: MapComponent;
+  readonly map = viewChild.required<MapComponent>(MapComponent);
 }
 
 describe('KeyboardZoomInteractionComponent', () => {
@@ -45,8 +45,8 @@ describe('KeyboardZoomInteractionComponent', () => {
 
   it('adds and removes a keyboard-zoom interaction with the host map lifecycle', () => {
     const host = fixture!.componentInstance;
-    const map = host.map.instance;
-    const interaction = host.interaction.instance;
+    const map = host.map().instance;
+    const interaction = host.interaction().instance;
 
     expect(map.getInteractions().getArray()).toContain(interaction);
 

@@ -1,12 +1,13 @@
 import {
   Component,
-  Input,
   OnInit,
   OnChanges,
   OnDestroy,
   SimpleChanges,
-  EventEmitter,
-  Output,
+  input,
+  output,
+  signal,
+  inject,
 } from '@angular/core';
 import View, { ViewOptions } from 'ol/View';
 import { MapComponent } from './map.component';
@@ -14,6 +15,8 @@ import { ObjectEvent } from 'ol/Object';
 import { Extent } from 'ol/extent';
 import { Coordinate } from 'ol/coordinate';
 import BaseEvent from 'ol/events/Event';
+import type { EventsKey } from 'ol/events';
+import { unByKey } from 'ol/Observable';
 import { ProjectionLike } from 'ol/proj';
 
 @Component({
@@ -21,87 +24,61 @@ import { ProjectionLike } from 'ol/proj';
   template: ` <ng-content></ng-content> `,
 })
 export class ViewComponent implements OnInit, OnChanges, OnDestroy {
-  @Input()
-  constrainRotation: boolean | number;
-  @Input()
-  enableRotation: boolean;
-  @Input()
-  extent?: Extent;
-  @Input()
-  maxResolution: number;
-  @Input()
-  minResolution: number;
-  @Input()
-  maxZoom: number;
-  @Input()
-  minZoom: number;
-  @Input()
-  resolution?: number;
-  @Input()
-  resolutions: number[] | undefined;
-  @Input()
-  rotation: number;
-  @Input()
-  zoom?: number;
-  @Input()
-  zoomFactor: number;
-  @Input()
-  center?: Coordinate;
-  @Input()
-  projection: ProjectionLike;
-  @Input()
-  constrainOnlyCenter: boolean;
-  @Input()
-  smoothExtentConstraint: boolean;
-  @Input()
-  constrainResolution: boolean;
-  @Input()
-  smoothResolutionConstraint: boolean;
-  @Input()
-  showFullExtent: boolean;
-  @Input()
-  multiWorld: boolean;
-  @Input()
-  padding?: number[];
+  readonly constrainRotation = input<boolean | number>();
+  readonly enableRotation = input<boolean>();
+  readonly extent = input<Extent>();
+  readonly maxResolution = input<number>();
+  readonly minResolution = input<number>();
+  readonly maxZoom = input<number>();
+  readonly minZoom = input<number>();
+  readonly resolution = input<number>();
+  readonly resolutions = input<number[] | undefined>();
+  readonly rotation = input<number>();
+  readonly zoom = input<number>();
+  readonly zoomFactor = input<number>();
+  readonly center = input<Coordinate>();
+  readonly projection = input<ProjectionLike>();
+  readonly constrainOnlyCenter = input<boolean>();
+  readonly smoothExtentConstraint = input<boolean>();
+  readonly constrainResolution = input<boolean>();
+  readonly smoothResolutionConstraint = input<boolean>();
+  readonly showFullExtent = input<boolean>();
+  readonly multiWorld = input<boolean>();
+  readonly padding = input<number[]>();
 
-  @Input()
-  zoomAnimation = false;
+  readonly zoomAnimation = input(false);
 
-  @Output()
-  olChange = new EventEmitter<BaseEvent>();
-  @Output()
-  changeCenter = new EventEmitter<ObjectEvent>();
-  @Output()
-  changeResolution = new EventEmitter<ObjectEvent>();
-  @Output()
-  changeRotation = new EventEmitter<ObjectEvent>();
-  @Output()
-  olError = new EventEmitter<BaseEvent>();
-  @Output()
-  propertyChange = new EventEmitter<ObjectEvent>();
+  readonly olChange = output<BaseEvent>();
+  readonly changeCenter = output<ObjectEvent>();
+  readonly changeResolution = output<ObjectEvent>();
+  readonly changeRotation = output<ObjectEvent>();
+  readonly olError = output<BaseEvent>();
+  readonly propertyChange = output<ObjectEvent>();
 
   public instance: View;
-  public componentType = 'view';
 
-  constructor(private host: MapComponent) {}
+  protected readonly _instanceSignal = signal<View | undefined>(undefined);
+
+  readonly instanceSignal = this._instanceSignal.asReadonly();
+
+  protected setInstance(instance: View): View {
+    this.instance = instance;
+
+    this._instanceSignal.set(instance);
+
+    return instance;
+  }
+  readonly componentType: string = 'view';
+  private eventKeys: EventsKey[] = [];
+
+  private readonly host = inject(MapComponent);
 
   ngOnInit() {
     // console.log('creating ol.View instance with: ', this);
-    this.instance = new View(this.createOptions());
-    this.host.instance.setView(this.instance);
-
-    this.instance.on('change', (event: BaseEvent) => this.olChange.emit(event));
-    this.instance.on('change:center', (event: ObjectEvent) => this.changeCenter.emit(event));
-    this.instance.on('change:resolution', (event: ObjectEvent) =>
-      this.changeResolution.emit(event),
-    );
-    this.instance.on('change:rotation', (event: ObjectEvent) => this.changeRotation.emit(event));
-    this.instance.on('error', (event: BaseEvent) => this.olError.emit(event));
-    this.instance.on('propertychange', (event: ObjectEvent) => this.propertyChange.emit(event));
+    this.initializeInstance();
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    const properties: { [index: string]: any } = {};
     if (!this.instance) {
       return;
     }
@@ -112,15 +89,14 @@ export class ViewComponent implements OnInit, OnChanges, OnDestroy {
             break;
           case 'zoom':
             /** Work-around: setting the zoom via setProperties does not work. */
-            if (this.zoomAnimation) {
+            if (this.zoomAnimation()) {
               this.instance.animate({ zoom: changes[key].currentValue });
             } else {
               this.instance.setZoom(changes[key].currentValue);
             }
             break;
           case 'projection':
-            this.instance = new View(this.createOptions());
-            this.host.instance.setView(this.instance);
+            this.initializeInstance();
             break;
           case 'center':
             /** Work-around: setting the center via setProperties does not work. */
@@ -132,6 +108,9 @@ export class ViewComponent implements OnInit, OnChanges, OnDestroy {
           case 'minZoom':
             this.instance.setMinZoom(changes[key].currentValue);
             break;
+          case 'constrainResolution':
+            this.instance.setConstrainResolution(changes[key].currentValue);
+            break;
           case 'resolution':
             this.instance.setResolution(changes[key].currentValue);
             break;
@@ -141,66 +120,65 @@ export class ViewComponent implements OnInit, OnChanges, OnDestroy {
           default:
             break;
         }
-        if (key !== 'zoomAnimation') {
-          properties[key] = changes[key].currentValue;
-        }
       }
     }
-    // console.log('changes detected in aol-view, setting new properties: ', properties);
-    this.instance.setProperties(properties, false);
   }
 
   ngOnDestroy() {
+    this.unbindInstanceEvents();
     // console.log('removing aol-view');
   }
 
-  private createOptions(): ViewOptions {
-    const {
-      center,
-      constrainOnlyCenter,
-      constrainResolution,
-      constrainRotation,
-      enableRotation,
-      extent,
-      maxResolution,
-      maxZoom,
-      minResolution,
-      minZoom,
-      multiWorld,
-      padding,
-      projection,
-      resolution,
-      resolutions,
-      rotation,
-      showFullExtent,
-      smoothExtentConstraint,
-      smoothResolutionConstraint,
-      zoom,
-      zoomFactor,
-    } = this;
+  private initializeInstance() {
+    this.unbindInstanceEvents();
+    this.setInstance(new View(this.createOptions()));
+    this.host.instance.setView(this.instance);
+    this.bindInstanceEvents();
+  }
 
+  private bindInstanceEvents() {
+    this.eventKeys = [
+      this.instance.on('change', (event: BaseEvent) => this.olChange.emit(event)),
+      this.instance.on('change:center', (event: ObjectEvent) => this.changeCenter.emit(event)),
+      this.instance.on('change:resolution', (event: ObjectEvent) =>
+        this.changeResolution.emit(event),
+      ),
+      this.instance.on('change:rotation', (event: ObjectEvent) => this.changeRotation.emit(event)),
+      this.instance.on('error', (event: BaseEvent) => this.olError.emit(event)),
+      this.instance.on('propertychange', (event: ObjectEvent) => this.propertyChange.emit(event)),
+    ];
+  }
+
+  private unbindInstanceEvents() {
+    if (this.eventKeys.length) {
+      unByKey(this.eventKeys);
+      this.eventKeys = [];
+    }
+  }
+
+  private createOptions(): ViewOptions {
     return {
-      center,
-      constrainOnlyCenter,
-      constrainResolution,
-      constrainRotation,
-      enableRotation,
-      extent,
-      maxResolution,
-      maxZoom,
-      minResolution,
-      minZoom,
-      multiWorld,
-      padding,
-      projection,
-      resolution,
-      resolutions,
-      rotation,
-      showFullExtent,
-      smoothExtentConstraint,
-      smoothResolutionConstraint,
-      zoom,
-      zoomFactor,
+      center: this.center(),
+      constrainOnlyCenter: this.constrainOnlyCenter(),
+      constrainResolution: this.constrainResolution(),
+      constrainRotation: this.constrainRotation(),
+      enableRotation: this.enableRotation(),
+      extent: this.extent(),
+      maxResolution: this.maxResolution(),
+      maxZoom: this.maxZoom(),
+      minResolution: this.minResolution(),
+      minZoom: this.minZoom(),
+      multiWorld: this.multiWorld(),
+      padding: this.padding(),
+      projection: this.projection(),
+      resolution: this.resolution(),
+      resolutions: this.resolutions(),
+      rotation: this.rotation(),
+      showFullExtent: this.showFullExtent(),
+      smoothExtentConstraint: this.smoothExtentConstraint(),
+      smoothResolutionConstraint: this.smoothResolutionConstraint(),
+      zoom: this.zoom(),
+      zoomFactor: this.zoomFactor(),
     };
   }
 }

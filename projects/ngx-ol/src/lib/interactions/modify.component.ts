@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnDestroy, OnInit, input, output, signal, inject } from '@angular/core';
 import { MapComponent } from '../map.component';
 import Modify from 'ol/interaction/Modify';
 import Collection from 'ol/Collection';
@@ -17,46 +17,41 @@ import BaseVectorLayer from 'ol/layer/BaseVector';
   template: '',
 })
 export class ModifyInteractionComponent implements OnInit, OnDestroy {
-  @Input()
-  condition?: Condition;
-  @Input()
-  deleteCondition?: Condition;
-  @Input()
-  insertVertexCondition?: Condition;
-  @Input()
-  pixelTolerance?: number;
-  @Input()
-  style?: StyleLike | FlatStyleLike | undefined;
-  @Input()
-  features?: Collection<Feature>;
-  @Input()
-  wrapX?: boolean;
-  @Input()
-  source?: Vector;
-  @Input()
-  hitDetection?: boolean | BaseVectorLayer<any, any, any>;
-  @Input()
-  snapToPointer?: boolean;
+  readonly condition = input<Condition>();
+  readonly deleteCondition = input<Condition>();
+  readonly insertVertexCondition = input<Condition>();
+  readonly pixelTolerance = input<number>();
+  readonly style = input<StyleLike | FlatStyleLike | undefined>();
+  readonly features = input<Collection<Feature>>();
+  readonly wrapX = input<boolean>();
+  readonly source = input<Vector>();
+  readonly hitDetection = input<boolean | BaseVectorLayer<any, any, any>>();
+  readonly snapToPointer = input<boolean>();
 
-  @Output()
-  olChange = new EventEmitter<BaseEvent>();
-  @Output()
-  changeActive = new EventEmitter<ObjectEvent>();
-  @Output()
-  olError = new EventEmitter<BaseEvent>();
-  @Output()
-  modifyEnd = new EventEmitter<ModifyEvent>();
-  @Output()
-  modifyStart = new EventEmitter<ModifyEvent>();
-  @Output()
-  propertyChange = new EventEmitter<ObjectEvent>();
+  readonly olChange = output<BaseEvent>();
+  readonly changeActive = output<ObjectEvent>();
+  readonly olError = output<BaseEvent>();
+  readonly modifyEnd = output<ModifyEvent>();
+  readonly modifyStart = output<ModifyEvent>();
+  readonly propertyChange = output<ObjectEvent>();
 
   instance: Modify;
 
-  constructor(private map: MapComponent) {}
+  protected readonly _instanceSignal = signal<Modify | undefined>(undefined);
+
+  readonly instanceSignal = this._instanceSignal.asReadonly();
+
+  protected setInstance(instance: Modify): Modify {
+    this.instance = instance;
+
+    this._instanceSignal.set(instance);
+
+    return instance;
+  }
+  private readonly map = inject(MapComponent);
 
   ngOnInit() {
-    this.instance = new Modify(this.createOptions());
+    this.setInstance(new Modify(this.createOptions()));
     this.instance.on('change', (event: BaseEvent) => this.olChange.emit(event));
     this.instance.on('change:active', (event: ObjectEvent) => this.changeActive.emit(event));
     this.instance.on('error', (event: BaseEvent) => this.olError.emit(event));
@@ -72,16 +67,16 @@ export class ModifyInteractionComponent implements OnInit, OnDestroy {
 
   private createOptions(): Options {
     return {
-      condition: this.condition,
-      deleteCondition: this.deleteCondition,
-      insertVertexCondition: this.insertVertexCondition,
-      pixelTolerance: this.pixelTolerance,
-      style: this.style,
-      features: this.features,
-      wrapX: this.wrapX,
-      source: this.source,
-      hitDetection: this.hitDetection,
-      snapToPointer: this.snapToPointer,
+      condition: this.condition(),
+      deleteCondition: this.deleteCondition(),
+      insertVertexCondition: this.insertVertexCondition(),
+      pixelTolerance: this.pixelTolerance(),
+      style: this.style(),
+      features: this.features(),
+      wrapX: this.wrapX(),
+      source: this.source(),
+      hitDetection: this.hitDetection(),
+      snapToPointer: this.snapToPointer(),
     };
   }
 }

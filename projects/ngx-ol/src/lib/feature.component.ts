@@ -3,10 +3,11 @@ import {
   OnInit,
   OnDestroy,
   OnChanges,
-  Input,
   SimpleChanges,
-  Output,
-  EventEmitter,
+  input,
+  output,
+  signal,
+  inject,
 } from '@angular/core';
 import Feature from 'ol/Feature';
 import MapBrowserEvent from 'ol/MapBrowserEvent';
@@ -17,41 +18,36 @@ import { SourceVectorComponent } from './sources/vector.component';
   template: ` <ng-content></ng-content> `,
 })
 export class FeatureComponent implements OnInit, OnDestroy, OnChanges {
-  @Input()
-  id: string | number | undefined;
+  readonly id = input<string | number | undefined>();
 
-  @Input()
-  properties: Record<any, any>;
+  readonly properties = input<Record<any, any>>();
 
-  @Input()
-  feature: Feature;
+  readonly feature = input<Feature>();
 
-  @Input()
-  clickable: boolean;
+  readonly clickable = input<boolean>();
 
-  @Output()
-  olClick = new EventEmitter<{ event: MapBrowserEvent<MouseEvent> | any; feature: Feature }>();
-  @Output()
-  singleClick = new EventEmitter<{ event: MapBrowserEvent<MouseEvent> | any; feature: Feature }>();
-  @Output()
-  dblClick = new EventEmitter<{ event: MapBrowserEvent<MouseEvent> | any; feature: Feature }>();
+  readonly olClick = output<{ event: MapBrowserEvent<MouseEvent> | any; feature: Feature }>();
+  readonly singleClick = output<{ event: MapBrowserEvent<MouseEvent> | any; feature: Feature }>();
+  readonly dblClick = output<{ event: MapBrowserEvent<MouseEvent> | any; feature: Feature }>();
 
-  public componentType = 'feature';
+  readonly componentType: string = 'feature';
   public instance: Feature;
 
-  constructor(private host: SourceVectorComponent) {}
+  protected readonly _instanceSignal = signal<Feature | undefined>(undefined);
+  readonly instanceSignal = this._instanceSignal.asReadonly();
+
+  protected setInstance(instance: Feature): Feature {
+    this.instance = instance;
+    this._instanceSignal.set(instance);
+    return instance;
+  }
+  private readonly host = inject(SourceVectorComponent);
 
   ngOnInit() {
-    this.instance = this.feature || new Feature();
-    if (this.properties) {
-      this.instance.setProperties(this.properties);
-    }
-    if (this.id !== undefined) {
-      this.instance.setId(this.id);
-    }
-    if (this.clickable) {
-      this.instance.set('__aol-feature', this);
-    }
+    this.setInstance(this.feature() || new Feature());
+    this.syncProperties(this.properties());
+    this.syncId();
+    this.syncClickable();
     this.host.instance.addFeature(this.instance);
   }
 
@@ -61,23 +57,49 @@ export class FeatureComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    const { feature, clickable } = changes;
-    if (this.instance) {
-      this.instance.setId(this.id);
-    }
+    const { feature, clickable, id, properties } = changes;
 
     if (feature && !feature.firstChange) {
       this.instance.set('__aol-feature', null);
       this.host.instance.removeFeature(this.instance);
-      this.instance = feature.currentValue;
-      if (this.clickable) {
-        this.instance.set('__aol-feature', this);
-      }
+      this.setInstance(feature.currentValue || new Feature());
+      this.syncProperties(this.properties());
+      this.syncId();
+      this.syncClickable();
       this.host.instance.addFeature(this.instance);
     }
 
+    if (id && !id.firstChange) {
+      this.syncId();
+    }
+
+    if (properties && !properties.firstChange && !(feature && !feature.firstChange)) {
+      this.syncProperties(properties.currentValue, properties.previousValue);
+    }
+
     if (clickable && !clickable.firstChange) {
-      this.instance.set('__aol-feature', clickable.currentValue ? this : null);
+      this.syncClickable();
+    }
+  }
+
+  private syncId() {
+    this.instance.setId(this.id());
+  }
+
+  private syncClickable() {
+    this.instance.set('__aol-feature', this.clickable() ? this : null);
+  }
+
+  private syncProperties(nextProperties?: Record<any, any>, previousProperties?: Record<any, any>) {
+    if (previousProperties) {
+      const nextKeys = new Set(Object.keys(nextProperties ?? {}));
+      Object.keys(previousProperties)
+        .filter((key) => !nextKeys.has(key))
+        .forEach((key) => this.instance.unset(key));
+    }
+
+    if (nextProperties) {
+      this.instance.setProperties(nextProperties);
     }
   }
 }

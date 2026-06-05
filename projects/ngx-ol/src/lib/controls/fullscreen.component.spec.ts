@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 import { AngularOpenlayersModule } from '../../public-api';
@@ -19,11 +19,9 @@ class ControlFullScreenHostComponent {
   center = [0, 0];
   zoom = 2;
 
-  @ViewChild(ControlFullScreenComponent)
-  control!: ControlFullScreenComponent;
+  readonly control = viewChild.required<ControlFullScreenComponent>(ControlFullScreenComponent);
 
-  @ViewChild(MapComponent)
-  map!: MapComponent;
+  readonly map = viewChild.required<MapComponent>(MapComponent);
 }
 
 describe('ControlFullScreenComponent', () => {
@@ -44,8 +42,8 @@ describe('ControlFullScreenComponent', () => {
 
   it('adds and removes a fullscreen control with the host map lifecycle', () => {
     const host = fixture!.componentInstance;
-    const map = host.map.instance;
-    const control = host.control.instance;
+    const map = host.map().instance;
+    const control = host.control().instance;
 
     expect(map.getControls().getArray()).toContain(control);
 

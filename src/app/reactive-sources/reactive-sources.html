@@ -1,0 +1,233 @@
+<div class="layout demo-layout">
+  <aol-map class="map demo-map">
+    <aol-view [zoom]="zoom()" [center]="center()"></aol-view>
+
+    @switch (sourceKind()) {
+      @case ('tile-wms') {
+        <aol-layer-tile>
+          <aol-source-tilewms
+            url="https://ahocevar.com/geoserver/wms"
+            [params]="localWmsParams()"
+            serverType="geoserver"
+            crossOrigin=""
+          ></aol-source-tilewms>
+        </aol-layer-tile>
+      }
+      @case ('vector') {
+        <aol-layer-vector>
+          <aol-source-vector [features]="features()"></aol-source-vector>
+          <aol-style>
+            <aol-style-circle [radius]="8">
+              <aol-style-stroke color="#111827" [width]="2"></aol-style-stroke>
+              <aol-style-fill color="#f97316"></aol-style-fill>
+            </aol-style-circle>
+          </aol-style>
+        </aol-layer-vector>
+      }
+      @case ('image-wms') {
+        <aol-layer-image [extent]="imageExtent()">
+          <aol-source-imagewms
+            url="https://gis.epa.ie/geoserver/EPA/wms"
+            serverType="geoserver"
+            [params]="epaWmsParams()"
+            [ratio]="wmsRatio()"
+            (imageLoadStart)="imageLoadStart()"
+            (imageLoadEnd)="imageLoadEnd()"
+            (imageLoadError)="imageLoadError()"
+          ></aol-source-imagewms>
+        </aol-layer-image>
+      }
+      @case ('image-arcgis') {
+        <aol-layer-image>
+          <aol-source-imagearcgisrest
+            url="https://sampleserver6.arcgisonline.com/ArcGIS/rest/services/USA/MapServer"
+            [params]="arcgisParams()"
+            [hidpi]="arcgisHidpi()"
+            (imageLoadStart)="imageLoadStart()"
+            (imageLoadEnd)="imageLoadEnd()"
+            (imageLoadError)="imageLoadError()"
+          ></aol-source-imagearcgisrest>
+        </aol-layer-image>
+      }
+      @case ('tile-arcgis') {
+        <aol-layer-tile>
+          <aol-source-tilearcgisrest
+            url="https://sampleserver6.arcgisonline.com/ArcGIS/rest/services/USA/MapServer"
+            [params]="arcgisParams()"
+            [hidpi]="arcgisHidpi()"
+          ></aol-source-tilearcgisrest>
+        </aol-layer-tile>
+      }
+      @case ('tile-json') {
+        <aol-layer-tile>
+          <aol-source-tilejson [url]="tileJsonUrl"></aol-source-tilejson>
+        </aol-layer-tile>
+      }
+      @case ('wmts') {
+        <aol-layer-tile>
+          <aol-source-tilewmts
+            layer="MODIS_Terra_CorrectedReflectance_TrueColor"
+            [style]="'default'"
+            matrixSet="GoogleMapsCompatible_Level9"
+            format="image/jpeg"
+            [url]="wmtsUrl"
+            [dimensions]="wmtsDimensions()"
+            (tileLoadStart)="tileLoadStart()"
+            (tileLoadEnd)="tileLoadEnd()"
+            (tileLoadError)="tileLoadError()"
+          >
+            <aol-tilegrid-wmts
+              [origin]="[-20037508.342789244, 20037508.342789244]"
+              [resolutions]="wmtsResolutions"
+              [matrixIds]="wmtsMatrixIds"
+              [tileSize]="256"
+            ></aol-tilegrid-wmts>
+          </aol-source-tilewmts>
+        </aol-layer-tile>
+      }
+    }
+
+    <aol-interaction-default></aol-interaction-default>
+    <aol-control-scaleline></aol-control-scaleline>
+    <aol-control-zoom></aol-control-zoom>
+    <aol-control-attribution></aol-control-attribution>
+  </aol-map>
+
+  <aside class="panel demo-panel">
+    <h2>Reactive sources</h2>
+    <p>
+      Use this page for source-only reactivity: live setters, source reloads, and source-specific
+      loading events.
+    </p>
+
+    <fieldset>
+      <legend>Source type</legend>
+      <label for="reactive-source-kind">Source</label>
+      <select
+        id="reactive-source-kind"
+        [value]="sourceKind()"
+        (change)="setSourceKind($any($event.target).value)"
+      >
+        <option value="tile-wms">Tile WMS</option>
+        <option value="vector">Vector features</option>
+        <option value="image-wms">Image WMS</option>
+        <option value="image-arcgis">Image ArcGIS REST</option>
+        <option value="tile-arcgis">Tile ArcGIS REST</option>
+        <option value="tile-json">TileJSON</option>
+        <option value="wmts">WMTS</option>
+      </select>
+      <button type="button" (click)="resetView()">Reset view to source extent</button>
+    </fieldset>
+
+    @if (sourceKind() === 'tile-wms') {
+      <fieldset>
+        <legend>Tile WMS</legend>
+        <label for="reactive-local-wms-layer">Layer</label>
+        <select
+          id="reactive-local-wms-layer"
+          [value]="localWmsLayer()"
+          (change)="setLocalWmsLayer($any($event.target).value)"
+        >
+          <option value="topp:states">US states</option>
+          <option value="ne:ne">Natural Earth</option>
+        </select>
+      </fieldset>
+    }
+
+    @if (sourceKind() === 'vector') {
+      <fieldset>
+        <legend>Vector source</legend>
+        <label for="reactive-feature-count">Features: {{ featureCount() }}</label>
+        <input
+          id="reactive-feature-count"
+          type="range"
+          min="1"
+          max="6"
+          [value]="featureCount()"
+          (input)="setFeatureCount($any($event.target).valueAsNumber)"
+        />
+      </fieldset>
+    }
+
+    @if (sourceKind() === 'image-wms') {
+      <fieldset>
+        <legend>Image WMS</legend>
+        <label for="reactive-epa-wms-layer">Layer</label>
+        <select
+          id="reactive-epa-wms-layer"
+          [value]="epaWmsLayer()"
+          (change)="setEpaWmsLayer($any($event.target).value)"
+        >
+          <option value="EPA:ADMIN_County">County boundaries</option>
+          <option value="EPA:WFD_Catchments">WFD catchments</option>
+        </select>
+
+        <label for="reactive-wms-ratio">Image ratio: {{ wmsRatio() }}</label>
+        <input
+          id="reactive-wms-ratio"
+          type="range"
+          min="1"
+          max="2"
+          step="0.1"
+          [value]="wmsRatio()"
+          (input)="setWmsRatio($any($event.target).valueAsNumber)"
+        />
+      </fieldset>
+    }
+
+    @if (sourceKind() === 'image-arcgis' || sourceKind() === 'tile-arcgis') {
+      <fieldset>
+        <legend>ArcGIS REST</legend>
+        <label for="reactive-arcgis-layer">Layer id</label>
+        <select
+          id="reactive-arcgis-layer"
+          [value]="arcgisLayer()"
+          (change)="setArcgisLayer($any($event.target).value)"
+        >
+          <option value="0">Cities</option>
+          <option value="2">States</option>
+          <option value="3">Counties</option>
+        </select>
+        <label>
+          <input type="checkbox" [checked]="arcgisHidpi()" (change)="toggleArcgisHidpi()" />
+          HiDPI rendering
+        </label>
+      </fieldset>
+    }
+
+    @if (sourceKind() === 'tile-json') {
+      <fieldset>
+        <legend>TileJSON</legend>
+        <p class="hint">TileJSON is loaded from {{ tileJsonUrl }}.</p>
+        <p class="hint">
+          The metadata URL is constructor-only in this wrapper because OpenLayers does not expose a
+          clear setter for reloading TileJSON metadata.
+        </p>
+      </fieldset>
+    }
+
+    @if (sourceKind() === 'wmts') {
+      <fieldset>
+        <legend>WMTS</legend>
+        <label for="reactive-wmts-time">Time dimension</label>
+        <select
+          id="reactive-wmts-time"
+          [value]="wmtsTime()"
+          (change)="setWmtsTime($any($event.target).value)"
+        >
+          <option value="2024-01-01">2024-01-01</option>
+          <option value="2024-06-01">2024-06-01</option>
+          <option value="2024-09-01">2024-09-01</option>
+        </select>
+        <p class="hint">
+          Uses NASA GIBS true-colour imagery so the <code>TIME</code> dimension has a visible
+          effect.
+        </p>
+      </fieldset>
+    }
+
+    <section class="status" aria-live="polite">
+      <p>{{ sourceStatus() }}</p>
+    </section>
+  </aside>
+</div>

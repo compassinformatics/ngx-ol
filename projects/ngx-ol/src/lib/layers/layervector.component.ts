@@ -2,10 +2,10 @@ import {
   Component,
   OnDestroy,
   OnInit,
-  Input,
-  Optional,
   OnChanges,
   SimpleChanges,
+  input,
+  inject,
 } from '@angular/core';
 import { MapComponent } from '../map.component';
 import Vector from 'ol/layer/Vector';
@@ -23,40 +23,31 @@ import VectorSource from 'ol/source/Vector';
   template: ` <ng-content></ng-content> `,
 })
 export class LayerVectorComponent extends LayerComponent implements OnInit, OnDestroy, OnChanges {
-  @Input()
-  renderOrder?: OrderFunction;
+  readonly renderOrder = input<OrderFunction>();
 
-  @Input()
-  renderBuffer: number;
+  readonly renderBuffer = input<number>();
 
-  @Input()
-  style: StyleLike | FlatStyleLike | null | undefined;
+  readonly style = input<StyleLike | FlatStyleLike | null | undefined>();
 
-  @Input()
-  updateWhileAnimating: boolean;
+  readonly updateWhileAnimating = input<boolean>();
 
-  @Input()
-  updateWhileInteracting: boolean;
+  readonly updateWhileInteracting = input<boolean>();
 
-  @Input()
-  declutter: boolean | string | number;
+  readonly declutter = input<boolean | string | number>();
 
-  @Input()
-  background?: BackgroundColor;
+  readonly background = input<BackgroundColor>();
 
-  @Input()
-  properties: Record<string, any>;
+  readonly properties = input<Record<string, any>>();
 
-  @Input()
-  source?: VectorSource;
+  readonly source = input<VectorSource>();
 
-  constructor(map: MapComponent, @Optional() group?: LayerGroupComponent) {
-    super(group || map);
+  constructor() {
+    super(inject(LayerGroupComponent, { optional: true }) || inject(MapComponent));
   }
 
   ngOnInit() {
     // console.log('creating ol.layer.Vector instance with:', this);
-    this.instance = new Vector(this.createOptions());
+    this.setInstance(new Vector(this.createOptions()));
     super.ngOnInit();
   }
 
@@ -66,20 +57,26 @@ export class LayerVectorComponent extends LayerComponent implements OnInit, OnDe
     if (style && this.instance) {
       this.instance.setStyle(style.currentValue);
     }
+    if (this.instance && changes.renderOrder) {
+      this.instance.setRenderOrder(changes.renderOrder.currentValue);
+    }
+    if (this.instance && changes.source) {
+      this.instance.setSource(changes.source.currentValue);
+    }
   }
 
   private createOptions(): Options<any, VectorSource<any>> {
     return {
       ...this.createLayerOptions(),
-      renderOrder: this.renderOrder,
-      renderBuffer: this.renderBuffer,
-      style: this.style,
-      updateWhileAnimating: this.updateWhileAnimating,
-      updateWhileInteracting: this.updateWhileInteracting,
-      declutter: this.declutter,
-      background: this.background,
-      properties: this.properties,
-      source: this.source,
+      renderOrder: this.renderOrder(),
+      renderBuffer: this.renderBuffer(),
+      style: this.style(),
+      updateWhileAnimating: this.updateWhileAnimating(),
+      updateWhileInteracting: this.updateWhileInteracting(),
+      declutter: this.declutter(),
+      background: this.background(),
+      properties: this.properties(),
+      source: this.source(),
     };
   }
 }

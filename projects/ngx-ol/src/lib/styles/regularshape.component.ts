@@ -1,11 +1,12 @@
 import {
   AfterContentInit,
   Component,
-  Host,
-  Input,
   OnChanges,
   OnDestroy,
   SimpleChanges,
+  inject,
+  input,
+  signal,
 } from '@angular/core';
 import type { Size } from 'ol/size';
 import Fill from 'ol/style/Fill';
@@ -20,54 +21,52 @@ import { StyleComponent } from './style.component';
   template: ` <ng-content></ng-content> `,
 })
 export class StyleRegularShapeComponent implements AfterContentInit, OnChanges, OnDestroy {
-  @Input()
-  fill?: Fill;
+  readonly fill = input<Fill>();
 
-  @Input()
-  points: number;
+  readonly points = input.required<number>();
 
-  @Input()
-  radius: number;
+  readonly radius = input.required<number>();
 
-  @Input()
-  radius2?: number;
+  readonly radius2 = input<number>();
 
-  @Input()
-  angle?: number;
+  readonly angle = input<number>();
 
-  @Input()
-  displacement?: number[];
+  readonly displacement = input<number[]>();
 
-  @Input()
-  stroke?: Stroke;
+  readonly stroke = input<Stroke>();
 
-  @Input()
-  rotation?: number;
+  readonly rotation = input<number>();
 
-  @Input()
-  rotateWithView?: boolean;
+  readonly rotateWithView = input<boolean>();
 
-  @Input()
-  scale?: number | Size;
+  readonly scale = input<number | Size>();
 
-  @Input()
-  declutterMode?: DeclutterMode;
+  readonly declutterMode = input<DeclutterMode>();
 
-  public componentType = 'style-regularshape';
+  readonly componentType: string = 'style-regularshape';
   public instance: RegularShape;
 
-  constructor(@Host() private host: StyleComponent) {}
+  protected readonly _instanceSignal = signal<RegularShape | undefined>(undefined);
+  readonly instanceSignal = this._instanceSignal.asReadonly();
+
+  protected setInstance(instance: RegularShape): RegularShape {
+    this.instance = instance;
+    this._instanceSignal.set(instance);
+    return instance;
+  }
+  private readonly host = inject(StyleComponent, { host: true });
 
   update() {
     if (this.instance) {
-      this.instance = new RegularShape(this.createOptions());
+      this.instance.setFill(this.fill() ?? null);
+      this.instance.setStroke(this.stroke() ?? null);
       this.host.instance.setImage(this.instance);
     }
     this.host.update();
   }
 
   ngAfterContentInit() {
-    this.instance = new RegularShape(this.createOptions());
+    this.setInstance(new RegularShape(this.createOptions()));
     this.host.instance.setImage(this.instance);
     this.host.update();
   }
@@ -90,7 +89,30 @@ export class StyleRegularShapeComponent implements AfterContentInit, OnChanges, 
       return;
     }
 
-    this.instance = new RegularShape(this.createOptions());
+    const requiresReload =
+      changes.points ||
+      changes.radius ||
+      changes.radius2 ||
+      changes.angle ||
+      changes.displacement ||
+      changes.rotation ||
+      changes.rotateWithView ||
+      changes.scale ||
+      changes.declutterMode;
+
+    if (!requiresReload) {
+      if (changes.fill) {
+        this.instance.setFill(changes.fill.currentValue ?? null);
+      }
+      if (changes.stroke) {
+        this.instance.setStroke(changes.stroke.currentValue ?? null);
+      }
+      this.host.instance.setImage(this.instance);
+      this.host.update();
+      return;
+    }
+
+    this.setInstance(new RegularShape(this.createOptions()));
     this.host.instance.setImage(this.instance);
     this.host.update();
   }
@@ -99,17 +121,17 @@ export class StyleRegularShapeComponent implements AfterContentInit, OnChanges, 
 
   private createOptions(): Options {
     return {
-      fill: this.fill,
-      points: this.points,
-      radius: this.radius,
-      radius2: this.radius2,
-      angle: this.angle,
-      displacement: this.displacement,
-      stroke: this.stroke,
-      rotation: this.rotation,
-      rotateWithView: this.rotateWithView,
-      scale: this.scale,
-      declutterMode: this.declutterMode,
+      fill: this.fill(),
+      points: this.points(),
+      radius: this.radius(),
+      radius2: this.radius2(),
+      angle: this.angle(),
+      displacement: this.displacement(),
+      stroke: this.stroke(),
+      rotation: this.rotation(),
+      rotateWithView: this.rotateWithView(),
+      scale: this.scale(),
+      declutterMode: this.declutterMode(),
     };
   }
 }

@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, input, signal, inject } from '@angular/core';
 import DragAndDrop from 'ol/interaction/DragAndDrop';
 import { Options } from 'ol/interaction/DragAndDrop';
 import FeatureFormat from 'ol/format/Feature';
@@ -10,19 +10,27 @@ import { ProjectionLike } from 'ol/proj';
   template: '',
 })
 export class DragAndDropInteractionComponent implements OnInit, OnDestroy {
-  @Input()
-  formatConstructors?: FeatureFormat[];
-  @Input()
-  projection?: ProjectionLike;
-  @Input()
-  target?: HTMLElement;
+  readonly formatConstructors = input<FeatureFormat[]>();
+  readonly projection = input<ProjectionLike>();
+  readonly target = input<HTMLElement>();
 
   instance: DragAndDrop;
 
-  constructor(private map: MapComponent) {}
+  protected readonly _instanceSignal = signal<DragAndDrop | undefined>(undefined);
+
+  readonly instanceSignal = this._instanceSignal.asReadonly();
+
+  protected setInstance(instance: DragAndDrop): DragAndDrop {
+    this.instance = instance;
+
+    this._instanceSignal.set(instance);
+
+    return instance;
+  }
+  private readonly map = inject(MapComponent);
 
   ngOnInit() {
-    this.instance = new DragAndDrop(this.createOptions());
+    this.setInstance(new DragAndDrop(this.createOptions()));
     this.map.instance.addInteraction(this.instance);
   }
 
@@ -32,9 +40,9 @@ export class DragAndDropInteractionComponent implements OnInit, OnDestroy {
 
   private createOptions(): Options {
     return {
-      formatConstructors: this.formatConstructors,
-      projection: this.projection,
-      target: this.target,
+      formatConstructors: this.formatConstructors(),
+      projection: this.projection(),
+      target: this.target(),
     };
   }
 }

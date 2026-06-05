@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 import { AngularOpenlayersModule } from '../../public-api';
@@ -20,11 +20,11 @@ class ControlMousePositionHostComponent {
   zoom = 2;
   projection = 'EPSG:4326';
 
-  @ViewChild(ControlMousePositionComponent)
-  control!: ControlMousePositionComponent;
+  readonly control = viewChild.required<ControlMousePositionComponent>(
+    ControlMousePositionComponent,
+  );
 
-  @ViewChild(MapComponent)
-  map!: MapComponent;
+  readonly map = viewChild.required<MapComponent>(MapComponent);
 }
 
 describe('ControlMousePositionComponent', () => {
@@ -45,8 +45,8 @@ describe('ControlMousePositionComponent', () => {
 
   it('adds and removes a mouse position control with the host map lifecycle', () => {
     const host = fixture!.componentInstance;
-    const map = host.map.instance;
-    const control = host.control.instance;
+    const map = host.map().instance;
+    const control = host.control().instance;
 
     expect(control.getProjection()?.getCode()).toBe('EPSG:4326');
     expect(map.getControls().getArray()).toContain(control);

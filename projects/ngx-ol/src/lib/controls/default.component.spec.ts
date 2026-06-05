@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 import { AngularOpenlayersModule } from '../../public-api';
@@ -21,11 +21,9 @@ class DefaultControlHostComponent {
   showZoom = true;
   showRotate = true;
 
-  @ViewChild(DefaultControlComponent)
-  control!: DefaultControlComponent;
+  readonly control = viewChild.required<DefaultControlComponent>(DefaultControlComponent);
 
-  @ViewChild(MapComponent)
-  map!: MapComponent;
+  readonly map = viewChild.required<MapComponent>(MapComponent);
 }
 
 describe('DefaultControlComponent', () => {
@@ -46,8 +44,8 @@ describe('DefaultControlComponent', () => {
 
   it('adds and removes the default controls collection with the host map lifecycle', () => {
     const host = fixture!.componentInstance;
-    const map = host.map.instance;
-    const controls = host.control.instance.getArray();
+    const map = host.map().instance;
+    const controls = host.control().instance.getArray();
 
     expect(controls.length).toBeGreaterThan(0);
     controls.forEach((control) => {

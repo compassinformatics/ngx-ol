@@ -1,11 +1,12 @@
 import {
   Component,
   forwardRef,
-  Host,
-  Input,
   OnChanges,
   OnInit,
   SimpleChanges,
+  input,
+  signal,
+  inject,
 } from '@angular/core';
 import type { NearestDirectionFunction } from 'ol/array';
 import type { ProjectionLike } from 'ol/proj';
@@ -19,85 +20,120 @@ import { SourceComponent } from './source.component';
 @Component({
   selector: 'aol-source-tilearcgisrest',
   template: ` <ng-content></ng-content> `,
-  providers: [{ provide: SourceComponent, useExisting: forwardRef(() => SourceTileArcGISRestComponent) }],
+  providers: [
+    { provide: SourceComponent, useExisting: forwardRef(() => SourceTileArcGISRestComponent) },
+  ],
 })
 export class SourceTileArcGISRestComponent extends SourceComponent implements OnInit, OnChanges {
-  @Input()
-  cacheSize?: number;
+  readonly cacheSize = input<number>();
 
-  @Input()
-  crossOrigin?: string | null;
+  readonly crossOrigin = input<string | null>();
 
-  @Input()
-  interpolate?: boolean;
+  readonly interpolate = input<boolean>();
 
-  @Input()
-  params?: { [key: string]: any };
+  readonly params = input<{ [key: string]: any }>();
 
-  @Input()
-  hidpi?: boolean;
+  readonly hidpi = input<boolean>();
 
-  @Input()
-  tileGrid?: TileGrid;
+  readonly tileGrid = input<TileGrid>();
 
-  @Input()
-  projection?: ProjectionLike;
+  readonly projection = input<ProjectionLike>();
 
-  @Input()
-  reprojectionErrorThreshold?: number;
+  readonly reprojectionErrorThreshold = input<number>();
 
-  @Input()
-  tileLoadFunction?: LoadFunction;
+  readonly tileLoadFunction = input<LoadFunction>();
 
-  @Input()
-  url?: string;
+  readonly url = input<string>();
 
-  @Input()
-  wrapX?: boolean;
+  readonly wrapX = input<boolean>();
 
-  @Input()
-  transition?: number;
+  readonly transition = input<number>();
 
-  @Input()
-  urls?: string[];
+  readonly urls = input<string[]>();
 
-  @Input()
-  zDirection?: number | NearestDirectionFunction;
+  readonly zDirection = input<number | NearestDirectionFunction>();
 
   instance: TileArcGISRest;
 
-  constructor(@Host() layer: LayerTileComponent) {
-    super(layer);
+  protected readonly _instanceSignal = signal<TileArcGISRest | undefined>(undefined);
+
+  readonly instanceSignal = this._instanceSignal.asReadonly();
+
+  protected setInstance(instance: TileArcGISRest): TileArcGISRest {
+    this.instance = instance;
+
+    this._instanceSignal.set(instance);
+
+    return instance;
+  }
+  constructor() {
+    super(inject(LayerTileComponent, { host: true }));
   }
 
   ngOnInit() {
-    this.instance = new TileArcGISRest(this.createOptions());
-    this.host.instance.setSource(this.instance);
+    this.replaceInstance();
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (this.instance && changes.hasOwnProperty('params') && this.params) {
-      this.instance.updateParams(this.params);
+    super.ngOnChanges(changes);
+    if (!this.instance) {
+      return;
+    }
+
+    if (this.hasRemovedParamKeys(changes)) {
+      this.replaceInstance();
+      return;
+    }
+
+    if (this.instance && changes.hasOwnProperty('params')) {
+      this.instance.updateParams(this.params() ?? {});
+    }
+    if (this.instance && changes.tileLoadFunction?.currentValue) {
+      this.instance.setTileLoadFunction(changes.tileLoadFunction.currentValue);
+    }
+    if (this.instance && changes.url?.currentValue) {
+      this.instance.setUrl(changes.url.currentValue);
+    }
+    if (this.instance && changes.urls?.currentValue) {
+      this.instance.setUrls(changes.urls.currentValue);
     }
   }
 
   private createOptions(): Options {
     return {
-      attributions: this.attributions,
-      cacheSize: this.cacheSize,
-      crossOrigin: this.crossOrigin,
-      interpolate: this.interpolate,
-      params: this.params,
-      hidpi: this.hidpi,
-      tileGrid: this.tileGrid,
-      projection: this.projection,
-      reprojectionErrorThreshold: this.reprojectionErrorThreshold,
-      tileLoadFunction: this.tileLoadFunction,
-      url: this.url,
-      wrapX: this.wrapX,
-      transition: this.transition,
-      urls: this.urls,
-      zDirection: this.zDirection,
+      attributions: this.attributions(),
+      cacheSize: this.cacheSize(),
+      crossOrigin: this.crossOrigin(),
+      interpolate: this.interpolate(),
+      params: this.params(),
+      hidpi: this.hidpi(),
+      tileGrid: this.tileGrid(),
+      projection: this.projection(),
+      reprojectionErrorThreshold: this.reprojectionErrorThreshold(),
+      tileLoadFunction: this.tileLoadFunction(),
+      url: this.url(),
+      wrapX: this.wrapX(),
+      transition: this.transition(),
+      urls: this.urls(),
+      zDirection: this.zDirection(),
     };
+  }
+
+  private replaceInstance(): void {
+    this.setInstance(new TileArcGISRest(this.createOptions()));
+    this.host.instance.setSource(this.instance);
+  }
+
+  private hasRemovedParamKeys(changes: SimpleChanges): boolean {
+    if (!changes.params || changes.params.firstChange) {
+      return false;
+    }
+
+    const previousParams = changes.params.previousValue ?? {};
+    const nextParams = changes.params.currentValue ?? {};
+
+    return Object.keys(previousParams).some(
+      (key) => !Object.prototype.hasOwnProperty.call(nextParams, key),
+    );
   }
 }

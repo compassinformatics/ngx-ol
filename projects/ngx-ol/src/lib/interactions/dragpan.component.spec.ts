@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 import { AngularOpenlayersModule } from '../../public-api';
@@ -19,11 +19,11 @@ class DragPanInteractionHostComponent {
   center = [0, 0];
   zoom = 2;
 
-  @ViewChild(DragPanInteractionComponent)
-  interaction!: DragPanInteractionComponent;
+  readonly interaction = viewChild.required<DragPanInteractionComponent>(
+    DragPanInteractionComponent,
+  );
 
-  @ViewChild(MapComponent)
-  map!: MapComponent;
+  readonly map = viewChild.required<MapComponent>(MapComponent);
 }
 
 describe('DragPanInteractionComponent', () => {
@@ -44,8 +44,8 @@ describe('DragPanInteractionComponent', () => {
 
   it('adds and removes a drag-pan interaction with the host map lifecycle', () => {
     const host = fixture!.componentInstance;
-    const map = host.map.instance;
-    const interaction = host.interaction.instance;
+    const map = host.map().instance;
+    const interaction = host.interaction().instance;
 
     expect(map.getInteractions().getArray()).toContain(interaction);
 

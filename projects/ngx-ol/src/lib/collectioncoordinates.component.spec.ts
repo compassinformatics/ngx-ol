@@ -1,4 +1,4 @@
-import { Component, signal, ViewChild } from '@angular/core';
+import { Component, signal, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { fromLonLat } from 'ol/proj';
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
@@ -42,11 +42,11 @@ class CollectionCoordinatesHostComponent {
     ],
   ];
 
-  @ViewChild(CollectionCoordinatesComponent)
-  collectionCoordinates!: CollectionCoordinatesComponent;
+  readonly collectionCoordinates = viewChild.required<CollectionCoordinatesComponent>(
+    CollectionCoordinatesComponent,
+  );
 
-  @ViewChild(GeometryPolygonComponent)
-  geometry!: GeometryPolygonComponent;
+  readonly geometry = viewChild.required<GeometryPolygonComponent>(GeometryPolygonComponent);
 }
 
 @Component({
@@ -80,8 +80,7 @@ class LinestringCollectionCoordinatesHostComponent {
     [1, 1],
   ];
 
-  @ViewChild(GeometryLinestringComponent)
-  geometry!: GeometryLinestringComponent;
+  readonly geometry = viewChild.required<GeometryLinestringComponent>(GeometryLinestringComponent);
 }
 
 @Component({
@@ -119,8 +118,9 @@ class MultiPolygonCollectionCoordinatesHostComponent {
     ],
   ];
 
-  @ViewChild(GeometryMultiPolygonComponent)
-  geometry!: GeometryMultiPolygonComponent;
+  readonly geometry = viewChild.required<GeometryMultiPolygonComponent>(
+    GeometryMultiPolygonComponent,
+  );
 }
 
 describe('CollectionCoordinatesComponent', () => {
@@ -144,7 +144,7 @@ describe('CollectionCoordinatesComponent', () => {
   });
 
   it('projects nested coordinate arrays into the host geometry', () => {
-    expect(fixture.componentInstance.geometry.instance.getCoordinates()).toEqual(
+    expect(fixture.componentInstance.geometry().instance.getCoordinates()).toEqual(
       fixture.componentInstance.coordinates,
     );
   });
@@ -152,7 +152,7 @@ describe('CollectionCoordinatesComponent', () => {
   it('transforms line string coordinates into the map projection', () => {
     const linestringFixture = TestBed.createComponent(LinestringCollectionCoordinatesHostComponent);
     linestringFixture.detectChanges();
-    const coordinates = linestringFixture.componentInstance.geometry.instance.getCoordinates();
+    const coordinates = linestringFixture.componentInstance.geometry().instance.getCoordinates();
 
     expect(coordinates[0]).toEqual(fromLonLat([0, 0]));
     expect(coordinates[1][0]).toBeCloseTo(fromLonLat([1, 1])[0]);
@@ -169,7 +169,7 @@ describe('CollectionCoordinatesComponent', () => {
 
     linestringFixture.detectChanges();
 
-    expect(linestringFixture.componentInstance.geometry.instance.getCoordinates()).toEqual(
+    expect(linestringFixture.componentInstance.geometry().instance.getCoordinates()).toEqual(
       linestringFixture.componentInstance.coordinates,
     );
 
@@ -181,7 +181,7 @@ describe('CollectionCoordinatesComponent', () => {
       MultiPolygonCollectionCoordinatesHostComponent,
     );
     multiPolygonFixture.detectChanges();
-    const coordinates = multiPolygonFixture.componentInstance.geometry.instance.getCoordinates();
+    const coordinates = multiPolygonFixture.componentInstance.geometry().instance.getCoordinates();
     const expected = fromLonLat([1, 1]);
 
     expect(coordinates[0][0][1][0]).toBeCloseTo(expected[0]);

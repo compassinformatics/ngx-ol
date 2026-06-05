@@ -1,4 +1,13 @@
-import { Component, Input, OnChanges, OnDestroy, OnInit, Optional, SimpleChanges } from '@angular/core';
+import {
+  Component,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  SimpleChanges,
+  input,
+  signal,
+  inject,
+} from '@angular/core';
 import WebGLTileLayer from 'ol/layer/WebGLTile';
 import type { Options, SourceType, Style } from 'ol/layer/WebGLTile';
 import type DataTileSource from 'ol/source/DataTile';
@@ -12,36 +21,45 @@ import { LayerGroupComponent } from './layergroup.component';
   selector: 'aol-layer-webgltile',
   template: ` <ng-content></ng-content> `,
 })
-export class LayerWebGLTileComponent extends LayerComponent implements OnInit, OnDestroy, OnChanges {
-  @Input()
-  style?: Style;
+export class LayerWebGLTileComponent
+  extends LayerComponent
+  implements OnInit, OnDestroy, OnChanges
+{
+  readonly style = input<Style>();
 
-  @Input()
-  preload?: number;
+  readonly preload = input<number>();
 
-  @Input()
-  source?: DataTileSource<DataTile>;
+  readonly source = input<DataTileSource<DataTile>>();
 
-  @Input()
-  sources?: DataTileSource<DataTile>[] | ((extent: Extent, resolution: number) => SourceType[]);
+  readonly sources = input<
+    DataTileSource<DataTile>[] | ((extent: Extent, resolution: number) => SourceType[])
+  >();
 
-  @Input()
-  map?: MapComponent['instance'];
+  readonly map = input<MapComponent['instance']>();
 
-  @Input()
-  useInterimTilesOnError?: boolean;
+  readonly useInterimTilesOnError = input<boolean>();
 
-  @Input()
-  cacheSize?: number;
+  readonly cacheSize = input<number>();
 
   instance: WebGLTileLayer;
 
-  constructor(map: MapComponent, @Optional() group?: LayerGroupComponent) {
-    super(group || map);
+  protected readonly _instanceSignal = signal<WebGLTileLayer | undefined>(undefined);
+
+  readonly instanceSignal = this._instanceSignal.asReadonly();
+
+  protected setInstance(instance: WebGLTileLayer): WebGLTileLayer {
+    this.instance = instance;
+
+    this._instanceSignal.set(instance);
+
+    return instance;
+  }
+  constructor() {
+    super(inject(LayerGroupComponent, { optional: true }) || inject(MapComponent));
   }
 
   ngOnInit() {
-    this.instance = new WebGLTileLayer(this.createOptions());
+    this.setInstance(new WebGLTileLayer(this.createOptions()));
     super.ngOnInit();
   }
 
@@ -51,18 +69,21 @@ export class LayerWebGLTileComponent extends LayerComponent implements OnInit, O
     if (this.instance && changes.style?.currentValue) {
       this.instance.setStyle(changes.style.currentValue);
     }
+    if (this.instance && changes.source) {
+      this.instance.setSource(changes.source.currentValue);
+    }
   }
 
   private createOptions(): Options {
     return {
       ...this.createLayerOptions(),
-      style: this.style,
-      preload: this.preload,
-      source: this.source,
-      sources: this.sources,
-      map: this.map,
-      useInterimTilesOnError: this.useInterimTilesOnError,
-      cacheSize: this.cacheSize,
+      style: this.style(),
+      preload: this.preload(),
+      source: this.source(),
+      sources: this.sources(),
+      map: this.map(),
+      useInterimTilesOnError: this.useInterimTilesOnError(),
+      cacheSize: this.cacheSize(),
     };
   }
 }

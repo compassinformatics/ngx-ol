@@ -1,11 +1,13 @@
 import {
   Component,
-  ContentChild,
-  Input,
   OnChanges,
   OnDestroy,
   OnInit,
   SimpleChanges,
+  contentChild,
+  input,
+  signal,
+  inject,
 } from '@angular/core';
 import { MapComponent } from './map.component';
 import Overlay, { Options, PanIntoViewOptions, Positioning } from 'ol/Overlay';
@@ -17,36 +19,37 @@ import { Coordinate } from 'ol/coordinate';
   template: '<ng-content></ng-content>',
 })
 export class OverlayComponent implements OnInit, OnDestroy, OnChanges {
-  @ContentChild(ContentComponent, { static: true })
-  content: ContentComponent;
+  protected readonly content = contentChild(ContentComponent);
 
-  @Input()
-  id?: number | string | undefined;
-  @Input()
-  offset?: number[];
-  @Input()
-  positioning?: Positioning;
-  @Input()
-  stopEvent?: boolean;
-  @Input()
-  insertFirst?: boolean;
-  @Input()
-  autoPan?: boolean | PanIntoViewOptions;
-  @Input()
-  position?: Coordinate | undefined;
-  @Input()
-  className?: string;
+  readonly id = input<number | string | undefined>();
+  readonly offset = input<number[]>();
+  readonly positioning = input<Positioning>();
+  readonly stopEvent = input<boolean>();
+  readonly insertFirst = input<boolean>();
+  readonly autoPan = input<boolean | PanIntoViewOptions>();
+  readonly position = input<Coordinate | undefined>();
+  readonly className = input<string>();
 
-  componentType = 'overlay';
+  readonly componentType: string = 'overlay';
   instance: Overlay;
+  protected readonly _instanceSignal = signal<Overlay | undefined>(undefined);
+  readonly instanceSignal = this._instanceSignal.asReadonly();
+
+  protected setInstance(instance: Overlay): Overlay {
+    this.instance = instance;
+    this._instanceSignal.set(instance);
+    return instance;
+  }
   element: HTMLElement;
 
-  constructor(private map: MapComponent) {}
+  private readonly map = inject(MapComponent);
 
   ngOnInit() {
-    if (this.content) {
-      this.element = this.content.elementRef.nativeElement;
-      this.instance = new Overlay(this.createOptions());
+    const content = this.content();
+
+    if (content) {
+      this.element = content.elementRef.nativeElement;
+      this.setInstance(new Overlay(this.createOptions()));
       this.map.instance.addOverlay(this.instance);
     }
   }
@@ -58,24 +61,30 @@ export class OverlayComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    const { position } = changes;
+    const { offset, position, positioning } = changes;
 
     if (position && this.instance) {
       this.instance.setPosition(position.currentValue);
+    }
+    if (offset && this.instance) {
+      this.instance.setOffset(offset.currentValue);
+    }
+    if (positioning && this.instance) {
+      this.instance.setPositioning(positioning.currentValue);
     }
   }
 
   private createOptions(): Options {
     return {
-      autoPan: this.autoPan,
-      className: this.className,
+      autoPan: this.autoPan(),
+      className: this.className(),
       element: this.element,
-      id: this.id,
-      insertFirst: this.insertFirst,
-      offset: this.offset,
-      position: this.position,
-      positioning: this.positioning,
-      stopEvent: this.stopEvent,
+      id: this.id(),
+      insertFirst: this.insertFirst(),
+      offset: this.offset(),
+      position: this.position(),
+      positioning: this.positioning(),
+      stopEvent: this.stopEvent(),
     };
   }
 }

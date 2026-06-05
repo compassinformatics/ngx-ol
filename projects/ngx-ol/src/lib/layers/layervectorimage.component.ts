@@ -2,10 +2,10 @@ import {
   Component,
   OnDestroy,
   OnInit,
-  Input,
-  Optional,
   OnChanges,
   SimpleChanges,
+  input,
+  inject,
 } from '@angular/core';
 import { MapComponent } from '../map.component';
 import VectorImage from 'ol/layer/VectorImage';
@@ -25,34 +25,27 @@ export class LayerVectorImageComponent
   extends LayerComponent
   implements OnInit, OnDestroy, OnChanges
 {
-  @Input()
-  renderBuffer: number;
+  readonly renderBuffer = input<number>();
 
-  @Input()
-  style: StyleLike | FlatStyleLike | null | undefined;
+  readonly style = input<StyleLike | FlatStyleLike | null | undefined>();
 
-  @Input()
-  declutter: boolean | string | number;
+  readonly declutter = input<boolean | string | number>();
 
-  @Input()
-  background?: BackgroundColor;
+  readonly background = input<BackgroundColor>();
 
-  @Input()
-  imageRatio: number;
+  readonly imageRatio = input<number>();
 
-  @Input()
-  properties: Record<string, any>;
+  readonly properties = input<Record<string, any>>();
 
-  @Input()
-  source?: VectorSource;
+  readonly source = input<VectorSource>();
 
-  constructor(map: MapComponent, @Optional() group?: LayerGroupComponent) {
-    super(group || map);
+  constructor() {
+    super(inject(LayerGroupComponent, { optional: true }) || inject(MapComponent));
   }
 
   ngOnInit() {
     // console.log('creating ol.layer.Vector instance with:', this);
-    this.instance = new VectorImage(this.createOptions());
+    this.setInstance(new VectorImage(this.createOptions()));
     super.ngOnInit();
   }
 
@@ -62,18 +55,21 @@ export class LayerVectorImageComponent
     if (style && this.instance) {
       this.instance.setStyle(style.currentValue);
     }
+    if (this.instance && changes.source) {
+      this.instance.setSource(changes.source.currentValue);
+    }
   }
 
   private createOptions(): Options<any, VectorSource<any>> & { imageRatio?: number } {
     return {
       ...this.createLayerOptions(),
-      renderBuffer: this.renderBuffer,
-      style: this.style,
-      declutter: this.declutter,
-      background: this.background,
-      imageRatio: this.imageRatio,
-      properties: this.properties,
-      source: this.source,
+      renderBuffer: this.renderBuffer(),
+      style: this.style(),
+      declutter: this.declutter(),
+      background: this.background(),
+      imageRatio: this.imageRatio(),
+      properties: this.properties(),
+      source: this.source(),
     };
   }
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Optional, SimpleChanges, OnChanges } from '@angular/core';
+import { Component, OnInit, SimpleChanges, OnChanges, input, inject } from '@angular/core';
 import VectorTile from 'ol/layer/VectorTile';
 import { MapComponent } from '../map.component';
 import { LayerComponent } from './layer.component';
@@ -14,32 +14,23 @@ import VectorTileSource from 'ol/source/VectorTile';
   template: ` <ng-content></ng-content> `,
 })
 export class LayerVectorTileComponent extends LayerComponent implements OnInit, OnChanges {
-  @Input()
-  renderBuffer: number;
-  @Input()
-  renderMode?: VectorTileRenderType;
-  @Input()
-  renderOrder?: OrderFunction;
-  @Input()
-  style: StyleLike | StyleFunction | null | undefined;
-  @Input()
-  background?: BackgroundColor;
-  @Input()
-  updateWhileAnimating: boolean;
-  @Input()
-  updateWhileInteracting: boolean;
-  @Input()
-  visible: boolean;
-  @Input()
-  source?: VectorTileSource;
+  readonly renderBuffer = input<number>();
+  readonly renderMode = input<VectorTileRenderType>();
+  readonly renderOrder = input<OrderFunction>();
+  readonly style = input<StyleLike | StyleFunction | null | undefined>();
+  readonly background = input<BackgroundColor>();
+  readonly updateWhileAnimating = input<boolean>();
+  readonly updateWhileInteracting = input<boolean>();
+  readonly visible = input<boolean>();
+  readonly source = input<VectorTileSource>();
 
-  constructor(map: MapComponent, @Optional() group?: LayerGroupComponent) {
-    super(group || map);
+  constructor() {
+    super(inject(LayerGroupComponent, { optional: true }) || inject(MapComponent));
   }
 
   ngOnInit() {
     // console.log('creating ol.layer.VectorTile instance with:', this);
-    this.instance = new VectorTile(this.createOptions());
+    this.setInstance(new VectorTile(this.createOptions()));
     super.ngOnInit();
   }
 
@@ -49,20 +40,26 @@ export class LayerVectorTileComponent extends LayerComponent implements OnInit, 
     if (style && this.instance) {
       this.instance.setStyle(style.currentValue);
     }
+    if (this.instance && changes.renderOrder) {
+      this.instance.setRenderOrder(changes.renderOrder.currentValue);
+    }
+    if (this.instance && changes.source) {
+      this.instance.setSource(changes.source.currentValue);
+    }
   }
 
   private createOptions(): Options<VectorTileSource> {
     return {
       ...this.createLayerOptions(),
-      renderBuffer: this.renderBuffer,
-      renderMode: this.renderMode,
-      renderOrder: this.renderOrder,
-      style: this.style,
-      background: this.background,
-      updateWhileAnimating: this.updateWhileAnimating,
-      updateWhileInteracting: this.updateWhileInteracting,
-      visible: this.visible,
-      source: this.source,
+      renderBuffer: this.renderBuffer(),
+      renderMode: this.renderMode(),
+      renderOrder: this.renderOrder(),
+      style: this.style(),
+      background: this.background(),
+      updateWhileAnimating: this.updateWhileAnimating(),
+      updateWhileInteracting: this.updateWhileInteracting(),
+      visible: this.visible(),
+      source: this.source(),
     };
   }
 }

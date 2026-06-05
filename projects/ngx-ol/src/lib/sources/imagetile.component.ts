@@ -1,4 +1,13 @@
-import { Component, forwardRef, Host, Input, OnChanges, OnInit, Optional, SimpleChanges } from '@angular/core';
+import {
+  Component,
+  forwardRef,
+  OnChanges,
+  OnInit,
+  SimpleChanges,
+  input,
+  signal,
+  inject,
+} from '@angular/core';
 import type { ProjectionLike } from 'ol/proj';
 import type { Size } from 'ol/size';
 import ImageTileSource from 'ol/source/ImageTile';
@@ -12,63 +21,63 @@ import { SourceComponent } from './source.component';
 @Component({
   selector: 'aol-source-imagetile',
   template: ` <ng-content></ng-content> `,
-  providers: [{ provide: SourceComponent, useExisting: forwardRef(() => SourceImageTileComponent) }],
+  providers: [
+    { provide: SourceComponent, useExisting: forwardRef(() => SourceImageTileComponent) },
+  ],
 })
 export class SourceImageTileComponent extends SourceComponent implements OnInit, OnChanges {
-  @Input()
-  url?: UrlLike;
+  readonly url = input<UrlLike>();
 
-  @Input()
-  loader?: Loader;
+  readonly loader = input<Loader>();
 
-  @Input()
-  maxZoom?: number;
+  readonly maxZoom = input<number>();
 
-  @Input()
-  minZoom?: number;
+  readonly minZoom = input<number>();
 
-  @Input()
-  tileSize?: number | Size;
+  readonly tileSize = input<number | Size>();
 
-  @Input()
-  gutter?: number;
+  readonly gutter = input<number>();
 
-  @Input()
-  maxResolution?: number;
+  readonly maxResolution = input<number>();
 
-  @Input()
-  projection?: ProjectionLike;
+  readonly projection = input<ProjectionLike>();
 
-  @Input()
-  tileGrid?: TileGrid;
+  readonly tileGrid = input<TileGrid>();
 
-  @Input()
-  state?: State;
+  readonly state = input<State>();
 
-  @Input()
-  wrapX?: boolean;
+  readonly wrapX = input<boolean>();
 
-  @Input()
-  transition?: number;
+  readonly transition = input<number>();
 
-  @Input()
-  interpolate?: boolean;
+  readonly interpolate = input<boolean>();
 
-  @Input()
-  crossOrigin?: CrossOriginAttribute;
+  readonly crossOrigin = input<CrossOriginAttribute>();
 
   instance: ImageTileSource;
 
-  constructor(@Optional() @Host() layer?: LayerWebGLTileComponent) {
-    super(layer!);
+  protected readonly _instanceSignal = signal<ImageTileSource | undefined>(undefined);
+
+  readonly instanceSignal = this._instanceSignal.asReadonly();
+
+  protected setInstance(instance: ImageTileSource): ImageTileSource {
+    this.instance = instance;
+
+    this._instanceSignal.set(instance);
+
+    return instance;
+  }
+  constructor() {
+    super(inject(LayerWebGLTileComponent, { optional: true, host: true })!);
   }
 
   ngOnInit() {
-    this.instance = new ImageTileSource(this.createOptions());
+    this.setInstance(new ImageTileSource(this.createOptions()));
     this.register(this.instance);
   }
 
   ngOnChanges(changes: SimpleChanges) {
+    super.ngOnChanges(changes);
     if (this.instance && changes.url?.currentValue) {
       this.instance.setUrl(changes.url.currentValue);
     }
@@ -76,22 +85,22 @@ export class SourceImageTileComponent extends SourceComponent implements OnInit,
 
   private createOptions(): Options {
     return {
-      url: this.url,
-      loader: this.loader,
-      attributions: this.attributions,
-      attributionsCollapsible: this.attributionsCollapsible,
-      maxZoom: this.maxZoom,
-      minZoom: this.minZoom,
-      tileSize: this.tileSize,
-      gutter: this.gutter,
-      maxResolution: this.maxResolution,
-      projection: this.projection,
-      tileGrid: this.tileGrid,
-      state: this.state,
-      wrapX: this.wrapX,
-      transition: this.transition,
-      interpolate: this.interpolate,
-      crossOrigin: this.crossOrigin,
+      url: this.url(),
+      loader: this.loader(),
+      attributions: this.attributions(),
+      attributionsCollapsible: this.attributionsCollapsible(),
+      maxZoom: this.maxZoom(),
+      minZoom: this.minZoom(),
+      tileSize: this.tileSize(),
+      gutter: this.gutter(),
+      maxResolution: this.maxResolution(),
+      projection: this.projection(),
+      tileGrid: this.tileGrid(),
+      state: this.state(),
+      wrapX: this.wrapX(),
+      transition: this.transition(),
+      interpolate: this.interpolate(),
+      crossOrigin: this.crossOrigin(),
     };
   }
 }

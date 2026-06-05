@@ -1,6 +1,7 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, signal, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import VectorSource from 'ol/source/Vector';
+import type { Type } from 'ol/geom/Geometry';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { AngularOpenlayersModule } from '../../public-api';
 import { MapComponent } from '../map.component';
@@ -11,7 +12,8 @@ import { DrawInteractionComponent } from './draw.component';
     <aol-map width="320px" height="240px">
       <aol-view [center]="center" [zoom]="zoom"></aol-view>
       <aol-interaction-draw
-        [type]="type"
+        [type]="type()"
+        [trace]="trace()"
         [source]="source"
         (drawStart)="drawStart($event)"
         (drawEnd)="drawEnd($event)"
@@ -29,7 +31,8 @@ import { DrawInteractionComponent } from './draw.component';
 class DrawInteractionHostComponent {
   center = [0, 0];
   zoom = 2;
-  type = 'Point' as const;
+  type = signal<Type>('Point');
+  trace = signal(false);
   source = new VectorSource();
   drawStart = vi.fn();
   drawEnd = vi.fn();
@@ -39,11 +42,9 @@ class DrawInteractionHostComponent {
   error = vi.fn();
   propertyChange = vi.fn();
 
-  @ViewChild(DrawInteractionComponent)
-  interaction!: DrawInteractionComponent;
+  readonly interaction = viewChild.required<DrawInteractionComponent>(DrawInteractionComponent);
 
-  @ViewChild(MapComponent)
-  map!: MapComponent;
+  readonly map = viewChild.required<MapComponent>(MapComponent);
 }
 
 describe('DrawInteractionComponent', () => {
@@ -65,15 +66,15 @@ describe('DrawInteractionComponent', () => {
   it('adds a draw interaction to the map and forwards OpenLayers events', () => {
     const host = fixture.componentInstance;
 
-    expect(host.map.instance.getInteractions().getArray()).toContain(host.interaction.instance);
+    expect(host.map().instance.getInteractions().getArray()).toContain(host.interaction().instance);
 
-    host.interaction.instance.dispatchEvent('drawstart');
-    host.interaction.instance.dispatchEvent('drawend');
-    host.interaction.instance.dispatchEvent('drawabort');
-    host.interaction.instance.dispatchEvent('change');
-    host.interaction.instance.dispatchEvent('change:active');
-    host.interaction.instance.dispatchEvent('error');
-    host.interaction.instance.dispatchEvent('propertychange');
+    host.interaction().instance.dispatchEvent('drawstart');
+    host.interaction().instance.dispatchEvent('drawend');
+    host.interaction().instance.dispatchEvent('drawabort');
+    host.interaction().instance.dispatchEvent('change');
+    host.interaction().instance.dispatchEvent('change:active');
+    host.interaction().instance.dispatchEvent('error');
+    host.interaction().instance.dispatchEvent('propertychange');
 
     expect(host.drawStart).toHaveBeenCalledOnce();
     expect(host.drawEnd).toHaveBeenCalledOnce();
@@ -82,5 +83,27 @@ describe('DrawInteractionComponent', () => {
     expect(host.changeActive).toHaveBeenCalledOnce();
     expect(host.error).toHaveBeenCalledOnce();
     expect(host.propertyChange).toHaveBeenCalledOnce();
+  });
+
+  it('replaces the registered draw interaction when the draw type changes', () => {
+    const host = fixture.componentInstance;
+    const oldInteraction = host.interaction().instance;
+
+    host.type.set('Polygon');
+    fixture.detectChanges(false);
+
+    expect(host.interaction().instance).not.toBe(oldInteraction);
+    expect(host.map().instance.getInteractions().getArray()).toContain(host.interaction().instance);
+    expect(host.map().instance.getInteractions().getArray()).not.toContain(oldInteraction);
+  });
+
+  it('updates trace without replacing the draw interaction', () => {
+    const host = fixture.componentInstance;
+    const interaction = host.interaction().instance;
+
+    host.trace.set(true);
+    fixture.detectChanges(false);
+
+    expect(host.interaction().instance).toBe(interaction);
   });
 });

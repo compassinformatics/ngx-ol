@@ -1,4 +1,14 @@
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  SimpleChanges,
+  input,
+  output,
+  signal,
+  inject,
+} from '@angular/core';
 import type { Condition } from 'ol/events/condition';
 import type { Extent as ExtentType } from 'ol/extent';
 import ExtentInteraction, { ExtentEvent } from 'ol/interaction/Extent';
@@ -10,34 +20,38 @@ import { MapComponent } from '../map.component';
   selector: 'aol-interaction-extent',
   template: '',
 })
-export class ExtentInteractionComponent implements OnInit, OnDestroy {
-  @Input()
-  condition?: Condition;
+export class ExtentInteractionComponent implements OnInit, OnChanges, OnDestroy {
+  readonly condition = input<Condition>();
 
-  @Input()
-  extent?: ExtentType;
+  readonly extent = input<ExtentType>();
 
-  @Input()
-  boxStyle?: StyleLike;
+  readonly boxStyle = input<StyleLike>();
 
-  @Input()
-  pixelTolerance?: number;
+  readonly pixelTolerance = input<number>();
 
-  @Input()
-  pointerStyle?: StyleLike;
+  readonly pointerStyle = input<StyleLike>();
 
-  @Input()
-  wrapX?: boolean;
+  readonly wrapX = input<boolean>();
 
-  @Output()
-  extentChanged = new EventEmitter<ExtentEvent>();
+  readonly extentChanged = output<ExtentEvent>();
 
   instance: ExtentInteraction;
 
-  constructor(private map: MapComponent) {}
+  protected readonly _instanceSignal = signal<ExtentInteraction | undefined>(undefined);
+
+  readonly instanceSignal = this._instanceSignal.asReadonly();
+
+  protected setInstance(instance: ExtentInteraction): ExtentInteraction {
+    this.instance = instance;
+
+    this._instanceSignal.set(instance);
+
+    return instance;
+  }
+  private readonly map = inject(MapComponent);
 
   ngOnInit() {
-    this.instance = new ExtentInteraction(this.createOptions());
+    this.setInstance(new ExtentInteraction(this.createOptions()));
     this.instance.on('extentchanged', (event) => this.extentChanged.emit(event));
     this.map.instance.addInteraction(this.instance);
   }
@@ -46,14 +60,20 @@ export class ExtentInteractionComponent implements OnInit, OnDestroy {
     this.map.instance.removeInteraction(this.instance);
   }
 
+  ngOnChanges(changes: SimpleChanges) {
+    if (this.instance && changes.extent) {
+      this.instance.setExtent(changes.extent.currentValue);
+    }
+  }
+
   private createOptions(): Options {
     return {
-      condition: this.condition,
-      extent: this.extent,
-      boxStyle: this.boxStyle,
-      pixelTolerance: this.pixelTolerance,
-      pointerStyle: this.pointerStyle,
-      wrapX: this.wrapX,
+      condition: this.condition(),
+      extent: this.extent(),
+      boxStyle: this.boxStyle(),
+      pixelTolerance: this.pixelTolerance(),
+      pointerStyle: this.pointerStyle(),
+      wrapX: this.wrapX(),
     };
   }
 }

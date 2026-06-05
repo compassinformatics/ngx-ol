@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import Circle from 'ol/geom/Circle';
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
@@ -28,11 +28,9 @@ class GeometryCircleHostComponent {
   center = [5, 6];
   radius = 10;
 
-  @ViewChild(GeometryCircleComponent)
-  geometry!: GeometryCircleComponent;
+  readonly geometry = viewChild.required<GeometryCircleComponent>(GeometryCircleComponent);
 
-  @ViewChild(FeatureComponent)
-  feature!: FeatureComponent;
+  readonly feature = viewChild.required<FeatureComponent>(FeatureComponent);
 }
 
 describe('GeometryCircleComponent', () => {
@@ -52,11 +50,11 @@ describe('GeometryCircleComponent', () => {
   });
 
   it('binds center and radius through Angular inputs and attaches the geometry to the feature', () => {
-    expect(fixture.componentInstance.geometry.instance).toBeInstanceOf(Circle);
-    expect(fixture.componentInstance.feature.instance.getGeometry()).toBe(
-      fixture.componentInstance.geometry.instance,
+    expect(fixture.componentInstance.geometry().instance).toBeInstanceOf(Circle);
+    expect(fixture.componentInstance.feature().instance.getGeometry()).toBe(
+      fixture.componentInstance.geometry().instance,
     );
-    expect(fixture.componentInstance.geometry.instance.getCenter()).toEqual([5, 6]);
-    expect(fixture.componentInstance.geometry.instance.getRadius()).toBe(10);
+    expect(fixture.componentInstance.geometry().instance.getCenter()).toEqual([5, 6]);
+    expect(fixture.componentInstance.geometry().instance.getRadius()).toBe(10);
   });
 });

@@ -1,4 +1,13 @@
-import { Component, Host, Input, OnChanges, OnInit, Optional, SimpleChanges, forwardRef } from '@angular/core';
+import {
+  Component,
+  OnChanges,
+  OnInit,
+  SimpleChanges,
+  forwardRef,
+  inject,
+  input,
+  signal,
+} from '@angular/core';
 import Collection from 'ol/Collection.js';
 import type { FeatureLike } from 'ol/Feature.js';
 import type FeatureFormat from 'ol/format/Feature.js';
@@ -16,31 +25,34 @@ import { LayerHeatmapComponent } from '../layers/layerheatmap.component';
   providers: [{ provide: SourceComponent, useExisting: forwardRef(() => SourceVectorComponent) }],
 })
 export class SourceVectorComponent extends SourceComponent implements OnInit, OnChanges {
-  @Input()
-  overlaps: boolean;
-  @Input()
-  features: FeatureLike[] | Collection<FeatureLike> | undefined;
-  @Input()
-  useSpatialIndex: boolean;
-  @Input()
-  wrapX: boolean;
-  @Input()
-  loader?: FeatureLoader<FeatureLike>;
-  @Input()
-  url?: string | FeatureUrlFunction;
-  @Input()
-  format?: FeatureFormat<any>;
-  @Input()
-  strategy?: LoadingStrategy;
+  readonly overlaps = input<boolean>();
+  readonly features = input<FeatureLike[] | Collection<FeatureLike> | undefined>();
+  readonly useSpatialIndex = input<boolean>();
+  readonly wrapX = input<boolean>();
+  readonly loader = input<FeatureLoader<FeatureLike>>();
+  readonly url = input<string | FeatureUrlFunction>();
+  readonly format = input<FeatureFormat<any>>();
+  readonly strategy = input<LoadingStrategy>();
 
   instance: Vector;
 
-  constructor(
-    @Optional() @Host() vectorLayer: LayerVectorComponent,
-    @Optional() @Host() vectorImageLayer: LayerVectorImageComponent,
-    @Optional() @Host() heatmapLayer: LayerHeatmapComponent,
-  ) {
-    super(vectorLayer || vectorImageLayer || heatmapLayer);
+  protected readonly _instanceSignal = signal<Vector | undefined>(undefined);
+
+  readonly instanceSignal = this._instanceSignal.asReadonly();
+
+  protected setInstance(instance: Vector): Vector {
+    this.instance = instance;
+
+    this._instanceSignal.set(instance);
+
+    return instance;
+  }
+  constructor() {
+    super(
+      inject(LayerVectorComponent, { optional: true, host: true }) ||
+        inject(LayerVectorImageComponent, { optional: true, host: true }) ||
+        inject(LayerHeatmapComponent, { optional: true, host: true })!,
+    );
   }
 
   ngOnInit() {
@@ -49,25 +61,34 @@ export class SourceVectorComponent extends SourceComponent implements OnInit, On
   }
 
   ngOnChanges(changes: SimpleChanges): void {
+    super.ngOnChanges(changes);
     const { features } = changes;
 
-    if (features?.currentValue && this.instance) {
+    if (this.instance && changes.loader?.currentValue) {
+      this.instance.setLoader(changes.loader.currentValue);
+    }
+    if (this.instance && changes.url?.currentValue) {
+      this.instance.setUrl(changes.url.currentValue);
+    }
+    if (features && this.instance) {
       this.instance.clear();
-      this.instance.addFeatures(features.currentValue);
+      if (features.currentValue) {
+        this.instance.addFeatures(features.currentValue);
+      }
     }
   }
 
   private createOptions(): Options<FeatureLike> {
     return {
-      attributions: this.attributions,
-      overlaps: this.overlaps,
-      features: this.features,
-      useSpatialIndex: this.useSpatialIndex,
-      wrapX: this.wrapX,
-      loader: this.loader,
-      url: this.url,
-      format: this.format,
-      strategy: this.strategy,
+      attributions: this.attributions(),
+      overlaps: this.overlaps(),
+      features: this.features(),
+      useSpatialIndex: this.useSpatialIndex(),
+      wrapX: this.wrapX(),
+      loader: this.loader(),
+      url: this.url(),
+      format: this.format(),
+      strategy: this.strategy(),
     };
   }
 }

@@ -1,4 +1,12 @@
-import { Component, Host, Input, forwardRef, ContentChild, AfterContentInit } from '@angular/core';
+import {
+  Component,
+  forwardRef,
+  AfterContentInit,
+  contentChild,
+  input,
+  signal,
+  inject,
+} from '@angular/core';
 import VectorTile from 'ol/source/VectorTile';
 import { Options } from 'ol/source/VectorTile';
 import TileGrid from 'ol/tilegrid/TileGrid';
@@ -24,93 +32,90 @@ import FeatureFormat from 'ol/format/Feature';
   ],
 })
 export class SourceVectorTileComponent extends SourceComponent implements AfterContentInit {
-  @Input()
-  cacheSize?: number;
-  @Input()
-  extent?: Extent;
-  @Input()
-  overlaps?: boolean;
-  @Input()
-  projection?: ProjectionLike;
-  @Input()
-  state?: State;
-  @Input()
-  tileClass?: typeof OlVectorTile;
-  @Input()
-  maxZoom?: number;
-  @Input()
-  minZoom?: number;
-  @Input()
-  tileSize?: number | Size;
-  @Input()
-  maxResolution?: number;
-  @Input()
-  tileUrlFunction?: UrlFunction;
-  @Input()
-  tileLoadFunction?: LoadFunction;
-  @Input()
-  url?: string;
-  @Input()
-  urls?: string[];
-  @Input()
-  transition?: number;
-  @Input()
-  wrapX?: boolean;
-  @Input()
-  zDirection?: number | NearestDirectionFunction;
-  @Input()
-  format?: FeatureFormat<any>;
+  readonly cacheSize = input<number>();
+  readonly extent = input<Extent>();
+  readonly overlaps = input<boolean>();
+  readonly projection = input<ProjectionLike>();
+  readonly state = input<State>();
+  readonly tileClass = input<typeof OlVectorTile>();
+  readonly maxZoom = input<number>();
+  readonly minZoom = input<number>();
+  readonly tileSize = input<number | Size>();
+  readonly maxResolution = input<number>();
+  readonly tileUrlFunction = input<UrlFunction>();
+  readonly tileLoadFunction = input<LoadFunction>();
+  readonly url = input<string>();
+  readonly urls = input<string[]>();
+  readonly transition = input<number>();
+  readonly wrapX = input<boolean>();
+  readonly zDirection = input<number | NearestDirectionFunction>();
+  readonly format = input<FeatureFormat<any>>();
 
-  @ContentChild(FormatMVTComponent, { static: false })
-  formatMVTComponent: FormatMVTComponent;
-  @ContentChild(FormatGeoJSONComponent, { static: false })
-  formatGeoJSONComponent: FormatGeoJSONComponent;
-  @ContentChild(TileGridComponent, { static: false })
-  tileGridComponent: TileGridComponent;
+  protected readonly formatMVTComponent = contentChild(FormatMVTComponent);
+  protected readonly formatGeoJSONComponent = contentChild(FormatGeoJSONComponent);
+  protected readonly tileGridComponent = contentChild(TileGridComponent);
 
   public instance: VectorTile;
+
+  protected readonly _instanceSignal = signal<VectorTile | undefined>(undefined);
+
+  readonly instanceSignal = this._instanceSignal.asReadonly();
+
+  protected setInstance(instance: VectorTile): VectorTile {
+    this.instance = instance;
+
+    this._instanceSignal.set(instance);
+
+    return instance;
+  }
   tileGrid: TileGrid;
 
-  constructor(@Host() layer: LayerVectorTileComponent) {
-    super(layer);
+  constructor() {
+    super(inject(LayerVectorTileComponent, { host: true }));
   }
 
   ngAfterContentInit() {
-    let format: FeatureFormat<any> | undefined = this.format;
-    if (this.formatMVTComponent) {
-      format = this.formatMVTComponent.instance;
-    }
-    if (this.formatGeoJSONComponent) {
-      format = this.formatGeoJSONComponent.instance;
-    }
-    this.tileGrid = this.tileGridComponent.instance;
+    let format: FeatureFormat<any> | undefined = this.format();
+    const formatMVTComponent = this.formatMVTComponent();
+    const formatGeoJSONComponent = this.formatGeoJSONComponent();
+    const tileGridComponent = this.tileGridComponent();
 
-    this.instance = new VectorTile(this.createOptions(format));
+    if (formatMVTComponent) {
+      format = formatMVTComponent.instance;
+    }
+    if (formatGeoJSONComponent) {
+      format = formatGeoJSONComponent.instance;
+    }
+    if (tileGridComponent) {
+      this.tileGrid = tileGridComponent.instance;
+    }
+
+    this.setInstance(new VectorTile(this.createOptions(format)));
     this.host.instance.setSource(this.instance);
   }
 
   private createOptions(format: FeatureFormat<any> | undefined): Options<any> {
     return {
-      attributions: this.attributions,
-      cacheSize: this.cacheSize,
-      extent: this.extent,
+      attributions: this.attributions(),
+      cacheSize: this.cacheSize(),
+      extent: this.extent(),
       format,
-      overlaps: this.overlaps,
-      projection: this.projection,
-      state: this.state,
-      tileClass: this.tileClass,
-      maxZoom: this.maxZoom,
-      minZoom: this.minZoom,
-      tileSize: this.tileSize,
-      maxResolution: this.maxResolution,
+      overlaps: this.overlaps(),
+      projection: this.projection(),
+      state: this.state(),
+      tileClass: this.tileClass(),
+      maxZoom: this.maxZoom(),
+      minZoom: this.minZoom(),
+      tileSize: this.tileSize(),
+      maxResolution: this.maxResolution(),
       tileGrid: this.tileGrid,
-      tileUrlFunction: this.tileUrlFunction,
-      tileLoadFunction: this.tileLoadFunction,
-      url: this.url,
-      urls: this.urls,
-      transition: this.transition,
-      wrapX: this.wrapX,
-      zDirection: this.zDirection,
+      tileUrlFunction: this.tileUrlFunction(),
+      tileLoadFunction: this.tileLoadFunction(),
+      url: this.url(),
+      urls: this.urls(),
+      transition: this.transition(),
+      wrapX: this.wrapX(),
+      zDirection: this.zDirection(),
     };
   }
 }

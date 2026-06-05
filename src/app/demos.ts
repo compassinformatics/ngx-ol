@@ -13,6 +13,7 @@ const GITHUB_SOURCE_BASE = 'https://github.com/compassinformatics/ngx-ol/blob/ma
 const SOURCE_PATH_OVERRIDES: Readonly<Record<string, string>> = {
   '/basic': 'src/app/basic-map/basic-map.ts',
   '/advanced': 'src/app/advanced-map/advanced-map.ts',
+  '/reactive-layers': 'src/app/reactive-view-layers/reactive-view-layers.ts',
   '/utf-grid': 'src/app/utfgrid/utfgrid.ts',
 };
 
@@ -89,6 +90,13 @@ const DEMO_DEFINITIONS: readonly DemoDefinition[] = [
     keywords: ['position', 'center', 'zoom', 'forms'],
   },
   {
+    path: '/instance-signal',
+    label: 'Instance Signal',
+    description:
+      'Uses instanceSignal to wait for the underlying OpenLayers map instance and call OL APIs safely.',
+    keywords: ['instance', 'signal', 'map', 'openlayers', 'escape-hatch'],
+  },
+  {
     path: '/cursor-position',
     label: 'Cursor Position',
     description: 'Move your pointer over the map to see its current coordinate.',
@@ -111,7 +119,8 @@ const DEMO_DEFINITIONS: readonly DemoDefinition[] = [
   {
     path: '/clickable-feature',
     label: 'Clickable Feature',
-    description: 'Shows how aol-feature emits olClick, singleClick, and dblClick when clickable is enabled.',
+    description:
+      'Shows how aol-feature emits olClick, singleClick, and dblClick when clickable is enabled.',
     keywords: ['feature', 'click', 'singleclick', 'dblclick', 'events'],
   },
   {
@@ -294,6 +303,51 @@ const DEMO_DEFINITIONS: readonly DemoDefinition[] = [
     label: 'Raster',
     description: 'Applies raster operations so you can see derived image output update live.',
     keywords: ['raster', 'operation', 'brightness', 'contrast'],
+  },
+  {
+    path: '/reactive-sources',
+    label: 'Reactive Sources',
+    description:
+      'Kitchen-sink source demo for XYZ, WMS, vector, ArcGIS REST, TileJSON, and WMTS updates.',
+    keywords: ['reactive', 'sources', 'xyz', 'wms', 'vector', 'arcgis', 'tilejson', 'wmts'],
+  },
+  {
+    path: '/reactive-layers',
+    label: 'Reactive Layers',
+    description:
+      'Kitchen-sink demo for live view constraints, layer state, vector layers, and heatmap settings.',
+    keywords: ['reactive', 'view', 'layers', 'heatmap', 'opacity', 'visibility'],
+  },
+  {
+    path: '/reactive-controls',
+    label: 'Reactive Controls',
+    description: 'Kitchen-sink map UI demo for live OpenLayers control inputs.',
+    keywords: ['reactive', 'controls', 'overview', 'scaleline', 'attribution'],
+  },
+  {
+    path: '/reactive-interactions',
+    label: 'Reactive Interactions',
+    description: 'Kitchen-sink interaction demo for navigation and selection options.',
+    keywords: ['reactive', 'interactions', 'navigation', 'select', 'mousewheel'],
+  },
+  {
+    path: '/reactive-drawings',
+    label: 'Reactive Drawings',
+    description: 'Kitchen-sink drawing demo for draw, modify, snap, and translate options.',
+    keywords: ['reactive', 'drawings', 'draw', 'modify', 'snap', 'translate'],
+  },
+  {
+    path: '/reactive-styles',
+    label: 'Reactive Styles',
+    description:
+      'Kitchen-sink style and geometry demo for live coordinates, strokes, fills, text, and circle styles.',
+    keywords: ['reactive', 'styles', 'geometry', 'text', 'stroke', 'fill'],
+  },
+  {
+    path: '/reactive-overlays',
+    label: 'Reactive Overlays',
+    description: 'Kitchen-sink overlay demo for position, offset, and positioning inputs.',
+    keywords: ['reactive', 'overlays', 'position', 'offset', 'popup'],
   },
 
   // Map utilities and comparison

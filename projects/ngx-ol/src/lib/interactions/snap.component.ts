@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { Component, OnDestroy, OnInit, input, output, signal, inject } from '@angular/core';
 import BaseEvent from 'ol/events/Event';
 import { SnapEvent } from 'ol/events/SnapEvent';
 import Snap from 'ol/interaction/Snap';
@@ -14,34 +14,35 @@ import Vector from 'ol/source/Vector';
   template: '',
 })
 export class SnapInteractionComponent implements OnInit, OnDestroy {
-  @Input()
-  features?: Collection<Feature>;
-  @Input()
-  edge?: boolean;
-  @Input()
-  vertex?: boolean;
-  @Input()
-  pixelTolerance?: number;
-  @Input()
-  source?: Vector;
+  readonly features = input<Collection<Feature>>();
+  readonly edge = input<boolean>();
+  readonly vertex = input<boolean>();
+  readonly pixelTolerance = input<number>();
+  readonly source = input<Vector>();
 
-  @Output()
-  olChange = new EventEmitter<BaseEvent>();
-  @Output()
-  changeActive = new EventEmitter<ObjectEvent>();
-  @Output()
-  olError = new EventEmitter<BaseEvent>();
-  @Output()
-  propertyChange = new EventEmitter<ObjectEvent>();
-  @Output()
-  snap = new EventEmitter<SnapEvent>();
+  readonly olChange = output<BaseEvent>();
+  readonly changeActive = output<ObjectEvent>();
+  readonly olError = output<BaseEvent>();
+  readonly propertyChange = output<ObjectEvent>();
+  readonly snap = output<SnapEvent>();
 
   instance: Snap;
 
-  constructor(private map: MapComponent) {}
+  protected readonly _instanceSignal = signal<Snap | undefined>(undefined);
+
+  readonly instanceSignal = this._instanceSignal.asReadonly();
+
+  protected setInstance(instance: Snap): Snap {
+    this.instance = instance;
+
+    this._instanceSignal.set(instance);
+
+    return instance;
+  }
+  private readonly map = inject(MapComponent);
 
   ngOnInit() {
-    this.instance = new Snap(this.createOptions());
+    this.setInstance(new Snap(this.createOptions()));
 
     this.instance.on('change', (event: BaseEvent) => this.olChange.emit(event));
     this.instance.on('change:active', (event: ObjectEvent) => this.changeActive.emit(event));
@@ -57,11 +58,11 @@ export class SnapInteractionComponent implements OnInit, OnDestroy {
 
   private createOptions(): Options {
     return {
-      features: this.features,
-      edge: this.edge,
-      vertex: this.vertex,
-      pixelTolerance: this.pixelTolerance,
-      source: this.source,
+      features: this.features(),
+      edge: this.edge(),
+      vertex: this.vertex(),
+      pixelTolerance: this.pixelTolerance(),
+      source: this.source(),
     };
   }
 }

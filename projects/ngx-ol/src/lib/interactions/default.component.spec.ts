@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 import { AngularOpenlayersModule } from '../../public-api';
@@ -20,11 +20,11 @@ class DefaultInteractionHostComponent {
   zoom = 2;
   dragPan = true;
 
-  @ViewChild(DefaultInteractionComponent)
-  interaction!: DefaultInteractionComponent;
+  readonly interaction = viewChild.required<DefaultInteractionComponent>(
+    DefaultInteractionComponent,
+  );
 
-  @ViewChild(MapComponent)
-  map!: MapComponent;
+  readonly map = viewChild.required<MapComponent>(MapComponent);
 }
 
 describe('DefaultInteractionComponent', () => {
@@ -45,8 +45,8 @@ describe('DefaultInteractionComponent', () => {
 
   it('adds and removes the default interaction collection with the host map lifecycle', () => {
     const host = fixture!.componentInstance;
-    const map = host.map.instance;
-    const interactions = host.interaction.instance.getArray();
+    const map = host.map().instance;
+    const interactions = host.interaction().instance.getArray();
 
     expect(interactions.length).toBeGreaterThan(0);
     interactions.forEach((interaction) => {

@@ -1,4 +1,4 @@
-import { Component, forwardRef, Host, Input, OnInit, Optional } from '@angular/core';
+import { Component, forwardRef, OnInit, input, signal, inject } from '@angular/core';
 import type { NearestDirectionFunction } from 'ol/array';
 import type { Extent } from 'ol/extent';
 import type { ProjectionLike } from 'ol/proj';
@@ -14,72 +14,70 @@ import { SourceComponent } from './source.component';
   providers: [{ provide: SourceComponent, useExisting: forwardRef(() => SourceZoomifyComponent) }],
 })
 export class SourceZoomifyComponent extends SourceComponent implements OnInit {
-  @Input()
-  cacheSize?: number;
+  readonly cacheSize = input<number>();
 
-  @Input()
-  crossOrigin?: string | null;
+  readonly crossOrigin = input<string | null>();
 
-  @Input()
-  interpolate?: boolean;
+  readonly interpolate = input<boolean>();
 
-  @Input()
-  projection?: ProjectionLike;
+  readonly projection = input<ProjectionLike>();
 
-  @Input()
-  tilePixelRatio?: number;
+  readonly tilePixelRatio = input<number>();
 
-  @Input()
-  reprojectionErrorThreshold?: number;
+  readonly reprojectionErrorThreshold = input<number>();
 
-  @Input()
-  url!: string;
+  readonly url = input.required<string>();
 
-  @Input()
-  tierSizeCalculation?: TierSizeCalculation;
+  readonly tierSizeCalculation = input<TierSizeCalculation>();
 
-  @Input()
-  size!: Size;
+  readonly size = input.required<Size>();
 
-  @Input()
-  extent?: Extent;
+  readonly extent = input<Extent>();
 
-  @Input()
-  transition?: number;
+  readonly transition = input<number>();
 
-  @Input()
-  tileSize?: number;
+  readonly tileSize = input<number>();
 
-  @Input()
-  zDirection?: number | NearestDirectionFunction;
+  readonly zDirection = input<number | NearestDirectionFunction>();
 
   instance: Zoomify;
 
-  constructor(@Optional() @Host() layer?: LayerTileComponent) {
-    super(layer!);
+  protected readonly _instanceSignal = signal<Zoomify | undefined>(undefined);
+
+  readonly instanceSignal = this._instanceSignal.asReadonly();
+
+  protected setInstance(instance: Zoomify): Zoomify {
+    this.instance = instance;
+
+    this._instanceSignal.set(instance);
+
+    return instance;
+  }
+  constructor() {
+    super(inject(LayerTileComponent, { optional: true, host: true })!);
   }
 
   ngOnInit() {
-    this.instance = new Zoomify(this.createOptions());
+    this.setInstance(new Zoomify(this.createOptions()));
     this.register(this.instance);
   }
 
   private createOptions(): Options {
     return {
-      attributions: this.attributions,
-      cacheSize: this.cacheSize,
-      crossOrigin: this.crossOrigin,
-      interpolate: this.interpolate,
-      projection: this.projection,
-      tilePixelRatio: this.tilePixelRatio,
-      reprojectionErrorThreshold: this.reprojectionErrorThreshold,
-      url: this.url,
-      tierSizeCalculation: this.tierSizeCalculation,
-      size: this.size,
-      extent: this.extent,
-      transition: this.transition,
-      tileSize: this.tileSize,
-      zDirection: this.zDirection,
+      attributions: this.attributions(),
+      cacheSize: this.cacheSize(),
+      crossOrigin: this.crossOrigin(),
+      interpolate: this.interpolate(),
+      projection: this.projection(),
+      tilePixelRatio: this.tilePixelRatio(),
+      reprojectionErrorThreshold: this.reprojectionErrorThreshold(),
+      url: this.url(),
+      tierSizeCalculation: this.tierSizeCalculation(),
+      size: this.size(),
+      extent: this.extent(),
+      transition: this.transition(),
+      tileSize: this.tileSize(),
+      zDirection: this.zDirection(),
     };
   }
 }

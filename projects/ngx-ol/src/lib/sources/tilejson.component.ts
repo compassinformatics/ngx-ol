@@ -1,4 +1,4 @@
-import { Component, Host, Input, OnInit, forwardRef } from '@angular/core';
+import { Component, OnInit, forwardRef, input, signal, inject } from '@angular/core';
 import TileJSON from 'ol/source/TileJSON';
 import { Config, Options } from 'ol/source/TileJSON';
 import { LoadFunction } from 'ol/Tile';
@@ -13,57 +13,56 @@ import { SourceComponent } from './source.component';
   providers: [{ provide: SourceComponent, useExisting: forwardRef(() => SourceTileJSONComponent) }],
 })
 export class SourceTileJSONComponent extends SourceComponent implements OnInit {
-  @Input()
-  cacheSize?: number;
-  @Input()
-  crossOrigin?: string | null;
-  @Input()
-  interpolate?: boolean;
-  @Input()
-  jsonp?: boolean;
-  @Input()
-  reprojectionErrorThreshold?: number;
-  @Input()
-  tileJSON?: Config;
-  @Input()
-  tileLoadFunction?: LoadFunction;
-  @Input()
-  tileSize?: number | Size;
-  @Input()
-  url?: string;
-  @Input()
-  wrapX?: boolean;
-  @Input()
-  transition?: number;
-  @Input()
-  zDirection?: number | NearestDirectionFunction;
+  readonly cacheSize = input<number>();
+  readonly crossOrigin = input<string | null>();
+  readonly interpolate = input<boolean>();
+  readonly jsonp = input<boolean>();
+  readonly reprojectionErrorThreshold = input<number>();
+  readonly tileJSON = input<Config>();
+  readonly tileLoadFunction = input<LoadFunction>();
+  readonly tileSize = input<number | Size>();
+  readonly url = input<string>();
+  readonly wrapX = input<boolean>();
+  readonly transition = input<number>();
+  readonly zDirection = input<number | NearestDirectionFunction>();
 
   instance: TileJSON;
 
-  constructor(@Host() layer: LayerTileComponent) {
-    super(layer);
+  protected readonly _instanceSignal = signal<TileJSON | undefined>(undefined);
+
+  readonly instanceSignal = this._instanceSignal.asReadonly();
+
+  protected setInstance(instance: TileJSON): TileJSON {
+    this.instance = instance;
+
+    this._instanceSignal.set(instance);
+
+    return instance;
+  }
+  constructor() {
+    super(inject(LayerTileComponent, { host: true }));
   }
 
   ngOnInit() {
-    this.instance = new TileJSON(this.createOptions());
+    this.setInstance(new TileJSON(this.createOptions()));
     this.host.instance.setSource(this.instance);
   }
 
   private createOptions(): Options {
     return {
-      attributions: this.attributions,
-      cacheSize: this.cacheSize,
-      crossOrigin: this.crossOrigin,
-      interpolate: this.interpolate,
-      jsonp: this.jsonp,
-      reprojectionErrorThreshold: this.reprojectionErrorThreshold,
-      tileJSON: this.tileJSON,
-      tileLoadFunction: this.tileLoadFunction,
-      tileSize: this.tileSize,
-      url: this.url,
-      wrapX: this.wrapX,
-      transition: this.transition,
-      zDirection: this.zDirection,
+      attributions: this.attributions(),
+      cacheSize: this.cacheSize(),
+      crossOrigin: this.crossOrigin(),
+      interpolate: this.interpolate(),
+      jsonp: this.jsonp(),
+      reprojectionErrorThreshold: this.reprojectionErrorThreshold(),
+      tileJSON: this.tileJSON(),
+      tileLoadFunction: this.tileLoadFunction(),
+      tileSize: this.tileSize(),
+      url: this.url(),
+      wrapX: this.wrapX(),
+      transition: this.transition(),
+      zDirection: this.zDirection(),
     };
   }
 }

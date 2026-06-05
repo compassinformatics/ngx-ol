@@ -1,13 +1,13 @@
 import {
   Component,
-  Host,
-  Input,
   forwardRef,
-  Output,
-  EventEmitter,
   OnChanges,
   SimpleChanges,
   OnInit,
+  input,
+  output,
+  signal,
+  inject,
 } from '@angular/core';
 import ImageStatic from 'ol/source/ImageStatic';
 import { Options } from 'ol/source/ImageStatic';
@@ -26,34 +26,36 @@ import { ImageSourceEvent } from 'ol/source/Image';
   ],
 })
 export class SourceImageStaticComponent extends SourceComponent implements OnInit, OnChanges {
-  @Input()
-  projection?: ProjectionLike | string;
-  @Input()
-  imageExtent: Extent;
-  @Input()
-  url: string;
-  @Input()
-  crossOrigin?: null | string;
-  @Input()
-  imageLoadFunction?: LoadFunction;
-  @Input()
-  interpolate?: boolean;
+  readonly projection = input<ProjectionLike | string>();
+  readonly imageExtent = input.required<Extent>();
+  readonly url = input.required<string>();
+  readonly crossOrigin = input<null | string>();
+  readonly imageLoadFunction = input<LoadFunction>();
+  readonly interpolate = input<boolean>();
 
-  @Output()
-  imageLoadStart = new EventEmitter<ImageSourceEvent>();
-  @Output()
-  imageLoadEnd = new EventEmitter<ImageSourceEvent>();
-  @Output()
-  imageLoadError = new EventEmitter<ImageSourceEvent>();
+  readonly imageLoadStart = output<ImageSourceEvent>();
+  readonly imageLoadEnd = output<ImageSourceEvent>();
+  readonly imageLoadError = output<ImageSourceEvent>();
 
   instance: ImageStatic;
 
-  constructor(@Host() layer: LayerImageComponent) {
-    super(layer);
+  protected readonly _instanceSignal = signal<ImageStatic | undefined>(undefined);
+
+  readonly instanceSignal = this._instanceSignal.asReadonly();
+
+  protected setInstance(instance: ImageStatic): ImageStatic {
+    this.instance = instance;
+
+    this._instanceSignal.set(instance);
+
+    return instance;
+  }
+  constructor() {
+    super(inject(LayerImageComponent, { host: true }));
   }
 
-  setLayerSource(): void {
-    this.instance = new ImageStatic(this.createOptions());
+  private replaceInstance(): void {
+    this.setInstance(new ImageStatic(this.createOptions()));
     this.host.instance.setSource(this.instance);
     this.instance.on('imageloadstart', (event: ImageSourceEvent) =>
       this.imageLoadStart.emit(event),
@@ -65,39 +67,36 @@ export class SourceImageStaticComponent extends SourceComponent implements OnIni
   }
 
   ngOnInit() {
-    this.setLayerSource();
+    this.replaceInstance();
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    const properties: { [index: string]: any } = {};
     if (!this.instance) {
       return;
     }
+    super.ngOnChanges(changes);
     for (const key in changes) {
       if (changes.hasOwnProperty(key)) {
         switch (key) {
           case 'url':
-            this.url = changes[key].currentValue;
-            this.setLayerSource();
+            this.replaceInstance();
             break;
           default:
             break;
         }
-        properties[key] = changes[key].currentValue;
       }
     }
-    this.instance.setProperties(properties, false);
   }
 
   private createOptions(): Options {
     return {
-      attributions: this.attributions,
-      projection: this.projection,
-      imageExtent: this.imageExtent,
-      url: this.url,
-      crossOrigin: this.crossOrigin,
-      imageLoadFunction: this.imageLoadFunction,
-      interpolate: this.interpolate,
+      attributions: this.attributions(),
+      projection: this.projection(),
+      imageExtent: this.imageExtent(),
+      url: this.url(),
+      crossOrigin: this.crossOrigin(),
+      imageLoadFunction: this.imageLoadFunction(),
+      interpolate: this.interpolate(),
     };
   }
 }

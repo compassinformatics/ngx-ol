@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, Input } from '@angular/core';
+import { Component, OnDestroy, OnInit, input, signal, inject } from '@angular/core';
 import DragRotate from 'ol/interaction/DragRotate';
 import { Options } from 'ol/interaction/DragRotate';
 import { MapComponent } from '../map.component';
@@ -9,17 +9,26 @@ import { Condition } from 'ol/events/condition';
   template: '',
 })
 export class DragRotateInteractionComponent implements OnInit, OnDestroy {
-  @Input()
-  condition?: Condition;
-  @Input()
-  duration?: number;
+  readonly condition = input<Condition>();
+  readonly duration = input<number>();
 
   instance: DragRotate;
 
-  constructor(private map: MapComponent) {}
+  protected readonly _instanceSignal = signal<DragRotate | undefined>(undefined);
+
+  readonly instanceSignal = this._instanceSignal.asReadonly();
+
+  protected setInstance(instance: DragRotate): DragRotate {
+    this.instance = instance;
+
+    this._instanceSignal.set(instance);
+
+    return instance;
+  }
+  private readonly map = inject(MapComponent);
 
   ngOnInit() {
-    this.instance = new DragRotate(this.createOptions());
+    this.setInstance(new DragRotate(this.createOptions()));
     this.map.instance.addInteraction(this.instance);
   }
 
@@ -29,8 +38,8 @@ export class DragRotateInteractionComponent implements OnInit, OnDestroy {
 
   private createOptions(): Options {
     return {
-      condition: this.condition,
-      duration: this.duration,
+      condition: this.condition(),
+      duration: this.duration(),
     };
   }
 }

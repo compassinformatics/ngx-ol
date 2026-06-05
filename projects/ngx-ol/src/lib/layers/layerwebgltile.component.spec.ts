@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import DataTileSource from 'ol/source/DataTile';
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
@@ -22,8 +22,7 @@ class LayerWebGLTileHostComponent {
     loader: () => new Uint8Array([0, 0, 0, 255]),
   });
 
-  @ViewChild(LayerWebGLTileComponent)
-  layer!: LayerWebGLTileComponent;
+  readonly layer = viewChild.required<LayerWebGLTileComponent>(LayerWebGLTileComponent);
 }
 
 describe('LayerWebGLTileComponent', () => {
@@ -43,7 +42,7 @@ describe('LayerWebGLTileComponent', () => {
   });
 
   it('binds its WebGL tile source through Angular inputs', () => {
-    expect(fixture.componentInstance.layer.instance.getSource()).toBe(
+    expect(fixture.componentInstance.layer().instance.getSource()).toBe(
       fixture.componentInstance.source,
     );
   });

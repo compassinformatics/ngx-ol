@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 import { AngularOpenlayersModule } from '../../public-api';
@@ -20,11 +20,9 @@ class ControlRotateHostComponent {
   zoom = 2;
   autoHide = false;
 
-  @ViewChild(ControlRotateComponent)
-  control!: ControlRotateComponent;
+  readonly control = viewChild.required<ControlRotateComponent>(ControlRotateComponent);
 
-  @ViewChild(MapComponent)
-  map!: MapComponent;
+  readonly map = viewChild.required<MapComponent>(MapComponent);
 }
 
 describe('ControlRotateComponent', () => {
@@ -45,8 +43,8 @@ describe('ControlRotateComponent', () => {
 
   it('adds and removes a rotate control with the host map lifecycle', () => {
     const host = fixture!.componentInstance;
-    const map = host.map.instance;
-    const control = host.control.instance;
+    const map = host.map().instance;
+    const control = host.control().instance;
 
     expect(map.getControls().getArray()).toContain(control);
 

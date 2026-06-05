@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import Collection from 'ol/Collection';
 import Feature from 'ol/Feature';
@@ -40,11 +40,11 @@ class TranslateInteractionHostComponent {
   error = vi.fn();
   propertyChange = vi.fn();
 
-  @ViewChild(TranslateInteractionComponent)
-  interaction!: TranslateInteractionComponent;
+  readonly interaction = viewChild.required<TranslateInteractionComponent>(
+    TranslateInteractionComponent,
+  );
 
-  @ViewChild(MapComponent)
-  map!: MapComponent;
+  readonly map = viewChild.required<MapComponent>(MapComponent);
 }
 
 describe('TranslateInteractionComponent', () => {
@@ -66,15 +66,15 @@ describe('TranslateInteractionComponent', () => {
   it('adds a translate interaction to the map and forwards OpenLayers events', () => {
     const host = fixture.componentInstance;
 
-    expect(host.map.instance.getInteractions().getArray()).toContain(host.interaction.instance);
+    expect(host.map().instance.getInteractions().getArray()).toContain(host.interaction().instance);
 
-    host.interaction.instance.dispatchEvent('translatestart');
-    host.interaction.instance.dispatchEvent('translating');
-    host.interaction.instance.dispatchEvent('translateend');
-    host.interaction.instance.dispatchEvent('change');
-    host.interaction.instance.dispatchEvent('change:active');
-    host.interaction.instance.dispatchEvent('error');
-    host.interaction.instance.dispatchEvent('propertychange');
+    host.interaction().instance.dispatchEvent('translatestart');
+    host.interaction().instance.dispatchEvent('translating');
+    host.interaction().instance.dispatchEvent('translateend');
+    host.interaction().instance.dispatchEvent('change');
+    host.interaction().instance.dispatchEvent('change:active');
+    host.interaction().instance.dispatchEvent('error');
+    host.interaction().instance.dispatchEvent('propertychange');
 
     expect(host.translateStart).toHaveBeenCalledOnce();
     expect(host.translating).toHaveBeenCalledOnce();

@@ -1,15 +1,14 @@
 import {
   AfterContentInit,
   Component,
-  ContentChild,
-  EventEmitter,
   forwardRef,
-  Host,
-  Input,
   OnChanges,
-  Optional,
-  Output,
   SimpleChanges,
+  contentChild,
+  input,
+  output,
+  signal,
+  inject,
 } from '@angular/core';
 import { Size } from 'ol/size';
 import XYZ from 'ol/source/XYZ';
@@ -30,92 +29,97 @@ import { SourceComponent } from './source.component';
   providers: [{ provide: SourceComponent, useExisting: forwardRef(() => SourceXYZComponent) }],
 })
 export class SourceXYZComponent extends SourceComponent implements AfterContentInit, OnChanges {
-  @Input()
-  cacheSize?: number;
-  @Input()
-  crossOrigin?: null | string;
-  @Input()
-  gutter?: number;
-  @Input()
-  interpolate?: boolean;
-  @Input()
-  projection?: ProjectionLike;
-  @Input()
-  reprojectionErrorThreshold?: number;
-  @Input()
-  maxResolution?: number;
-  @Input()
-  minZoom?: number;
-  @Input()
-  maxZoom?: number;
-  @Input()
-  tileGrid?: TileGrid;
-  @Input()
-  tileLoadFunction?: LoadFunction;
-  @Input()
-  tilePixelRatio?: number;
-  @Input()
-  tileSize?: number | Size;
-  @Input()
-  tileUrlFunction?: UrlFunction;
-  @Input()
-  transition?: number;
-  @Input()
-  url?: string;
-  @Input()
-  urls?: string[];
-  @Input()
-  wrapX?: boolean;
-  @Input()
-  zDirection?: number | NearestDirectionFunction;
+  readonly cacheSize = input<number>();
+  readonly crossOrigin = input<null | string>();
+  readonly gutter = input<number>();
+  readonly interpolate = input<boolean>();
+  readonly projection = input<ProjectionLike>();
+  readonly reprojectionErrorThreshold = input<number>();
+  readonly maxResolution = input<number>();
+  readonly minZoom = input<number>();
+  readonly maxZoom = input<number>();
+  readonly tileGrid = input<TileGrid>();
+  readonly tileLoadFunction = input<LoadFunction>();
+  readonly tilePixelRatio = input<number>();
+  readonly tileSize = input<number | Size>();
+  readonly tileUrlFunction = input<UrlFunction>();
+  readonly transition = input<number>();
+  readonly url = input<string>();
+  readonly urls = input<string[]>();
+  readonly wrapX = input<boolean>();
+  readonly zDirection = input<number | NearestDirectionFunction>();
 
-  @ContentChild(TileGridComponent, { static: false })
-  tileGridXYZ: TileGridComponent;
+  protected readonly tileGridXYZ = contentChild(TileGridComponent);
 
-  @Output()
-  tileLoadStart = new EventEmitter<TileSourceEvent>();
-  @Output()
-  tileLoadEnd = new EventEmitter<TileSourceEvent>();
-  @Output()
-  tileLoadError = new EventEmitter<TileSourceEvent>();
+  readonly tileLoadStart = output<TileSourceEvent>();
+  readonly tileLoadEnd = output<TileSourceEvent>();
+  readonly tileLoadError = output<TileSourceEvent>();
 
   instance: XYZ;
+  protected contentTileGrid?: TileGrid;
 
-  constructor(
-    @Optional()
-    @Host()
-    protected layer?: LayerTileComponent,
-  ) {
-    super(layer!);
+  protected readonly _instanceSignal = signal<XYZ | undefined>(undefined);
+
+  readonly instanceSignal = this._instanceSignal.asReadonly();
+
+  protected setInstance(instance: XYZ): XYZ {
+    this.instance = instance;
+
+    this._instanceSignal.set(instance);
+
+    return instance;
+  }
+  constructor() {
+    super(inject(LayerTileComponent, { optional: true, host: true })!);
   }
 
   ngAfterContentInit() {
-    if (this.tileGridXYZ) {
-      this.tileGrid = this.tileGridXYZ.instance;
+    const tileGridXYZ = this.tileGridXYZ();
+
+    if (tileGridXYZ) {
+      this.contentTileGrid = tileGridXYZ.instance;
     }
-    this.init();
+    this.initializeInstance();
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    const properties: { [index: string]: any } = {};
-
     if (!this.instance) {
       return;
     }
+    super.ngOnChanges(changes);
     for (const key in changes) {
       if (changes.hasOwnProperty(key)) {
-        properties[key] = changes[key].currentValue;
+        switch (key) {
+          case 'tileLoadFunction':
+            if (changes[key].currentValue) {
+              this.instance.setTileLoadFunction(changes[key].currentValue);
+            }
+            continue;
+          case 'tileUrlFunction':
+            if (changes[key].currentValue) {
+              this.instance.setTileUrlFunction(changes[key].currentValue);
+            }
+            continue;
+          case 'urls':
+            if (changes[key].currentValue) {
+              this.instance.setUrls(changes[key].currentValue);
+            }
+            continue;
+          case 'url':
+            if (changes[key].currentValue !== undefined) {
+              this.instance.setUrl(changes[key].currentValue);
+              continue;
+            }
+            break;
+          default:
+            break;
+        }
       }
-    }
-
-    this.instance.setProperties(properties, false);
-    if (changes.hasOwnProperty('url')) {
-      this.init();
     }
   }
 
-  init() {
-    this.instance = new XYZ(this.createOptions());
+  initializeInstance() {
+    this.setInstance(new XYZ(this.createOptions()));
 
     this.instance.on('tileloadstart', (event: TileSourceEvent) => this.tileLoadStart.emit(event));
     this.instance.on('tileloadend', (event: TileSourceEvent) => this.tileLoadEnd.emit(event));
@@ -126,27 +130,27 @@ export class SourceXYZComponent extends SourceComponent implements AfterContentI
 
   protected createOptions(): Options {
     return {
-      attributions: this.attributions,
-      attributionsCollapsible: this.attributionsCollapsible,
-      cacheSize: this.cacheSize,
-      crossOrigin: this.crossOrigin,
-      gutter: this.gutter,
-      interpolate: this.interpolate,
-      projection: this.projection,
-      reprojectionErrorThreshold: this.reprojectionErrorThreshold,
-      maxResolution: this.maxResolution,
-      minZoom: this.minZoom,
-      maxZoom: this.maxZoom,
-      tileGrid: this.tileGrid,
-      tileLoadFunction: this.tileLoadFunction,
-      tilePixelRatio: this.tilePixelRatio,
-      tileSize: this.tileSize,
-      tileUrlFunction: this.tileUrlFunction,
-      transition: this.transition,
-      url: this.url,
-      urls: this.urls,
-      wrapX: this.wrapX,
-      zDirection: this.zDirection,
+      attributions: this.attributions(),
+      attributionsCollapsible: this.attributionsCollapsible(),
+      cacheSize: this.cacheSize(),
+      crossOrigin: this.crossOrigin(),
+      gutter: this.gutter(),
+      interpolate: this.interpolate(),
+      projection: this.projection(),
+      reprojectionErrorThreshold: this.reprojectionErrorThreshold(),
+      maxResolution: this.maxResolution(),
+      minZoom: this.minZoom(),
+      maxZoom: this.maxZoom(),
+      tileGrid: this.contentTileGrid ?? this.tileGrid(),
+      tileLoadFunction: this.tileLoadFunction(),
+      tilePixelRatio: this.tilePixelRatio(),
+      tileSize: this.tileSize(),
+      tileUrlFunction: this.tileUrlFunction(),
+      transition: this.transition(),
+      url: this.url(),
+      urls: this.urls(),
+      wrapX: this.wrapX(),
+      zDirection: this.zDirection(),
     };
   }
 }

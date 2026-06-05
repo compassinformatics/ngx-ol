@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 import { AngularOpenlayersModule } from '../public-api';
@@ -31,11 +31,9 @@ class CoordinateHostComponent {
   overlayY = 2;
   overlaySrid = 'EPSG:3857';
 
-  @ViewChild(ViewComponent)
-  view!: ViewComponent;
+  readonly view = viewChild.required<ViewComponent>(ViewComponent);
 
-  @ViewChild(OverlayComponent)
-  overlay!: OverlayComponent;
+  readonly overlay = viewChild.required<OverlayComponent>(OverlayComponent);
 }
 
 describe('CoordinateComponent', () => {
@@ -55,7 +53,7 @@ describe('CoordinateComponent', () => {
   });
 
   it('projects bound coordinates into its host view and overlay', () => {
-    expect(fixture.componentInstance.view.instance.getCenter()).toEqual([7, 9]);
-    expect(fixture.componentInstance.overlay.instance.getPosition()).toEqual([1, 2]);
+    expect(fixture.componentInstance.view().instance.getCenter()).toEqual([7, 9]);
+    expect(fixture.componentInstance.overlay().instance.getPosition()).toEqual([1, 2]);
   });
 });

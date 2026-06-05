@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import Point from 'ol/geom/Point';
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
@@ -31,11 +31,9 @@ class GeometryPointHostComponent {
   y = 2;
   srid = 'EPSG:3857';
 
-  @ViewChild(GeometryPointComponent)
-  geometry!: GeometryPointComponent;
+  readonly geometry = viewChild.required<GeometryPointComponent>(GeometryPointComponent);
 
-  @ViewChild(FeatureComponent)
-  feature!: FeatureComponent;
+  readonly feature = viewChild.required<FeatureComponent>(FeatureComponent);
 }
 
 describe('GeometryPointComponent', () => {
@@ -55,10 +53,10 @@ describe('GeometryPointComponent', () => {
   });
 
   it('attaches the bound point geometry to its feature', () => {
-    expect(fixture.componentInstance.geometry.instance).toBeInstanceOf(Point);
-    expect(fixture.componentInstance.geometry.instance.getCoordinates()).toEqual([1, 2]);
-    expect(fixture.componentInstance.feature.instance.getGeometry()).toBe(
-      fixture.componentInstance.geometry.instance,
+    expect(fixture.componentInstance.geometry().instance).toBeInstanceOf(Point);
+    expect(fixture.componentInstance.geometry().instance.getCoordinates()).toEqual([1, 2]);
+    expect(fixture.componentInstance.feature().instance.getGeometry()).toBe(
+      fixture.componentInstance.geometry().instance,
     );
   });
 });

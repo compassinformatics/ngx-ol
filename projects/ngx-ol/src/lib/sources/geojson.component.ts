@@ -1,4 +1,4 @@
-import { Component, Host, Input, OnInit, Optional, forwardRef } from '@angular/core';
+import { Component, OnInit, forwardRef, inject, input, signal } from '@angular/core';
 import { LayerVectorComponent } from '../layers/layervector.component';
 import { SourceComponent } from './source.component';
 import FeatureFormat from 'ol/format/Feature';
@@ -15,44 +15,52 @@ import { Options as VectorOptions } from 'ol/source/Vector';
   providers: [{ provide: SourceComponent, useExisting: forwardRef(() => SourceGeoJSONComponent) }],
 })
 export class SourceGeoJSONComponent extends SourceComponent implements OnInit {
-  @Input()
-  defaultDataProjection: ProjectionLike;
-  @Input()
-  featureProjection: ProjectionLike;
-  @Input()
-  geometryName: string;
-  @Input()
-  url: string;
+  readonly defaultDataProjection = input<ProjectionLike>();
+  readonly featureProjection = input<ProjectionLike>();
+  readonly geometryName = input<string>();
+  readonly url = input<string>();
 
   instance: Vector;
+
+  protected readonly _instanceSignal = signal<Vector | undefined>(undefined);
+
+  readonly instanceSignal = this._instanceSignal.asReadonly();
+
+  protected setInstance(instance: Vector): Vector {
+    this.instance = instance;
+
+    this._instanceSignal.set(instance);
+
+    return instance;
+  }
   format: FeatureFormat;
 
-  constructor(
-    @Optional() @Host() vectorLayer: LayerVectorComponent,
-    @Optional() @Host() vectorImageLayer: LayerVectorImageComponent,
-  ) {
-    super(vectorLayer || vectorImageLayer);
+  constructor() {
+    super(
+      inject(LayerVectorComponent, { optional: true, host: true }) ||
+        inject(LayerVectorImageComponent, { optional: true, host: true })!,
+    );
   }
 
   ngOnInit() {
     this.format = new GeoJSON(this.createFormatOptions());
-    this.instance = new Vector(this.createVectorOptions());
+    this.setInstance(new Vector(this.createVectorOptions()));
     this.host.instance.setSource(this.instance);
   }
 
   private createFormatOptions(): GeoJSONOptions {
     return {
-      dataProjection: this.defaultDataProjection,
-      featureProjection: this.featureProjection,
-      geometryName: this.geometryName,
+      dataProjection: this.defaultDataProjection(),
+      featureProjection: this.featureProjection(),
+      geometryName: this.geometryName(),
     };
   }
 
   private createVectorOptions(): VectorOptions {
     return {
-      attributions: this.attributions,
+      attributions: this.attributions(),
       format: this.format,
-      url: this.url,
+      url: this.url(),
     };
   }
 }

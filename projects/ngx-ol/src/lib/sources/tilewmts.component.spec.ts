@@ -1,4 +1,4 @@
-import { Component, signal, ViewChild } from '@angular/core';
+import { Component, signal, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { AngularOpenlayersModule } from '../../public-api';
@@ -15,6 +15,7 @@ import { SourceTileWMTSComponent } from './tilewmts.component';
           [layer]="layerName"
           [style]="styleName"
           [matrixSet]="matrixSet"
+          [dimensions]="dimensions()"
           [url]="url()"
           (tileLoadStart)="tileLoadStart($event)"
           (tileLoadEnd)="tileLoadEnd($event)"
@@ -38,6 +39,7 @@ class SourceTileWmtsHostComponent {
   layerName = 'demo';
   styleName = 'default';
   matrixSet = 'webmercator';
+  dimensions = signal<Record<string, string>>({ TIME: '2026-01-01', ELEVATION: '0' });
   url = signal('https://example.com/wmts');
   origin: [number, number] = [0, 0];
   resolutions = [2, 1];
@@ -46,14 +48,11 @@ class SourceTileWmtsHostComponent {
   tileLoadEnd = vi.fn();
   tileLoadError = vi.fn();
 
-  @ViewChild(SourceTileWMTSComponent)
-  source!: SourceTileWMTSComponent;
+  readonly source = viewChild.required<SourceTileWMTSComponent>(SourceTileWMTSComponent);
 
-  @ViewChild(LayerTileComponent)
-  layer!: LayerTileComponent;
+  readonly layer = viewChild.required<LayerTileComponent>(LayerTileComponent);
 
-  @ViewChild(TileGridWMTSComponent)
-  tileGrid!: TileGridWMTSComponent;
+  readonly tileGrid = viewChild.required<TileGridWMTSComponent>(TileGridWMTSComponent);
 }
 
 describe('SourceTileWMTSComponent', () => {
@@ -75,16 +74,16 @@ describe('SourceTileWMTSComponent', () => {
   it('binds a WMTS source into the tile layer and prefers the child tile grid helper', () => {
     const host = fixture!.componentInstance;
 
-    expect(host.layer.instance.getSource()).toBe(host.source.instance);
-    expect(host.source.instance.getTileGrid()).toBe(host.tileGrid.instance);
+    expect(host.layer().instance.getSource()).toBe(host.source().instance);
+    expect(host.source().instance.getTileGrid()).toBe(host.tileGrid().instance);
   });
 
   it('forwards tile load events through template outputs', () => {
     const host = fixture!.componentInstance;
 
-    host.source.instance.dispatchEvent('tileloadstart');
-    host.source.instance.dispatchEvent('tileloadend');
-    host.source.instance.dispatchEvent('tileloaderror');
+    host.source().instance.dispatchEvent('tileloadstart');
+    host.source().instance.dispatchEvent('tileloadend');
+    host.source().instance.dispatchEvent('tileloaderror');
 
     expect(host.tileLoadStart).toHaveBeenCalledOnce();
     expect(host.tileLoadEnd).toHaveBeenCalledOnce();
@@ -93,21 +92,49 @@ describe('SourceTileWMTSComponent', () => {
 
   it('recreates and re-registers the source when the URL binding changes', () => {
     const host = fixture!.componentInstance;
-    const previousSource = host.source.instance;
+    const previousSource = host.source().instance;
 
     host.url.set('https://example.com/updated-wmts');
 
     fixture!.detectChanges();
 
-    expect(host.source.instance).not.toBe(previousSource);
-    expect(host.layer.instance.getSource()).toBe(host.source.instance);
+    expect(host.source().instance).not.toBe(previousSource);
+    expect(host.layer().instance.getSource()).toBe(host.source().instance);
+  });
+
+  it('updates WMTS dimensions without recreating the source when keys are retained', () => {
+    const host = fixture!.componentInstance;
+    const previousSource = host.source().instance;
+
+    host.dimensions.set({ TIME: '2026-01-02', ELEVATION: '0' });
+
+    fixture!.detectChanges();
+
+    expect(host.source().instance).toBe(previousSource);
+    expect(host.source().instance.getDimensions()).toEqual({
+      TIME: '2026-01-02',
+      ELEVATION: '0',
+    });
+  });
+
+  it('recreates the WMTS source when dimension keys are removed', () => {
+    const host = fixture!.componentInstance;
+    const previousSource = host.source().instance;
+
+    host.dimensions.set({ TIME: '2026-01-03' });
+
+    fixture!.detectChanges();
+
+    expect(host.source().instance).not.toBe(previousSource);
+    expect(host.layer().instance.getSource()).toBe(host.source().instance);
+    expect(host.source().instance.getDimensions()).toEqual({ TIME: '2026-01-03' });
   });
 
   it('clears the tile layer source when the source component is destroyed', () => {
     const host = fixture!.componentInstance;
-    const layer = host.layer.instance;
+    const layer = host.layer().instance;
 
-    expect(layer.getSource()).toBe(host.source.instance);
+    expect(layer.getSource()).toBe(host.source().instance);
 
     fixture!.destroy();
     fixture = undefined;

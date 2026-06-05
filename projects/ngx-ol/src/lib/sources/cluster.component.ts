@@ -1,13 +1,13 @@
 import {
   AfterContentInit,
   Component,
-  ContentChild,
-  forwardRef,
-  Host,
-  Input,
   OnChanges,
-  Optional,
   SimpleChanges,
+  contentChild,
+  forwardRef,
+  inject,
+  input,
+  signal,
 } from '@angular/core';
 import Feature from 'ol/Feature';
 import Point from 'ol/geom/Point';
@@ -26,50 +26,68 @@ import { LayerVectorImageComponent } from '../layers/layervectorimage.component'
   providers: [{ provide: SourceComponent, useExisting: forwardRef(() => SourceClusterComponent) }],
 })
 export class SourceClusterComponent extends SourceComponent implements AfterContentInit, OnChanges {
-  @Input()
-  distance?: number;
-  @Input()
-  minDistance?: number;
-  @Input()
-  geometryFunction?: (feature: Feature) => Point;
-  @Input()
-  wrapX?: boolean;
-  @Input()
-  createCluster?: any;
+  readonly distance = input<number>();
+  readonly minDistance = input<number>();
+  readonly geometryFunction = input<(feature: Feature) => Point>();
+  readonly wrapX = input<boolean>();
+  readonly createCluster = input<any>();
 
-  @ContentChild(SourceVectorComponent, { static: false })
-  sourceVectorComponent: SourceVectorComponent;
+  protected readonly sourceVectorComponent = contentChild(SourceVectorComponent);
 
   instance: Cluster<any>;
+
+  protected readonly _instanceSignal = signal<Cluster<any> | undefined>(undefined);
+
+  readonly instanceSignal = this._instanceSignal.asReadonly();
+
+  protected setInstance(instance: Cluster<any>): Cluster<any> {
+    this.instance = instance;
+
+    this._instanceSignal.set(instance);
+
+    return instance;
+  }
   source: Vector<any>;
 
-  constructor(
-    @Optional() @Host() vectorLayer: LayerVectorComponent,
-    @Optional() @Host() vectorImageLayer: LayerVectorImageComponent,
-  ) {
-    super(vectorLayer || vectorImageLayer);
+  constructor() {
+    super(
+      inject(LayerVectorComponent, { optional: true, host: true }) ||
+        inject(LayerVectorImageComponent, { optional: true, host: true })!,
+    );
   }
 
   ngAfterContentInit() {
-    this.source = this.sourceVectorComponent.instance;
+    const sourceVectorComponent = this.sourceVectorComponent();
 
-    this.instance = new Cluster(this.createOptions());
+    if (sourceVectorComponent) {
+      this.source = sourceVectorComponent.instance;
+    }
+
+    this.setInstance(new Cluster(this.createOptions()));
     this.host.instance.setSource(this.instance);
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (this.instance && changes.hasOwnProperty('distance') && this.distance !== undefined) {
-      this.instance.setDistance(this.distance);
+    super.ngOnChanges(changes);
+    if (this.instance && changes.hasOwnProperty('distance') && this.distance() !== undefined) {
+      this.instance.setDistance(this.distance()!);
+    }
+    if (
+      this.instance &&
+      changes.hasOwnProperty('minDistance') &&
+      this.minDistance() !== undefined
+    ) {
+      this.instance.setMinDistance(this.minDistance()!);
     }
   }
 
   private createOptions(): Options<any> {
     return {
-      distance: this.distance,
-      minDistance: this.minDistance,
-      geometryFunction: this.geometryFunction,
-      wrapX: this.wrapX,
-      createCluster: this.createCluster,
+      distance: this.distance(),
+      minDistance: this.minDistance(),
+      geometryFunction: this.geometryFunction(),
+      wrapX: this.wrapX(),
+      createCluster: this.createCluster(),
       source: this.source,
     };
   }

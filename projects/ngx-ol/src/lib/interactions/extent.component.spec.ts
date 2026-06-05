@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { AngularOpenlayersModule } from '../../public-api';
@@ -24,11 +24,9 @@ class ExtentInteractionHostComponent {
   extent: [number, number, number, number] = [-5, -5, 5, 5];
   extentChanged = vi.fn();
 
-  @ViewChild(ExtentInteractionComponent)
-  interaction!: ExtentInteractionComponent;
+  readonly interaction = viewChild.required<ExtentInteractionComponent>(ExtentInteractionComponent);
 
-  @ViewChild(MapComponent)
-  map!: MapComponent;
+  readonly map = viewChild.required<MapComponent>(MapComponent);
 }
 
 describe('ExtentInteractionComponent', () => {
@@ -50,9 +48,9 @@ describe('ExtentInteractionComponent', () => {
   it('adds an extent interaction to the map and forwards extent change events', () => {
     const host = fixture.componentInstance;
 
-    expect(host.map.instance.getInteractions().getArray()).toContain(host.interaction.instance);
+    expect(host.map().instance.getInteractions().getArray()).toContain(host.interaction().instance);
 
-    host.interaction.instance.dispatchEvent('extentchanged');
+    host.interaction().instance.dispatchEvent('extentchanged');
 
     expect(host.extentChanged).toHaveBeenCalledOnce();
   });

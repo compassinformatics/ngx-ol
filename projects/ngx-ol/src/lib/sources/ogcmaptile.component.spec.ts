@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 import { AngularOpenlayersModule } from '../../public-api';
@@ -22,11 +22,9 @@ class SourceOgcMapTileHostComponent {
   zoom = 2;
   url = 'https://example.com/ogc-map-tiles.json';
 
-  @ViewChild(SourceOGCMapTileComponent)
-  source!: SourceOGCMapTileComponent;
+  readonly source = viewChild.required<SourceOGCMapTileComponent>(SourceOGCMapTileComponent);
 
-  @ViewChild(LayerTileComponent)
-  layer!: LayerTileComponent;
+  readonly layer = viewChild.required<LayerTileComponent>(LayerTileComponent);
 }
 
 describe('SourceOGCMapTileComponent', () => {
@@ -46,8 +44,8 @@ describe('SourceOGCMapTileComponent', () => {
   });
 
   it('binds an OGC map tile source into the tile layer through template inputs', () => {
-    expect(fixture.componentInstance.layer.instance.getSource()).toBe(
-      fixture.componentInstance.source.instance,
+    expect(fixture.componentInstance.layer().instance.getSource()).toBe(
+      fixture.componentInstance.source().instance,
     );
   });
 });

@@ -2,10 +2,10 @@ import {
   Component,
   OnDestroy,
   OnInit,
-  Input,
-  Optional,
   OnChanges,
   SimpleChanges,
+  input,
+  inject,
 } from '@angular/core';
 import Tile from 'ol/layer/Tile';
 import { Options } from 'ol/layer/BaseTile';
@@ -19,36 +19,44 @@ import TileSource from 'ol/source/Tile';
   template: ` <ng-content></ng-content> `,
 })
 export class LayerTileComponent extends LayerComponent implements OnInit, OnDestroy, OnChanges {
-  @Input()
-  preload?: number;
-  @Input()
-  useInterimTilesOnError?: boolean;
-  @Input()
-  cacheSize?: number;
-  @Input()
-  source?: TileSource;
+  readonly preload = input<number>();
+  readonly useInterimTilesOnError = input<boolean>();
+  readonly cacheSize = input<number>();
+  readonly source = input<TileSource>();
 
-  constructor(map: MapComponent, @Optional() group?: LayerGroupComponent) {
-    super(group || map);
+  constructor() {
+    super(inject(LayerGroupComponent, { optional: true }) || inject(MapComponent));
   }
 
   ngOnInit() {
     // console.log('creating ol.layer.Tile instance with:', this);
-    this.instance = new Tile(this.createOptions());
+    this.setInstance(new Tile(this.createOptions()));
     super.ngOnInit();
   }
 
   ngOnChanges(changes: SimpleChanges) {
     super.ngOnChanges(changes);
+    if (!this.instance) {
+      return;
+    }
+    if (changes.preload?.currentValue !== undefined) {
+      this.instance.setPreload(changes.preload.currentValue);
+    }
+    if (changes.useInterimTilesOnError?.currentValue !== undefined) {
+      this.instance.setUseInterimTilesOnError(changes.useInterimTilesOnError.currentValue);
+    }
+    if (changes.source) {
+      this.instance.setSource(changes.source.currentValue);
+    }
   }
 
   private createOptions(): Options<TileSource> {
     return {
       ...this.createLayerOptions(),
-      preload: this.preload,
-      useInterimTilesOnError: this.useInterimTilesOnError,
-      cacheSize: this.cacheSize,
-      source: this.source,
+      preload: this.preload(),
+      useInterimTilesOnError: this.useInterimTilesOnError(),
+      cacheSize: this.cacheSize(),
+      source: this.source(),
     };
   }
 }
