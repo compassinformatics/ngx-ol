@@ -2,6 +2,7 @@ import { Component, signal, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 import { AngularOpenlayersModule } from '../../public-api';
+import { FeatureComponent } from '../feature.component';
 import { StyleComponent } from './style.component';
 import { StyleCircleComponent } from './circle.component';
 
@@ -31,6 +32,8 @@ class StyleCircleHostComponent {
   readonly circle = viewChild.required<StyleCircleComponent>(StyleCircleComponent);
 
   readonly style = viewChild.required<StyleComponent>(StyleComponent);
+
+  readonly feature = viewChild.required<FeatureComponent>(FeatureComponent);
 }
 
 describe('StyleCircleComponent', () => {
@@ -57,6 +60,8 @@ describe('StyleCircleComponent', () => {
   });
 
   it('updates the OpenLayers circle style when the radius binding changes', () => {
+    const revision = fixture.componentInstance.feature().instance.getRevision();
+
     fixture.componentInstance.radius.set(12);
 
     fixture.detectChanges(false);
@@ -65,5 +70,6 @@ describe('StyleCircleComponent', () => {
     expect(fixture.componentInstance.style().instance.getImage()).toBe(
       fixture.componentInstance.circle().instance,
     );
+    expect(fixture.componentInstance.feature().instance.getRevision()).toBeGreaterThan(revision);
   });
 });

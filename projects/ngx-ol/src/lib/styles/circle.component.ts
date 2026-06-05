@@ -106,6 +106,7 @@ export class StyleCircleComponent implements AfterContentInit, OnChanges, OnDest
     if (changes.stroke) {
       this.instance.setStroke(changes.stroke.currentValue);
     }
+    this.host.update();
     // console.log('changes detected in aol-style-circle, setting new radius: ', changes['radius'].currentValue);
   }
 
