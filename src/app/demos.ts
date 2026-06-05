@@ -90,6 +90,13 @@ const DEMO_DEFINITIONS: readonly DemoDefinition[] = [
     keywords: ['position', 'center', 'zoom', 'forms'],
   },
   {
+    path: '/instance-signal',
+    label: 'Instance Signal',
+    description:
+      'Uses instanceSignal to wait for the underlying OpenLayers map instance and call OL APIs safely.',
+    keywords: ['instance', 'signal', 'map', 'openlayers', 'escape-hatch'],
+  },
+  {
     path: '/cursor-position',
     label: 'Cursor Position',
     description: 'Move your pointer over the map to see its current coordinate.',
@@ -112,7 +119,8 @@ const DEMO_DEFINITIONS: readonly DemoDefinition[] = [
   {
     path: '/clickable-feature',
     label: 'Clickable Feature',
-    description: 'Shows how aol-feature emits olClick, singleClick, and dblClick when clickable is enabled.',
+    description:
+      'Shows how aol-feature emits olClick, singleClick, and dblClick when clickable is enabled.',
     keywords: ['feature', 'click', 'singleclick', 'dblclick', 'events'],
   },
   {
@@ -325,8 +333,7 @@ const DEMO_DEFINITIONS: readonly DemoDefinition[] = [
   {
     path: '/reactive-drawings',
     label: 'Reactive Drawings',
-    description:
-      'Kitchen-sink drawing demo for draw, modify, snap, and translate options.',
+    description: 'Kitchen-sink drawing demo for draw, modify, snap, and translate options.',
     keywords: ['reactive', 'drawings', 'draw', 'modify', 'snap', 'translate'],
   },
   {

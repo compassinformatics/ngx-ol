@@ -21,6 +21,7 @@ import { Home } from './home/home';
 import { ImageStatic } from './image-static/image-static';
 import { ImageWms } from './image-wms/image-wms';
 import { IndividualImports } from './individual-imports/individual-imports';
+import { InstanceSignalDemo } from './instance-signal/instance-signal';
 import { Iiif } from './iiif/iiif';
 import { LinkInteractionDemo } from './link-interaction/link-interaction';
 import { MapPosition } from './map-position/map-position';
@@ -99,6 +100,7 @@ export const routes: Routes = [
   { path: 'utf-grid', component: Utfgrid },
   { path: 'image-static', component: ImageStatic },
   { path: 'map-interactions', component: MapInteractions },
+  { path: 'instance-signal', component: InstanceSignalDemo },
   { path: 'dbl-click-drag-zoom', component: DblClickDragZoomDemo },
   { path: 'pinch-rotate', component: PinchRotateDemo },
   { path: 'link-interaction', component: LinkInteractionDemo },

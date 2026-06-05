@@ -1,0 +1,51 @@
+<div class="layout demo-layout">
+  <aol-map #map class="map demo-map" tabindex="0">
+    <aol-view [center]="center" [zoom]="initialZoom"></aol-view>
+
+    <aol-layer-tile>
+      <aol-source-osm></aol-source-osm>
+    </aol-layer-tile>
+
+    <aol-interaction-default></aol-interaction-default>
+    <aol-control-defaults></aol-control-defaults>
+  </aol-map>
+
+  <aside class="panel demo-panel">
+    <h2>Instance signal</h2>
+    <p>
+      `instanceSignal` exposes the underlying OpenLayers object once ngx-ol has created it.
+      `instance` remains available as the direct escape hatch, while the signal gives templates and
+      reactive code a safe readiness check.
+    </p>
+
+    @if (map.instanceSignal(); as mapInstance) {
+      <div class="status is-ready">OpenLayers map instance is ready.</div>
+
+      <dl class="instance-details">
+        <div>
+          <dt>Layers</dt>
+          <dd>{{ mapInstance.getLayers().getLength() }}</dd>
+        </div>
+        <div>
+          <dt>Controls</dt>
+          <dd>{{ mapInstance.getControls().getLength() }}</dd>
+        </div>
+        <div>
+          <dt>Interactions</dt>
+          <dd>{{ mapInstance.getInteractions().getLength() }}</dd>
+        </div>
+      </dl>
+
+      <fieldset>
+        <legend>Call OpenLayers APIs</legend>
+        <button type="button" (click)="fitIreland()">Fit Ireland</button>
+        <button type="button" (click)="rotate()">Rotate view</button>
+        <button type="button" (click)="resetRotation()">Reset rotation</button>
+      </fieldset>
+
+      <pre><code>this.mapComponent().instanceSignal()?.getView()</code></pre>
+    } @else {
+      <div class="status">Waiting for ngx-ol to create the OpenLayers map instance.</div>
+    }
+  </aside>
+</div>
