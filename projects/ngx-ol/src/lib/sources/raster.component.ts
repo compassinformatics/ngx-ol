@@ -65,7 +65,7 @@ export class SourceRasterComponent extends SourceComponent implements AfterConte
       this.sources = [sourceComponent.instance];
     }
 
-    this.init();
+    this.initializeInstance();
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -75,7 +75,7 @@ export class SourceRasterComponent extends SourceComponent implements AfterConte
     }
   }
 
-  init() {
+  initializeInstance() {
     this.setInstance(new Raster(this.createOptions()));
     this.instance.on('beforeoperations', (event: RasterSourceEvent) =>
       this.beforeOperations.emit(event),

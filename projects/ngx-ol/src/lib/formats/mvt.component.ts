@@ -1,4 +1,4 @@
-import { Component, input, signal } from '@angular/core';
+import { Component, OnInit, input, signal } from '@angular/core';
 import MVT from 'ol/format/MVT';
 import { FeatureClass } from 'ol/Feature';
 import { Options } from 'ol/format/MVT';
@@ -7,7 +7,7 @@ import { Options } from 'ol/format/MVT';
   selector: 'aol-format-mvt',
   template: '',
 })
-export class FormatMVTComponent {
+export class FormatMVTComponent implements OnInit {
   readonly featureClass = input<FeatureClass>();
   readonly geometryName = input<string>();
   readonly layerName = input<string>();
@@ -29,7 +29,7 @@ export class FormatMVTComponent {
 
     return instance;
   }
-  constructor() {
+  ngOnInit() {
     this.setInstance(new MVT(this.createOptions()));
   }
 

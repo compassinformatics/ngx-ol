@@ -82,7 +82,7 @@ export class SourceTileWMTSComponent
     }
     super.ngOnChanges(changes);
     if (changes.hasOwnProperty('url') || this.hasRemovedDimensionKeys(changes)) {
-      this.setLayerSource();
+      this.replaceInstance();
       return;
     }
     if (changes.hasOwnProperty('dimensions')) {
@@ -103,7 +103,7 @@ export class SourceTileWMTSComponent
     );
   }
 
-  setLayerSource(): void {
+  private replaceInstance(): void {
     this.setInstance(new SourceWMTS(this.createOptions()));
     this.instance.on('tileloadstart', (event: TileSourceEvent) => this.tileLoadStart.emit(event));
     this.instance.on('tileloadend', (event: TileSourceEvent) => this.tileLoadEnd.emit(event));
@@ -118,7 +118,7 @@ export class SourceTileWMTSComponent
       this.contentTileGrid = tileGridWMTS.instance;
     }
     if (this.contentTileGrid ?? this.tileGrid()) {
-      this.setLayerSource();
+      this.replaceInstance();
     }
   }
 

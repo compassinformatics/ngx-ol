@@ -71,7 +71,7 @@ export class SourceTileArcGISRestComponent extends SourceComponent implements On
   }
 
   ngOnInit() {
-    this.setLayerSource();
+    this.replaceInstance();
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -81,7 +81,7 @@ export class SourceTileArcGISRestComponent extends SourceComponent implements On
     }
 
     if (this.hasRemovedParamKeys(changes)) {
-      this.setLayerSource();
+      this.replaceInstance();
       return;
     }
 
@@ -119,7 +119,7 @@ export class SourceTileArcGISRestComponent extends SourceComponent implements On
     };
   }
 
-  private setLayerSource(): void {
+  private replaceInstance(): void {
     this.setInstance(new TileArcGISRest(this.createOptions()));
     this.host.instance.setSource(this.instance);
   }

@@ -83,7 +83,7 @@ export class DrawInteractionComponent implements OnInit, OnChanges, OnDestroy {
     );
 
     if (this.instance && requiresReload) {
-      this.reloadInstance();
+      this.replaceInstance();
       return;
     }
 
@@ -104,7 +104,7 @@ export class DrawInteractionComponent implements OnInit, OnChanges, OnDestroy {
     this.map.instance.addInteraction(this.instance);
   }
 
-  private reloadInstance() {
+  private replaceInstance() {
     this.map.instance.removeInteraction(this.instance);
     this.initializeInstance();
   }

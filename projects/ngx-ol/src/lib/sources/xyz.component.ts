@@ -79,7 +79,7 @@ export class SourceXYZComponent extends SourceComponent implements AfterContentI
     if (tileGridXYZ) {
       this.contentTileGrid = tileGridXYZ.instance;
     }
-    this.init();
+    this.initializeInstance();
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -118,7 +118,7 @@ export class SourceXYZComponent extends SourceComponent implements AfterContentI
     }
   }
 
-  init() {
+  initializeInstance() {
     this.setInstance(new XYZ(this.createOptions()));
 
     this.instance.on('tileloadstart', (event: TileSourceEvent) => this.tileLoadStart.emit(event));

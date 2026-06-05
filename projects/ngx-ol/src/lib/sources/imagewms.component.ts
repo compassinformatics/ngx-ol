@@ -65,7 +65,7 @@ export class SourceImageWMSComponent
   }
 
   ngOnInit() {
-    this.setLayerSource();
+    this.replaceInstance();
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -75,7 +75,7 @@ export class SourceImageWMSComponent
     }
 
     if (this.hasRemovedParamKeys(changes)) {
-      this.setLayerSource();
+      this.replaceInstance();
       return;
     }
 
@@ -114,7 +114,7 @@ export class SourceImageWMSComponent
     };
   }
 
-  private setLayerSource(): void {
+  private replaceInstance(): void {
     this.unbindInstanceEvents();
     this.setInstance(new ImageWMS(this.createOptions()));
     this.host.instance.setSource(this.instance);

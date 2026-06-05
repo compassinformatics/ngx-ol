@@ -1,4 +1,4 @@
-import { Component, input, signal } from '@angular/core';
+import { Component, OnInit, input, signal } from '@angular/core';
 import GeoJSON from 'ol/format/GeoJSON.js';
 import { Options } from 'ol/format/GeoJSON';
 import { ProjectionLike } from 'ol/proj';
@@ -7,7 +7,7 @@ import { ProjectionLike } from 'ol/proj';
   selector: 'aol-format-geojson',
   template: '',
 })
-export class FormatGeoJSONComponent {
+export class FormatGeoJSONComponent implements OnInit {
   readonly featureClass = input<any>();
   readonly geometryName = input<string>();
   readonly dataProjection = input<ProjectionLike>();
@@ -29,7 +29,7 @@ export class FormatGeoJSONComponent {
 
     return instance;
   }
-  constructor() {
+  ngOnInit() {
     this.setInstance(new GeoJSON(this.createOptions()));
   }
 

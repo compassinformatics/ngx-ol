@@ -54,7 +54,7 @@ export class SourceImageStaticComponent extends SourceComponent implements OnIni
     super(inject(LayerImageComponent, { host: true }));
   }
 
-  setLayerSource(): void {
+  private replaceInstance(): void {
     this.setInstance(new ImageStatic(this.createOptions()));
     this.host.instance.setSource(this.instance);
     this.instance.on('imageloadstart', (event: ImageSourceEvent) =>
@@ -67,7 +67,7 @@ export class SourceImageStaticComponent extends SourceComponent implements OnIni
   }
 
   ngOnInit() {
-    this.setLayerSource();
+    this.replaceInstance();
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -79,7 +79,7 @@ export class SourceImageStaticComponent extends SourceComponent implements OnIni
       if (changes.hasOwnProperty(key)) {
         switch (key) {
           case 'url':
-            this.setLayerSource();
+            this.replaceInstance();
             break;
           default:
             break;

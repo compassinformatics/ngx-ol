@@ -35,14 +35,14 @@ export class TileGridComponent implements OnInit, OnChanges {
     return instance;
   }
   ngOnInit() {
-    this.createInstance();
+    this.initializeInstance();
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    this.createInstance();
+    this.initializeInstance();
   }
 
-  protected createInstance() {
+  protected initializeInstance() {
     if (!this.resolutions()) {
       this.setInstance(createXYZ(this.createXYZOptions()));
     } else {

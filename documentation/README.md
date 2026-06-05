@@ -60,10 +60,31 @@ Known init-only or rebuild-backed inputs:
 | Geometry                   | Coordinates, geometry collections, point coordinates, circle center/radius, and coordinate SRID transforms are synced.                                                                                                                                                                                                    | Geometry layout options and base geometry SRID are init-only unless the child coordinate component performs the transform.                                                                                                                                                                                                            |
 | `aol-feature`              | `id` and `properties` are synced.                                                                                                                                                                                                                                                                                         | Changing the `feature` input replaces the wrapped OL feature instance.                                                                                                                                                                                                                                                                |
 
+## Instance timing
+
+Every wrapper exposes the underlying OpenLayers object through `instance` and `instanceSignal`. Version 22 keeps both APIs.
+
+Most wrappers create their OpenLayers instance during `ngOnInit`, after Angular inputs are available. Components that need projected child components, such as child tile grids, child formats, raster child sources, or child styles, create their instance during content initialization instead.
+
+`instanceSignal()` is `undefined` until the wrapper has enough inputs and child content to create a valid OpenLayers instance. It is updated whenever ngx-ol intentionally replaces the underlying OL instance, for example when changing a constructor-only input that has a documented rebuild path.
+
+Use `instanceSignal()` when code needs to wait until the OpenLayers object is ready:
+
+```ts
+protected readonly mapComponent = viewChild.required(MapComponent);
+
+protected rotate(): void {
+  this.mapComponent().instanceSignal()?.getView().animate({
+    rotation: Math.PI / 8,
+  });
+}
+```
+
 ## Table of contents
 
 - [v22 output name changes](#v22-output-name-changes)
 - [Input reactivity notes](#input-reactivity-notes)
+- [Instance timing](#instance-timing)
 - [Modules](#modules)
 - [Map setup](#map-setup)
 - [Layer groups](#layer-groups)

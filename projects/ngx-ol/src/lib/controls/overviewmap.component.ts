@@ -71,11 +71,11 @@ export class ControlOverviewMapComponent implements OnInit, OnChanges, OnDestroy
       this.instance.setRotateWithView(changes.rotateWithView.currentValue);
     }
     if (this.instance != null && changes.hasOwnProperty('view')) {
-      this.reloadInstance();
+      this.replaceInstance();
     }
   }
 
-  private reloadInstance() {
+  private replaceInstance() {
     this.map.instance.removeControl(this.instance);
     this.setInstance(new OverviewMap(this.createOptions()));
     this.map.instance.addControl(this.instance);

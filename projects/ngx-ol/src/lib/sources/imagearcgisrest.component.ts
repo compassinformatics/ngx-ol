@@ -65,7 +65,7 @@ export class SourceImageArcGISRestComponent
   }
 
   ngOnInit() {
-    this.setLayerSource();
+    this.replaceInstance();
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -75,7 +75,7 @@ export class SourceImageArcGISRestComponent
     }
 
     if (this.hasRemovedParamKeys(changes)) {
-      this.setLayerSource();
+      this.replaceInstance();
       return;
     }
 
@@ -113,7 +113,7 @@ export class SourceImageArcGISRestComponent
     };
   }
 
-  private setLayerSource(): void {
+  private replaceInstance(): void {
     this.unbindInstanceEvents();
     this.setInstance(new ImageArcGISRest(this.createOptions()));
     this.host.instance.setSource(this.instance);

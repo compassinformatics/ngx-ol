@@ -61,7 +61,7 @@ export class SourceTileWMSComponent extends SourceComponent implements OnChanges
   }
 
   ngOnInit() {
-    this.setLayerSource();
+    this.replaceInstance();
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -71,7 +71,7 @@ export class SourceTileWMSComponent extends SourceComponent implements OnChanges
     }
 
     if (this.hasRemovedParamKeys(changes)) {
-      this.setLayerSource();
+      this.replaceInstance();
       return;
     }
 
@@ -113,7 +113,7 @@ export class SourceTileWMSComponent extends SourceComponent implements OnChanges
     };
   }
 
-  private setLayerSource(): void {
+  private replaceInstance(): void {
     this.setInstance(new TileWMS(this.createOptions()));
     this.host.instance.setSource(this.instance);
   }
