@@ -1,10 +1,9 @@
-import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { AngularOpenlayersModule } from 'ngx-ol';
 import { Coordinate } from 'ol/coordinate';
 
 @Component({
   selector: 'app-basic-map',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AngularOpenlayersModule],
   templateUrl: './basic-map.html',
   styleUrl: './basic-map.less',

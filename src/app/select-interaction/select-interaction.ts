@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, signal, viewChild } from '@angular/core';
+import { Component, signal, viewChild } from '@angular/core';
 import { AngularOpenlayersModule } from 'ngx-ol';
 import Feature from 'ol/Feature';
 import Point from 'ol/geom/Point';
@@ -13,7 +13,6 @@ type LayerVectorRef = {
 
 @Component({
   selector: 'app-select-interaction',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AngularOpenlayersModule],
   templateUrl: './select-interaction.html',
   styleUrl: './select-interaction.less',

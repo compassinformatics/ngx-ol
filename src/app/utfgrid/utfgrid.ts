@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, signal, viewChild } from '@angular/core';
+import { Component, computed, signal, viewChild } from '@angular/core';
 import { AngularOpenlayersModule } from 'ngx-ol';
 import type MapBrowserEvent from 'ol/MapBrowserEvent';
 import type { Coordinate } from 'ol/coordinate';
@@ -25,7 +25,6 @@ type ViewRef = {
 
 @Component({
   selector: 'app-utfgrid',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AngularOpenlayersModule],
   templateUrl: './utfgrid.html',
   styleUrl: './utfgrid.less',

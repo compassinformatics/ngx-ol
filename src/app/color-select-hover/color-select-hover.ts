@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, signal, viewChild } from '@angular/core';
+import { Component, signal, viewChild } from '@angular/core';
 import { AngularOpenlayersModule } from 'ngx-ol';
 import type { MapComponent } from 'ngx-ol';
 import MapBrowserEvent from 'ol/MapBrowserEvent';
@@ -12,7 +12,6 @@ import Style from 'ol/style/Style';
 
 @Component({
   selector: 'app-color-select-hover',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AngularOpenlayersModule],
   templateUrl: './color-select-hover.html',
   styleUrl: './color-select-hover.less',

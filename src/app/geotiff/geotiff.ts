@@ -1,8 +1,5 @@
-import { AfterViewInit, ChangeDetectionStrategy, Component, OnDestroy, signal, viewChild } from '@angular/core';
-import {
-  AngularOpenlayersMapModule,
-  AngularOpenlayersTileLayersModule,
-} from 'ngx-ol';
+import { AfterViewInit, Component, OnDestroy, signal, viewChild } from '@angular/core';
+import { AngularOpenlayersMapModule, AngularOpenlayersTileLayersModule } from 'ngx-ol';
 import type { MapComponent } from 'ngx-ol';
 import type { LayerWebGLTileComponent } from 'ngx-ol';
 import type { Style } from 'ol/layer/WebGLTile';
@@ -12,7 +9,6 @@ import type { SourceInfo } from 'ol/source/GeoTIFF';
 
 @Component({
   selector: 'app-geotiff',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AngularOpenlayersMapModule, AngularOpenlayersTileLayersModule],
   templateUrl: './geotiff.html',
   styleUrl: './geotiff.less',

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, DestroyRef, inject, signal } from '@angular/core';
+import { Component, DestroyRef, inject, signal } from '@angular/core';
 import { AngularOpenlayersModule } from 'ngx-ol';
 import type { Coordinate } from 'ol/coordinate';
 import { unByKey } from 'ol/Observable';
@@ -7,7 +7,6 @@ import XYZ from 'ol/source/XYZ';
 
 @Component({
   selector: 'app-xyz-esri',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AngularOpenlayersModule],
   templateUrl: './xyz-esri.html',
   styleUrl: './xyz-esri.less',

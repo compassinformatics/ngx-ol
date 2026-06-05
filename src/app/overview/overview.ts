@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { AngularOpenlayersModule } from 'ngx-ol';
 import type { Coordinate } from 'ol/coordinate';
 import TileLayer from 'ol/layer/Tile.js';
@@ -6,7 +6,6 @@ import OSM from 'ol/source/OSM.js';
 
 @Component({
   selector: 'app-overview',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AngularOpenlayersModule],
   templateUrl: './overview.html',
   styleUrl: './overview.less',

@@ -1,11 +1,10 @@
-import { ChangeDetectionStrategy, Component, viewChild } from '@angular/core';
+import { Component, viewChild } from '@angular/core';
 import { AngularOpenlayersModule, MapComponent } from 'ngx-ol';
 import type { Coordinate } from 'ol/coordinate';
 import { transform, transformExtent } from 'ol/proj';
 
 @Component({
   selector: 'app-instance-signal',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AngularOpenlayersModule],
   templateUrl: './instance-signal.html',
   styleUrl: './instance-signal.less',

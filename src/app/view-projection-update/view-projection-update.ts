@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, signal } from '@angular/core';
+import { Component, computed, signal } from '@angular/core';
 import { AngularOpenlayersModule } from 'ngx-ol';
 import { transform } from 'ol/proj';
 
@@ -6,7 +6,6 @@ type ProjectionCode = 'EPSG:3857' | 'EPSG:4326';
 
 @Component({
   selector: 'app-view-projection-update',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AngularOpenlayersModule],
   templateUrl: './view-projection-update.html',
   styleUrl: './view-projection-update.less',

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, signal } from '@angular/core';
+import { Component, computed, signal } from '@angular/core';
 import MapBrowserEvent from 'ol/MapBrowserEvent';
 import { Coordinate } from 'ol/coordinate';
 import { transform } from 'ol/proj';
@@ -6,7 +6,6 @@ import { AngularOpenlayersModule } from 'ngx-ol';
 
 @Component({
   selector: 'app-cursor-position',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AngularOpenlayersModule],
   templateUrl: './cursor-position.html',
   styleUrl: './cursor-position.less',

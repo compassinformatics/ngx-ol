@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { AngularOpenlayersModule } from 'ngx-ol';
 import Feature from 'ol/Feature';
 import type { Coordinate } from 'ol/coordinate';
@@ -7,7 +7,6 @@ import { transform } from 'ol/proj';
 
 @Component({
   selector: 'app-reactive-interactions',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AngularOpenlayersModule],
   templateUrl: './reactive-interactions.html',
   styleUrl: './reactive-interactions.less',

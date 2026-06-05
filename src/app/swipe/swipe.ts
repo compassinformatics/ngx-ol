@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, signal, viewChild } from '@angular/core';
+import { Component, signal, viewChild } from '@angular/core';
 import { AngularOpenlayersModule } from 'ngx-ol';
 import type { MapComponent } from 'ngx-ol';
 import type { Coordinate } from 'ol/coordinate';
@@ -11,7 +11,6 @@ type RenderEvent = BaseEvent & {
 
 @Component({
   selector: 'app-swipe',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AngularOpenlayersModule],
   templateUrl: './swipe.html',
   styleUrl: './swipe.less',
@@ -63,7 +62,8 @@ export class Swipe {
     this.dragStartOffset.set(this.swipeOffsetToCenter());
     this.dragStartClientX.set(event.clientX);
     event.preventDefault();
-    event.currentTarget instanceof HTMLElement && event.currentTarget.setPointerCapture(event.pointerId);
+    event.currentTarget instanceof HTMLElement &&
+      event.currentTarget.setPointerCapture(event.pointerId);
   }
 
   protected onPointerMove(event: PointerEvent): void {

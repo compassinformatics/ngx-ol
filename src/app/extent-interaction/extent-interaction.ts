@@ -1,12 +1,11 @@
 import { JsonPipe } from '@angular/common';
-import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { AngularOpenlayersModule } from 'ngx-ol';
 import type { Extent } from 'ol/extent.js';
 import { fromLonLat } from 'ol/proj.js';
 
 @Component({
   selector: 'app-extent-interaction',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AngularOpenlayersModule, JsonPipe],
   templateUrl: './extent-interaction.html',
   styleUrl: './extent-interaction.less',

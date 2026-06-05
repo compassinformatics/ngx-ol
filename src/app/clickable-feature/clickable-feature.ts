@@ -1,11 +1,10 @@
-import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { AngularOpenlayersModule } from 'ngx-ol';
 import type { Coordinate } from 'ol/coordinate';
 import { transform } from 'ol/proj';
 
 @Component({
   selector: 'app-clickable-feature',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AngularOpenlayersModule],
   templateUrl: './clickable-feature.html',
   styleUrl: './clickable-feature.less',

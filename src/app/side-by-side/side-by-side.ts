@@ -1,10 +1,4 @@
-import {
-  afterNextRender,
-  ChangeDetectionStrategy,
-  Component,
-  signal,
-  viewChild,
-} from '@angular/core';
+import { afterNextRender, Component, signal, viewChild } from '@angular/core';
 import { AngularOpenlayersModule } from 'ngx-ol';
 import type { MapComponent, ViewComponent } from 'ngx-ol';
 import type { Coordinate } from 'ol/coordinate';
@@ -12,7 +6,6 @@ import { transform } from 'ol/proj';
 
 @Component({
   selector: 'app-side-by-side',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AngularOpenlayersModule],
   templateUrl: './side-by-side.html',
   styleUrl: './side-by-side.less',

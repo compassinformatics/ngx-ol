@@ -1,5 +1,5 @@
 import { JsonPipe } from '@angular/common';
-import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { AngularOpenlayersModule } from 'ngx-ol';
 import Feature from 'ol/Feature';
 import GeoJSON, { GeoJSONFeature } from 'ol/format/GeoJSON';
@@ -10,7 +10,6 @@ import { transform } from 'ol/proj';
 
 @Component({
   selector: 'app-modify-polygon',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AngularOpenlayersModule, JsonPipe],
   templateUrl: './modify-polygon.html',
   styleUrl: './modify-polygon.less',

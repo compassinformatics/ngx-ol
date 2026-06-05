@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, signal } from '@angular/core';
+import { Component, computed, signal } from '@angular/core';
 import { AngularOpenlayersModule } from 'ngx-ol';
 import Feature from 'ol/Feature';
 import type { Coordinate } from 'ol/coordinate';
@@ -60,7 +60,6 @@ const SOURCE_VIEWS: Record<SourceKind, { center: Coordinate; zoom: number }> = {
 
 @Component({
   selector: 'app-reactive-sources',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AngularOpenlayersModule],
   templateUrl: './reactive-sources.html',
   styleUrl: './reactive-sources.less',
@@ -78,7 +77,9 @@ export class ReactiveSources {
   readonly wmtsTime = signal('2024-01-01');
   readonly wmtsUrl = 'https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/wmts.cgi';
   readonly featureCount = signal(3);
-  readonly sourceStatus = signal('Tile WMS source selected. Change params and watch the map update.');
+  readonly sourceStatus = signal(
+    'Tile WMS source selected. Change params and watch the map update.',
+  );
   readonly imageExtent = signal<Extent>([-1250000, 6250000, 500000, 7600000]);
   readonly localWmsParams = computed(() => ({
     FORMAT: 'image/png',
@@ -99,16 +100,8 @@ export class ReactiveSources {
   );
   readonly wmtsMatrixIds = Array.from({ length: 10 }, (_, index) => index.toString());
   readonly wmtsResolutions = [
-    156543.03392804097,
-    78271.51696402048,
-    39135.75848201024,
-    19567.87924100512,
-    9783.93962050256,
-    4891.96981025128,
-    2445.98490512564,
-    1222.99245256282,
-    611.49622628141,
-    305.748113140705,
+    156543.03392804097, 78271.51696402048, 39135.75848201024, 19567.87924100512, 9783.93962050256,
+    4891.96981025128, 2445.98490512564, 1222.99245256282, 611.49622628141, 305.748113140705,
   ];
 
   protected setSourceKind(sourceKind: SourceKind): void {

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, signal, viewChild } from '@angular/core';
+import { Component, signal, viewChild } from '@angular/core';
 import MapBrowserEvent from 'ol/MapBrowserEvent';
 import { Coordinate } from 'ol/coordinate';
 import { AngularOpenlayersModule } from 'ngx-ol';
@@ -23,7 +23,6 @@ type FeatureInfoResponse = {
 
 @Component({
   selector: 'app-overlay',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AngularOpenlayersModule],
   templateUrl: './overlay.html',
   styleUrl: './overlay.less',

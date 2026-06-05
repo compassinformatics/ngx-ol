@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, DestroyRef, inject, signal } from '@angular/core';
+import { Component, DestroyRef, inject, signal } from '@angular/core';
 import { AngularOpenlayersModule } from 'ngx-ol';
 import type { Coordinate } from 'ol/coordinate';
 import type { Extent } from 'ol/extent';
@@ -8,7 +8,6 @@ import TileArcGISRest from 'ol/source/TileArcGISRest';
 
 @Component({
   selector: 'app-arcgis-tiled',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AngularOpenlayersModule],
   templateUrl: './arcgis-tiled.html',
   styleUrl: './arcgis-tiled.less',
