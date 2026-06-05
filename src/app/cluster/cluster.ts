@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, signal } from '@angular/core';
+import { Component, computed, signal } from '@angular/core';
 import { AngularOpenlayersModule } from 'ngx-ol';
 import Feature from 'ol/Feature';
 import Point from 'ol/geom/Point';
@@ -13,7 +13,6 @@ type DemoPoint = {
 
 @Component({
   selector: 'app-cluster',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AngularOpenlayersModule],
   templateUrl: './cluster.html',
   styleUrl: './cluster.less',

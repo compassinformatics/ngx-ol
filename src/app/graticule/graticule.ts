@@ -1,11 +1,10 @@
-import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { AngularOpenlayersModule } from 'ngx-ol';
 import Stroke from 'ol/style/Stroke';
 import type { Coordinate } from 'ol/coordinate';
 
 @Component({
   selector: 'app-graticule',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AngularOpenlayersModule],
   templateUrl: './graticule.html',
   styleUrl: './graticule.less',

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import {
   AngularOpenlayersMapInteractionsModule,
   AngularOpenlayersMapModule,
@@ -8,7 +8,6 @@ import { fromLonLat } from 'ol/proj';
 
 @Component({
   selector: 'app-dbl-click-drag-zoom',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     AngularOpenlayersMapModule,
     AngularOpenlayersMapInteractionsModule,

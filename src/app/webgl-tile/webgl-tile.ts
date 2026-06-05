@@ -1,14 +1,10 @@
-import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
-import {
-  AngularOpenlayersMapModule,
-  AngularOpenlayersTileLayersModule,
-} from 'ngx-ol';
+import { Component, signal } from '@angular/core';
+import { AngularOpenlayersMapModule, AngularOpenlayersTileLayersModule } from 'ngx-ol';
 import type { Style } from 'ol/layer/WebGLTile';
 import { fromLonLat } from 'ol/proj';
 
 @Component({
   selector: 'app-webgl-tile',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AngularOpenlayersMapModule, AngularOpenlayersTileLayersModule],
   templateUrl: './webgl-tile.html',
   styleUrl: './webgl-tile.less',

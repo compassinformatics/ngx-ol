@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, signal } from '@angular/core';
+import { Component, computed, signal } from '@angular/core';
 import { AngularOpenlayersModule } from 'ngx-ol';
 import Feature from 'ol/Feature';
 import type { Coordinate } from 'ol/coordinate';
@@ -17,7 +17,6 @@ const POINTS: readonly [number, number, number][] = [
 
 @Component({
   selector: 'app-reactive-view-layers',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AngularOpenlayersModule],
   templateUrl: './reactive-view-layers.html',
   styleUrl: './reactive-view-layers.less',

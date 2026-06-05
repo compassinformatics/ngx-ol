@@ -1,13 +1,9 @@
-import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
-import {
-  AngularOpenlayersMapModule,
-  AngularOpenlayersTileLayersModule,
-} from 'ngx-ol';
+import { Component, signal } from '@angular/core';
+import { AngularOpenlayersMapModule, AngularOpenlayersTileLayersModule } from 'ngx-ol';
 import { fromLonLat } from 'ol/proj';
 
 @Component({
   selector: 'app-pinch-rotate',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AngularOpenlayersMapModule, AngularOpenlayersTileLayersModule],
   templateUrl: './pinch-rotate.html',
   styleUrl: './pinch-rotate.less',

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { AngularOpenlayersModule } from 'ngx-ol';
 import type { Coordinate } from 'ol/coordinate';
 import { altShiftKeysOnly, platformModifierKeyOnly, shiftKeyOnly } from 'ol/events/condition';
@@ -18,7 +18,6 @@ type MapInteractionKey =
 
 @Component({
   selector: 'app-map-interactions',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AngularOpenlayersModule],
   templateUrl: './map-interactions.html',
   styleUrl: './map-interactions.less',

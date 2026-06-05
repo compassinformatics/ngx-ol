@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, signal } from '@angular/core';
+import { Component, computed, signal } from '@angular/core';
 import { AngularOpenlayersModule } from 'ngx-ol';
 import { getCenter, type Extent } from 'ol/extent';
 import type { Coordinate } from 'ol/coordinate';
@@ -11,7 +11,6 @@ type StaticImageOption = {
 
 @Component({
   selector: 'app-image-static',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AngularOpenlayersModule],
   templateUrl: './image-static.html',
   styleUrl: './image-static.less',

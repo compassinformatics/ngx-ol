@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { AngularOpenlayersModule } from 'ngx-ol';
 import TileJSON from 'ol/source/TileJSON';
 import type { Coordinate } from 'ol/coordinate';
@@ -6,7 +6,6 @@ import { transform } from 'ol/proj';
 
 @Component({
   selector: 'app-tile-json-dynamic',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AngularOpenlayersModule],
   templateUrl: './tile-json-dynamic.html',
   styleUrl: './tile-json-dynamic.less',

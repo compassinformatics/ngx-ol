@@ -47,7 +47,7 @@ export class App {}
 
 Detailed component-by-component reference, including Angular inputs and outputs can be found here: [documentation/README.md](documentation/README.md).
 
-## Upcoming v22 breaking changes
+## v22 breaking changes
 
 Version 22 normalizes output names. The `ol` prefix is now only used where the unprefixed output would conflict with a common native/browser event name or be too generic: `olChange`, `olClick`, `olError`, and `olSelect`.
 
@@ -69,6 +69,12 @@ Update templates as follows:
 | `(olSnap)` | `(snap)` |
 
 `olPostRender` has been removed. Use the existing `(postRender)` output.
+
+Programmatic access to wrapper component inputs, outputs, and queries now uses Angular's signal APIs. Template bindings are unchanged, but code that reads wrapper inputs directly must call them as signals, for example `view.zoom()` instead of `view.zoom`.
+
+Components now rely on Angular 22's default `OnPush` change detection behavior. Applications should update state through signals, bindings, or other Angular change-detection notifications.
+
+`aol-map` now defaults `runOutsideAngular` to `true`, so OpenLayers map event handling runs outside Angular's zone unless explicitly disabled with `[runOutsideAngular]="false"`.
 
 ## Development
 
@@ -94,7 +100,7 @@ Use `minor` or `major` instead of `patch` as needed.
 To publish automatically:
 
 1. Commit the version change.
-2. Create and push a new tag with the version number, for example `v21.1.0`.
+2. Create and push a new tag with the version number, for example `v22.0.0`.
 3. Create a GitHub release from that tag.
 
 Publishing to npm is then handled by the GitHub Actions workflow.

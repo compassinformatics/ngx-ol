@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import {
   AngularOpenlayersMapModule,
   AngularOpenlayersTileLayersModule,
@@ -12,7 +12,6 @@ import Stroke from 'ol/style/Stroke';
 
 @Component({
   selector: 'app-regular-shape',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     AngularOpenlayersMapModule,
     AngularOpenlayersTileLayersModule,

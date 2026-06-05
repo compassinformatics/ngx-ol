@@ -1,14 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import {
-  ChangeDetectionStrategy,
-  Component,
-  computed,
-  effect,
-  inject,
-  OnInit,
-  signal,
-  viewChild,
-} from '@angular/core';
+import { Component, computed, effect, inject, OnInit, signal, viewChild } from '@angular/core';
 import {
   AngularOpenlayersMapModule,
   AngularOpenlayersTileLayersModule,
@@ -24,7 +15,6 @@ import View from 'ol/View';
 
 @Component({
   selector: 'app-iiif',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AngularOpenlayersMapModule, AngularOpenlayersTileLayersModule],
   templateUrl: './iiif.html',
   styleUrl: './iiif.less',

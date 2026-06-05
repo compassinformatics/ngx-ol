@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import {
   AngularOpenlayersMapModule,
   AngularOpenlayersTileLayersModule,
@@ -10,7 +10,6 @@ import { fromLonLat } from 'ol/proj';
 
 @Component({
   selector: 'app-heatmap',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     AngularOpenlayersMapModule,
     AngularOpenlayersTileLayersModule,

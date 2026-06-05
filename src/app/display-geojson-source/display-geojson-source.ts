@@ -1,11 +1,10 @@
-import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { Coordinate } from 'ol/coordinate';
 import { transform } from 'ol/proj';
 import { AngularOpenlayersModule } from 'ngx-ol';
 
 @Component({
   selector: 'app-display-geojson-source',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AngularOpenlayersModule],
   templateUrl: './display-geojson-source.html',
   styleUrl: './display-geojson-source.less',

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, signal } from '@angular/core';
+import { Component, computed, signal } from '@angular/core';
 import { AngularOpenlayersModule } from 'ngx-ol';
 import Feature from 'ol/Feature';
 import Point from 'ol/geom/Point';
@@ -7,7 +7,6 @@ import { transform } from 'ol/proj';
 
 @Component({
   selector: 'app-marker',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AngularOpenlayersModule],
   templateUrl: './marker.html',
   styleUrl: './marker.less',

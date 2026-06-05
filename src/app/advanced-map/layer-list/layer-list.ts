@@ -1,9 +1,8 @@
-import { ChangeDetectionStrategy, Component, computed, model, signal } from '@angular/core';
+import { Component, computed, model, signal } from '@angular/core';
 import { MapLayer } from '../layers';
 
 @Component({
   selector: 'app-layer-list',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [],
   templateUrl: './layer-list.html',
   styleUrl: './layer-list.less',

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { AngularOpenlayersModule } from 'ngx-ol';
 import Collection from 'ol/Collection';
 import Feature from 'ol/Feature';
@@ -12,7 +12,6 @@ type DrawType = Extract<GeometryType, 'Point' | 'LineString' | 'Polygon'>;
 
 @Component({
   selector: 'app-reactive-drawings',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AngularOpenlayersModule],
   templateUrl: './reactive-drawings.html',
   styleUrl: './reactive-drawings.less',
@@ -33,7 +32,9 @@ export class ReactiveDrawings {
   readonly snapPixelTolerance = signal(10);
   readonly translateEnabled = signal(false);
   readonly translateHitTolerance = signal(6);
-  readonly status = signal('Toggle drawing interactions, draw features, or drag existing geometry.');
+  readonly status = signal(
+    'Toggle drawing interactions, draw features, or drag existing geometry.',
+  );
   readonly featureCollection = new Collection<Feature>([
     new Feature({
       geometry: new Point(transform([-4.4, 54], 'EPSG:4326', 'EPSG:3857')),
@@ -113,7 +114,9 @@ export class ReactiveDrawings {
   }
 
   protected interactionEnded(name: string): void {
-    this.status.set(`${name} ended. Features in collection: ${this.featureCollection.getLength()}.`);
+    this.status.set(
+      `${name} ended. Features in collection: ${this.featureCollection.getLength()}.`,
+    );
   }
 }
 

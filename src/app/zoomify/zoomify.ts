@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, effect, signal, viewChild } from '@angular/core';
+import { Component, effect, signal, viewChild } from '@angular/core';
 import {
   AngularOpenlayersMapModule,
   AngularOpenlayersTileLayersModule,
@@ -10,7 +10,6 @@ import View from 'ol/View';
 
 @Component({
   selector: 'app-zoomify',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AngularOpenlayersMapModule, AngularOpenlayersTileLayersModule],
   templateUrl: './zoomify.html',
   styleUrl: './zoomify.less',

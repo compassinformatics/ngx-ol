@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import {
   ControlAttributionComponent,
   ControlScaleLineComponent,
@@ -13,7 +13,6 @@ import type { Coordinate } from 'ol/coordinate';
 
 @Component({
   selector: 'app-individual-imports',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     MapComponent,
     ViewComponent,

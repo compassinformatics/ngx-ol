@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { AngularOpenlayersModule } from 'ngx-ol';
 import Feature from 'ol/Feature';
@@ -11,7 +11,6 @@ import { map } from 'rxjs';
 
 @Component({
   selector: 'app-display-geometry',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AngularOpenlayersModule],
   templateUrl: './display-geometry.html',
   styleUrl: './display-geometry.less',

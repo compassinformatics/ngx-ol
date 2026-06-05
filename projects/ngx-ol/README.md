@@ -58,3 +58,9 @@ Rename affected template bindings:
 | `(olSnap)` | `(snap)` |
 
 `olPostRender` has been removed. Use `(postRender)`.
+
+Programmatic access to wrapper component inputs, outputs, and queries now uses Angular's signal APIs. Template bindings are unchanged, but code that reads wrapper inputs directly must call them as signals, for example `view.zoom()` instead of `view.zoom`.
+
+Components now rely on Angular 22's default `OnPush` change detection behavior. Applications should update state through signals, bindings, or other Angular change-detection notifications.
+
+`aol-map` now defaults `runOutsideAngular` to `true`, so OpenLayers map event handling runs outside Angular's zone unless explicitly disabled with `[runOutsideAngular]="false"`.

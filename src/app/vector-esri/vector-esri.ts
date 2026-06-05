@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, DestroyRef, inject, signal } from '@angular/core';
+import { Component, DestroyRef, inject, signal } from '@angular/core';
 import { AngularOpenlayersModule } from 'ngx-ol';
 import { type FeatureLike } from 'ol/Feature';
 import EsriJSON from 'ol/format/EsriJSON';
@@ -17,7 +17,6 @@ import type { Extent } from 'ol/extent';
 
 @Component({
   selector: 'app-vector-esri',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AngularOpenlayersModule],
   templateUrl: './vector-esri.html',
   styleUrl: './vector-esri.less',

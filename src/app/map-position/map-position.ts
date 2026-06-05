@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, DestroyRef, inject, signal, viewChild } from '@angular/core';
+import { Component, DestroyRef, inject, signal, viewChild } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Coordinate } from 'ol/coordinate';
@@ -8,7 +8,6 @@ import type { ViewComponent } from 'ngx-ol';
 
 @Component({
   selector: 'app-map-position',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AngularOpenlayersModule, ReactiveFormsModule],
   templateUrl: './map-position.html',
   styleUrl: './map-position.less',
