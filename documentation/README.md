@@ -25,6 +25,12 @@ Migration table:
 
 `olPostRender` has been removed. Use `(postRender)`.
 
+Programmatic access to wrapper component inputs, outputs, and queries now uses Angular's signal APIs. Template bindings are unchanged, but code that reads wrapper inputs directly must call them as signals, for example `view.zoom()` instead of `view.zoom`.
+
+Components rely on Angular 22's default `OnPush` change detection behavior. Applications should update state through signals, bindings, or other Angular change-detection notifications.
+
+`aol-map` defaults `runOutsideAngular` to `true`, so OpenLayers map event handling runs outside Angular's zone unless explicitly disabled with `[runOutsideAngular]="false"`.
+
 ## Input reactivity notes
 
 Most inputs are forwarded to OpenLayers with the matching setter when OpenLayers exposes one. Some OpenLayers options are constructor-only, so changing the Angular input after the component has created its OL instance will not change the existing OL object. For those inputs, recreate the wrapper component with Angular control flow if the value needs to change.
@@ -89,6 +95,7 @@ protected rotate(): void {
 - [Map setup](#map-setup)
 - [Layer groups](#layer-groups)
 - [Tile layers and tiled sources](#tile-layers-and-tiled-sources)
+- [Tile grids](#tile-grids)
 - [Image layers and image sources](#image-layers-and-image-sources)
 - [Vector layers, vector sources, and formats](#vector-layers-vector-sources-and-formats)
 - [Features and geometry](#features-and-geometry)
@@ -374,6 +381,21 @@ Inputs:
 - `transition`
 - `zDirection`
 
+### aol-source-utfgrid
+
+`aol-source-utfgrid` wraps the corresponding OpenLayers source.
+
+Inputs:
+
+- `attributions`
+- `attributionsCollapsible`
+- `preemptive`
+- `jsonp`
+- `tileJSON`
+- `url`
+- `wrapX`
+- `zDirection`
+
 ### aol-source-tilewms
 
 `aol-source-tilewms` wraps the corresponding OpenLayers source.
@@ -435,6 +457,49 @@ Outputs:
 - `tileLoadStart`
 - `tileLoadEnd`
 - `tileLoadError`
+
+## Tile grids
+
+```html
+<aol-source-tilewmts [layer]="layer" [matrixSet]="matrixSet" [style]="style">
+  <aol-tilegrid-wmts
+    [matrixIds]="matrixIds"
+    [resolutions]="resolutions"
+    [origin]="origin"
+  ></aol-tilegrid-wmts>
+</aol-source-tilewmts>
+```
+
+### aol-tilegrid
+
+`aol-tilegrid` wraps `ol/tilegrid/TileGrid`.
+
+Inputs:
+
+- `extent`
+- `maxZoom`
+- `minZoom`
+- `maxResolution`
+- `tileSize`
+- `origin`
+- `origins`
+- `resolutions`
+- `sizes`
+- `tileSizes`
+
+### aol-tilegrid-wmts
+
+`aol-tilegrid-wmts` wraps `ol/tilegrid/WMTS`.
+
+Inputs:
+
+- `origin`
+- `origins`
+- `resolutions`
+- `matrixIds`
+- `sizes`
+- `tileSize`
+- `tileSizes`
 
 ### aol-source-tilearcgisrest
 
