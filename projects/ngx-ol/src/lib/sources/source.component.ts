@@ -1,5 +1,5 @@
 import { OnChanges, OnDestroy, Directive, SimpleChanges, input, signal } from '@angular/core';
-import Source, { AttributionLike } from 'ol/source/Source';
+import Source, { AttributionLike } from 'ol/source/Source.js';
 
 import { LayerComponent } from '../layers/layer.component';
 

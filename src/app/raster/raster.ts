@@ -1,7 +1,7 @@
 import { Component, signal, viewChild } from '@angular/core';
 import { AngularOpenlayersModule } from 'ngx-ol';
-import type { Coordinate } from 'ol/coordinate';
-import { transform } from 'ol/proj';
+import type { Coordinate } from 'ol/coordinate.js';
+import { transform } from 'ol/proj.js';
 
 type RasterData = {
   brightness: number;

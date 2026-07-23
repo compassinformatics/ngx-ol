@@ -10,14 +10,14 @@ import {
   signal,
   inject,
 } from '@angular/core';
-import { Size } from 'ol/size';
-import XYZ from 'ol/source/XYZ';
-import { Options } from 'ol/source/XYZ';
-import { TileSourceEvent } from 'ol/source/Tile';
-import { LoadFunction, UrlFunction } from 'ol/Tile';
-import TileGrid from 'ol/tilegrid/TileGrid';
-import { ProjectionLike } from 'ol/proj';
-import { NearestDirectionFunction } from 'ol/array';
+import { Size } from 'ol/size.js';
+import XYZ from 'ol/source/XYZ.js';
+import { Options } from 'ol/source/XYZ.js';
+import { TileSourceEvent } from 'ol/source/Tile.js';
+import { LoadFunction, UrlFunction } from 'ol/Tile.js';
+import TileGrid from 'ol/tilegrid/TileGrid.js';
+import { ProjectionLike } from 'ol/proj.js';
+import { NearestDirectionFunction } from 'ol/array.js';
 
 import { LayerTileComponent } from '../layers/layertile.component';
 import { TileGridComponent } from '../tilegrid.component';

@@ -1,6 +1,6 @@
 import { Component, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import WMTS from 'ol/tilegrid/WMTS';
+import WMTS from 'ol/tilegrid/WMTS.js';
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 import { AngularOpenlayersModule } from '../public-api';
 import { TileGridWMTSComponent } from './tilegridwmts.component';

@@ -7,10 +7,10 @@ import {
   input,
   signal,
 } from '@angular/core';
-import ZoomToExtent from 'ol/control/ZoomToExtent';
-import { Options } from 'ol/control/ZoomToExtent';
+import ZoomToExtent from 'ol/control/ZoomToExtent.js';
+import { Options } from 'ol/control/ZoomToExtent.js';
 import { MapComponent } from '../map.component';
-import { Extent } from 'ol/extent';
+import { Extent } from 'ol/extent.js';
 
 @Component({
   selector: 'aol-control-zoomtoextent',

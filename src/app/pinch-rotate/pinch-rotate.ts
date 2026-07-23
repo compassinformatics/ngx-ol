@@ -1,6 +1,6 @@
 import { Component, signal } from '@angular/core';
 import { AngularOpenlayersMapModule, AngularOpenlayersTileLayersModule } from 'ngx-ol';
-import { fromLonLat } from 'ol/proj';
+import { fromLonLat } from 'ol/proj.js';
 
 @Component({
   selector: 'app-pinch-rotate',

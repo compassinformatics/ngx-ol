@@ -1,10 +1,10 @@
 import { Component, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import Feature from 'ol/Feature';
-import Geometry from 'ol/geom/Geometry';
-import Point from 'ol/geom/Point';
-import Style from 'ol/style/Style';
-import VectorSource from 'ol/source/Vector';
+import Feature from 'ol/Feature.js';
+import Geometry from 'ol/geom/Geometry.js';
+import Point from 'ol/geom/Point.js';
+import Style from 'ol/style/Style.js';
+import VectorSource from 'ol/source/Vector.js';
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 import { AngularOpenlayersModule } from '../../public-api';
 import { LayerVectorImageComponent } from './layervectorimage.component';

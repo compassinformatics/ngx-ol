@@ -1,10 +1,10 @@
 import { Component, OnInit, forwardRef, input, signal, inject } from '@angular/core';
-import BingMaps from 'ol/source/BingMaps';
-import { Options } from 'ol/source/BingMaps';
+import BingMaps from 'ol/source/BingMaps.js';
+import { Options } from 'ol/source/BingMaps.js';
 import { SourceComponent } from './source.component';
 import { LayerTileComponent } from '../layers/layertile.component';
-import { LoadFunction } from 'ol/Tile';
-import { NearestDirectionFunction } from 'ol/array';
+import { LoadFunction } from 'ol/Tile.js';
+import { NearestDirectionFunction } from 'ol/array.js';
 
 @Component({
   selector: 'aol-source-bingmaps',

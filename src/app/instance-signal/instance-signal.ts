@@ -1,7 +1,7 @@
 import { Component, viewChild } from '@angular/core';
 import { AngularOpenlayersModule, MapComponent } from 'ngx-ol';
-import type { Coordinate } from 'ol/coordinate';
-import { transform, transformExtent } from 'ol/proj';
+import type { Coordinate } from 'ol/coordinate.js';
+import { transform, transformExtent } from 'ol/proj.js';
 
 @Component({
   selector: 'app-instance-signal',

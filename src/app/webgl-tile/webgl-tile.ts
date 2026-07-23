@@ -1,7 +1,7 @@
 import { Component, signal } from '@angular/core';
 import { AngularOpenlayersMapModule, AngularOpenlayersTileLayersModule } from 'ngx-ol';
-import type { Style } from 'ol/layer/WebGLTile';
-import { fromLonLat } from 'ol/proj';
+import type { Style } from 'ol/layer/WebGLTile.js';
+import { fromLonLat } from 'ol/proj.js';
 
 @Component({
   selector: 'app-webgl-tile',

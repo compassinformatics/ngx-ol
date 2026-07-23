@@ -10,16 +10,16 @@ import {
   signal,
   inject,
 } from '@angular/core';
-import ImageWMS from 'ol/source/ImageWMS';
-import { Options } from 'ol/source/ImageWMS';
+import ImageWMS from 'ol/source/ImageWMS.js';
+import { Options } from 'ol/source/ImageWMS.js';
 import { LayerImageComponent } from '../layers/layerimage.component';
 import { SourceComponent } from './source.component';
-import { ProjectionLike } from 'ol/proj';
-import { LoadFunction } from 'ol/Image';
-import { ImageSourceEvent } from 'ol/source/Image';
-import { ServerType } from 'ol/source/wms';
-import type { EventsKey } from 'ol/events';
-import { unByKey } from 'ol/Observable';
+import { ProjectionLike } from 'ol/proj.js';
+import { LoadFunction } from 'ol/Image.js';
+import { ImageSourceEvent } from 'ol/source/Image.js';
+import { ServerType } from 'ol/source/wms.js';
+import type { EventsKey } from 'ol/events.js';
+import { unByKey } from 'ol/Observable.js';
 
 @Component({
   selector: 'aol-source-imagewms',

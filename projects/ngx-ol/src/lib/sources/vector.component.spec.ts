@@ -1,7 +1,7 @@
 import { Component, signal, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import Feature from 'ol/Feature';
-import Point from 'ol/geom/Point';
+import Feature from 'ol/Feature.js';
+import Point from 'ol/geom/Point.js';
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 import { AngularOpenlayersModule } from '../../public-api';
 import { LayerVectorComponent } from '../layers/layervector.component';

@@ -1,19 +1,19 @@
 import { Component, DestroyRef, inject, signal } from '@angular/core';
 import { AngularOpenlayersModule } from 'ngx-ol';
-import { type FeatureLike } from 'ol/Feature';
-import EsriJSON from 'ol/format/EsriJSON';
-import type MapBrowserEvent from 'ol/MapBrowserEvent';
-import { unByKey } from 'ol/Observable';
-import { transform } from 'ol/proj';
-import XYZ from 'ol/source/XYZ';
-import VectorSource from 'ol/source/Vector';
-import Fill from 'ol/style/Fill';
-import Stroke from 'ol/style/Stroke';
-import Style, { type StyleLike } from 'ol/style/Style';
-import { createXYZ } from 'ol/tilegrid';
-import { tile as tileStrategy } from 'ol/loadingstrategy';
-import type { Coordinate } from 'ol/coordinate';
-import type { Extent } from 'ol/extent';
+import { type FeatureLike } from 'ol/Feature.js';
+import EsriJSON from 'ol/format/EsriJSON.js';
+import type MapBrowserEvent from 'ol/MapBrowserEvent.js';
+import { unByKey } from 'ol/Observable.js';
+import { transform } from 'ol/proj.js';
+import XYZ from 'ol/source/XYZ.js';
+import VectorSource from 'ol/source/Vector.js';
+import Fill from 'ol/style/Fill.js';
+import Stroke from 'ol/style/Stroke.js';
+import Style, { type StyleLike } from 'ol/style/Style.js';
+import { createXYZ } from 'ol/tilegrid.js';
+import { tile as tileStrategy } from 'ol/loadingstrategy.js';
+import type { Coordinate } from 'ol/coordinate.js';
+import type { Extent } from 'ol/extent.js';
 
 @Component({
   selector: 'app-vector-esri',

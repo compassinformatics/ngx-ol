@@ -1,9 +1,9 @@
 import { Component, signal } from '@angular/core';
 import { AngularOpenlayersModule } from 'ngx-ol';
-import Feature from 'ol/Feature';
-import type { Coordinate } from 'ol/coordinate';
-import Point from 'ol/geom/Point';
-import { transform } from 'ol/proj';
+import Feature from 'ol/Feature.js';
+import type { Coordinate } from 'ol/coordinate.js';
+import Point from 'ol/geom/Point.js';
+import { transform } from 'ol/proj.js';
 
 @Component({
   selector: 'app-reactive-interactions',

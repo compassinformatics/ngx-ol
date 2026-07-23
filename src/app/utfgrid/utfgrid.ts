@@ -1,8 +1,8 @@
 import { Component, computed, signal, viewChild } from '@angular/core';
 import { AngularOpenlayersModule } from 'ngx-ol';
-import type MapBrowserEvent from 'ol/MapBrowserEvent';
-import type { Coordinate } from 'ol/coordinate';
-import { transform } from 'ol/proj';
+import type MapBrowserEvent from 'ol/MapBrowserEvent.js';
+import type { Coordinate } from 'ol/coordinate.js';
+import { transform } from 'ol/proj.js';
 
 type UtfGridInfo = Record<string, unknown>;
 

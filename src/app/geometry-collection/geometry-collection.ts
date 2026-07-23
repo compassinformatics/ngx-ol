@@ -4,11 +4,11 @@ import {
   AngularOpenlayersTileLayersModule,
   AngularOpenlayersVectorLayersModule,
 } from 'ngx-ol';
-import Geometry from 'ol/geom/Geometry';
-import LineString from 'ol/geom/LineString';
-import Point from 'ol/geom/Point';
-import Polygon from 'ol/geom/Polygon';
-import { fromLonLat } from 'ol/proj';
+import Geometry from 'ol/geom/Geometry.js';
+import LineString from 'ol/geom/LineString.js';
+import Point from 'ol/geom/Point.js';
+import Polygon from 'ol/geom/Polygon.js';
+import { fromLonLat } from 'ol/proj.js';
 
 @Component({
   selector: 'app-geometry-collection',

@@ -1,9 +1,9 @@
 import { Component, OnInit, forwardRef, input, signal, inject } from '@angular/core';
-import TileJSON from 'ol/source/TileJSON';
-import { Config, Options } from 'ol/source/TileJSON';
-import { LoadFunction } from 'ol/Tile';
-import { Size } from 'ol/size';
-import { NearestDirectionFunction } from 'ol/array';
+import TileJSON from 'ol/source/TileJSON.js';
+import { Config, Options } from 'ol/source/TileJSON.js';
+import { LoadFunction } from 'ol/Tile.js';
+import { Size } from 'ol/size.js';
+import { NearestDirectionFunction } from 'ol/array.js';
 import { LayerTileComponent } from '../layers/layertile.component';
 import { SourceComponent } from './source.component';
 

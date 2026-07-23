@@ -7,8 +7,8 @@ import {
   input,
   signal,
 } from '@angular/core';
-import Zoom from 'ol/control/Zoom';
-import { Options } from 'ol/control/Zoom';
+import Zoom from 'ol/control/Zoom.js';
+import { Options } from 'ol/control/Zoom.js';
 import { MapComponent } from '../map.component';
 
 @Component({

@@ -1,12 +1,12 @@
 import { JsonPipe } from '@angular/common';
 import { Component, signal } from '@angular/core';
 import { AngularOpenlayersModule } from 'ngx-ol';
-import Feature from 'ol/Feature';
-import GeoJSON, { GeoJSONFeature } from 'ol/format/GeoJSON';
-import Polygon from 'ol/geom/Polygon';
-import type { Coordinate } from 'ol/coordinate';
-import Projection from 'ol/proj/Projection';
-import { transform } from 'ol/proj';
+import Feature from 'ol/Feature.js';
+import GeoJSON, { GeoJSONFeature } from 'ol/format/GeoJSON.js';
+import Polygon from 'ol/geom/Polygon.js';
+import type { Coordinate } from 'ol/coordinate.js';
+import Projection from 'ol/proj/Projection.js';
+import { transform } from 'ol/proj.js';
 
 @Component({
   selector: 'app-modify-polygon',

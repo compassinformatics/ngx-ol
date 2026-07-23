@@ -1,7 +1,7 @@
 import { Component, OnInit, input, signal } from '@angular/core';
 import GeoJSON from 'ol/format/GeoJSON.js';
-import { Options } from 'ol/format/GeoJSON';
-import { ProjectionLike } from 'ol/proj';
+import { Options } from 'ol/format/GeoJSON.js';
+import { ProjectionLike } from 'ol/proj.js';
 
 @Component({
   selector: 'aol-format-geojson',

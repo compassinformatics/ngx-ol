@@ -10,9 +10,9 @@ import {
   inject,
 } from '@angular/core';
 import { MapComponent } from './map.component';
-import Overlay, { Options, PanIntoViewOptions, Positioning } from 'ol/Overlay';
+import Overlay, { Options, PanIntoViewOptions, Positioning } from 'ol/Overlay.js';
 import { ContentComponent } from './content.component';
-import { Coordinate } from 'ol/coordinate';
+import { Coordinate } from 'ol/coordinate.js';
 
 @Component({
   selector: 'aol-overlay',

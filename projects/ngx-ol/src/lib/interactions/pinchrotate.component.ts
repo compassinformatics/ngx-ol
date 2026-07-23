@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit, input, signal, inject } from '@angular/core';
-import PinchRotate from 'ol/interaction/PinchRotate';
-import type { Options } from 'ol/interaction/PinchRotate';
+import PinchRotate from 'ol/interaction/PinchRotate.js';
+import type { Options } from 'ol/interaction/PinchRotate.js';
 import { MapComponent } from '../map.component';
 
 @Component({

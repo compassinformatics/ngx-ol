@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit, input, signal, inject } from '@angular/core';
-import PinchZoom from 'ol/interaction/PinchZoom';
-import { Options } from 'ol/interaction/PinchZoom';
+import PinchZoom from 'ol/interaction/PinchZoom.js';
+import { Options } from 'ol/interaction/PinchZoom.js';
 import { MapComponent } from '../map.component';
 
 @Component({

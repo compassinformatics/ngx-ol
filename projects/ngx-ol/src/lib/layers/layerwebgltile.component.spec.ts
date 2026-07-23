@@ -1,6 +1,6 @@
 import { Component, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import DataTileSource from 'ol/source/DataTile';
+import DataTileSource from 'ol/source/DataTile.js';
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 import { AngularOpenlayersModule } from '../../public-api';
 import { LayerWebGLTileComponent } from './layerwebgltile.component';

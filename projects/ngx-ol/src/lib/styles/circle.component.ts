@@ -8,13 +8,13 @@ import {
   input,
   signal,
 } from '@angular/core';
-import Circle from 'ol/style/Circle';
-import Fill from 'ol/style/Fill';
-import Stroke from 'ol/style/Stroke';
-import { Options } from 'ol/style/Circle';
+import Circle from 'ol/style/Circle.js';
+import Fill from 'ol/style/Fill.js';
+import Stroke from 'ol/style/Stroke.js';
+import { Options } from 'ol/style/Circle.js';
 import { StyleComponent } from './style.component';
-import { Size } from 'ol/size';
-import { DeclutterMode } from 'ol/style/Style';
+import { Size } from 'ol/size.js';
+import { DeclutterMode } from 'ol/style/Style.js';
 
 @Component({
   selector: 'aol-style-circle',

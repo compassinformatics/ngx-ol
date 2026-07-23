@@ -1,16 +1,16 @@
 import { Component, OnDestroy, OnInit, input, output, signal, inject } from '@angular/core';
 import { MapComponent } from '../map.component';
-import Modify from 'ol/interaction/Modify';
-import Collection from 'ol/Collection';
-import Feature from 'ol/Feature';
-import Vector from 'ol/source/Vector';
-import { ModifyEvent, Options } from 'ol/interaction/Modify';
-import { StyleLike } from 'ol/style/Style';
-import { Condition } from 'ol/events/condition';
-import { ObjectEvent } from 'ol/Object';
-import BaseEvent from 'ol/events/Event';
-import { FlatStyleLike } from 'ol/style/flat';
-import BaseVectorLayer from 'ol/layer/BaseVector';
+import Modify from 'ol/interaction/Modify.js';
+import Collection from 'ol/Collection.js';
+import Feature from 'ol/Feature.js';
+import Vector from 'ol/source/Vector.js';
+import { ModifyEvent, Options } from 'ol/interaction/Modify.js';
+import { StyleLike } from 'ol/style/Style.js';
+import { Condition } from 'ol/events/condition.js';
+import { ObjectEvent } from 'ol/Object.js';
+import BaseEvent from 'ol/events/Event.js';
+import { FlatStyleLike } from 'ol/style/flat.js';
+import BaseVectorLayer from 'ol/layer/BaseVector.js';
 
 @Component({
   selector: 'aol-interaction-modify',

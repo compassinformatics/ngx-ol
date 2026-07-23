@@ -1,9 +1,9 @@
 import { Component, computed, signal } from '@angular/core';
 import { AngularOpenlayersModule } from 'ngx-ol';
-import Feature from 'ol/Feature';
-import Point from 'ol/geom/Point';
-import type { Coordinate } from 'ol/coordinate';
-import { transform } from 'ol/proj';
+import Feature from 'ol/Feature.js';
+import Point from 'ol/geom/Point.js';
+import type { Coordinate } from 'ol/coordinate.js';
+import { transform } from 'ol/proj.js';
 
 @Component({
   selector: 'app-marker',

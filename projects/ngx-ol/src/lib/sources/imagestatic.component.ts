@@ -9,14 +9,14 @@ import {
   signal,
   inject,
 } from '@angular/core';
-import ImageStatic from 'ol/source/ImageStatic';
-import { Options } from 'ol/source/ImageStatic';
+import ImageStatic from 'ol/source/ImageStatic.js';
+import { Options } from 'ol/source/ImageStatic.js';
 import { SourceComponent } from './source.component';
 import { LayerImageComponent } from '../layers/layerimage.component';
-import { ProjectionLike } from 'ol/proj';
-import { Extent } from 'ol/extent';
-import { LoadFunction } from 'ol/Image';
-import { ImageSourceEvent } from 'ol/source/Image';
+import { ProjectionLike } from 'ol/proj.js';
+import { Extent } from 'ol/extent.js';
+import { LoadFunction } from 'ol/Image.js';
+import { ImageSourceEvent } from 'ol/source/Image.js';
 
 @Component({
   selector: 'aol-source-imagestatic',

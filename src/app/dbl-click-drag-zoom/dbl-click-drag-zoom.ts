@@ -4,7 +4,7 @@ import {
   AngularOpenlayersMapModule,
   AngularOpenlayersTileLayersModule,
 } from 'ngx-ol';
-import { fromLonLat } from 'ol/proj';
+import { fromLonLat } from 'ol/proj.js';
 
 @Component({
   selector: 'app-dbl-click-drag-zoom',

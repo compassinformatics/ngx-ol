@@ -7,22 +7,22 @@ import {
   signal,
   inject,
 } from '@angular/core';
-import VectorTile from 'ol/source/VectorTile';
-import { Options } from 'ol/source/VectorTile';
-import TileGrid from 'ol/tilegrid/TileGrid';
-import OlVectorTile from 'ol/VectorTile';
+import VectorTile from 'ol/source/VectorTile.js';
+import { Options } from 'ol/source/VectorTile.js';
+import TileGrid from 'ol/tilegrid/TileGrid.js';
+import OlVectorTile from 'ol/VectorTile.js';
 import { LayerVectorTileComponent } from '../layers/layervectortile.component';
 import { TileGridComponent } from '../tilegrid.component';
 import { SourceComponent } from './source.component';
-import { ProjectionLike } from 'ol/proj';
-import { LoadFunction, UrlFunction } from 'ol/Tile';
-import { NearestDirectionFunction } from 'ol/array';
-import { Extent } from 'ol/extent';
-import { Size } from 'ol/size';
-import { State } from 'ol/source/Source';
+import { ProjectionLike } from 'ol/proj.js';
+import { LoadFunction, UrlFunction } from 'ol/Tile.js';
+import { NearestDirectionFunction } from 'ol/array.js';
+import { Extent } from 'ol/extent.js';
+import { Size } from 'ol/size.js';
+import { State } from 'ol/source/Source.js';
 import { FormatGeoJSONComponent } from '../formats/geojson.component';
 import { FormatMVTComponent } from '../formats/mvt.component';
-import FeatureFormat from 'ol/format/Feature';
+import FeatureFormat from 'ol/format/Feature.js';
 
 @Component({
   selector: 'aol-source-vectortile',

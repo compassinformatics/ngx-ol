@@ -1,6 +1,6 @@
 import { Component, signal } from '@angular/core';
 import { AngularOpenlayersModule } from 'ngx-ol';
-import type { Coordinate } from 'ol/coordinate';
+import type { Coordinate } from 'ol/coordinate.js';
 import TileLayer from 'ol/layer/Tile.js';
 import OSM from 'ol/source/OSM.js';
 

@@ -1,9 +1,9 @@
 import { Component, signal, viewChild } from '@angular/core';
 import { AngularOpenlayersModule } from 'ngx-ol';
 import type { MapComponent } from 'ngx-ol';
-import type { Coordinate } from 'ol/coordinate';
-import type BaseEvent from 'ol/events/Event';
-import { transform } from 'ol/proj';
+import type { Coordinate } from 'ol/coordinate.js';
+import type BaseEvent from 'ol/events/Event.js';
+import { transform } from 'ol/proj.js';
 
 type RenderEvent = BaseEvent & {
   context: CanvasRenderingContext2D;

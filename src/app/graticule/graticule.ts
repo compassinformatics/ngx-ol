@@ -1,7 +1,7 @@
 import { Component, signal } from '@angular/core';
 import { AngularOpenlayersModule } from 'ngx-ol';
-import Stroke from 'ol/style/Stroke';
-import type { Coordinate } from 'ol/coordinate';
+import Stroke from 'ol/style/Stroke.js';
+import type { Coordinate } from 'ol/coordinate.js';
 
 @Component({
   selector: 'app-graticule',

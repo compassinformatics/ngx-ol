@@ -1,6 +1,6 @@
 import { Component, signal } from '@angular/core';
-import { Coordinate } from 'ol/coordinate';
-import { transform } from 'ol/proj';
+import { Coordinate } from 'ol/coordinate.js';
+import { transform } from 'ol/proj.js';
 import { AngularOpenlayersModule } from 'ngx-ol';
 
 @Component({

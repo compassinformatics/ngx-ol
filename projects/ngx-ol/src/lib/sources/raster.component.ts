@@ -10,9 +10,9 @@ import {
   signal,
   inject,
 } from '@angular/core';
-import Raster from 'ol/source/Raster';
-import Source from 'ol/source/Source';
-import { Operation, Options, RasterSourceEvent } from 'ol/source/Raster';
+import Raster from 'ol/source/Raster.js';
+import Source from 'ol/source/Source.js';
+import { Operation, Options, RasterSourceEvent } from 'ol/source/Raster.js';
 
 import { LayerImageComponent } from '../layers/layerimage.component';
 import { SourceComponent } from './source.component';

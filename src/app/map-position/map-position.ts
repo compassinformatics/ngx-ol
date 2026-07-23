@@ -1,8 +1,8 @@
 import { Component, DestroyRef, inject, signal, viewChild } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { Coordinate } from 'ol/coordinate';
-import { transform } from 'ol/proj';
+import { Coordinate } from 'ol/coordinate.js';
+import { transform } from 'ol/proj.js';
 import { AngularOpenlayersModule } from 'ngx-ol';
 import type { ViewComponent } from 'ngx-ol';
 

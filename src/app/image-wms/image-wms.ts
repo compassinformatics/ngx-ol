@@ -1,7 +1,7 @@
 import { Component, signal } from '@angular/core';
 import { AngularOpenlayersModule } from 'ngx-ol';
-import type { Coordinate } from 'ol/coordinate';
-import type { Extent } from 'ol/extent';
+import type { Coordinate } from 'ol/coordinate.js';
+import type { Extent } from 'ol/extent.js';
 
 @Component({
   selector: 'app-image-wms',

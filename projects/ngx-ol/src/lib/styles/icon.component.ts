@@ -1,11 +1,11 @@
 import { Component, OnChanges, OnInit, SimpleChanges, inject, input, signal } from '@angular/core';
-import Icon from 'ol/style/Icon';
+import Icon from 'ol/style/Icon.js';
 
 import { StyleComponent } from './style.component';
-import { IconAnchorUnits, IconOrigin, Options } from 'ol/style/Icon';
-import { Size } from 'ol/size';
-import { Color } from 'ol/color';
-import { DeclutterMode } from 'ol/style/Style';
+import { IconAnchorUnits, IconOrigin, Options } from 'ol/style/Icon.js';
+import { Size } from 'ol/size.js';
+import { Color } from 'ol/color.js';
+import { DeclutterMode } from 'ol/style/Style.js';
 
 @Component({
   selector: 'aol-style-icon',

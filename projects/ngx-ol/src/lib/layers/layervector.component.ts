@@ -8,15 +8,15 @@ import {
   inject,
 } from '@angular/core';
 import { MapComponent } from '../map.component';
-import Vector from 'ol/layer/Vector';
-import { StyleLike } from 'ol/style/Style';
-import { Options } from 'ol/layer/BaseVector';
+import Vector from 'ol/layer/Vector.js';
+import { StyleLike } from 'ol/style/Style.js';
+import { Options } from 'ol/layer/BaseVector.js';
 import { LayerComponent } from './layer.component';
 import { LayerGroupComponent } from './layergroup.component';
-import { BackgroundColor } from 'ol/layer/Base';
-import { FlatStyleLike } from 'ol/style/flat';
-import { OrderFunction } from 'ol/render';
-import VectorSource from 'ol/source/Vector';
+import { BackgroundColor } from 'ol/layer/Base.js';
+import { FlatStyleLike } from 'ol/style/flat.js';
+import { OrderFunction } from 'ol/render.js';
+import VectorSource from 'ol/source/Vector.js';
 
 @Component({
   selector: 'aol-layer-vector',

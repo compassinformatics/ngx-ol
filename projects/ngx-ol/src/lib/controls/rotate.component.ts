@@ -7,9 +7,9 @@ import {
   input,
   signal,
 } from '@angular/core';
-import MapEvent from 'ol/MapEvent';
-import Rotate from 'ol/control/Rotate';
-import { Options } from 'ol/control/Rotate';
+import MapEvent from 'ol/MapEvent.js';
+import Rotate from 'ol/control/Rotate.js';
+import { Options } from 'ol/control/Rotate.js';
 import { MapComponent } from '../map.component';
 
 @Component({

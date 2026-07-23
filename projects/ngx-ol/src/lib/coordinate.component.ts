@@ -1,11 +1,11 @@
 import { Component, OnChanges, SimpleChanges, OnInit, inject, input } from '@angular/core';
-import { transform } from 'ol/proj';
+import { transform } from 'ol/proj.js';
 import { MapComponent } from './map.component';
 import { GeometryPointComponent } from './geom/geometrypoint.component';
 import { GeometryCircleComponent } from './geom/geometrycircle.component';
 import { ViewComponent } from './view.component';
 import { OverlayComponent } from './overlay.component';
-import { ObjectEvent } from 'ol/Object';
+import { ObjectEvent } from 'ol/Object.js';
 
 @Component({
   selector: 'aol-coordinate',

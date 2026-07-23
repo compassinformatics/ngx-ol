@@ -10,18 +10,18 @@ import {
   inject,
 } from '@angular/core';
 import { MapComponent } from '../map.component';
-import Draw from 'ol/interaction/Draw';
-import Collection from 'ol/Collection';
-import Feature from 'ol/Feature';
-import Vector from 'ol/source/Vector';
-import { DrawEvent, GeometryFunction, Options } from 'ol/interaction/Draw';
-import { StyleLike } from 'ol/style/Style';
-import { Condition } from 'ol/events/condition';
-import { Type } from 'ol/geom/Geometry';
-import { GeometryLayout } from 'ol/geom/Geometry';
-import { ObjectEvent } from 'ol/Object';
-import BaseEvent from 'ol/events/Event';
-import { FlatStyleLike } from 'ol/style/flat';
+import Draw from 'ol/interaction/Draw.js';
+import Collection from 'ol/Collection.js';
+import Feature from 'ol/Feature.js';
+import Vector from 'ol/source/Vector.js';
+import { DrawEvent, GeometryFunction, Options } from 'ol/interaction/Draw.js';
+import { StyleLike } from 'ol/style/Style.js';
+import { Condition } from 'ol/events/condition.js';
+import { Type } from 'ol/geom/Geometry.js';
+import { GeometryLayout } from 'ol/geom/Geometry.js';
+import { ObjectEvent } from 'ol/Object.js';
+import BaseEvent from 'ol/events/Event.js';
+import { FlatStyleLike } from 'ol/style/flat.js';
 
 @Component({
   selector: 'aol-interaction-draw',

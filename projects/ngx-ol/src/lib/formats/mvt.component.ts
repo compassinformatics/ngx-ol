@@ -1,7 +1,7 @@
 import { Component, OnInit, input, signal } from '@angular/core';
-import MVT from 'ol/format/MVT';
-import { FeatureClass } from 'ol/Feature';
-import { Options } from 'ol/format/MVT';
+import MVT from 'ol/format/MVT.js';
+import { FeatureClass } from 'ol/Feature.js';
+import { Options } from 'ol/format/MVT.js';
 
 @Component({
   selector: 'aol-format-mvt',

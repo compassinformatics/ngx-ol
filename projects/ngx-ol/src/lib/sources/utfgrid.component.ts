@@ -1,10 +1,10 @@
 import { Component, OnInit, forwardRef, input, signal, inject } from '@angular/core';
 import { SourceComponent } from './source.component';
 import { LayerTileComponent } from '../layers/layertile.component';
-import UTFGrid from 'ol/source/UTFGrid';
-import { Config } from 'ol/source/TileJSON';
-import { Options } from 'ol/source/UTFGrid';
-import { NearestDirectionFunction } from 'ol/array';
+import UTFGrid from 'ol/source/UTFGrid.js';
+import { Config } from 'ol/source/TileJSON.js';
+import { Options } from 'ol/source/UTFGrid.js';
+import { NearestDirectionFunction } from 'ol/array.js';
 
 @Component({
   selector: 'aol-source-utfgrid',

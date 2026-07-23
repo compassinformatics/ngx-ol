@@ -8,10 +8,10 @@ import {
   signal,
   inject,
 } from '@angular/core';
-import type { FeatureLike } from 'ol/Feature';
-import Heatmap from 'ol/layer/Heatmap';
-import type { Options } from 'ol/layer/Heatmap';
-import VectorSource from 'ol/source/Vector';
+import type { FeatureLike } from 'ol/Feature.js';
+import Heatmap from 'ol/layer/Heatmap.js';
+import type { Options } from 'ol/layer/Heatmap.js';
+import VectorSource from 'ol/source/Vector.js';
 import { MapComponent } from '../map.component';
 import { LayerComponent } from './layer.component';
 import { LayerGroupComponent } from './layergroup.component';

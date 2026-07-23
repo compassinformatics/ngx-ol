@@ -2,7 +2,7 @@ import { Component, OnInit, signal } from '@angular/core';
 import { FeatureComponent } from '../feature.component';
 import { SimpleGeometryComponent } from './simplegeometry.component';
 import { MapComponent } from '../map.component';
-import LineString from 'ol/geom/LineString';
+import LineString from 'ol/geom/LineString.js';
 
 @Component({
   selector: 'aol-geometry-linestring',

@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit, input, signal, inject } from '@angular/core';
-import DoubleClickZoom from 'ol/interaction/DoubleClickZoom';
-import { Options } from 'ol/interaction/DoubleClickZoom';
+import DoubleClickZoom from 'ol/interaction/DoubleClickZoom.js';
+import { Options } from 'ol/interaction/DoubleClickZoom.js';
 import { MapComponent } from '../map.component';
 
 @Component({

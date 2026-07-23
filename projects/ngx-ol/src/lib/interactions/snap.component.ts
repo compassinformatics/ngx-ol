@@ -1,13 +1,13 @@
 import { Component, OnDestroy, OnInit, input, output, signal, inject } from '@angular/core';
-import BaseEvent from 'ol/events/Event';
-import { SnapEvent } from 'ol/events/SnapEvent';
-import Snap from 'ol/interaction/Snap';
-import { Options } from 'ol/interaction/Snap';
-import { ObjectEvent } from 'ol/Object';
+import BaseEvent from 'ol/events/Event.js';
+import { SnapEvent } from 'ol/events/SnapEvent.js';
+import Snap from 'ol/interaction/Snap.js';
+import { Options } from 'ol/interaction/Snap.js';
+import { ObjectEvent } from 'ol/Object.js';
 import { MapComponent } from '../map.component';
-import Collection from 'ol/Collection';
-import Feature from 'ol/Feature';
-import Vector from 'ol/source/Vector';
+import Collection from 'ol/Collection.js';
+import Feature from 'ol/Feature.js';
+import Vector from 'ol/source/Vector.js';
 
 @Component({
   selector: 'aol-interaction-snap',

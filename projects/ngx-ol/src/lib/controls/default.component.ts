@@ -1,11 +1,11 @@
 import { Component, OnDestroy, OnInit, input, signal, inject } from '@angular/core';
-import Control from 'ol/control/Control';
-import { defaults } from 'ol/control/defaults';
-import { DefaultsOptions } from 'ol/control/defaults';
-import Collection from 'ol/Collection';
-import { Options as AttributionOptions } from 'ol/control/Attribution';
-import { Options as RotateOptions } from 'ol/control/Rotate';
-import { Options as ZoomOptions } from 'ol/control/Zoom';
+import Control from 'ol/control/Control.js';
+import { defaults } from 'ol/control/defaults.js';
+import { DefaultsOptions } from 'ol/control/defaults.js';
+import Collection from 'ol/Collection.js';
+import { Options as AttributionOptions } from 'ol/control/Attribution.js';
+import { Options as RotateOptions } from 'ol/control/Rotate.js';
+import { Options as ZoomOptions } from 'ol/control/Zoom.js';
 
 import { MapComponent } from '../map.component';
 

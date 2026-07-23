@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit, contentChild, signal, inject } from '@angular/core';
-import Control from 'ol/control/Control';
-import { Options } from 'ol/control/Control';
+import Control from 'ol/control/Control.js';
+import { Options } from 'ol/control/Control.js';
 import { MapComponent } from '../map.component';
 import { ContentComponent } from '../content.component';
 

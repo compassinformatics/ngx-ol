@@ -1,11 +1,11 @@
 import { Component, signal, viewChild } from '@angular/core';
 import { AngularOpenlayersModule } from 'ngx-ol';
-import Feature from 'ol/Feature';
-import Point from 'ol/geom/Point';
-import type { Coordinate } from 'ol/coordinate';
-import type Layer from 'ol/layer/Layer';
-import type { SelectEvent } from 'ol/interaction/Select';
-import { transform } from 'ol/proj';
+import Feature from 'ol/Feature.js';
+import Point from 'ol/geom/Point.js';
+import type { Coordinate } from 'ol/coordinate.js';
+import type Layer from 'ol/layer/Layer.js';
+import type { SelectEvent } from 'ol/interaction/Select.js';
+import { transform } from 'ol/proj.js';
 
 type LayerVectorRef = {
   instance: Layer;

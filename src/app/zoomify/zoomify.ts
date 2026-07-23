@@ -5,8 +5,8 @@ import {
   MapComponent,
   SourceZoomifyComponent,
 } from 'ngx-ol';
-import type { Size } from 'ol/size';
-import View from 'ol/View';
+import type { Size } from 'ol/size.js';
+import View from 'ol/View.js';
 
 @Component({
   selector: 'app-zoomify',

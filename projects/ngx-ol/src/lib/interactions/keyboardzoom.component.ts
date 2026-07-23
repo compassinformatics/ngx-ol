@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit, input, signal, inject } from '@angular/core';
-import KeyboardZoom from 'ol/interaction/KeyboardZoom';
-import { Options } from 'ol/interaction/KeyboardZoom';
+import KeyboardZoom from 'ol/interaction/KeyboardZoom.js';
+import { Options } from 'ol/interaction/KeyboardZoom.js';
 import { MapComponent } from '../map.component';
 
 @Component({

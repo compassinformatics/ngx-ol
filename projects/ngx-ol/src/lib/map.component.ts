@@ -11,17 +11,17 @@ import {
   output,
   signal,
 } from '@angular/core';
-import Map from 'ol/Map';
-import type { MapOptions } from 'ol/Map';
-import MapBrowserEvent from 'ol/MapBrowserEvent';
-import MapEvent from 'ol/MapEvent';
-import { ObjectEvent } from 'ol/Object';
-import RenderEvent from 'ol/render/Event';
-import Control from 'ol/control/Control';
-import Interaction from 'ol/interaction/Interaction';
-import BaseEvent from 'ol/events/Event';
-import type { EventsKey } from 'ol/events';
-import { unByKey } from 'ol/Observable';
+import Map from 'ol/Map.js';
+import type { MapOptions } from 'ol/Map.js';
+import MapBrowserEvent from 'ol/MapBrowserEvent.js';
+import MapEvent from 'ol/MapEvent.js';
+import { ObjectEvent } from 'ol/Object.js';
+import RenderEvent from 'ol/render/Event.js';
+import Control from 'ol/control/Control.js';
+import Interaction from 'ol/interaction/Interaction.js';
+import BaseEvent from 'ol/events/Event.js';
+import type { EventsKey } from 'ol/events.js';
+import { unByKey } from 'ol/Observable.js';
 
 @Component({
   selector: 'aol-map',

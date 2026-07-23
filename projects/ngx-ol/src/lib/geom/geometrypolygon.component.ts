@@ -2,7 +2,7 @@ import { Component, OnInit, signal } from '@angular/core';
 import { FeatureComponent } from '../feature.component';
 import { SimpleGeometryComponent } from './simplegeometry.component';
 import { MapComponent } from '../map.component';
-import Polygon from 'ol/geom/Polygon';
+import Polygon from 'ol/geom/Polygon.js';
 
 @Component({
   selector: 'aol-geometry-polygon',

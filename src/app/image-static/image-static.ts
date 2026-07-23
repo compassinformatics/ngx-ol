@@ -1,8 +1,8 @@
 import { Component, computed, signal } from '@angular/core';
 import { AngularOpenlayersModule } from 'ngx-ol';
-import { getCenter, type Extent } from 'ol/extent';
-import type { Coordinate } from 'ol/coordinate';
-import Projection from 'ol/proj/Projection';
+import { getCenter, type Extent } from 'ol/extent.js';
+import type { Coordinate } from 'ol/coordinate.js';
+import Projection from 'ol/proj/Projection.js';
 
 type StaticImageOption = {
   label: string;

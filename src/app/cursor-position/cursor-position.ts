@@ -1,7 +1,7 @@
 import { Component, computed, signal } from '@angular/core';
-import MapBrowserEvent from 'ol/MapBrowserEvent';
-import { Coordinate } from 'ol/coordinate';
-import { transform } from 'ol/proj';
+import MapBrowserEvent from 'ol/MapBrowserEvent.js';
+import { Coordinate } from 'ol/coordinate.js';
+import { transform } from 'ol/proj.js';
 import { AngularOpenlayersModule } from 'ngx-ol';
 
 @Component({

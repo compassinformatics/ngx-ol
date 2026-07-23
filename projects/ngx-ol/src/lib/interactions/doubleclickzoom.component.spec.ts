@@ -1,7 +1,7 @@
 import { Component, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import MapBrowserEvent from 'ol/MapBrowserEvent';
-import MapBrowserEventType from 'ol/MapBrowserEventType';
+import MapBrowserEvent from 'ol/MapBrowserEvent.js';
+import MapBrowserEventType from 'ol/MapBrowserEventType.js';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { AngularOpenlayersModule } from '../../public-api';
 import { MapComponent } from '../map.component';

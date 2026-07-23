@@ -1,9 +1,9 @@
 import { Component, OnChanges, OnInit, SimpleChanges, input, signal } from '@angular/core';
-import { createXYZ, XYZOptions } from 'ol/tilegrid';
-import TileGrid, { Options } from 'ol/tilegrid/TileGrid';
-import { Extent } from 'ol/extent';
-import { Coordinate } from 'ol/coordinate';
-import { Size } from 'ol/size';
+import { createXYZ, XYZOptions } from 'ol/tilegrid.js';
+import TileGrid, { Options } from 'ol/tilegrid/TileGrid.js';
+import { Extent } from 'ol/extent.js';
+import { Coordinate } from 'ol/coordinate.js';
+import { Size } from 'ol/size.js';
 
 @Component({
   selector: 'aol-tilegrid',

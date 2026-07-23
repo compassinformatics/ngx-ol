@@ -1,6 +1,6 @@
 import { Component, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import MultiLineString from 'ol/geom/MultiLineString';
+import MultiLineString from 'ol/geom/MultiLineString.js';
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 import { AngularOpenlayersModule } from '../../public-api';
 import { FeatureComponent } from '../feature.component';

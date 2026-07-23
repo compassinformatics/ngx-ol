@@ -8,11 +8,11 @@ import {
   input,
   signal,
 } from '@angular/core';
-import MousePosition, { Options } from 'ol/control/MousePosition';
+import MousePosition, { Options } from 'ol/control/MousePosition.js';
 import { MapComponent } from '../map.component';
-import { CoordinateFormat } from 'ol/coordinate';
-import { ProjectionLike } from 'ol/proj';
-import MapEvent from 'ol/MapEvent';
+import { CoordinateFormat } from 'ol/coordinate.js';
+import { ProjectionLike } from 'ol/proj.js';
+import MapEvent from 'ol/MapEvent.js';
 
 @Component({
   selector: 'aol-control-mouseposition',

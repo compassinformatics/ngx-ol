@@ -2,11 +2,11 @@ import { HttpClient } from '@angular/common/http';
 import { Component, inject, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { AngularOpenlayersModule } from 'ngx-ol';
-import Feature from 'ol/Feature';
-import { Coordinate } from 'ol/coordinate';
-import GeoJSON, { GeoJSONFeatureCollection } from 'ol/format/GeoJSON';
-import Point from 'ol/geom/Point';
-import { transform } from 'ol/proj';
+import Feature from 'ol/Feature.js';
+import { Coordinate } from 'ol/coordinate.js';
+import GeoJSON, { GeoJSONFeatureCollection } from 'ol/format/GeoJSON.js';
+import Point from 'ol/geom/Point.js';
+import { transform } from 'ol/proj.js';
 import { map } from 'rxjs';
 
 @Component({

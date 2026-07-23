@@ -1,13 +1,13 @@
 import { Component, OnChanges, OnInit, SimpleChanges, inject, input, signal } from '@angular/core';
-import Fill from 'ol/style/Fill';
-import Image from 'ol/style/Image';
-import Stroke from 'ol/style/Stroke';
-import Style from 'ol/style/Style';
-import Text from 'ol/style/Text';
-import Geometry from 'ol/geom/Geometry';
+import Fill from 'ol/style/Fill.js';
+import Image from 'ol/style/Image.js';
+import Stroke from 'ol/style/Stroke.js';
+import Style from 'ol/style/Style.js';
+import Text from 'ol/style/Text.js';
+import Geometry from 'ol/geom/Geometry.js';
 import { FeatureComponent } from '../feature.component';
 import { LayerVectorComponent } from '../layers/layervector.component';
-import { GeometryFunction, Options, RenderFunction } from 'ol/style/Style';
+import { GeometryFunction, Options, RenderFunction } from 'ol/style/Style.js';
 import { LayerVectorImageComponent } from '../layers/layervectorimage.component';
 
 @Component({

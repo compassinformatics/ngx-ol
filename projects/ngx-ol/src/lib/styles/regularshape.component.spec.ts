@@ -4,8 +4,8 @@ import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 import { AngularOpenlayersModule } from '../../public-api';
 import { StyleComponent } from './style.component';
 import { StyleRegularShapeComponent } from './regularshape.component';
-import Fill from 'ol/style/Fill';
-import Stroke from 'ol/style/Stroke';
+import Fill from 'ol/style/Fill.js';
+import Stroke from 'ol/style/Stroke.js';
 
 @Component({
   template: `

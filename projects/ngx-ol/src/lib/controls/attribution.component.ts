@@ -8,9 +8,9 @@ import {
   input,
   signal,
 } from '@angular/core';
-import Attribution from 'ol/control/Attribution';
-import { Options } from 'ol/control/Attribution';
-import MapEvent from 'ol/MapEvent';
+import Attribution from 'ol/control/Attribution.js';
+import { Options } from 'ol/control/Attribution.js';
+import MapEvent from 'ol/MapEvent.js';
 import { MapComponent } from '../map.component';
 
 @Component({

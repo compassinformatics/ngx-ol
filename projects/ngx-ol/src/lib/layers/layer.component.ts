@@ -7,11 +7,11 @@ import {
   input,
   signal,
 } from '@angular/core';
-import Event from 'ol/events/Event';
+import Event from 'ol/events/Event.js';
 import { MapComponent } from '../map.component';
 import { LayerGroupComponent } from './layergroup.component';
-import { Extent } from 'ol/extent';
-import { RenderFunction } from 'ol/layer/Layer';
+import { Extent } from 'ol/extent.js';
+import { RenderFunction } from 'ol/layer/Layer.js';
 
 @Directive()
 // eslint-disable-next-line @angular-eslint/directive-class-suffix

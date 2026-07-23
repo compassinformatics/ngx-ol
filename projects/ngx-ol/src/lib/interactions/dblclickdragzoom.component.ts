@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit, input, signal, inject } from '@angular/core';
-import DblClickDragZoom from 'ol/interaction/DblClickDragZoom';
-import type { Options } from 'ol/interaction/DblClickDragZoom';
+import DblClickDragZoom from 'ol/interaction/DblClickDragZoom.js';
+import type { Options } from 'ol/interaction/DblClickDragZoom.js';
 import { MapComponent } from '../map.component';
 
 @Component({
