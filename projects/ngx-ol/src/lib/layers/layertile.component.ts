@@ -7,12 +7,12 @@ import {
   input,
   inject,
 } from '@angular/core';
-import Tile from 'ol/layer/Tile';
-import { Options } from 'ol/layer/BaseTile';
+import Tile from 'ol/layer/Tile.js';
+import { Options } from 'ol/layer/BaseTile.js';
 import { MapComponent } from '../map.component';
 import { LayerComponent } from './layer.component';
 import { LayerGroupComponent } from './layergroup.component';
-import TileSource from 'ol/source/Tile';
+import TileSource from 'ol/source/Tile.js';
 
 @Component({
   selector: 'aol-layer-tile',

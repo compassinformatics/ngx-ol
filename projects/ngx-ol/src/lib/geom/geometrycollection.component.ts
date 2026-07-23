@@ -1,6 +1,6 @@
 import { Component, OnChanges, OnInit, SimpleChanges, input, signal, inject } from '@angular/core';
-import Geometry from 'ol/geom/Geometry';
-import GeometryCollection from 'ol/geom/GeometryCollection';
+import Geometry from 'ol/geom/Geometry.js';
+import GeometryCollection from 'ol/geom/GeometryCollection.js';
 import { FeatureComponent } from '../feature.component';
 
 @Component({

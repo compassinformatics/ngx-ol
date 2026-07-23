@@ -1,9 +1,9 @@
 import { Component, DestroyRef, inject, signal } from '@angular/core';
 import { AngularOpenlayersModule } from 'ngx-ol';
-import type { Coordinate } from 'ol/coordinate';
-import { unByKey } from 'ol/Observable';
-import { transform } from 'ol/proj';
-import XYZ from 'ol/source/XYZ';
+import type { Coordinate } from 'ol/coordinate.js';
+import { unByKey } from 'ol/Observable.js';
+import { transform } from 'ol/proj.js';
+import XYZ from 'ol/source/XYZ.js';
 
 @Component({
   selector: 'app-xyz-esri',

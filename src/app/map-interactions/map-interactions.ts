@@ -1,8 +1,8 @@
 import { Component, signal } from '@angular/core';
 import { AngularOpenlayersModule } from 'ngx-ol';
-import type { Coordinate } from 'ol/coordinate';
-import { altShiftKeysOnly, platformModifierKeyOnly, shiftKeyOnly } from 'ol/events/condition';
-import { transform } from 'ol/proj';
+import type { Coordinate } from 'ol/coordinate.js';
+import { altShiftKeysOnly, platformModifierKeyOnly, shiftKeyOnly } from 'ol/events/condition.js';
+import { transform } from 'ol/proj.js';
 
 type MapInteractionKey =
   | 'defaults'

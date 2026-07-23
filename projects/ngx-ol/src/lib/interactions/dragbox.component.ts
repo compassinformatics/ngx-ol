@@ -1,9 +1,9 @@
 import { Component, OnDestroy, OnInit, input, signal, inject } from '@angular/core';
-import DragBox from 'ol/interaction/DragBox';
-import { Options } from 'ol/interaction/DragBox';
+import DragBox from 'ol/interaction/DragBox.js';
+import { Options } from 'ol/interaction/DragBox.js';
 import { MapComponent } from '../map.component';
-import { Condition } from 'ol/events/condition';
-import { EndCondition } from 'ol/interaction/DragBox';
+import { Condition } from 'ol/events/condition.js';
+import { EndCondition } from 'ol/interaction/DragBox.js';
 
 @Component({
   selector: 'aol-interaction-dragbox',

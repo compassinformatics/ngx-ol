@@ -1,5 +1,5 @@
 import { Component, signal } from '@angular/core';
-import { Coordinate } from 'ol/coordinate';
+import { Coordinate } from 'ol/coordinate.js';
 import { AngularOpenlayersModule } from 'ngx-ol';
 import { LayerList } from './layer-list/layer-list';
 import { layers as initialLayers, LayerType } from './layers';

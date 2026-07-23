@@ -1,11 +1,11 @@
 import { Component, forwardRef, OnInit, input, signal, inject } from '@angular/core';
-import type { NearestDirectionFunction } from 'ol/array';
-import type { Extent } from 'ol/extent';
-import type { ProjectionLike } from 'ol/proj';
-import type { Size } from 'ol/size';
-import IIIF from 'ol/source/IIIF';
-import type { Options } from 'ol/source/IIIF';
-import type { State } from 'ol/source/Source';
+import type { NearestDirectionFunction } from 'ol/array.js';
+import type { Extent } from 'ol/extent.js';
+import type { ProjectionLike } from 'ol/proj.js';
+import type { Size } from 'ol/size.js';
+import IIIF from 'ol/source/IIIF.js';
+import type { Options } from 'ol/source/IIIF.js';
+import type { State } from 'ol/source/Source.js';
 import { LayerTileComponent } from '../layers/layertile.component';
 import { SourceComponent } from './source.component';
 

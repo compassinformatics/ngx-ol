@@ -8,12 +8,12 @@ import {
   signal,
   inject,
 } from '@angular/core';
-import type { NearestDirectionFunction } from 'ol/array';
-import type { ProjectionLike } from 'ol/proj';
-import TileGrid from 'ol/tilegrid/TileGrid';
-import type { LoadFunction } from 'ol/Tile';
-import TileArcGISRest from 'ol/source/TileArcGISRest';
-import type { Options } from 'ol/source/TileArcGISRest';
+import type { NearestDirectionFunction } from 'ol/array.js';
+import type { ProjectionLike } from 'ol/proj.js';
+import TileGrid from 'ol/tilegrid/TileGrid.js';
+import type { LoadFunction } from 'ol/Tile.js';
+import TileArcGISRest from 'ol/source/TileArcGISRest.js';
+import type { Options } from 'ol/source/TileArcGISRest.js';
 import { LayerTileComponent } from '../layers/layertile.component';
 import { SourceComponent } from './source.component';
 

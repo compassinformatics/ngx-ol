@@ -1,7 +1,7 @@
 import { Component, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import Collection from 'ol/Collection';
-import Feature from 'ol/Feature';
+import Collection from 'ol/Collection.js';
+import Feature from 'ol/Feature.js';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { AngularOpenlayersModule } from '../../public-api';
 import { MapComponent } from '../map.component';

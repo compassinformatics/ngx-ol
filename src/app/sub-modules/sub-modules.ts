@@ -1,6 +1,6 @@
 import { Component, signal } from '@angular/core';
 import { AngularOpenlayersMapModule, AngularOpenlayersTileLayersModule } from 'ngx-ol';
-import type { Coordinate } from 'ol/coordinate';
+import type { Coordinate } from 'ol/coordinate.js';
 
 @Component({
   selector: 'app-sub-modules',

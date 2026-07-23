@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit, inject, signal } from '@angular/core';
-import Group from 'ol/layer/Group';
-import { Options } from 'ol/layer/Group';
+import Group from 'ol/layer/Group.js';
+import { Options } from 'ol/layer/Group.js';
 import { LayerComponent } from './layer.component';
 import { MapComponent } from '../map.component';
 

@@ -8,12 +8,12 @@ import {
   signal,
   inject,
 } from '@angular/core';
-import Collection from 'ol/Collection';
-import MapEvent from 'ol/MapEvent';
-import BaseLayer from 'ol/layer/Base';
-import View from 'ol/View';
-import OverviewMap from 'ol/control/OverviewMap';
-import { Options } from 'ol/control/OverviewMap';
+import Collection from 'ol/Collection.js';
+import MapEvent from 'ol/MapEvent.js';
+import BaseLayer from 'ol/layer/Base.js';
+import View from 'ol/View.js';
+import OverviewMap from 'ol/control/OverviewMap.js';
+import { Options } from 'ol/control/OverviewMap.js';
 import { MapComponent } from '../map.component';
 
 @Component({

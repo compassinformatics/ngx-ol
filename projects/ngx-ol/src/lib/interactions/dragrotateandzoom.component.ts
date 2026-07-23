@@ -1,8 +1,8 @@
 import { Component, OnDestroy, OnInit, input, signal, inject } from '@angular/core';
-import DragRotateAndZoom from 'ol/interaction/DragRotateAndZoom';
-import { Options } from 'ol/interaction/DragRotateAndZoom';
+import DragRotateAndZoom from 'ol/interaction/DragRotateAndZoom.js';
+import { Options } from 'ol/interaction/DragRotateAndZoom.js';
 import { MapComponent } from '../map.component';
-import { Condition } from 'ol/events/condition';
+import { Condition } from 'ol/events/condition.js';
 
 @Component({
   selector: 'aol-interaction-dragrotateandzoom',

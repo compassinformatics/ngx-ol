@@ -1,7 +1,7 @@
 import { OnInit, Directive, input, signal } from '@angular/core';
 import { FeatureComponent } from '../feature.component';
 import { MapComponent } from '../map.component';
-import SimpleGeometry from 'ol/geom/SimpleGeometry';
+import SimpleGeometry from 'ol/geom/SimpleGeometry.js';
 
 @Directive()
 // eslint-disable-next-line @angular-eslint/directive-class-suffix

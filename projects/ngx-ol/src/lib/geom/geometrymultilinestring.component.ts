@@ -2,7 +2,7 @@ import { Component, OnInit, signal } from '@angular/core';
 import { FeatureComponent } from '../feature.component';
 import { SimpleGeometryComponent } from './simplegeometry.component';
 import { MapComponent } from '../map.component';
-import MultiLineString from 'ol/geom/MultiLineString';
+import MultiLineString from 'ol/geom/MultiLineString.js';
 
 @Component({
   selector: 'aol-geometry-multilinestring',

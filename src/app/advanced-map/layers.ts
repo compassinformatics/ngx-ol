@@ -1,5 +1,5 @@
-import { Extent } from 'ol/extent';
-import { ServerType } from 'ol/source/wms';
+import { Extent } from 'ol/extent.js';
+import { ServerType } from 'ol/source/wms.js';
 
 export enum LayerType {
   TileWMS,

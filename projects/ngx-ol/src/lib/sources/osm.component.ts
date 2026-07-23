@@ -8,11 +8,11 @@ import {
   output,
   signal,
 } from '@angular/core';
-import OSM from 'ol/source/OSM';
-import { Options } from 'ol/source/OSM';
-import { TileSourceEvent } from 'ol/source/Tile';
-import { LoadFunction } from 'ol/Tile';
-import { NearestDirectionFunction } from 'ol/array';
+import OSM from 'ol/source/OSM.js';
+import { Options } from 'ol/source/OSM.js';
+import { TileSourceEvent } from 'ol/source/Tile.js';
+import { LoadFunction } from 'ol/Tile.js';
+import { NearestDirectionFunction } from 'ol/array.js';
 import { SourceComponent } from './source.component';
 import { SourceXYZComponent } from './xyz.component';
 

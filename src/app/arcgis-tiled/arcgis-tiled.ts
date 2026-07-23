@@ -1,10 +1,10 @@
 import { Component, DestroyRef, inject, signal } from '@angular/core';
 import { AngularOpenlayersModule } from 'ngx-ol';
-import type { Coordinate } from 'ol/coordinate';
-import type { Extent } from 'ol/extent';
-import { unByKey } from 'ol/Observable';
-import OSM from 'ol/source/OSM';
-import TileArcGISRest from 'ol/source/TileArcGISRest';
+import type { Coordinate } from 'ol/coordinate.js';
+import type { Extent } from 'ol/extent.js';
+import { unByKey } from 'ol/Observable.js';
+import OSM from 'ol/source/OSM.js';
+import TileArcGISRest from 'ol/source/TileArcGISRest.js';
 
 @Component({
   selector: 'app-arcgis-tiled',

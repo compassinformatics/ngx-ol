@@ -10,14 +10,14 @@ import {
 } from '@angular/core';
 import { LayerTileComponent } from '../layers/layertile.component';
 import { SourceComponent } from './source.component';
-import TileWMS from 'ol/source/TileWMS';
-import { Options } from 'ol/source/TileWMS';
-import TileGrid from 'ol/tilegrid/TileGrid';
-import { LoadFunction } from 'ol/Tile';
-import ImageTile from 'ol/ImageTile';
-import { NearestDirectionFunction } from 'ol/array';
-import { ProjectionLike } from 'ol/proj';
-import { ServerType } from 'ol/source/wms';
+import TileWMS from 'ol/source/TileWMS.js';
+import { Options } from 'ol/source/TileWMS.js';
+import TileGrid from 'ol/tilegrid/TileGrid.js';
+import { LoadFunction } from 'ol/Tile.js';
+import ImageTile from 'ol/ImageTile.js';
+import { NearestDirectionFunction } from 'ol/array.js';
+import { ProjectionLike } from 'ol/proj.js';
+import { ServerType } from 'ol/source/wms.js';
 
 @Component({
   selector: 'aol-source-tilewms',

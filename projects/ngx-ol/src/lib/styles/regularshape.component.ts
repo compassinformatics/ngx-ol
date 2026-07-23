@@ -8,12 +8,12 @@ import {
   input,
   signal,
 } from '@angular/core';
-import type { Size } from 'ol/size';
-import Fill from 'ol/style/Fill';
-import RegularShape from 'ol/style/RegularShape';
-import type { Options } from 'ol/style/RegularShape';
-import Stroke from 'ol/style/Stroke';
-import type { DeclutterMode } from 'ol/style/Style';
+import type { Size } from 'ol/size.js';
+import Fill from 'ol/style/Fill.js';
+import RegularShape from 'ol/style/RegularShape.js';
+import type { Options } from 'ol/style/RegularShape.js';
+import Stroke from 'ol/style/Stroke.js';
+import type { DeclutterMode } from 'ol/style/Style.js';
 import { StyleComponent } from './style.component';
 
 @Component({

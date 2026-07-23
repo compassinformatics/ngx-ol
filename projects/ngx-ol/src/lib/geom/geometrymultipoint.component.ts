@@ -2,7 +2,7 @@ import { Component, OnInit, signal } from '@angular/core';
 import { FeatureComponent } from '../feature.component';
 import { SimpleGeometryComponent } from './simplegeometry.component';
 import { MapComponent } from '../map.component';
-import MultiPoint from 'ol/geom/MultiPoint';
+import MultiPoint from 'ol/geom/MultiPoint.js';
 
 @Component({
   selector: 'aol-geometry-multipoint',

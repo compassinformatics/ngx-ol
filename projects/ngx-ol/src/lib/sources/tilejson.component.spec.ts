@@ -1,6 +1,6 @@
 import { Component, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import type { Config } from 'ol/source/TileJSON';
+import type { Config } from 'ol/source/TileJSON.js';
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 import { AngularOpenlayersModule } from '../../public-api';
 import { LayerTileComponent } from '../layers/layertile.component';

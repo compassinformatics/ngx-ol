@@ -1,11 +1,11 @@
 import { Component, OnInit, OnChanges, SimpleChanges, inject, input, signal } from '@angular/core';
-import Fill from 'ol/style/Fill';
-import Stroke from 'ol/style/Stroke';
-import Text from 'ol/style/Text';
+import Fill from 'ol/style/Fill.js';
+import Stroke from 'ol/style/Stroke.js';
+import Text from 'ol/style/Text.js';
 import { StyleComponent } from './style.component';
-import { Options, TextJustify, TextPlacement } from 'ol/style/Text';
-import { DeclutterMode } from 'ol/style/Style';
-import { Size } from 'ol/size';
+import { Options, TextJustify, TextPlacement } from 'ol/style/Text.js';
+import { DeclutterMode } from 'ol/style/Style.js';
+import { Size } from 'ol/size.js';
 
 @Component({
   selector: 'aol-style-text',

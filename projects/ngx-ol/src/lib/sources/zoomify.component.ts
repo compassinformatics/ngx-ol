@@ -1,10 +1,10 @@
 import { Component, forwardRef, OnInit, input, signal, inject } from '@angular/core';
-import type { NearestDirectionFunction } from 'ol/array';
-import type { Extent } from 'ol/extent';
-import type { ProjectionLike } from 'ol/proj';
-import type { Size } from 'ol/size';
-import Zoomify from 'ol/source/Zoomify';
-import type { Options, TierSizeCalculation } from 'ol/source/Zoomify';
+import type { NearestDirectionFunction } from 'ol/array.js';
+import type { Extent } from 'ol/extent.js';
+import type { ProjectionLike } from 'ol/proj.js';
+import type { Size } from 'ol/size.js';
+import Zoomify from 'ol/source/Zoomify.js';
+import type { Options, TierSizeCalculation } from 'ol/source/Zoomify.js';
 import { LayerTileComponent } from '../layers/layertile.component';
 import { SourceComponent } from './source.component';
 

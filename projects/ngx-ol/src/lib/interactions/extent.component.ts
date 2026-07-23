@@ -9,11 +9,11 @@ import {
   signal,
   inject,
 } from '@angular/core';
-import type { Condition } from 'ol/events/condition';
-import type { Extent as ExtentType } from 'ol/extent';
-import ExtentInteraction, { ExtentEvent } from 'ol/interaction/Extent';
-import type { Options } from 'ol/interaction/Extent';
-import type { StyleLike } from 'ol/style/Style';
+import type { Condition } from 'ol/events/condition.js';
+import type { Extent as ExtentType } from 'ol/extent.js';
+import ExtentInteraction, { ExtentEvent } from 'ol/interaction/Extent.js';
+import type { Options } from 'ol/interaction/Extent.js';
+import type { StyleLike } from 'ol/style/Style.js';
 import { MapComponent } from '../map.component';
 
 @Component({

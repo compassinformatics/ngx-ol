@@ -1,10 +1,10 @@
 import { Component, computed, signal } from '@angular/core';
 import { AngularOpenlayersModule } from 'ngx-ol';
-import Feature from 'ol/Feature';
-import Point from 'ol/geom/Point';
-import Polygon from 'ol/geom/Polygon';
-import type { Coordinate } from 'ol/coordinate';
-import { transform } from 'ol/proj';
+import Feature from 'ol/Feature.js';
+import Point from 'ol/geom/Point.js';
+import Polygon from 'ol/geom/Polygon.js';
+import type { Coordinate } from 'ol/coordinate.js';
+import { transform } from 'ol/proj.js';
 
 type DemoPoint = {
   x: number;

@@ -4,9 +4,9 @@ import {
   AngularOpenlayersTileLayersModule,
   AngularOpenlayersVectorLayersModule,
 } from 'ngx-ol';
-import Feature from 'ol/Feature';
-import Point from 'ol/geom/Point';
-import { fromLonLat } from 'ol/proj';
+import Feature from 'ol/Feature.js';
+import Point from 'ol/geom/Point.js';
+import { fromLonLat } from 'ol/proj.js';
 
 @Component({
   selector: 'app-heatmap',

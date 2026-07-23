@@ -7,8 +7,8 @@ import {
   input,
   signal,
 } from '@angular/core';
-import FullScreen from 'ol/control/FullScreen';
-import { Options } from 'ol/control/FullScreen';
+import FullScreen from 'ol/control/FullScreen.js';
+import { Options } from 'ol/control/FullScreen.js';
 import { MapComponent } from '../map.component';
 
 @Component({

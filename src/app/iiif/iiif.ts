@@ -6,12 +6,12 @@ import {
   MapComponent,
   SourceIIIFComponent,
 } from 'ngx-ol';
-import type { Coordinate } from 'ol/coordinate';
-import type { Extent } from 'ol/extent';
-import IIIFInfo from 'ol/format/IIIFInfo';
-import type { ImageInformationResponse } from 'ol/format/IIIFInfo';
-import type { Options } from 'ol/source/IIIF';
-import View from 'ol/View';
+import type { Coordinate } from 'ol/coordinate.js';
+import type { Extent } from 'ol/extent.js';
+import IIIFInfo from 'ol/format/IIIFInfo.js';
+import type { ImageInformationResponse } from 'ol/format/IIIFInfo.js';
+import type { Options } from 'ol/source/IIIF.js';
+import View from 'ol/View.js';
 
 @Component({
   selector: 'app-iiif',

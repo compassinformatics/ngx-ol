@@ -9,16 +9,16 @@ import {
   signal,
   inject,
 } from '@angular/core';
-import Translate from 'ol/interaction/Translate';
-import Collection from 'ol/Collection';
-import Feature from 'ol/Feature';
-import Layer from 'ol/layer/Layer';
-import { Options, TranslateEvent } from 'ol/interaction/Translate';
+import Translate from 'ol/interaction/Translate.js';
+import Collection from 'ol/Collection.js';
+import Feature from 'ol/Feature.js';
+import Layer from 'ol/layer/Layer.js';
+import { Options, TranslateEvent } from 'ol/interaction/Translate.js';
 import { MapComponent } from '../map.component';
-import BaseEvent from 'ol/events/Event';
-import { ObjectEvent } from 'ol/Object';
-import { Condition } from 'ol/events/condition';
-import { FilterFunction } from 'ol/interaction/Select';
+import BaseEvent from 'ol/events/Event.js';
+import { ObjectEvent } from 'ol/Object.js';
+import { Condition } from 'ol/events/condition.js';
+import { FilterFunction } from 'ol/interaction/Select.js';
 
 @Component({
   selector: 'aol-interaction-translate',

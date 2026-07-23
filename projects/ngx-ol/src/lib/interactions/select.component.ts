@@ -10,15 +10,15 @@ import {
   inject,
 } from '@angular/core';
 import { MapComponent } from '../map.component';
-import Select from 'ol/interaction/Select';
-import Layer from 'ol/layer/Layer';
-import Collection from 'ol/Collection';
-import Feature from 'ol/Feature';
-import { SelectEvent, FilterFunction, Options } from 'ol/interaction/Select';
-import { StyleLike } from 'ol/style/Style';
-import { Condition } from 'ol/events/condition';
-import { ObjectEvent } from 'ol/Object';
-import BaseEvent from 'ol/events/Event';
+import Select from 'ol/interaction/Select.js';
+import Layer from 'ol/layer/Layer.js';
+import Collection from 'ol/Collection.js';
+import Feature from 'ol/Feature.js';
+import { SelectEvent, FilterFunction, Options } from 'ol/interaction/Select.js';
+import { StyleLike } from 'ol/style/Style.js';
+import { Condition } from 'ol/events/condition.js';
+import { ObjectEvent } from 'ol/Object.js';
+import BaseEvent from 'ol/events/Event.js';
 
 @Component({
   selector: 'aol-interaction-select',

@@ -1,8 +1,8 @@
 import { Component, OnDestroy, OnInit, input, signal, inject } from '@angular/core';
-import DragRotate from 'ol/interaction/DragRotate';
-import { Options } from 'ol/interaction/DragRotate';
+import DragRotate from 'ol/interaction/DragRotate.js';
+import { Options } from 'ol/interaction/DragRotate.js';
 import { MapComponent } from '../map.component';
-import { Condition } from 'ol/events/condition';
+import { Condition } from 'ol/events/condition.js';
 
 @Component({
   selector: 'aol-interaction-dragrotate',

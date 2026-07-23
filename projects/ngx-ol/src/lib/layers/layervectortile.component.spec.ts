@@ -1,8 +1,8 @@
 import { Component, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import MVT from 'ol/format/MVT';
-import Style from 'ol/style/Style';
-import VectorTileSource from 'ol/source/VectorTile';
+import MVT from 'ol/format/MVT.js';
+import Style from 'ol/style/Style.js';
+import VectorTileSource from 'ol/source/VectorTile.js';
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 import { AngularOpenlayersModule } from '../../public-api';
 import { LayerVectorTileComponent } from './layervectortile.component';

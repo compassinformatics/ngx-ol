@@ -7,17 +7,17 @@ import {
   signal,
   inject,
 } from '@angular/core';
-import OGCVectorTile from 'ol/source/OGCVectorTile';
-import { Options } from 'ol/source/OGCVectorTile';
-import TileGrid from 'ol/tilegrid/TileGrid';
+import OGCVectorTile from 'ol/source/OGCVectorTile.js';
+import { Options } from 'ol/source/OGCVectorTile.js';
+import TileGrid from 'ol/tilegrid/TileGrid.js';
 import { LayerVectorTileComponent } from '../layers/layervectortile.component';
 import { SourceComponent } from './source.component';
-import { ProjectionLike } from 'ol/proj';
-import VectorTile from 'ol/VectorTile';
-import { NearestDirectionFunction } from 'ol/array';
+import { ProjectionLike } from 'ol/proj.js';
+import VectorTile from 'ol/VectorTile.js';
+import { NearestDirectionFunction } from 'ol/array.js';
 import { FormatMVTComponent } from '../formats/mvt.component';
 import { FormatGeoJSONComponent } from '../formats/geojson.component';
-import FeatureFormat from 'ol/format/Feature';
+import FeatureFormat from 'ol/format/Feature.js';
 
 @Component({
   selector: 'aol-source-ogcvectortile',

@@ -1,6 +1,6 @@
 import { Component, signal, viewChild } from '@angular/core';
-import MapBrowserEvent from 'ol/MapBrowserEvent';
-import { Coordinate } from 'ol/coordinate';
+import MapBrowserEvent from 'ol/MapBrowserEvent.js';
+import { Coordinate } from 'ol/coordinate.js';
 import { AngularOpenlayersModule } from 'ngx-ol';
 
 type TileWmsSourceRef = {

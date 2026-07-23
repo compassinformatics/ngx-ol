@@ -4,11 +4,11 @@ import {
   AngularOpenlayersTileLayersModule,
   AngularOpenlayersVectorLayersModule,
 } from 'ngx-ol';
-import Feature from 'ol/Feature';
-import Point from 'ol/geom/Point';
-import { fromLonLat } from 'ol/proj';
-import Fill from 'ol/style/Fill';
-import Stroke from 'ol/style/Stroke';
+import Feature from 'ol/Feature.js';
+import Point from 'ol/geom/Point.js';
+import { fromLonLat } from 'ol/proj.js';
+import Fill from 'ol/style/Fill.js';
+import Stroke from 'ol/style/Stroke.js';
 
 @Component({
   selector: 'app-regular-shape',

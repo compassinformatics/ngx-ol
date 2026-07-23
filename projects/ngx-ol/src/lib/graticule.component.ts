@@ -8,8 +8,8 @@ import {
   signal,
   inject,
 } from '@angular/core';
-import Graticule from 'ol/layer/Graticule';
-import Stroke from 'ol/style/Stroke';
+import Graticule from 'ol/layer/Graticule.js';
+import Stroke from 'ol/style/Stroke.js';
 import { MapComponent } from './map.component';
 
 @Component({

@@ -1,9 +1,9 @@
 import { Component, OnDestroy, OnInit, input, signal, inject } from '@angular/core';
-import DragPan from 'ol/interaction/DragPan';
-import { Options } from 'ol/interaction/DragPan';
-import Kinetic from 'ol/Kinetic';
+import DragPan from 'ol/interaction/DragPan.js';
+import { Options } from 'ol/interaction/DragPan.js';
+import Kinetic from 'ol/Kinetic.js';
 import { MapComponent } from '../map.component';
-import { Condition } from 'ol/events/condition';
+import { Condition } from 'ol/events/condition.js';
 
 @Component({
   selector: 'aol-interaction-dragpan',

@@ -2,9 +2,9 @@ import { Component, OnChanges, OnInit, SimpleChanges, input, signal } from '@ang
 import { FeatureComponent } from '../feature.component';
 import { SimpleGeometryComponent } from './simplegeometry.component';
 import { MapComponent } from '../map.component';
-import Point from 'ol/geom/Point';
-import { Coordinate } from 'ol/coordinate';
-import { GeometryLayout } from 'ol/geom/Geometry';
+import Point from 'ol/geom/Point.js';
+import { Coordinate } from 'ol/coordinate.js';
+import { GeometryLayout } from 'ol/geom/Geometry.js';
 
 @Component({
   selector: 'aol-geometry-point',

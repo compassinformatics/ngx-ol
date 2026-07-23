@@ -5,9 +5,9 @@ import { GeometryPolygonComponent } from './geom/geometrypolygon.component';
 import { GeometryMultiPointComponent } from './geom/geometrymultipoint.component';
 import { GeometryMultiLinestringComponent } from './geom/geometrymultilinestring.component';
 import { GeometryMultiPolygonComponent } from './geom/geometrymultipolygon.component';
-import { Coordinate } from 'ol/coordinate';
-import { transform } from 'ol/proj';
-import { ObjectEvent } from 'ol/Object';
+import { Coordinate } from 'ol/coordinate.js';
+import { transform } from 'ol/proj.js';
+import { ObjectEvent } from 'ol/Object.js';
 
 @Component({
   selector: 'aol-collection-coordinates',

@@ -1,13 +1,13 @@
 import { Component, OnInit, forwardRef, inject, input, signal } from '@angular/core';
 import { LayerVectorComponent } from '../layers/layervector.component';
 import { SourceComponent } from './source.component';
-import FeatureFormat from 'ol/format/Feature';
-import Vector from 'ol/source/Vector';
-import GeoJSON from 'ol/format/GeoJSON';
-import { Options as GeoJSONOptions } from 'ol/format/GeoJSON';
-import { ProjectionLike } from 'ol/proj';
+import FeatureFormat from 'ol/format/Feature.js';
+import Vector from 'ol/source/Vector.js';
+import GeoJSON from 'ol/format/GeoJSON.js';
+import { Options as GeoJSONOptions } from 'ol/format/GeoJSON.js';
+import { ProjectionLike } from 'ol/proj.js';
 import { LayerVectorImageComponent } from '../layers/layervectorimage.component';
-import { Options as VectorOptions } from 'ol/source/Vector';
+import { Options as VectorOptions } from 'ol/source/Vector.js';
 
 @Component({
   selector: 'aol-source-geojson',

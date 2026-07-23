@@ -1,8 +1,8 @@
 import { Component, OnDestroy, OnInit, input, signal, inject } from '@angular/core';
-import { defaults } from 'ol/interaction/defaults';
-import Interaction from 'ol/interaction/Interaction';
-import { DefaultsOptions } from 'ol/interaction/defaults';
-import Collection from 'ol/Collection';
+import { defaults } from 'ol/interaction/defaults.js';
+import Interaction from 'ol/interaction/Interaction.js';
+import { DefaultsOptions } from 'ol/interaction/defaults.js';
+import Collection from 'ol/Collection.js';
 import { MapComponent } from '../map.component';
 
 @Component({

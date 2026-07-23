@@ -1,12 +1,12 @@
 import { Component, signal } from '@angular/core';
 import { AngularOpenlayersModule } from 'ngx-ol';
-import Collection from 'ol/Collection';
-import Feature from 'ol/Feature';
-import type { Coordinate } from 'ol/coordinate';
-import type { Type as GeometryType } from 'ol/geom/Geometry';
-import Point from 'ol/geom/Point';
-import Polygon from 'ol/geom/Polygon';
-import { transform } from 'ol/proj';
+import Collection from 'ol/Collection.js';
+import Feature from 'ol/Feature.js';
+import type { Coordinate } from 'ol/coordinate.js';
+import type { Type as GeometryType } from 'ol/geom/Geometry.js';
+import Point from 'ol/geom/Point.js';
+import Polygon from 'ol/geom/Polygon.js';
+import { transform } from 'ol/proj.js';
 
 type DrawType = Extract<GeometryType, 'Point' | 'LineString' | 'Polygon'>;
 

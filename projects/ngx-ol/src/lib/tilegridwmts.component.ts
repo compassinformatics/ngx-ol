@@ -1,8 +1,8 @@
 import { Component, OnChanges, OnInit, input, signal } from '@angular/core';
-import WMTS, { Options } from 'ol/tilegrid/WMTS';
+import WMTS, { Options } from 'ol/tilegrid/WMTS.js';
 import { TileGridComponent } from './tilegrid.component';
-import { Coordinate } from 'ol/coordinate';
-import { Size } from 'ol/size';
+import { Coordinate } from 'ol/coordinate.js';
+import { Size } from 'ol/size.js';
 
 @Component({
   selector: 'aol-tilegrid-wmts',

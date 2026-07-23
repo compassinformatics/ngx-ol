@@ -13,13 +13,13 @@ import {
 import { LayerTileComponent } from '../layers/layertile.component';
 import { SourceComponent } from './source.component';
 import { TileGridWMTSComponent } from '../tilegridwmts.component';
-import SourceWMTS from 'ol/source/WMTS';
-import WMTS from 'ol/tilegrid/WMTS';
-import { ProjectionLike } from 'ol/proj';
-import { LoadFunction } from 'ol/Tile';
-import { TileSourceEvent } from 'ol/source/Tile';
-import { Options, RequestEncoding } from 'ol/source/WMTS';
-import { NearestDirectionFunction } from 'ol/array';
+import SourceWMTS from 'ol/source/WMTS.js';
+import WMTS from 'ol/tilegrid/WMTS.js';
+import { ProjectionLike } from 'ol/proj.js';
+import { LoadFunction } from 'ol/Tile.js';
+import { TileSourceEvent } from 'ol/source/Tile.js';
+import { Options, RequestEncoding } from 'ol/source/WMTS.js';
+import { NearestDirectionFunction } from 'ol/array.js';
 
 @Component({
   selector: 'aol-source-tilewmts',

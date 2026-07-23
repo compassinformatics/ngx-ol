@@ -9,11 +9,11 @@ import {
   input,
   signal,
 } from '@angular/core';
-import Feature from 'ol/Feature';
-import Point from 'ol/geom/Point';
-import Cluster from 'ol/source/Cluster';
-import Vector from 'ol/source/Vector';
-import { Options } from 'ol/source/Cluster';
+import Feature from 'ol/Feature.js';
+import Point from 'ol/geom/Point.js';
+import Cluster from 'ol/source/Cluster.js';
+import Vector from 'ol/source/Vector.js';
+import { Options } from 'ol/source/Cluster.js';
 
 import { LayerVectorComponent } from '../layers/layervector.component';
 import { SourceComponent } from './source.component';

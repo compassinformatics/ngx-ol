@@ -8,8 +8,8 @@ import {
   signal,
   inject,
 } from '@angular/core';
-import MouseWheelZoom from 'ol/interaction/MouseWheelZoom';
-import { Options } from 'ol/interaction/MouseWheelZoom';
+import MouseWheelZoom from 'ol/interaction/MouseWheelZoom.js';
+import { Options } from 'ol/interaction/MouseWheelZoom.js';
 import { MapComponent } from '../map.component';
 
 @Component({

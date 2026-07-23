@@ -1,10 +1,10 @@
 import { Component, OnChanges, OnInit, SimpleChanges, input, signal } from '@angular/core';
 import { FeatureComponent } from '../feature.component';
-import Circle from 'ol/geom/Circle';
+import Circle from 'ol/geom/Circle.js';
 import { SimpleGeometryComponent } from './simplegeometry.component';
 import { MapComponent } from '../map.component';
-import { Coordinate } from 'ol/coordinate';
-import { GeometryLayout } from 'ol/geom/Geometry';
+import { Coordinate } from 'ol/coordinate.js';
+import { GeometryLayout } from 'ol/geom/Geometry.js';
 
 @Component({
   selector: 'aol-geometry-circle',

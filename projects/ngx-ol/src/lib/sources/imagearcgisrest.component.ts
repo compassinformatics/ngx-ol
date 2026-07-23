@@ -10,15 +10,15 @@ import {
   signal,
   inject,
 } from '@angular/core';
-import ImageArcGISRest from 'ol/source/ImageArcGISRest';
-import { Options } from 'ol/source/ImageArcGISRest';
+import ImageArcGISRest from 'ol/source/ImageArcGISRest.js';
+import { Options } from 'ol/source/ImageArcGISRest.js';
 import { LayerImageComponent } from '../layers/layerimage.component';
 import { SourceComponent } from './source.component';
-import { ProjectionLike } from 'ol/proj';
-import { LoadFunction } from 'ol/Image';
-import { ImageSourceEvent } from 'ol/source/Image';
-import type { EventsKey } from 'ol/events';
-import { unByKey } from 'ol/Observable';
+import { ProjectionLike } from 'ol/proj.js';
+import { LoadFunction } from 'ol/Image.js';
+import { ImageSourceEvent } from 'ol/source/Image.js';
+import type { EventsKey } from 'ol/events.js';
+import { unByKey } from 'ol/Observable.js';
 
 @Component({
   selector: 'aol-source-imagearcgisrest',

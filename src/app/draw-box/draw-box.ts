@@ -1,11 +1,11 @@
 import { JsonPipe } from '@angular/common';
 import { Component, computed, signal } from '@angular/core';
-import Feature from 'ol/Feature';
-import { Coordinate } from 'ol/coordinate';
-import GeoJSON, { GeoJSONFeature } from 'ol/format/GeoJSON';
-import { createBox } from 'ol/interaction/Draw';
-import Polygon from 'ol/geom/Polygon';
-import { transform } from 'ol/proj';
+import Feature from 'ol/Feature.js';
+import { Coordinate } from 'ol/coordinate.js';
+import GeoJSON, { GeoJSONFeature } from 'ol/format/GeoJSON.js';
+import { createBox } from 'ol/interaction/Draw.js';
+import Polygon from 'ol/geom/Polygon.js';
+import { transform } from 'ol/proj.js';
 import { AngularOpenlayersModule } from 'ngx-ol';
 
 @Component({

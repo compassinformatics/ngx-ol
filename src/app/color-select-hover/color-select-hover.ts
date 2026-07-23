@@ -1,14 +1,14 @@
 import { Component, signal, viewChild } from '@angular/core';
 import { AngularOpenlayersModule } from 'ngx-ol';
 import type { MapComponent } from 'ngx-ol';
-import MapBrowserEvent from 'ol/MapBrowserEvent';
-import Feature from 'ol/Feature';
-import Polygon from 'ol/geom/Polygon';
-import type { Coordinate } from 'ol/coordinate';
-import { transform } from 'ol/proj';
-import Fill from 'ol/style/Fill';
-import Stroke from 'ol/style/Stroke';
-import Style from 'ol/style/Style';
+import MapBrowserEvent from 'ol/MapBrowserEvent.js';
+import Feature from 'ol/Feature.js';
+import Polygon from 'ol/geom/Polygon.js';
+import type { Coordinate } from 'ol/coordinate.js';
+import { transform } from 'ol/proj.js';
+import Fill from 'ol/style/Fill.js';
+import Stroke from 'ol/style/Stroke.js';
+import Style from 'ol/style/Style.js';
 
 @Component({
   selector: 'app-color-select-hover',

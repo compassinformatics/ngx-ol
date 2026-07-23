@@ -8,11 +8,11 @@ import {
   signal,
   inject,
 } from '@angular/core';
-import WebGLTileLayer from 'ol/layer/WebGLTile';
-import type { Options, SourceType, Style } from 'ol/layer/WebGLTile';
-import type DataTileSource from 'ol/source/DataTile';
-import type DataTile from 'ol/DataTile';
-import type { Extent } from 'ol/extent';
+import WebGLTileLayer from 'ol/layer/WebGLTile.js';
+import type { Options, SourceType, Style } from 'ol/layer/WebGLTile.js';
+import type DataTileSource from 'ol/source/DataTile.js';
+import type DataTile from 'ol/DataTile.js';
+import type { Extent } from 'ol/extent.js';
 import { MapComponent } from '../map.component';
 import { LayerComponent } from './layer.component';
 import { LayerGroupComponent } from './layergroup.component';

@@ -1,11 +1,11 @@
 import { Component, OnInit, OnChanges, SimpleChanges, inject, input, signal } from '@angular/core';
-import Fill from 'ol/style/Fill';
-import { Options } from 'ol/style/Fill';
+import Fill from 'ol/style/Fill.js';
+import { Options } from 'ol/style/Fill.js';
 import { StyleComponent } from './style.component';
 import { StyleCircleComponent } from './circle.component';
 import { StyleTextComponent } from './text.component';
-import { Color } from 'ol/color';
-import { ColorLike, PatternDescriptor } from 'ol/colorlike';
+import { Color } from 'ol/color.js';
+import { ColorLike, PatternDescriptor } from 'ol/colorlike.js';
 
 @Component({
   selector: 'aol-style-fill',

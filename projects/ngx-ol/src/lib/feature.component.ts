@@ -9,8 +9,8 @@ import {
   signal,
   inject,
 } from '@angular/core';
-import Feature from 'ol/Feature';
-import MapBrowserEvent from 'ol/MapBrowserEvent';
+import Feature from 'ol/Feature.js';
+import MapBrowserEvent from 'ol/MapBrowserEvent.js';
 import { SourceVectorComponent } from './sources/vector.component';
 
 @Component({

@@ -8,13 +8,13 @@ import {
   signal,
   inject,
 } from '@angular/core';
-import type { ProjectionLike } from 'ol/proj';
-import type { Size } from 'ol/size';
-import ImageTileSource from 'ol/source/ImageTile';
-import type { CrossOriginAttribute } from 'ol/source/DataTile';
-import type { Loader, Options, UrlLike } from 'ol/source/ImageTile';
-import type { State } from 'ol/source/Source';
-import TileGrid from 'ol/tilegrid/TileGrid';
+import type { ProjectionLike } from 'ol/proj.js';
+import type { Size } from 'ol/size.js';
+import ImageTileSource from 'ol/source/ImageTile.js';
+import type { CrossOriginAttribute } from 'ol/source/DataTile.js';
+import type { Loader, Options, UrlLike } from 'ol/source/ImageTile.js';
+import type { State } from 'ol/source/Source.js';
+import TileGrid from 'ol/tilegrid/TileGrid.js';
 import { LayerWebGLTileComponent } from '../layers/layerwebgltile.component';
 import { SourceComponent } from './source.component';
 

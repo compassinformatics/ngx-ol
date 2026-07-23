@@ -1,7 +1,7 @@
 import { Component, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import GeometryCollection from 'ol/geom/GeometryCollection';
-import Point from 'ol/geom/Point';
+import GeometryCollection from 'ol/geom/GeometryCollection.js';
+import Point from 'ol/geom/Point.js';
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 import { AngularOpenlayersModule } from '../../public-api';
 import { FeatureComponent } from '../feature.component';

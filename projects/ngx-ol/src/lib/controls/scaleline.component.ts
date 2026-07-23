@@ -8,10 +8,10 @@ import {
   signal,
   inject,
 } from '@angular/core';
-import ScaleLine from 'ol/control/ScaleLine';
+import ScaleLine from 'ol/control/ScaleLine.js';
 import { MapComponent } from '../map.component';
-import { Options, Units } from 'ol/control/ScaleLine';
-import MapEvent from 'ol/MapEvent';
+import { Options, Units } from 'ol/control/ScaleLine.js';
+import MapEvent from 'ol/MapEvent.js';
 
 @Component({
   selector: 'aol-control-scaleline',

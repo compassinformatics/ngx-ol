@@ -1,7 +1,7 @@
 import { Component, signal, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import VectorSource from 'ol/source/Vector';
-import type { Type } from 'ol/geom/Geometry';
+import VectorSource from 'ol/source/Vector.js';
+import type { Type } from 'ol/geom/Geometry.js';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { AngularOpenlayersModule } from '../../public-api';
 import { MapComponent } from '../map.component';

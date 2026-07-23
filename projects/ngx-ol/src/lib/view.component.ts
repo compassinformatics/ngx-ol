@@ -9,15 +9,15 @@ import {
   signal,
   inject,
 } from '@angular/core';
-import View, { ViewOptions } from 'ol/View';
+import View, { ViewOptions } from 'ol/View.js';
 import { MapComponent } from './map.component';
-import { ObjectEvent } from 'ol/Object';
-import { Extent } from 'ol/extent';
-import { Coordinate } from 'ol/coordinate';
-import BaseEvent from 'ol/events/Event';
-import type { EventsKey } from 'ol/events';
-import { unByKey } from 'ol/Observable';
-import { ProjectionLike } from 'ol/proj';
+import { ObjectEvent } from 'ol/Object.js';
+import { Extent } from 'ol/extent.js';
+import { Coordinate } from 'ol/coordinate.js';
+import BaseEvent from 'ol/events/Event.js';
+import type { EventsKey } from 'ol/events.js';
+import { unByKey } from 'ol/Observable.js';
+import { ProjectionLike } from 'ol/proj.js';
 
 @Component({
   selector: 'aol-view',

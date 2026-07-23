@@ -1,8 +1,8 @@
 import { Component, OnDestroy, OnInit, input, signal, inject } from '@angular/core';
-import DragZoom from 'ol/interaction/DragZoom';
-import { Options } from 'ol/interaction/DragZoom';
+import DragZoom from 'ol/interaction/DragZoom.js';
+import { Options } from 'ol/interaction/DragZoom.js';
 import { MapComponent } from '../map.component';
-import { Condition } from 'ol/events/condition';
+import { Condition } from 'ol/events/condition.js';
 
 @Component({
   selector: 'aol-interaction-dragzoom',

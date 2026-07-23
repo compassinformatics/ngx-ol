@@ -7,9 +7,9 @@ import {
   input,
   signal,
 } from '@angular/core';
-import MapEvent from 'ol/MapEvent';
-import ZoomSlider from 'ol/control/ZoomSlider';
-import { Options } from 'ol/control/ZoomSlider';
+import MapEvent from 'ol/MapEvent.js';
+import ZoomSlider from 'ol/control/ZoomSlider.js';
+import { Options } from 'ol/control/ZoomSlider.js';
 import { MapComponent } from '../map.component';
 
 @Component({

@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit, input, signal, inject } from '@angular/core';
-import Link from 'ol/interaction/Link';
-import type { Options, Params } from 'ol/interaction/Link';
-import type { AnimationOptions } from 'ol/View';
+import Link from 'ol/interaction/Link.js';
+import type { Options, Params } from 'ol/interaction/Link.js';
+import type { AnimationOptions } from 'ol/View.js';
 import { MapComponent } from '../map.component';
 
 @Component({

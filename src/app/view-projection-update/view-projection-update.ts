@@ -1,6 +1,6 @@
 import { Component, computed, signal } from '@angular/core';
 import { AngularOpenlayersModule } from 'ngx-ol';
-import { transform } from 'ol/proj';
+import { transform } from 'ol/proj.js';
 
 type ProjectionCode = 'EPSG:3857' | 'EPSG:4326';
 

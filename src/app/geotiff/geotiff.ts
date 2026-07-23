@@ -2,10 +2,10 @@ import { AfterViewInit, Component, OnDestroy, signal, viewChild } from '@angular
 import { AngularOpenlayersMapModule, AngularOpenlayersTileLayersModule } from 'ngx-ol';
 import type { MapComponent } from 'ngx-ol';
 import type { LayerWebGLTileComponent } from 'ngx-ol';
-import type { Style } from 'ol/layer/WebGLTile';
-import View from 'ol/View';
-import GeoTIFFSource from 'ol/source/GeoTIFF';
-import type { SourceInfo } from 'ol/source/GeoTIFF';
+import type { Style } from 'ol/layer/WebGLTile.js';
+import View from 'ol/View.js';
+import GeoTIFFSource from 'ol/source/GeoTIFF.js';
+import type { SourceInfo } from 'ol/source/GeoTIFF.js';
 
 @Component({
   selector: 'app-geotiff',
